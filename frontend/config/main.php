@@ -14,6 +14,8 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'cookieValidationKey' => 'ear8GcRjBGXQgKVwfEpbApyj7Fb0UKXk',
+            'baseUrl' => '',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -43,7 +45,7 @@ return [
             'rules' => [
             ],
         ],
-        
+
     ],
     'params' => $params,
 ];
