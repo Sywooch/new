@@ -1,6 +1,7 @@
 <?php
 return [
     'vendorPath' => dirname( dirname( __DIR__ ) ) . '/vendor',
+    'name' => 'Vezugruz29.ru',
     'language' => 'ru-RU',
     'sourceLanguage' => 'ru-RU',
     'components' => [
