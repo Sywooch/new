@@ -40,10 +40,10 @@ return [
                 ],
             ],
         ],
-        'authManager'          => [
+        /*'authManager'          => [
             'class'        => 'yii\rbac\DbManager',
             'defaultRoles' => [ 'user' ],
-        ],
+        ],*/
     ],
     'modules'    => [
         'user' => [
@@ -73,5 +73,6 @@ return [
                 'recoverySubject'       => 'Recovery subject',
             ]
         ],
+        'rbac' => 'dektrium\rbac\RbacWebModule',
     ],
 ];
