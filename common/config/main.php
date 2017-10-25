@@ -1,8 +1,8 @@
 <?php
 return [
-    'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'vendorPath' => dirname( dirname( __DIR__ ) ) . '/vendor',
     'components' => [
-        'cache' => [
+        'cache'                => [
             'class' => 'yii\caching\FileCache',
         ],
         'authClientCollection' => [
@@ -13,48 +13,48 @@ return [
                     'clientId'     => 'CLIENT_ID',
                     'clientSecret' => 'CLIENT_SECRET',
                 ],
-                'yandex' => [
+                'yandex'    => [
                     'class'        => 'dektrium\user\clients\Yandex',
                     'clientId'     => 'CLIENT_ID',
                     'clientSecret' => 'CLIENT_SECRET'
                 ],
-                'facebook' => [
+                'facebook'  => [
                     'class'        => 'dektrium\user\clients\Facebook',
                     'clientId'     => 'CLIENT_ID',
                     'clientSecret' => 'CLIENT_SECRET',
                 ],
-                'twitter' => [
+                'twitter'   => [
                     'class'          => 'dektrium\user\clients\Twitter',
                     'consumerKey'    => 'CONSUMER_KEY',
                     'consumerSecret' => 'CONSUMER_SECRET',
                 ],
-                'google' => [
+                'google'    => [
                     'class'        => 'dektrium\user\clients\Google',
                     'clientId'     => 'CLIENT_ID',
                     'clientSecret' => 'CLIENT_SECRET',
                 ],
-                'linkedin' => [
+                'linkedin'  => [
                     'class'        => 'dektrium\user\clients\LinkedIn',
                     'clientId'     => 'CLIENT_ID',
                     'clientSecret' => 'CLIENT_SECRET'
                 ],
             ],
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-            'defaultRoles' => ['user'],
+        'authManager'          => [
+            'class'        => 'yii\rbac\DbManager',
+            'defaultRoles' => [ 'user' ],
         ],
     ],
-    'modules' => [
+    'modules'    => [
         'user' => [
-            'class' => 'dektrium\user\Module',
+            'class'                    => 'dektrium\user\Module',
             // you will configure your module inside this file
             // or if need different configuration for frontend and backend you may
             // configure in needed configs
-            'admins'          => [ 'beckson' ],
+            'admins'                   => [ 'beckson' ],
             // Автоматическая генерация пароля
-//            'enableGeneratingPassword' => true,
-            'enableFlashMessages' => false,
+            'enableGeneratingPassword' => true,
+            'enableFlashMessages'      => false,
             /*
              // Admin-layout
              'controllerMap' => [
@@ -63,6 +63,15 @@ return [
                     'layout' => '//admin-layout',
                 ],
             ],*/
+            // Отправка писем
+            'mailer'                   => [
+                'sender'                => [ 'no-reply@myhost.com' => 'Administrator' ],
+                // or ['no-reply@myhost.com' => 'Sender name']
+                'welcomeSubject'        => 'Welcome subject',
+                'confirmationSubject'   => 'Confirmation subject',
+                'reconfirmationSubject' => 'Email change subject',
+                'recoverySubject'       => 'Recovery subject',
+            ]
         ],
     ],
 ];
