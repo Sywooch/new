@@ -130,7 +130,7 @@ class UsersHostController extends Controller
      * Функция для переноса старых пользователей из таблицы QAuthUser
      * в новую таблицу User
      */
-    public function actionPassOldUsers()
+    public function actionMoveOldUsers()
     {
         $searchModel = new QAuthUserSearc();
         $provider = $searchModel->searchAll();
