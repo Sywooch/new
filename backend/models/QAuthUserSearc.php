@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use backend\models\QAuthUser;
+use yii\data\ArrayDataProvider;
 
 /**
  * QAuthUserSearc represents the model behind the search form about `backend\models\QAuthUser`.
@@ -91,6 +92,23 @@ class QAuthUserSearc extends QAuthUser
             ->andFilterWhere(['like', 'QAuthUserLJ', $this->QAuthUserLJ])
             ->andFilterWhere(['like', 'QAuthUserAbout', $this->QAuthUserAbout])
             ->andFilterWhere(['like', 'QAuthUserExtra', $this->QAuthUserExtra]);
+
+        return $dataProvider;
+    }
+
+    /**
+     * Функция для получения пользователей из таблицы QAuthUser
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchAll()
+    {
+        $query = QAuthUser::find()->select( [ 'QAuthUserID', 'QAuthUserFullName', 'QAuthUserEmail' ] );
+
+        $dataProvider = new ActiveDataProvider( [
+            'query'      => $query,
+            'pagination' => false,
+        ] );
 
         return $dataProvider;
     }
