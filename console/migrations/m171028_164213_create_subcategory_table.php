@@ -15,12 +15,15 @@ class m171028_164213_create_subcategory_table extends Migration
         $this->createTable( 'subcategory', [
             'id'          => $this->primaryKey(),
             'old_id'      => $this->integer( 3 )->notNull()->unique(),
-            'cut_id'      => $this->integer( 2 )->notNull()->unique(),
-            'subcat_name' => $this->string( 50 )->notNull()->unique(),
-            'menu_order'  => $this->integer( 2 )->notNull()->unique(),
+            'old_cat_id'  => $this->integer( 3 )->notNull(),
+            'cat_id'      => $this->integer( 2 )->notNull(),
+            'subcat_name' => $this->string( 50 )->notNull(),
+            'menu_order'  => $this->integer( 2 )->notNull(),
         ] );
 
-        $this->addForeignKey( 'fk-subcat-catefory_id', 'subcategory', 'cut_id', 'category', 'id', 'CASCADE' );
+        $this->addForeignKey( 'fk-subcat-category_id', 'subcategory', 'cat_id', 'category', 'id', 'CASCADE' );
+        $this->addForeignKey( 'fk-subcut-oldcategory_id', 'subcategory', 'old_cat_id', 'category', 'old_id',
+            'CASCADE' );
     }
 
     /**
@@ -28,6 +31,6 @@ class m171028_164213_create_subcategory_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('subcategory');
+        $this->dropTable( 'subcategory' );
     }
 }

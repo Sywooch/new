@@ -19,11 +19,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'old_id') ?>
 
-    <?= $form->field($model, 'cut_id') ?>
+    <?= $form->field($model, 'old_cat_id') ?>
+
+    <?= $form->field($model, 'cat_id') ?>
 
     <?= $form->field($model, 'subcat_name') ?>
 
-    <?= $form->field($model, 'menu_order') ?>
+    <?php // echo $form->field($model, 'menu_order') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

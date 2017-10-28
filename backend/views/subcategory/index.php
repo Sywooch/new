@@ -26,9 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'old_id',
-            'cut_id',
+            'old_cat_id',
+            'cat_id',
             'subcat_name',
-            'menu_order',
+            // 'menu_order',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

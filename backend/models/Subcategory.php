@@ -9,11 +9,13 @@ use Yii;
  *
  * @property integer $id
  * @property integer $old_id
- * @property integer $cut_id
+ * @property integer $old_cat_id
+ * @property integer $cat_id
  * @property string $subcat_name
  * @property integer $menu_order
  *
- * @property Category $cut
+ * @property Category $cat
+ * @property Category $oldCat
  */
 class Subcategory extends \yii\db\ActiveRecord
 {
@@ -31,14 +33,12 @@ class Subcategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'cut_id', 'subcat_name', 'menu_order'], 'required'],
-            [['old_id', 'cut_id', 'menu_order'], 'integer'],
+            [['old_id', 'old_cat_id', 'cat_id', 'subcat_name', 'menu_order'], 'required'],
+            [['old_id', 'old_cat_id', 'cat_id', 'menu_order'], 'integer'],
             [['subcat_name'], 'string', 'max' => 50],
             [['old_id'], 'unique'],
-            [['cut_id'], 'unique'],
-            [['subcat_name'], 'unique'],
-            [['menu_order'], 'unique'],
-            [['cut_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cut_id' => 'id']],
+            [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
+            [['old_cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['old_cat_id' => 'old_id']],
         ];
     }
 
@@ -50,7 +50,8 @@ class Subcategory extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'old_id' => 'Old ID',
-            'cut_id' => 'Cut ID',
+            'old_cat_id' => 'Old Cat ID',
+            'cat_id' => 'Cat ID',
             'subcat_name' => 'Subcat Name',
             'menu_order' => 'Menu Order',
         ];
@@ -59,8 +60,16 @@ class Subcategory extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCut()
+    public function getCat()
     {
-        return $this->hasOne(Category::className(), ['id' => 'cut_id']);
+        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOldCat()
+    {
+        return $this->hasOne(Category::className(), ['old_id' => 'old_cat_id']);
     }
 }

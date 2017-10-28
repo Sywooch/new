@@ -18,7 +18,7 @@ class SubcategorySearch extends Subcategory
     public function rules()
     {
         return [
-            [['id', 'old_id', 'cut_id', 'menu_order'], 'integer'],
+            [['id', 'old_id', 'old_cat_id', 'cat_id', 'menu_order'], 'integer'],
             [['subcat_name'], 'safe'],
         ];
     }
@@ -61,7 +61,8 @@ class SubcategorySearch extends Subcategory
         $query->andFilterWhere([
             'id' => $this->id,
             'old_id' => $this->old_id,
-            'cut_id' => $this->cut_id,
+            'old_cat_id' => $this->old_cat_id,
+            'cat_id' => $this->cat_id,
             'menu_order' => $this->menu_order,
         ]);
 
