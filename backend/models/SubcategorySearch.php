@@ -47,6 +47,9 @@ class SubcategorySearch extends Subcategory
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 50,
+            ],
         ]);
 
         $this->load($params);
