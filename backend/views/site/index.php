@@ -17,6 +17,8 @@ $this->title = 'My Yii Application';
 									<br>
 									<a href="<?= \yii\helpers\Url::to( [ '/category/index' ] ) ?>">Категории</a>
 									<br>
+									<a href="<?= \yii\helpers\Url::to( [ '/subcategory/index' ] ) ?>">Подкатегории</a>
+									<br>
 									<a href="<?= \yii\helpers\Url::to( [ '/country/index' ] ) ?>">Города</a>
 									<br>
 									<a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>">Rbac</a>
