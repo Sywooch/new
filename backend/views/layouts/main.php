@@ -57,22 +57,24 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="container-fluid">
         <?= Breadcrumbs::widget([
+            'homeLink' => ['label' => 'Главная', 'url' => '/site/index'],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
+        <?= $this->render( '_sidebar' ); ?>
         <?= $content ?>
     </div>
 </div>
 
-<footer class="footer">
+<!--<footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Yii::$app->name ?> <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <?/*= Yii::$app->name */?> <?/*= date('Y') */?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"><?/*= Yii::powered() */?></p>
     </div>
-</footer>
+</footer>-->
 
 <?php $this->endBody() ?>
 </body>

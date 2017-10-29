@@ -7,34 +7,28 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
 	<div class="body-content">
-		<div class="row">
-			<div class="col-xs-12 col-sm-12 page-header">
-				<h2>Admin</h2>
-			</div>
-		</div>
 
 		<div class="row">
 
-			<div class="col-xs-12 col-sm-9">
-				<h4>Content</h4>
-			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-			<div class="col-xs-6 col-sm-3">
+				<h2 class="page-header">Dashboard</h2>
 
-				<div class="list-group">
-					<a href="javascript:void(0)" class="list-group-item"><strong>Разделы</strong></a>
-					<a href="<?= \yii\helpers\Url::to( [ '/users-host/index' ] ) ?>" class="list-group-item active">Старые пользователи</a>
+				<ol>
 
-					<a href="<?= \yii\helpers\Url::to( [ '/category/index' ] ) ?>" class="list-group-item">Категории</a>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/users-host/index' ] ) ?>">Старые пользователи</a></li>
 
-					<a href="<?= \yii\helpers\Url::to( [ '/subcategory/index' ] ) ?>" class="list-group-item">Подкатегории</a>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/category/index' ] ) ?>">Категории</a></li>
 
-					<a href="<?= \yii\helpers\Url::to( [ '/country/index' ] ) ?>" class="list-group-item">Города</a>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/subcategory/index' ] ) ?>">Подкатегории</a></li>
 
-					<a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>" class="list-group-item">Rbac</a>
-				</div>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/country/index' ] ) ?>">Города</a></li>
+
+					<li><a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>">Rbac</a></li>
+				</ol>
 
 			</div>
+
 		</div>
 
 	</div>
