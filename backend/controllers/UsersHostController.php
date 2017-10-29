@@ -15,6 +15,8 @@ use backend\models\UserTmp;
  */
 class UsersHostController extends Controller
 {
+    public $layout = 'dashboard';
+
     /**
      * @inheritdoc
      */

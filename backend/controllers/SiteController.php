@@ -12,6 +12,8 @@ use common\models\LoginForm;
  */
 class SiteController extends Controller
 {
+    public $layout = 'dashboard';
+
     /**
      * @inheritdoc
      */
