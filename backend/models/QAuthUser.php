@@ -38,6 +38,14 @@ use Yii;
 class QAuthUser extends \common\models\User
 {
     /**
+     * @return mixed
+     */
+    public static function getDb()
+    {
+        return \Yii::$app->db_qpl;
+    }
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
