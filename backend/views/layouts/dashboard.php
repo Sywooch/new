@@ -1,4 +1,10 @@
 <?php
+/**
+ * File: dashboard.php
+ * Email: becksonq@gmail.com
+ * Date: 29.10.2017
+ * Time: 19:24
+ */
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -16,11 +22,11 @@ AppAsset::register( $this );
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-	<meta charset="<?= Yii::$app->charset ?>">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-	<title><?= Html::encode( Yii::$app->name ) ?></title>
+    <title><?= Html::encode( Yii::$app->name ) ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -58,23 +64,20 @@ AppAsset::register( $this );
     NavBar::end();
     ?>
 
-	<div class="container">
-        <?= Breadcrumbs::widget( [
-            'homeLink' => [ 'label' => 'Главная', 'url' => '/admin/site/index' ],
-            'links'    => isset( $this->params['breadcrumbs'] ) ? $this->params['breadcrumbs'] : [],
-        ] ) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-	</div>
-</div>
+    <div class="container-fluid">
+        <?= $this->render( '_sidebar' ); ?>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <? /*= Yii::$app->name */ ?> <? /*= date('Y') */ ?></p>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <?= Breadcrumbs::widget( [
+                'homeLink' => [ 'label' => 'Главная', 'url' => '/site/index' ],
+                'links'    => isset( $this->params['breadcrumbs'] ) ? $this->params['breadcrumbs'] : [],
+            ] ) ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
 
-        <p class="pull-right"><? /*= Yii::powered() */ ?></p>
     </div>
-</footer>
+</div>
 
 <?php $this->endBody() ?>
 </body>
