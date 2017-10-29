@@ -137,3 +137,7 @@ a.desc:after {
     color: #ffffff;
     background-color: #125b75;
 }
+
+.navbar-inverse .btn-link {
+    color: #F2F2F2;
+}
