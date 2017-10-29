@@ -58,14 +58,14 @@ return [
             // Автоматическая генерация пароля
             'enableGeneratingPassword' => true,
             'enableFlashMessages'      => false,
-            /*
+
              // Admin-layout
              'controllerMap' => [
                 'admin' => [
                     'class'  => 'dektrium\user\controllers\AdminController',
-                    'layout' => '//admin-layout',
+                    'layout' => '/admin-layout',
                 ],
-            ],*/
+            ],
             // Отправка писем
             'mailer'                   => [
                 'sender'                => [ 'no-reply@myhost.com' => 'Administrator' ],
