@@ -42,7 +42,7 @@ class QAuthUser extends \common\models\User
      */
     public static function getDb()
     {
-        return \Yii::$app->db_qpl;
+        return \Yii::$app->db_host;
     }
 
     /**
