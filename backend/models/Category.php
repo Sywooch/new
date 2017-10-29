@@ -11,6 +11,9 @@ use Yii;
  * @property integer $old_id
  * @property string $category_name
  * @property integer $menu_order
+ *
+ * @property Subcategory[] $subcategories
+ * @property Subcategory[] $subcategories0
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -48,5 +51,21 @@ class Category extends \yii\db\ActiveRecord
             'category_name' => 'Category Name',
             'menu_order' => 'Menu Order',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubcategories()
+    {
+        return $this->hasMany(Subcategory::className(), ['cat_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubcategories0()
+    {
+        return $this->hasMany(Subcategory::className(), ['old_cat_id' => 'old_id']);
     }
 }
