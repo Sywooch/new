@@ -44,14 +44,38 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/user/registration/register']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/user/security/login']];
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/user/security/logout'], 'post')
+
+        $menuItems[] =
+
+						/*'<li>'*/
+
+
+
+
+            '<li class="dropdown">
+						
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . Yii::$app->user->identity->username . ' <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="'. \yii\helpers\Url::to('/user/settings/profile') .'">Профиль</a></li>
+            <li role="separator" class="divider"></li>
+            <li>'
+
+          . Html::beginForm(['/user/security/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Logout',
+//                'Logout (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
-            . '</li>';
+
+            .'</li>
+          </ul>
+        </li>';
+								
+								
+								
+            /*. '</li>'*/;
+        
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

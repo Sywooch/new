@@ -4,6 +4,11 @@ return [
     'name' => 'Vezugruz29.ru',
     'language' => 'ru-RU',
     'sourceLanguage' => 'ru-RU',
+    /*'container' => [
+        'yii\data\Pagination' => [
+            'pageSize' => 50,
+        ],
+    ],*/
     'components' => [
         'cache'                => [
             'class' => 'yii\caching\FileCache',
@@ -52,9 +57,9 @@ return [
             // configure in needed configs
             'adminPermission' => 'role, permission',
             'admins'                   => [ 'beckson' ],
-            'modelMap'        => [
+            /*'modelMap'        => [
                 'RegistrationForm' => 'common\models\RegistrationForm',
-            ],
+            ],*/
             // Автоматическая генерация пароля
             'enableGeneratingPassword' => true,
             'enableFlashMessages'      => false,
