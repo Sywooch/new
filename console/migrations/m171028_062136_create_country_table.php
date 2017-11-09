@@ -12,11 +12,13 @@ class m171028_062136_create_country_table extends Migration
      */
     public function up()
     {
-        $this->createTable('country', [
+        $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+
+        $this->createTable('{{%country}}', [
             'id' => $this->primaryKey(),
             'old_id' => $this->integer(3)->notNull(),
             'country_name' => $this->string(50)->notNull(),
-        ]);
+        ], $tableOptions);
     }
 
     /**
@@ -24,6 +26,6 @@ class m171028_062136_create_country_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('country');
+        $this->dropTable('{{%country}}');
     }
 }

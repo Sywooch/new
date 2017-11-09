@@ -12,12 +12,14 @@ class m171028_153846_create_category_table extends Migration
      */
     public function up()
     {
-        $this->createTable('category', [
+        $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
+
+        $this->createTable('{{%category}}', [
             'id' => $this->primaryKey(),
             'old_id' => $this->integer(2)->notNull()->unique(),
             'category_name' => $this->string(50)->notNull()->unique(),
             'menu_order' => $this->integer(2)->notNull()->unique(),
-        ]);
+        ], $tableOptions);
     }
 
     /**
@@ -25,6 +27,6 @@ class m171028_153846_create_category_table extends Migration
      */
     public function down()
     {
-        $this->dropTable('category');
+        $this->dropTable('{{%category}}');
     }
 }

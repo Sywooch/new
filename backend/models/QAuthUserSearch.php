@@ -9,9 +9,9 @@ use backend\models\QAuthUser;
 use yii\data\ArrayDataProvider;
 
 /**
- * QAuthUserSearc represents the model behind the search form about `backend\models\QAuthUser`.
+ * QAuthUserSearch represents the model behind the search form about `backend\models\QAuthUser`.
  */
-class QAuthUserSearc extends QAuthUser
+class QAuthUserSearch extends QAuthUser
 {
     /**
      * @inheritdoc

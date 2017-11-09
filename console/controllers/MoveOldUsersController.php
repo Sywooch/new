@@ -9,7 +9,7 @@
 namespace console\controllers;
 
 use yii;
-use backend\models\QAuthUserSearc;
+use backend\models\QAuthUserSearch;
 
 class MoveOldUsersController extends yii\console\Controller
 {
@@ -19,7 +19,7 @@ class MoveOldUsersController extends yii\console\Controller
      */
     public function actionMove()
     {
-        $searchModel = new QAuthUserSearc();
+        $searchModel = new QAuthUserSearch();
         $details = $searchModel->searchDetails();
 
         $old_users = $details->getModels();

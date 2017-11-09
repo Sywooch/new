@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\QAuthUser;
-use backend\models\QAuthUserSearc;
+use backend\models\QAuthUserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,7 +37,7 @@ class UsersHostController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new QAuthUserSearc();
+        $searchModel = new QAuthUserSearch();
         $dataProvider = $searchModel->search( Yii::$app->request->queryParams );
 
         return $this->render( 'index', [
