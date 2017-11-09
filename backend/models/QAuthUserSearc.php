@@ -101,7 +101,7 @@ class QAuthUserSearc extends QAuthUser
      *
      * @return ActiveDataProvider
      */
-    public function searchAll()
+    public function searchDetails()
     {
         $query = QAuthUser::find()->select( [ 'QAuthUserID', 'QAuthUserFullName', 'QAuthUserEmail' ] );
 
