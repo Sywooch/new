@@ -8,7 +8,6 @@ use backend\models\QAuthUserSearc;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use backend\models\UserTmp;
 
 /**
  * UsersHostController implements the CRUD actions for QAuthUser model.
@@ -125,47 +124,6 @@ class UsersHostController extends Controller
         }
         else {
             throw new NotFoundHttpException( 'The requested page does not exist.' );
-        }
-    }
-
-    /**
-     * Функция для переноса старых пользователей из таблицы QAuthUser
-     * в новую таблицу User
-     */
-    public function actionMoveOldUsers()
-    {
-        $searchModel = new QAuthUserSearc();
-        $provider = $searchModel->searchAll();
-
-        $old_users = $provider->getModels();
-
-        foreach ( $old_users as $key => $val ) {
-
-            $user = new \dektrium\user\models\User();
-
-            $user->username =  $val['QAuthUserEmail'];
-            $user->email = $val['QAuthUserEmail'];
-            $user->password_hash = '$2y$10$EvE76ImLLtNj5e1YlayN4.zR9JyJyaQdqYXtVU3K6RV4ciNJpj.72';
-            $user->auth_key = 'ArYVZMYHd1PgJjkZo2nVtAFGLl5nk6W3';
-            $user->confirmed_at = time();
-            $user->registration_ip = '127.0.0.1';
-            $user->created_at = time();
-            $user->updated_at = time();
-            $user->flags = 0;
-            $user->last_login_at = null;
-
-            if ( !$user->save() ) {
-                echo '<pre>';
-                print_r( $user->errors );
-                echo '</pre>';
-            }
-
-            $id = $user->id;
-
-            $name = $val['QAuthUserFullName'];
-
-            Yii::$app->db->createCommand()->update('profile', ['name' => $name ], ['user_id' => $id])->execute();
-
         }
     }
 }
