@@ -12,6 +12,7 @@ use Yii;
  * @property string $category_name
  * @property integer $menu_order
  *
+ * @property Adverts $id0
  * @property Subcategory[] $subcategories
  * @property Subcategory[] $subcategories0
  */
@@ -37,6 +38,7 @@ class Category extends \yii\db\ActiveRecord
             [['old_id'], 'unique'],
             [['category_name'], 'unique'],
             [['menu_order'], 'unique'],
+            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Adverts::className(), 'targetAttribute' => ['id' => 'cat_id']],
         ];
     }
 
@@ -51,6 +53,14 @@ class Category extends \yii\db\ActiveRecord
             'category_name' => 'Category Name',
             'menu_order' => 'Menu Order',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getId0()
+    {
+        return $this->hasOne(Adverts::className(), ['cat_id' => 'id']);
     }
 
     /**

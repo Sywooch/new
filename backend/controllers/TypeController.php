@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Adverts;
-use backend\models\AdvertsSearch;
+use backend\models\Type;
+use backend\models\TypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * AdvertsController implements the CRUD actions for Adverts model.
+ * TypeController implements the CRUD actions for Type model.
  */
-class AdvertsController extends Controller
+class TypeController extends Controller
 {
     public $layout = 'dashboard';
 
@@ -32,12 +32,12 @@ class AdvertsController extends Controller
     }
 
     /**
-     * Lists all Adverts models.
+     * Lists all Type models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new AdvertsSearch();
+        $searchModel = new TypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +47,7 @@ class AdvertsController extends Controller
     }
 
     /**
-     * Displays a single Adverts model.
+     * Displays a single Type model.
      * @param integer $id
      * @return mixed
      */
@@ -59,13 +59,13 @@ class AdvertsController extends Controller
     }
 
     /**
-     * Creates a new Adverts model.
+     * Creates a new Type model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Adverts();
+        $model = new Type();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -77,7 +77,7 @@ class AdvertsController extends Controller
     }
 
     /**
-     * Updates an existing Adverts model.
+     * Updates an existing Type model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class AdvertsController extends Controller
     }
 
     /**
-     * Deletes an existing Adverts model.
+     * Deletes an existing Type model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -109,15 +109,15 @@ class AdvertsController extends Controller
     }
 
     /**
-     * Finds the Adverts model based on its primary key value.
+     * Finds the Type model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Adverts the loaded model
+     * @return Type the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Adverts::findOne($id)) !== null) {
+        if (($model = Type::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

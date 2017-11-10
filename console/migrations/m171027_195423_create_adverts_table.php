@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `adverts`.
  */
-class m171109_195425_create_adverts_table extends Migration
+class m171027_195423_create_adverts_table extends Migration
 {
     /**
      * @inheritdoc
@@ -35,10 +35,10 @@ class m171109_195425_create_adverts_table extends Migration
             'updated_at' => $this->integer()->unsigned()->notNull(),
         ] , $tableOptions);
 
-        $this->addForeignKey( 'fk-type', '{{%adverts}}', 'type', '{{%type}}', 'id' );
-        $this->addForeignKey( 'fk-category_id', '{{%adverts}}', 'cat_id', '{{%category}}', 'id' );
-        $this->addForeignKey( 'fk-subcat_id', '{{%adverts}}', 'subcat_id', '{{%subcategory}}', 'id' );
-        $this->addForeignKey( 'fk-city_id', '{{%adverts}}', 'city', '{{%country}}', 'id' );
+        /*$this->createIndex('{{%adverts-type}}', '{{%adverts}}', 'type');
+        $this->createIndex('{{%adverts-cat_id}}', '{{%adverts}}', 'cat_id');
+        $this->createIndex('{{%adverts-subcut_id}}', '{{%adverts}}', 'subcat_id');
+        $this->createIndex('{{%adverts-city}}', '{{%adverts}}', 'city');*/
     }
 
     /**

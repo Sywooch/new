@@ -20,6 +20,8 @@ class m171028_153846_create_category_table extends Migration
             'category_name' => $this->string(50)->notNull()->unique(),
             'menu_order' => $this->integer(2)->notNull()->unique(),
         ], $tableOptions);
+
+//        $this->addForeignKey( 'fk-category_id', '{{%category}}', 'id', '{{%adverts}}', 'cat_id' );
     }
 
     /**

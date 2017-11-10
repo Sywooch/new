@@ -7,12 +7,12 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\AdvertsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Adverts';
+$this->title = 'Новые объявления';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="adverts-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>

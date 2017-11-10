@@ -19,6 +19,8 @@ class m171028_062136_create_country_table extends Migration
             'old_id' => $this->integer(3)->notNull(),
             'country_name' => $this->string(50)->notNull(),
         ], $tableOptions);
+
+//        $this->addForeignKey( 'fk-city_id', '{{%country}}', 'id', '{{%adverts}}', 'city' );
     }
 
     /**

@@ -11,6 +11,7 @@ namespace console\controllers;
 
 use backend\models\Advert;
 use backend\models\Adverts;
+use backend\models\Subcategory;
 use yii\console\Controller;
 use yii\data\ActiveDataProvider;
 
@@ -22,13 +23,13 @@ class CopyAdvertsController extends Controller
         $query = $advert->find()->asArray()->all();
 
         foreach ( $query as $value ) {
-//            print_r( $value['AdvertID'] . "\n" );
+
             $adverts = new Adverts();
 
             $adverts->old_id = $value['AdvertID'];
             $adverts->sid = $value['AdvertsID'];
-            $adverts->cat_id = $value['AdvertID']; //TODO:
-            $adverts->subcat_id = $value['AdvertID']; //TODO:
+            $adverts->cat_id = $this->convertCategory( $value['AdvertFolder'] );
+            $adverts->subcat_id = $this->convertSubcategory( $value['AdvertFolder'] );
             $adverts->type = $value['AdvertType'];
             $value['AdvertHeader'] !== '' ? $adverts->header = $value['AdvertHeader'] : $adverts->header = '---';
             $adverts->comment = $value['AdvertComment'];
@@ -43,55 +44,46 @@ class CopyAdvertsController extends Controller
             $adverts->created_at = $value['AdvertTime'];
             $adverts->updated_at = $value['AdvertTimeOriginated'];
 
-            if ( $adverts->validate() ) {
-                if ( !$adverts->save() ) {
-                    $this->stdout( "Can't save advert " . $value['AdvertID'] . PHP_EOL );
-                }
+            if ( !$adverts->save() ) {
+                $this->stdout( "Can't save advert " . $value['AdvertID'] . PHP_EOL );
+            } else {
+                $this->stdout( 'Process...' . PHP_EOL );
             }
         }
 
+        $this->stdout( 'Done!' . PHP_EOL );
         return 0;
     }
 
-    private function convertCategory(){
 
-    }
-
-    private function convertType( $arg )
+    private function convertCategory( $AdvertFolder )
     {
-        $type = '';
+        $cat_id = '';
+        $subcategory = new Subcategory();
+        $query = $subcategory->find()->asArray()->all();
 
-        switch ( $arg ) {
-            case 1:
-                $type = 'Продам';
-                break;
-            case 2:
-                $type = 'Сдам';
-                break;
-            case 3:
-                $type = 'Сниму';
-                break;
-            case 4:
-                $type = 'Предлагаю';
-                break;
-            case 5:
-                $type = 'Воспользуюсь';
-                break;
-            case 6:
-                $type = 'Ищу';
-                break;
-            case 7:
-                $type = 'Отдам';
-                break;
-            case 8:
-                $type = 'Приму в дар';
-                break;
-            case 9:
-                $type = 'Обменяю';
-                break;
+        foreach ( $query as $val ) {
+            // TODO: если категория -1, то это верхний уровень, записи не будет
+            // объявление пришло из губернии
+            if ( $val['old_id'] == $AdvertFolder ) {
+                $cat_id = $val['cat_id'];
+            }
         }
 
-        return $type;
+        return $cat_id;
     }
 
+    private function convertSubcategory( $AdvertFolder ){
+        $subcut_id = '';
+        $subcategory = new Subcategory();
+        $query = $subcategory->find()->asArray()->all();
+
+        foreach ( $query as $val ){
+            if( $val['old_id'] == $AdvertFolder ){
+                $subcut_id = $val['id'];
+            }
+        }
+
+        return $subcut_id;
+    }
 }

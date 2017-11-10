@@ -15,6 +15,7 @@ use Yii;
  * @property integer $menu_order
  *
  * @property Category $cat
+ * @property Adverts $id0
  * @property Category $oldCat
  */
 class Subcategory extends \yii\db\ActiveRecord
@@ -38,6 +39,7 @@ class Subcategory extends \yii\db\ActiveRecord
             [['subcat_name'], 'string', 'max' => 50],
             [['old_id'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
+            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Adverts::className(), 'targetAttribute' => ['id' => 'subcat_id']],
             [['old_cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['old_cat_id' => 'old_id']],
         ];
     }
@@ -63,6 +65,14 @@ class Subcategory extends \yii\db\ActiveRecord
     public function getCat()
     {
         return $this->hasOne(Category::className(), ['id' => 'cat_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getId0()
+    {
+        return $this->hasOne(Adverts::className(), ['subcat_id' => 'id']);
     }
 
     /**

@@ -63,6 +63,49 @@ class Helpers
         $s = preg_replace( "/[^0-9a-z-_ ]/i", "", $s ); // очищаем строку от недопустимых символов
         $s = str_replace( " ", "-", $s ); // заменяем пробелы знаком минус
 
-        return $s; // возвращаем результат
+        return $s;
+    }
+
+    /**
+     * Функция для перевода типа объявления
+     *
+     * @param $arg
+     * @return string
+     */
+    private function convertType( $arg )
+    {
+        $type = '';
+
+        switch ( $arg ) {
+            case 1:
+                $type = 'Продам';
+                break;
+            case 2:
+                $type = 'Сдам';
+                break;
+            case 3:
+                $type = 'Сниму';
+                break;
+            case 4:
+                $type = 'Предлагаю';
+                break;
+            case 5:
+                $type = 'Воспользуюсь';
+                break;
+            case 6:
+                $type = 'Ищу';
+                break;
+            case 7:
+                $type = 'Отдам';
+                break;
+            case 8:
+                $type = 'Приму в дар';
+                break;
+            case 9:
+                $type = 'Обменяю';
+                break;
+        }
+
+        return $type;
     }
 }

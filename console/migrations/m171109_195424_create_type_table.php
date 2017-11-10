@@ -20,6 +20,8 @@ class m171109_195424_create_type_table extends Migration
             'name'     => $this->string( 15 )->notNull()->unique(),
             'sort'     => $this->integer()->notNull()->unique(),
         ], $tableOptions );
+
+//        $this->addForeignKey( 'fk-type', '{{%type}}', 'id', '{{%adverts}}', 'type' );
     }
 
     /**

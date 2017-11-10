@@ -25,6 +25,11 @@ use Yii;
  * @property integer $ip
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property Category $category
+ * @property Country $country
+ * @property Subcategory $subcategory
+ * @property Type $type0
  */
 class Adverts extends \yii\db\ActiveRecord
 {
@@ -47,6 +52,8 @@ class Adverts extends \yii\db\ActiveRecord
             [['comment'], 'string'],
             [['sid'], 'string', 'max' => 32],
             [['header'], 'string', 'max' => 255],
+            [['old_id'], 'unique'],
+            [['sid'], 'unique'],
         ];
     }
 
@@ -75,5 +82,37 @@ class Adverts extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCountry()
+    {
+        return $this->hasOne(Country::className(), ['id' => 'city']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubcategory()
+    {
+        return $this->hasOne(Subcategory::className(), ['id' => 'subcat_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getType0()
+    {
+        return $this->hasOne(Type::className(), ['id' => 'type']);
     }
 }
