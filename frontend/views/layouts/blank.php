@@ -63,21 +63,12 @@ AppAsset::register( $this );
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-9 col-xs-12">
+			<div class="col-sm-12 col-xs-12">
           <?= Breadcrumbs::widget( [
               'links' => isset( $this->params['breadcrumbs'] ) ? $this->params['breadcrumbs'] : [],
           ] ) ?>
           <?= Alert::widget() ?>
           <?= $content ?>
-			</div>
-
-			<div class="col-sm-3">
-				<!--<button id="add-ads-main-red" class="btn btn-lg btn-danger btn-block"><i class="fa fa-pencil-square-o"></i>
-					Подать объявление
-				</button>-->
-
-          <?= Html::a('<i class="fa fa-pencil-square-o"></i>Подать объявление', ['/advert/create'], ['id' => 'add-ads-main-red', 'class'=>'btn btn-lg btn-danger btn-block', 'type' => 'button']) ?>
-
 			</div>
 		</div>
 	</div>

@@ -137,3 +137,10 @@ a.desc:after {
     color: #ffffff;
     background-color: #125b75;
 }
+
+#add-ads-main-red {
+    border-bottom-width: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    font-size: 14px;
+}

@@ -10,8 +10,6 @@ use Yii;
  * @property integer $id
  * @property integer $old_id
  * @property string $country_name
- *
- * @property Adverts $id0
  */
 class Country extends \yii\db\ActiveRecord
 {
@@ -32,7 +30,6 @@ class Country extends \yii\db\ActiveRecord
             [['old_id', 'country_name'], 'required'],
             [['old_id'], 'integer'],
             [['country_name'], 'string', 'max' => 50],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => Adverts::className(), 'targetAttribute' => ['id' => 'city']],
         ];
     }
 
@@ -46,13 +43,5 @@ class Country extends \yii\db\ActiveRecord
             'old_id' => 'Old ID',
             'country_name' => 'Country Name',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getId0()
-    {
-        return $this->hasOne(Adverts::className(), ['city' => 'id']);
     }
 }

@@ -32,7 +32,7 @@ class CopyAdvertsController extends Controller
             $adverts->subcat_id = $this->convertSubcategory( $value['AdvertFolder'] );
             $adverts->type = $value['AdvertType'];
             $value['AdvertHeader'] !== '' ? $adverts->header = $value['AdvertHeader'] : $adverts->header = '---';
-            $adverts->comment = $value['AdvertComment'];
+            $adverts->description = $value['AdvertComment'];
             $adverts->city = $value['AdvertCity'];
             $adverts->price = $value['AdvertPrice'];
             $adverts->period = $value['AdvertPeriod'];

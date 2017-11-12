@@ -14,7 +14,7 @@ use Yii;
  * @property integer $subcat_id
  * @property integer $type
  * @property string $header
- * @property string $comment
+ * @property string $description
  * @property integer $city
  * @property integer $price
  * @property integer $period
@@ -25,11 +25,6 @@ use Yii;
  * @property integer $ip
  * @property integer $created_at
  * @property integer $updated_at
- *
- * @property Category $category
- * @property Country $country
- * @property Subcategory $subcategory
- * @property Type $type0
  */
 class Adverts extends \yii\db\ActiveRecord
 {
@@ -49,7 +44,7 @@ class Adverts extends \yii\db\ActiveRecord
         return [
             [['old_id', 'sid', 'cat_id', 'subcat_id', 'type', 'header', 'city', 'ip', 'created_at', 'updated_at'], 'required'],
             [['old_id', 'cat_id', 'subcat_id', 'type', 'city', 'price', 'period', 'active', 'selected', 'special', 'images', 'ip', 'created_at', 'updated_at'], 'integer'],
-            [['comment'], 'string'],
+            [['description'], 'string'],
             [['sid'], 'string', 'max' => 32],
             [['header'], 'string', 'max' => 255],
             [['old_id'], 'unique'],
@@ -70,7 +65,7 @@ class Adverts extends \yii\db\ActiveRecord
             'subcat_id' => 'Subcat ID',
             'type' => 'Type',
             'header' => 'Header',
-            'comment' => 'Comment',
+            'description' => 'Description',
             'city' => 'City',
             'price' => 'Price',
             'period' => 'Period',
@@ -82,37 +77,5 @@ class Adverts extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCategory()
-    {
-        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCountry()
-    {
-        return $this->hasOne(Country::className(), ['id' => 'city']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSubcategory()
-    {
-        return $this->hasOne(Subcategory::className(), ['id' => 'subcat_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getType0()
-    {
-        return $this->hasOne(Type::className(), ['id' => 'type']);
     }
 }

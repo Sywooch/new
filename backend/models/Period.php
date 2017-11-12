@@ -5,21 +5,21 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "type".
+ * This is the model class for table "period".
  *
  * @property integer $id
- * @property integer $old_type
- * @property string $name
+ * @property integer $period
  * @property integer $sort
+ * @property string $description
  */
-class Type extends \yii\db\ActiveRecord
+class Period extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'type';
+        return 'period';
     }
 
     /**
@@ -28,12 +28,10 @@ class Type extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['old_type', 'sort'], 'integer'],
-            [['name', 'sort'], 'required'],
-            [['name'], 'string', 'max' => 15],
-            [['name'], 'unique'],
+            [['period', 'sort'], 'integer'],
+            [['description'], 'string', 'max' => 25],
+            [['period'], 'unique'],
             [['sort'], 'unique'],
-            [['old_type'], 'unique'],
         ];
     }
 
@@ -44,9 +42,9 @@ class Type extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'old_type' => 'Old Type',
-            'name' => 'Name',
+            'period' => 'Period',
             'sort' => 'Sort',
+            'description' => 'Description',
         ];
     }
 }

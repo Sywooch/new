@@ -19,7 +19,7 @@ class AdvertsSearch extends Adverts
     {
         return [
             [['id', 'old_id', 'cat_id', 'subcat_id', 'type', 'city', 'price', 'period', 'active', 'selected', 'special', 'images', 'ip', 'created_at', 'updated_at'], 'integer'],
-            [['sid', 'header', 'comment'], 'safe'],
+            [['sid', 'header', 'description'], 'safe'],
         ];
     }
 
@@ -81,7 +81,7 @@ class AdvertsSearch extends Adverts
 
         $query->andFilterWhere(['like', 'sid', $this->sid])
             ->andFilterWhere(['like', 'header', $this->header])
-            ->andFilterWhere(['like', 'comment', $this->comment]);
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

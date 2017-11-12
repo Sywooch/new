@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute'=>'Comment',
                 'contentOptions' =>['style'=>'white-space: normal;'],
-                'value'=>'comment',
+                'value'=>'description',
             ],
             // 'city',
              'price',

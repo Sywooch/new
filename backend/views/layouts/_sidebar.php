@@ -29,6 +29,8 @@
 
 		<li><a href="<?= \yii\helpers\Url::to( [ '/type/index' ] ) ?>">Тип объявления</a></li>
 
+		<li><a href="<?= \yii\helpers\Url::to( [ '/period/index' ] ) ?>">Период</a></li>
+
 		<li><a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>">Rbac</a></li>
 	</ul>
 

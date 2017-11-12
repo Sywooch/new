@@ -22,7 +22,7 @@ class m171027_195423_create_adverts_table extends Migration
             'subcat_id' => $this->integer(3)->notNull(),
             'type' => $this->integer(2)->notNull(),
             'header' => $this->string(255)->notNull(),
-            'comment' => $this->text(),
+            'description' => $this->text(),
             'city' => $this->integer(3)->notNull(),
             'price' => $this->integer(11),
             'period' => $this->integer(11),
