@@ -8,6 +8,7 @@
 
 namespace board\forms;
 
+use backend\models\Country;
 use yii\helpers\ArrayHelper;
 use backend\models\Category;
 use backend\models\Subcategory;
@@ -22,11 +23,12 @@ class AdvertCreateForm extends CompositeForm
     public $type;
     public $header;
     public $description;
-    public $price;
+    public $city;
 
     public function __construct( $config = [] )
     {
         $this->price = new PriceForm();
+        $this->contactInfo = new ContactInfoForm();
         $this->images = new ImageForm();
         parent::__construct( $config );
     }
@@ -34,9 +36,9 @@ class AdvertCreateForm extends CompositeForm
     public function rules()
     {
         return [
-            [ [ 'cat_id', 'subcat_id', 'period', 'type', 'header', 'description' ], 'required' ],
-            [ [ 'cat_id', 'subcat_id' ], 'string', 'max' => 50 ],
-            [ ['description'], 'string', 'max' => 255 ],
+            [ [ 'cat_id', 'subcat_id', 'period', 'type', 'header', 'description', 'city', ], 'required' ],
+            [ [ 'cat_id', 'subcat_id' ], 'integer' ],
+            [ [ 'description' ], 'string', 'max' => 255 ],
         ];
     }
 
@@ -75,12 +77,13 @@ class AdvertCreateForm extends CompositeForm
         return ArrayHelper::map( Period::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
     }
 
-    public function negotiableCheck(){
-
+    public function cityList()
+    {
+        return ArrayHelper::map( Country::find()->orderBy('sort')->asArray()->all(), 'id', 'country_name' );
     }
 
     protected function internalForms()
     {
-        return [ 'images' ];
+        return [ 'price', 'contactInfo', 'images' ];
     }
 }

@@ -34,8 +34,11 @@ class PriceForm extends Model
     {
         return [
             'price' => 'Цена',
-            'negotiable' => 'Договорная',
         ];
+    }
+
+    public function negotiableCheck(){
+
     }
 
 }

@@ -7,6 +7,10 @@
  */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use frontend\assets\FontAwesomeAsset;
+use yii\helpers\Url;
+
+FontAwesomeAsset::register( $this );
 
 /* @var $model board\forms\AdvertCreateForm */
 ?>
@@ -33,7 +37,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field( $model->price, 'price' )->textInput( [ 'maxlength' => true ] ) ?>
 
-    <?= $form->field( $model->price, 'negotiable' )->checkboxList( ['Меркурий', 'Венера',] ) ?>
+    <?= $form->field( $model->price, 'negotiable' )->checkboxList( [ 'Торг уместен' ] )->label( false ) ?>
+
+    <?= $form->field( $model, 'city' )->dropDownList( $model->cityList(), [ 'prompt' => 'Выберите' ] ) ?>
+
+	<hr>
+	<h4>Контактная информация<a id="sec-lk-enter" href="<?= Url::to('/user/security/login') ?>" title="Войти под своим именем" data-toggle="modal"
+															data-target="#login-form"><i class="fa fa-user"></i>Я зарегистрирован</a></h4>
+
+
+    <?= $form->field( $model->contactInfo, 'username' )->textInput( [ 'placeholder' => "Иванов Иван" ] ) ?>
+
+    <?= $form->field( $model->contactInfo, 'useremail' )->textInput( [ 'placeholder' => "someone@mail.ru" ] ) ?>
+
+    <?= $form->field( $model->contactInfo, 'userphone' )->textInput( [ 'placeholder' => "8 888 8888888" ] ) ?>
 
 
 	<div class="form-group">

@@ -18,11 +18,11 @@ class AdvertController extends \yii\web\Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'login', 'error' ],
+                        'actions' => [ 'login', 'error', 'create' ],
                         'allow'   => true,
                     ],
                     [
-                        'actions' => [ 'logout', 'index', 'create' ],
+                        'actions' => [ 'logout', 'index' ],
                         'allow'   => true,
                         'roles'   => [ '@' ],
                     ],

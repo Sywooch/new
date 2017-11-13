@@ -144,3 +144,12 @@ a.desc:after {
     text-transform: uppercase;
     font-size: 14px;
 }
+
+#sec-lk-enter {
+    float:right;
+    font-size: smaller;
+}
+
+.fa {
+    margin-right: 7px;
+}
