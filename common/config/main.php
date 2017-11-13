@@ -50,10 +50,10 @@ return [
             // you will configure your module inside this file
             // or if need different configuration for frontend and backend you may
             // configure in needed configs
-            'adminPermission' => 'role, permission',
+//            'adminPermission' => 'role, permission',
             'admins'                   => [ 'beckson' ],
             'modelMap'        => [
-                'RegistrationForm' => 'common\models\RegistrationForm',
+//                'RegistrationForm' => 'common\models\RegistrationForm',
             ],
             // Автоматическая генерация пароля
             'enableGeneratingPassword' => true,
