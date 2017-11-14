@@ -48,8 +48,26 @@ FontAwesomeAsset::register( $this );
         'options' => [
             'accept'   => 'image/*',
             'multiple' => true,
+						'uploadUrl' => 'img',
         ]
     ] ) ?>
+
+	<div class="file-loading">
+		<input id="input-700" name="kartik-input-700[]" type="file" multiple>
+	</div>
+    <?php
+    $this->registerJs( <<< EOT_JS
+    alert('ee');
+$(document).on("ready", function() {
+		
+    $("#input-700").fileinput({
+        uploadUrl: "/file-upload-single/1",
+        maxFileCount: 5
+    });
+});
+EOT_JS
+    );
+    ?>
 	<hr>
 	<h4>Контактная информация<a id="sec-lk-enter" href="<?= Url::to( '/user/login' ) ?>" title="Войти под своим именем"><i
 					class="fa fa-user"></i>Я зарегистрирован</a></h4>
