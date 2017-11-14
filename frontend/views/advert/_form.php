@@ -42,6 +42,14 @@ FontAwesomeAsset::register( $this );
     <?= $form->field( $model, 'city' )->dropDownList( $model->cityList(), [ 'prompt' => 'Выберите' ] ) ?>
 
 	<hr>
+	<h4>Добавить фотографии</h4>
+    <?= $form->field( $model->images, 'files[]' )->widget( FileInput::class, [
+        'options' => [
+            'accept'   => 'image/*',
+            'multiple' => true,
+        ]
+    ] ) ?>
+	<hr>
 	<h4>Контактная информация<a id="sec-lk-enter" href="<?= Url::to( '/user/login' ) ?>" title="Войти под своим именем"><i
 					class="fa fa-user"></i>Я зарегистрирован</a></h4>
 
