@@ -39,6 +39,8 @@ class m171027_195423_create_adverts_table extends Migration
         $this->createIndex('{{%adverts-cat_id}}', '{{%adverts}}', 'cat_id');
         $this->createIndex('{{%adverts-subcut_id}}', '{{%adverts}}', 'subcat_id');
         $this->createIndex('{{%adverts-city}}', '{{%adverts}}', 'city');*/
+
+//        $this->addForeignKey( 'fk-city', '{{%adverts}}', 'city', '{{%country}}', 'id' );
     }
 
     /**

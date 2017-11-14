@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
+use kartik\file\FileInput;
 
 FontAwesomeAsset::register( $this );
 
