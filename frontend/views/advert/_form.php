@@ -45,28 +45,50 @@ FontAwesomeAsset::register( $this );
 	<hr>
 	<h4>Добавить фотографии</h4>
     <?= $form->field( $model->images, 'files[]' )->widget( FileInput::class, [
-        'options' => [
+        'options'       => [
             'accept'   => 'image/*',
             'multiple' => true,
-						'uploadUrl' => 'img',
-        ]
+        ],
+        'pluginOptions' => [
+            'allowedFileExtensions' => [
+                'jpg',
+                'gif',
+                'png'
+            ],
+            'showUpload'            => false,
+        ],
+
     ] ) ?>
 
-	<div class="file-loading">
-		<input id="input-700" name="kartik-input-700[]" type="file" multiple>
-	</div>
+	<!--	<div class="file-loading">-->
+	<!--      --><? //= $form->field( $model->images, 'files[]' )->widget( FileInput::class, [
+    //          'options'       => [
+    //              'accept' => 'image/*',
+    ////                          'multiple' => true,
+    //              						'uploadUrl' => Url::to(['/uploads']),
+    ////              						'uploadUrl' => '/uploads',
+    //          ],
+    //          'pluginOptions' => [
+    //          		'allowedFileExtensions' => [
+    //          				'jpg', 'gif', 'png'
+    //							],
+    //							'showUpload' => false,
+    //							],
+    //					]
+    //			) ?>
+
+
+	<!--		<input id="input-700" name="kartik-input-700[]" type="file" multiple>-->
+
+	<!--	</div>-->
     <?php
-    $this->registerJs( <<< EOT_JS
-    alert('ee');
-$(document).on("ready", function() {
-		
-    $("#input-700").fileinput({
-        uploadUrl: "/file-upload-single/1",
-        maxFileCount: 5
-    });
-});
-EOT_JS
-    );
+    $script = <<< JS
+				// $("#input-700").fileinput({
+				// 		uploadUrl: '/uploads',
+				// 		maxFileCount: 6
+				// });
+JS;
+    //$this->registerJs( $script, yii\web\View::POS_READY );
     ?>
 	<hr>
 	<h4>Контактная информация<a id="sec-lk-enter" href="<?= Url::to( '/user/login' ) ?>" title="Войти под своим именем"><i
@@ -79,7 +101,7 @@ EOT_JS
     <?= $form->field( $model->contactInfo, 'userphone' )->textInput( [ 'placeholder' => "8 888 8888888", ] ) ?>
 
 	<div class="form-group">
-      <?= Html::submitButton( 'Create', [ 'class' => 'btn btn-success' ] ) ?>
+      <?= Html::submitButton( 'Сохранить и перейти >>', [ 'class' => 'btn btn-primary' ] ) ?>
 	</div>
 
     <?php ActiveForm::end(); ?>
