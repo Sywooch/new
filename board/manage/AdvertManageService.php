@@ -24,8 +24,6 @@ class AdvertManageService
     private $_special = null;
     private $_ip = 127001;
 
-    private $_negotiable = 1;
-
     /*public function __construct( AdvertsRepository $adverts, TransactionManager $transaction )
     {
         $this->adverts = $adverts;
@@ -34,6 +32,11 @@ class AdvertManageService
 
     public function create( AdvertCreateForm $form )
     {
+        echo '<pre>';
+        var_dump( $form );
+        echo '</pre>';
+        exit;
+
         $price = new Price();
 
         /* $advert = Advert::create(
@@ -53,16 +56,18 @@ class AdvertManageService
             $form->header,
             $form->description,
 //            $form->priceForm->price,
-            $price->negotiable = $form->negotiable,
+//            $price->negotiable = $form->negotiable,
             $form->city,
-            $form->username,
-            $form->useremail,
-            $form->userphone,
+//            $form->username,
+//            $form->useremail,
+//            $form->userphone,
             $this->_active,
             $this->_selected,
             $this->_special,
             $this->_ip
         );
+
+        $price->negotiable = $form->negotiable;
 
         foreach ( $form->images->files as $file ) {
             $advert->addPhoto( $file );

@@ -3,12 +3,12 @@
 namespace frontend\controllers;
 
 use yii;
+use board\forms\AdvertCreateForm;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use board\forms\AdvertCreateForm;
 use board\manage\AdvertManageService;
 
-class AdvertController extends \yii\web\Controller
+class AdvertController__old extends \yii\web\Controller
 {
     public $layout = 'blank';
 
@@ -55,6 +55,7 @@ class AdvertController extends \yii\web\Controller
     {
         $form = new AdvertCreateForm();
 
+        // TODO:
         if ( $form->load( Yii::$app->request->post() ) && $form->validate() ) {
             try{
                 $advert = $this->service->create( $form );
@@ -64,15 +65,6 @@ class AdvertController extends \yii\web\Controller
                 Yii::$app->session->setFlash( 'error', $e->getMessage() );
             }
         }
-
-        /*$model = new Advert();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }*/
 
         return $this->render( 'create', [
             'model' => $form,

@@ -10,8 +10,8 @@ use Yii;
  * @property integer $id
  * @property integer $price
  * @property integer $price_old
- * @property string $currency
- * @property integer $negotiable
+ * @property integer $currency
+ * @property string $negotiable
  */
 class Price extends \yii\db\ActiveRecord
 {
@@ -29,8 +29,8 @@ class Price extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'price_old', 'negotiable'], 'integer', 'min' => 0],
-            [['currency'], 'string', 'max' => 12],
+            [['price', 'price_old', 'currency'], 'integer'],
+            [['negotiable'], 'string', 'max' => 2],
         ];
     }
 
@@ -41,10 +41,10 @@ class Price extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'price' => 'Цена',
-            'price_old' => 'Старая цена',
+            'price' => 'Price',
+            'price_old' => 'Price Old',
             'currency' => 'Currency',
-            'negotiable' => 'Торг уместен',
+            'negotiable' => 'Negotiable',
         ];
     }
 }

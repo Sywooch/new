@@ -18,8 +18,8 @@ class m171115_191949_create_price_table extends Migration
             'id'         => $this->primaryKey(),
             'price'      => $this->integer(),
             'price_old'  => $this->integer(),
-            'currency'   => $this->string( 12 ),
-            'negotiable' => $this->boolean(),
+            'currency'   => $this->integer( 1 ),
+            'negotiable' => $this->string(2),
         ], $tableOptions );
     }
 
