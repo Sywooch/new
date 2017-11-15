@@ -30,4 +30,12 @@ class AdvertsRepository
         $this->dispatcher->dispatchAll( $advert->releaseEvents() );
         $this->dispatcher->dispatch( new EntityPersisted( $advert ) );
     }
+
+    public function get( $id )
+    {
+        if ( !$product = Advert::findOne( $id ) ) {
+            throw new \DomainException( 'Product is not found.' );
+        }
+        return $product;
+    }
 }

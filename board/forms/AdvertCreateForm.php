@@ -17,6 +17,7 @@ use backend\models\Type;
 use backend\models\Period;
 use board\services\UserInfo;
 use common\models\User;
+use frontend\models\Price;
 
 class AdvertCreateForm extends CompositeForm
 {
@@ -28,14 +29,26 @@ class AdvertCreateForm extends CompositeForm
     public $description;
     public $city;
 
-    public $negotiable;
+    /*public function __construct( $cat_id, $subcat_id, $period, $type, $header, $description, $city, $config = [] )
+    {
+        $this->cat_id = $cat_id;
+        $this->subcat_id = $subcat_id;
+        $this->period = $period;
+        $this->type = $type;
+        $this->header = $header;
+        $this->description = $description;
+        $this->city = $city;
+        $this->price = new PriceForm();
+        $this->images = new ImageForm();
+        $this->contactInfo = new ContactInfoForm();
+        parent::__construct( $config );
+    }*/
 
     public function __construct( $config = [] )
     {
-        $this->price = new PriceForm();
+        $this->priceForm = new Price();
+        $this->imagesForm = new ImageForm();
         $this->contactInfo = new ContactInfoForm();
-        $this->images = new ImageForm();
-        $this->username = $this->getUserName();
         parent::__construct( $config );
     }
 
@@ -121,6 +134,6 @@ class AdvertCreateForm extends CompositeForm
 
     protected function internalForms()
     {
-        return [ 'price', 'contactInfo', 'images' ];
+        return [ 'priceForm', 'contactInfo', 'imagesForm' ];
     }
 }

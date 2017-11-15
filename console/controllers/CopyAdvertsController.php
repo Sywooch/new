@@ -34,12 +34,12 @@ class CopyAdvertsController extends Controller
             $value['AdvertHeader'] !== '' ? $adverts->header = $value['AdvertHeader'] : $adverts->header = '---';
             $adverts->description = $value['AdvertComment'];
             $adverts->city = $value['AdvertCity'];
-            $adverts->price = $value['AdvertPrice'];
+//            $adverts->price = $value['AdvertPrice'];
             $adverts->period = $value['AdvertPeriod'];
             $adverts->active = $value['AdvertActive'];
-            $adverts->selected = $value['AdvertSelected'];
-            $adverts->special = $value['AdvertSpecial'];
-            $adverts->images = $value['AdvertImg']; // TODO:
+            $adverts->selected_old = $value['AdvertSelected'];
+            $adverts->special_old = $value['AdvertSpecial'];
+            $adverts->images_old = $value['AdvertImg']; // TODO:
             $value['AdvertIPAdress'] != null ? $adverts->ip = $value['AdvertIPAdress'] : $adverts->ip = 1414544319;
             $adverts->created_at = $value['AdvertTime'];
             $adverts->updated_at = $value['AdvertTimeOriginated'];

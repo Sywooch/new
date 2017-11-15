@@ -36,9 +36,9 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
-    <?= $form->field( $model->price, 'price' )->textInput( [ 'maxlength' => true ] ) ?>
+    <?= $form->field( $model->priceForm, 'price' )->textInput( [ 'maxlength' => true ] ) ?>
 
-    <?= $form->field( $model->price, 'negotiable' )->checkboxList( [ 'Торг уместен' ] )->label( false ) ?>
+    <?= $form->field( $model->priceForm, 'negotiable' )->checkboxList( [ 'Торг уместен' ] )->label( false ) ?>
 
     <?= $form->field( $model, 'city' )->dropDownList( $model->cityList(), [ 'prompt' => 'Выберите' ] ) ?>
 
@@ -94,7 +94,7 @@ JS;
 	<h4>Контактная информация<a id="sec-lk-enter" href="<?= Url::to( '/user/login' ) ?>" title="Войти под своим именем"><i
 					class="fa fa-user"></i>Я зарегистрирован</a></h4>
 
-    <?= $form->field( $model->username, 'username' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
+    <?= $form->field( $model->contactInfo, 'username' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 
     <?= $form->field( $model->contactInfo, 'useremail' )->textInput( [ 'placeholder' => $model->getUserEmail(), ] ) ?>
 

@@ -24,12 +24,12 @@ class m171027_195423_create_adverts_table extends Migration
             'header' => $this->string(255)->notNull(),
             'description' => $this->text(),
             'city' => $this->integer(3)->notNull(),
-            'price' => $this->integer(11),
+//            'price' => $this->integer(11),
             'period' => $this->integer(11),
             'active' => $this->boolean()->defaultValue(1),
-            'selected' => $this->boolean()->defaultValue(0),
-            'special' => $this->boolean()->defaultValue(0),
-            'images' => $this->boolean()->defaultValue(0),
+            'selected_old' => $this->boolean()->defaultValue(0),
+            'special_old' => $this->boolean()->defaultValue(0),
+            'images_old' => $this->boolean()->defaultValue(0),
             'ip' => $this->integer(11)->notNull(),
             'created_at' => $this->integer()->unsigned()->notNull(),
             'updated_at' => $this->integer()->unsigned()->notNull(),
@@ -40,7 +40,7 @@ class m171027_195423_create_adverts_table extends Migration
         $this->createIndex('{{%adverts-subcut_id}}', '{{%adverts}}', 'subcat_id');
         $this->createIndex('{{%adverts-city}}', '{{%adverts}}', 'city');*/
 
-//        $this->addForeignKey( 'fk-city', '{{%adverts}}', 'city', '{{%country}}', 'id' );
+        $this->addForeignKey( 'fk-city', '{{%adverts}}', 'city', '{{%country}}', 'id' );
     }
 
     /**

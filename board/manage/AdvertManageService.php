@@ -18,10 +18,12 @@ class AdvertManageService
     private $adverts;
     private $transaction;
 
-//    private $active = 1;
-//    private $selected = null;
-//    private $special = null;
-//    private $ip;
+    private $_active = 1;
+    private $_selected = null;
+    private $_special = null;
+    private $_ip = 127001;
+
+    private $_negotiable = 1;
 
     /*public function __construct( AdvertsRepository $adverts, TransactionManager $transaction )
     {
@@ -29,8 +31,17 @@ class AdvertManageService
         $this->transaction = $transaction;
     }*/
 
-    public function create(AdvertCreateForm $form)
+    public function create( AdvertCreateForm $form )
     {
+        /* $advert = Advert::create(
+             $form->cat_id,
+             $form->subcat_id,
+             $form->type,
+             $form->period,
+             $form->header,
+             $form->description,
+             $form->city
+         );*/
         $advert = Advert::create(
             $form->cat_id,
             $form->subcat_id,
@@ -38,16 +49,16 @@ class AdvertManageService
             $form->period,
             $form->header,
             $form->description,
-            $form->price,
-            $form->negotiable,
+            $form->priceForm->price,
+            $this->_negotiable,
             $form->city,
             $form->username,
             $form->useremail,
             $form->userphone,
-            $form->active,
-            $form->selected,
-            $form->special,
-            $form->ip
+            $this->_active,
+            $this->_selected,
+            $this->_special,
+            $this->_ip
         );
 
         foreach ( $form->images->files as $file ) {
