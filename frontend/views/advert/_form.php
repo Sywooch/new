@@ -44,7 +44,7 @@ FontAwesomeAsset::register( $this );
 
 	<hr>
 	<h4>Добавить фотографии</h4>
-    <?= $form->field( $model->images, 'files[]' )->widget( FileInput::class, [
+    <?= $form->field( $model->imagesForm, 'files[]' )->widget( FileInput::class, [
         'options'       => [
             'accept'   => 'image/*',
             'multiple' => true,
@@ -94,11 +94,11 @@ JS;
 	<h4>Контактная информация<a id="sec-lk-enter" href="<?= Url::to( '/user/login' ) ?>" title="Войти под своим именем"><i
 					class="fa fa-user"></i>Я зарегистрирован</a></h4>
 
-    <?= $form->field( $model->contactInfo, 'username' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
+    <?= $form->field( $model, 'username' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 
-    <?= $form->field( $model->contactInfo, 'useremail' )->textInput( [ 'placeholder' => $model->getUserEmail(), ] ) ?>
+    <?= $form->field( $model, 'useremail' )->textInput( [ 'placeholder' => 'someone@mail.ru', ] ) ?>
 
-    <?= $form->field( $model->contactInfo, 'userphone' )->textInput( [ 'placeholder' => $model->getUserPhone(), ] ) ?>
+    <?= $form->field( $model, 'userphone' )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', ] ) ?>
 
 	<div class="form-group">
       <?= Html::submitButton( 'Сохранить и перейти >>', [ 'class' => 'btn btn-primary' ] ) ?>

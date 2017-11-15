@@ -15,7 +15,6 @@ use backend\models\Category;
 use backend\models\Subcategory;
 use backend\models\Type;
 use backend\models\Period;
-use board\services\UserInfo;
 use common\models\User;
 use frontend\models\Price;
 
@@ -28,6 +27,9 @@ class AdvertCreateForm extends CompositeForm
     public $header;
     public $description;
     public $city;
+    public $username;
+    public $useremail;
+    public $userphone;
 
     /*public function __construct( $cat_id, $subcat_id, $period, $type, $header, $description, $city, $config = [] )
     {
@@ -48,7 +50,7 @@ class AdvertCreateForm extends CompositeForm
     {
         $this->priceForm = new Price();
         $this->imagesForm = new ImageForm();
-        $this->contactInfo = new ContactInfoForm();
+//        $this->contactInfo = new ContactInfoForm();
         parent::__construct( $config );
     }
 
@@ -73,14 +75,17 @@ class AdvertCreateForm extends CompositeForm
             'city'        => 'Город',
             'price'       => 'Цена',
             'images'      => 'Фотографии',
+            'username'    => 'Имя',
+            'useremail'   => 'Email',
+            'userphone'   => 'Телефон'
         ];
     }
 
-    public function getUserName()
+    /*public function getUserName()
     {
         if ( !Yii::$app->user->isGuest ) {
             $id = Yii::$app->user->id;
-            return User::find()->select('username')->where('id' == $id )->asArray()->one();
+            return User::find()->select( 'username' )->where( 'id' == $id )->asArray()->one();
         }
         else {
             return 'Иванов Иван';
@@ -89,23 +94,25 @@ class AdvertCreateForm extends CompositeForm
 
     public function getUserEmail()
     {
-        if ( !Yii::$app->user->isGuest){
+        if ( !Yii::$app->user->isGuest ) {
             $id = Yii::$app->user->id;
-            return User::find()->select('email')->where('id' == $id )->asArray()->one();
-        } else {
+            return User::find()->select( 'email' )->where( 'id' == $id )->asArray()->one();
+        }
+        else {
             return 'someone@mail.ru';
         }
     }
 
     public function getUserPhone()
     {
-        if ( !Yii::$app->user->isGuest){
+        if ( !Yii::$app->user->isGuest ) {
             $id = Yii::$app->user->id;
             return UserInfo::getUserPhones( $id );
-        } else {
+        }
+        else {
             return '8 xxx xxx xx xx';
         }
-    }
+    }*/
 
     public function categoryList()
     {
@@ -134,6 +141,6 @@ class AdvertCreateForm extends CompositeForm
 
     protected function internalForms()
     {
-        return [ 'priceForm', 'contactInfo', 'imagesForm' ];
+        return [ 'priceForm', 'imagesForm' ];
     }
 }

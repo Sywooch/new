@@ -12,6 +12,7 @@ use board\repositories\AdvertsRepository;
 use board\services\TransactionManager;
 use board\forms\AdvertCreateForm;
 use board\entities\Advert;
+use frontend\models\Price;
 
 class AdvertManageService
 {
@@ -33,6 +34,8 @@ class AdvertManageService
 
     public function create( AdvertCreateForm $form )
     {
+        $price = new Price();
+
         /* $advert = Advert::create(
              $form->cat_id,
              $form->subcat_id,
@@ -49,8 +52,8 @@ class AdvertManageService
             $form->period,
             $form->header,
             $form->description,
-            $form->priceForm->price,
-            $this->_negotiable,
+//            $form->priceForm->price,
+            $price->negotiable = $form->negotiable,
             $form->city,
             $form->username,
             $form->useremail,

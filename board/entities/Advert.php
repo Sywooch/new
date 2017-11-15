@@ -28,7 +28,7 @@ class Advert extends ActiveRecord implements AggregateRoot
         $period,
         $header,
         $description,
-        $price,
+//        $price,
         $negotiable,
         $city,
         $username,
@@ -48,15 +48,15 @@ class Advert extends ActiveRecord implements AggregateRoot
         $advert->type = $type;
         $advert->header = $header;
         $advert->description = $description;
-        $advert->price = $price;
+//        $advert->price = $price;
         $advert->negotiable = $negotiable;
         $advert->city = $city;
         $advert->username = $username;
         $advert->useremail = $useremail;
         $advert->userphone = $userphone;
         $advert->active = $active;
-        $advert->selected = $selected;
-        $advert->special = $special;
+        $advert->selected_old = $selected;
+        $advert->special_old = $special;
         $advert->ip = $ip;
         $advert->created_at = time();
         return $advert;
