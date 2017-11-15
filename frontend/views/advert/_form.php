@@ -94,11 +94,11 @@ JS;
 	<h4>Контактная информация<a id="sec-lk-enter" href="<?= Url::to( '/user/login' ) ?>" title="Войти под своим именем"><i
 					class="fa fa-user"></i>Я зарегистрирован</a></h4>
 
-    <?= $form->field( $model->contactInfo, 'username' )->textInput( [ 'placeholder' => "Иванов Иван" ] ) ?>
+    <?= $form->field( $model->username, 'username' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 
-    <?= $form->field( $model->contactInfo, 'useremail' )->textInput( [ 'placeholder' => "someone@mail.ru" ] ) ?>
+    <?= $form->field( $model->contactInfo, 'useremail' )->textInput( [ 'placeholder' => $model->getUserEmail(), ] ) ?>
 
-    <?= $form->field( $model->contactInfo, 'userphone' )->textInput( [ 'placeholder' => "8 888 8888888", ] ) ?>
+    <?= $form->field( $model->contactInfo, 'userphone' )->textInput( [ 'placeholder' => $model->getUserPhone(), ] ) ?>
 
 	<div class="form-group">
       <?= Html::submitButton( 'Сохранить и перейти >>', [ 'class' => 'btn btn-primary' ] ) ?>

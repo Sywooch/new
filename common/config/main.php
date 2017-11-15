@@ -56,7 +56,7 @@ return [
 //                'RegistrationForm' => 'common\models\RegistrationForm',
             ],
             // Автоматическая генерация пароля
-            'enableGeneratingPassword' => true,
+//            'enableGeneratingPassword' => true,
             'enableFlashMessages'      => false,
 
              // Admin-layout

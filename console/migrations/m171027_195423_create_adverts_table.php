@@ -16,7 +16,7 @@ class m171027_195423_create_adverts_table extends Migration
 
         $this->createTable( '{{%adverts}}', [
             'id'  => $this->primaryKey(),
-            'old_id' => $this->integer()->notNull()->unique(),
+            'old_id' => $this->integer()->unique(),
             'sid' => $this->string( 32 )->notNull()->unique(),
             'cat_id' => $this->integer(3)->notNull(),
             'subcat_id' => $this->integer(3)->notNull(),

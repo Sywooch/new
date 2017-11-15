@@ -8,12 +8,15 @@
 
 namespace board\forms;
 
+use yii;
 use backend\models\Country;
 use yii\helpers\ArrayHelper;
 use backend\models\Category;
 use backend\models\Subcategory;
 use backend\models\Type;
 use backend\models\Period;
+use board\services\UserInfo;
+use common\models\User;
 
 class AdvertCreateForm extends CompositeForm
 {
@@ -25,11 +28,14 @@ class AdvertCreateForm extends CompositeForm
     public $description;
     public $city;
 
+    public $negotiable;
+
     public function __construct( $config = [] )
     {
         $this->price = new PriceForm();
         $this->contactInfo = new ContactInfoForm();
         $this->images = new ImageForm();
+        $this->username = $this->getUserName();
         parent::__construct( $config );
     }
 
@@ -57,6 +63,37 @@ class AdvertCreateForm extends CompositeForm
         ];
     }
 
+    public function getUserName()
+    {
+        if ( !Yii::$app->user->isGuest ) {
+            $id = Yii::$app->user->id;
+            return User::find()->select('username')->where('id' == $id )->asArray()->one();
+        }
+        else {
+            return 'Иванов Иван';
+        }
+    }
+
+    public function getUserEmail()
+    {
+        if ( !Yii::$app->user->isGuest){
+            $id = Yii::$app->user->id;
+            return User::find()->select('email')->where('id' == $id )->asArray()->one();
+        } else {
+            return 'someone@mail.ru';
+        }
+    }
+
+    public function getUserPhone()
+    {
+        if ( !Yii::$app->user->isGuest){
+            $id = Yii::$app->user->id;
+            return UserInfo::getUserPhones( $id );
+        } else {
+            return '8 xxx xxx xx xx';
+        }
+    }
+
     public function categoryList()
     {
         return ArrayHelper::map( Category::find()->orderBy( 'menu_order' )->asArray()->all(), 'id', 'category_name' );
@@ -79,7 +116,7 @@ class AdvertCreateForm extends CompositeForm
 
     public function cityList()
     {
-        return ArrayHelper::map( Country::find()->orderBy('sort')->asArray()->all(), 'id', 'country_name' );
+        return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
     }
 
     protected function internalForms()

@@ -29,7 +29,6 @@ class ContactInfoForm extends Model
         return [
             [ [ 'username', 'useremail', 'userphone', ], 'required' ],
             [ [ 'username', 'useremail' ], 'string', 'max' => 255 ],
-//            [ [ 'username', 'useremail', ], 'unique'],
             [ [ 'userphone', ], 'integer', 'min' => 0 ],
         ];
     }

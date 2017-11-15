@@ -6,10 +6,13 @@ use yii;
 use board\forms\AdvertCreateForm;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use board\manage\AdvertManageService;
 
 class AdvertController extends \yii\web\Controller
 {
     public $layout = 'blank';
+
+    private $service;
 
     public function behaviors()
     {
@@ -37,6 +40,12 @@ class AdvertController extends \yii\web\Controller
         ];
     }
 
+    public function __construct( $id, $module, AdvertManageService $service, $config = [] )
+    {
+        parent::__construct( $id, $module, $config );
+        $this->service = $service;
+    }
+
     public function actionIndex()
     {
         return $this->render( 'index' );
@@ -49,8 +58,8 @@ class AdvertController extends \yii\web\Controller
         // TODO:
         if ( $form->load( Yii::$app->request->post() ) && $form->validate() ) {
             try{
-                $product = $this->service->create( $form );
-                return $this->redirect( [ 'view', 'id' => $product->id ] );
+                $advert = $this->service->create( $form );
+                return $this->redirect( [ 'view', 'id' => $advert->id ] );
             } catch ( \DomainException $e ){
                 Yii::$app->errorHandler->logException( $e );
                 Yii::$app->session->setFlash( 'error', $e->getMessage() );
