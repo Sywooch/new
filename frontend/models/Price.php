@@ -42,7 +42,7 @@ class Price extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'price' => 'Price',
+            'price' => 'Цена',
             'price_old' => 'Price Old',
             'currency' => 'Currency',
             'negotiable' => 'Negotiable',

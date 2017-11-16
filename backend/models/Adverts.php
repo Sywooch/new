@@ -5,7 +5,7 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "adverts".
+ * This is the model class for table "{{%adverts}}".
  *
  * @property integer $id
  * @property integer $old_id
@@ -36,7 +36,7 @@ class Adverts extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'adverts';
+        return '{{%adverts}}';
     }
 
     /**

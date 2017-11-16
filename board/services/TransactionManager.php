@@ -14,10 +14,10 @@ class TransactionManager
 {
     private $dispatcher;
 
-    public function __construct( DeferredEventDispatcher $dispatcher )
+    /*public function __construct( DeferredEventDispatcher $dispatcher )
     {
         $this->dispatcher = $dispatcher;
-    }
+    }*/
 
     public function wrap( callable $function )
     {

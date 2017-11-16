@@ -3,13 +3,16 @@
 namespace frontend\models;
 
 use Yii;
+use dektrium\user\models\User;
 
 /**
- * This is the model class for table "user_phones".
+ * This is the model class for table "{{%user_phones}}".
  *
  * @property integer $id
  * @property integer $user_id
+ * @property integer $ad_id
  * @property integer $phone
+ * @property integer $sort
  *
  * @property User $user
  */
@@ -20,7 +23,7 @@ class UserPhones extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'user_phones';
+        return '{{%user_phones}}';
     }
 
     /**
@@ -29,7 +32,7 @@ class UserPhones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'phone'], 'integer'],
+            [['user_id', 'ad_id', 'phone', 'sort'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -42,7 +45,9 @@ class UserPhones extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
-            'phone' => 'Phone',
+            'ad_id' => 'Ad ID',
+            'phone' => 'Телефон',
+            'sort' => 'Sort',
         ];
     }
 

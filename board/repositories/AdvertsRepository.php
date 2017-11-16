@@ -16,10 +16,10 @@ class AdvertsRepository
 {
     private $_dispatcher;
 
-    public function __construct( EventDispatcher $dispatcher )
+    /*public function __construct( EventDispatcher $dispatcher )
     {
         $this->_dispatcher = $dispatcher;
-    }
+    }*/
 
     public function save( Adverts $advert )
     {
@@ -27,8 +27,8 @@ class AdvertsRepository
             throw new \RuntimeException( 'Saving error.' );
         }
 
-        $this->_dispatcher->dispatchAll( $advert->releaseEvents() );
-        $this->_dispatcher->dispatch( new EntityPersisted( $advert ) );
+//        $this->_dispatcher->dispatchAll( $advert->releaseEvents() );
+//        $this->_dispatcher->dispatch( new EntityPersisted( $advert ) );
     }
 
     public function get( $id )

@@ -17,8 +17,9 @@ class m171115_153058_create_user_phones_table extends Migration
         $this->createTable( '{{%user_phones}}', [
             'id'      => $this->primaryKey(),
             'user_id' => $this->integer(),
+            'ad_id'   => $this->integer(),
             'phone'   => $this->integer( 15 ),
-            'sort' => $this->integer(2),
+            'sort'    => $this->integer( 2 ),
         ], $tableOptions );
 
         $this->addForeignKey( 'fk-user_id', '{{%user_phones}}', 'user_id', 'user', 'id' );

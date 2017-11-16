@@ -76,7 +76,7 @@ AppAsset::register( $this );
 					Подать объявление
 				</button>-->
 
-          <?= Html::a('<i class="fa fa-pencil-square-o"></i>Подать объявление', ['/advert/create'], ['id' => 'add-ads-main-red', 'class'=>'btn btn-lg btn-danger btn-block', 'type' => 'button']) ?>
+          <?= Html::a('<i class="fa fa-pencil-square-o"></i>Подать объявление', ['/adverts/create'], ['id' => 'add-ads-main-red', 'class'=>'btn btn-lg btn-danger btn-block', 'type' => 'button']) ?>
 
 			</div>
 		</div>

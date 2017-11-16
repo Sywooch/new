@@ -11,7 +11,7 @@ namespace board\dispatchers;
 
 interface EventDispatcher
 {
-    public function dispatchAll( $events );
+    public function dispatchAll( array $events );
 
     public function dispatch( $event );
 }
