@@ -12,6 +12,10 @@ use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 use backend\models\Country;
+use backend\models\Category;
+use backend\models\Subcategory;
+use backend\models\Period;
+use backend\models\Type;
 
 class Adverts extends ActiveRecord implements AggregateRoot
 {
@@ -40,7 +44,7 @@ class Adverts extends ActiveRecord implements AggregateRoot
     ){
         $advert = new static();
         $advert->old_id = null;
-        $advert->sid = date( 'U' );
+        $advert->sid = md5(time().rand(1, 0xFFFFFF));;
         $advert->cat_id = $cat_id;
         $advert->subcat_id = $subcat_id;
         $advert->period = $period;
@@ -66,20 +70,31 @@ class Adverts extends ActiveRecord implements AggregateRoot
                 'class' => SaveRelationsBehavior::className(),
                 'relations' => [ 'images' ],
             ],
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
         ];
     }
 
     public function rules()
     {
         return [
-            [['old_id', 'cat_id', 'subcat_id', 'type', 'city', 'period', 'active', 'selected_old', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
-            [['sid', 'cat_id', 'subcat_id', 'type', 'period', 'header', 'city', 'ip', 'created_at', 'updated_at'], 'required'],
+            [['old_id', 'cat_id', 'subcat_id', 'type', 'city', 'period', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
+            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'city', 'ip',], 'required'],
             [['description'], 'string'],
             [['sid'], 'string', 'max' => 32],
             [['header', 'author', 'email'], 'string', 'max' => 255],
             [['sid'], 'unique'],
             [['old_id'], 'unique'],
+            [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
             [['city'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['city' => 'id']],
+            [['period'], 'exist', 'skipOnError' => true, 'targetClass' => Period::className(), 'targetAttribute' => ['period' => 'id']],
+            [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => ['subcat_id' => 'id']],
+            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Type::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
 
@@ -92,19 +107,27 @@ class Adverts extends ActiveRecord implements AggregateRoot
             'id' => 'ID',
             'old_id' => 'Old ID',
             'sid' => 'Sid',
+
             'cat_id' => 'Раздел',
             'subcat_id' => 'Подраздел',
             'type' => 'Тип',
+
             'header' => 'Заголовок',
             'description' => 'Описание',
             'city' => 'Город',
+
             'period' => 'Период',
             'author' => 'Автор',
             'email' => 'Email',
+
             'active' => 'Active',
+            'selected' => 'Selected',
             'selected_old' => 'Selected Old',
+
+            'special' => 'Special',
             'special_old' => 'Special Old',
             'images_old' => 'Images Old',
+
             'ip' => 'Ip',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -130,9 +153,41 @@ class Adverts extends ActiveRecord implements AggregateRoot
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getCat()
+    {
+        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getCity0()
     {
         return $this->hasOne(Country::className(), ['id' => 'city']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPeriod0()
+    {
+        return $this->hasOne(Period::className(), ['id' => 'period']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubcat()
+    {
+        return $this->hasOne(Subcategory::className(), ['id' => 'subcat_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getType0()
+    {
+        return $this->hasOne(Type::className(), ['id' => 'type']);
     }
 
     public function releaseEvents(){ }

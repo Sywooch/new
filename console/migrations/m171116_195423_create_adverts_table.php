@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `adverts`.
  */
-class m171027_195423_create_adverts_table extends Migration
+class m171116_195423_create_adverts_table extends Migration
 {
     /**
      * @inheritdoc
@@ -16,7 +16,7 @@ class m171027_195423_create_adverts_table extends Migration
 
         $this->createTable( '{{%adverts}}', [
             'id'  => $this->primaryKey(),
-            'old_id' => $this->integer()->unique(),
+            'old_id' => $this->integer()->unique()->defaultValue(null),
             'sid' => $this->string( 32 )->notNull()->unique(),
             'cat_id' => $this->integer(3)->notNull(),
             'subcat_id' => $this->integer(3)->notNull(),
@@ -28,20 +28,21 @@ class m171027_195423_create_adverts_table extends Migration
             'author' => $this->string(),
             'email' => $this->string(),
             'active' => $this->boolean()->defaultValue(1),
-            'selected_old' => $this->boolean()->defaultValue(0),
-            'special_old' => $this->boolean()->defaultValue(0),
-            'images_old' => $this->boolean()->defaultValue(0),
+            'selected' => $this->boolean()->defaultValue(0),
+            'selected_old' => $this->boolean()->defaultValue(null),
+            'special' => $this->boolean()->defaultValue(0),
+            'special_old' => $this->boolean()->defaultValue(null),
+            'images_old' => $this->boolean()->defaultValue(null),
             'ip' => $this->integer(11)->notNull(),
             'created_at' => $this->integer()->unsigned()->notNull(),
             'updated_at' => $this->integer()->unsigned()->notNull(),
         ] , $tableOptions);
 
-        /*$this->createIndex('{{%adverts-type}}', '{{%adverts}}', 'type');
-        $this->createIndex('{{%adverts-cat_id}}', '{{%adverts}}', 'cat_id');
-        $this->createIndex('{{%adverts-subcut_id}}', '{{%adverts}}', 'subcat_id');
-        $this->createIndex('{{%adverts-city}}', '{{%adverts}}', 'city');*/
-
         $this->addForeignKey( 'fk-city', '{{%adverts}}', 'city', '{{%country}}', 'id' );
+        $this->addForeignKey( 'fk-cat', '{{%adverts}}', 'cat_id', '{{%category}}', 'id' );
+        $this->addForeignKey( 'fk-subcat', '{{%adverts}}', 'subcat_id', '{{%subcategory}}', 'id' );
+        $this->addForeignKey( 'fk-type', '{{%adverts}}', 'type', '{{%type}}', 'id' );
+        $this->addForeignKey( 'fk-period', '{{%adverts}}', 'period', '{{%period}}', 'id' );
     }
 
     /**

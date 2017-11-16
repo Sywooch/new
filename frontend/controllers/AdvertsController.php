@@ -2,10 +2,6 @@
 
 namespace frontend\controllers;
 
-use backend\models\Category;
-use board\forms\ImageForm;
-use frontend\models\Price;
-use frontend\models\UserPhones;
 use yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -13,14 +9,17 @@ use board\forms\AdvertCreateForm;
 use board\manage\AdvertManageService;
 use board\entities\Adverts;
 use yii\web\NotFoundHttpException;
-use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use backend\models\Subcategory;
 use backend\models\Type;
 use backend\models\Period;
 use backend\models\Country;
 use yii\helpers\Json;
-use yii\web\Response;
+use backend\models\Category;
+use board\forms\ImageForm;
+use frontend\models\Price;
+use frontend\models\UserPhones;
+use common\models\Helpers;
 
 class AdvertsController extends \yii\web\Controller
 {
@@ -35,11 +34,11 @@ class AdvertsController extends \yii\web\Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'login', 'error', 'create', 'subcat'],
+                        'actions' => [ 'login', 'error', 'create', 'subcat' ],
                         'allow'   => true,
                     ],
                     [
-                        'actions' => [ 'logout', 'index' ],
+                        'actions' => [ 'logout', 'index', 'view' ],
                         'allow'   => true,
                         'roles'   => [ '@' ],
                     ],
@@ -68,22 +67,50 @@ class AdvertsController extends \yii\web\Controller
     public function actionCreate()
     {
         $model = new Adverts();
-        $category = $this->categoryList();
-//        $subcategory = $this->subcategoryList( $cat_id );
-        $type = $this->typeList();
-        $period = $this->periodList();
-        $city = $this->cityList();
+        $category = $this->_categoryList();
+        $type = $this->_typeList();
+        $period = $this->_periodList();
+        $city = $this->_cityList();
         $price = new Price();
         $phone = new UserPhones();
 
-        if ( $model->load( Yii::$app->request->post() ) && $model->save() ) {
-            return $this->redirect( [ 'view', 'id' => $model->id ] );
+        if ( $model->load( Yii::$app->request->post() ) ) {
+
+            $model->sid = $this->getSid();
+            $model->ip = $this->getIp();
+//            $phone->phone = $model->phone;
+            print '<pre>';
+            var_dump( Yii::$app->request->post() );
+            print '</pre>';
+            die;
+
+
+            $transaction = Adverts::getDb()->beginTransaction();
+            try {
+                $model->save();
+
+                // ...другие операции с базой данных...
+                $transaction->commit();
+            } catch(\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            } catch(\Throwable $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+
+//            if ( $model->save() ) {
+//                return $this->redirect( [ 'view', 'id' => $model->id ] );
+//            }
+//            else {
+//                var_dump( $model->getErrors() );
+//                die();
+//            }
         }
         else {
             return $this->render( 'create', [
                 'model'    => $model,
                 'category' => $category,
-                //                'subcategory' => $subcategory,
                 'type'     => $type,
                 'period'   => $period,
                 'city'     => $city,
@@ -91,6 +118,18 @@ class AdvertsController extends \yii\web\Controller
                 'phone'    => $phone,
             ] );
         }
+    }
+
+
+
+    private function getIp()
+    {
+        return Helpers::IpToNum( Yii::$app->request->userIP );
+    }
+
+    private function getSid()
+    {
+        return $sid = md5( time() . rand( 1, 0xFFFFFF ) );
     }
 
     public function actionSubcat()
@@ -103,19 +142,13 @@ class AdvertsController extends \yii\web\Controller
 
             if ( $parents != null ) {
                 $cat_id = $parents[0];
-                $out = self::subcategoryList( $cat_id ); //var_dump( $out ); exit;
-                // the getSubCatList function will query the database based on the
-                // cat_id and return an array like below:
-                // [
-                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
-                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
-                // ]
+                $out = self::subcategoryList( $cat_id );
                 echo Json::encode( [ 'output' => $out, 'selected' => '' ] );
                 return;
             }
         }
 
-        echo Json::encode( [ 'output' => '1', 'selected' => '1' ] );
+        echo Json::encode( [ 'output' => '', 'selected' => '' ] );
     }
 
     private function getPhone()
@@ -124,58 +157,36 @@ class AdvertsController extends \yii\web\Controller
         return ArrayHelper::map( UserPhones::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'category_name' );
     }
 
-    private function categoryList()
+    private function _categoryList()
     {
         return ArrayHelper::map( Category::find()->orderBy( 'menu_order' )->asArray()->all(), 'id', 'category_name' );
     }
 
-    private function subcategoryList( $cat_id )
+    public function subcategoryList( $cat_id )
     {
-        return ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'menu_order' )->asArray()->all(),
+        $array = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'menu_order' )->asArray()->all(),
             'id', 'subcat_name' );
+
+        $result = [];
+        foreach ( $array as $key => $value ) {
+            $result[] = [ 'id' => $key, 'name' => $value ];
+        }
+        return $result;
     }
 
-    private function typeList()
+    private function _typeList()
     {
         return ArrayHelper::map( Type::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'name' );
     }
 
-    private function periodList()
+    private function _periodList()
     {
         return ArrayHelper::map( Period::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
     }
 
-    private function cityList()
+    private function _cityList()
     {
         return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
-    }
-
-    public function actionCreate_old()
-    {
-        $form = new AdvertCreateForm();
-
-        if ( $form->load( Yii::$app->request->post() ) && $form->validate() ) {
-            try{
-                $advert = $this->_service->create( $form );
-                return $this->redirect( [ 'view', 'id' => $advert->id ] );
-            } catch ( \DomainException $e ){
-                Yii::$app->errorHandler->logException( $e );
-                Yii::$app->session->setFlash( 'error', $e->getMessage() );
-            }
-        }
-
-        /*$model = new Advert();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }*/
-
-        return $this->render( 'create', [
-            'model' => $form,
-        ] );
     }
 
     public function actionView( $id )

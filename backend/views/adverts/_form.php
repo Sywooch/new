@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'old_id')->textInput() ?>
 
-    <?= $form->field($model, 'sid')->textInput(['maxlength' => true]) ?>
+    <?/*= $form->field($model, 'sid')->textInput(['maxlength' => true]) */?>
 
     <?= $form->field($model, 'cat_id')->textInput() ?>
 
