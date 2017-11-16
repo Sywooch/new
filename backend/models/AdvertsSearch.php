@@ -18,8 +18,8 @@ class AdvertsSearch extends Adverts
     public function rules()
     {
         return [
-            [['id', 'old_id', 'cat_id', 'subcat_id', 'type', 'city', 'price', 'period', 'active', 'selected', 'special', 'images', 'ip', 'created_at', 'updated_at'], 'integer'],
-            [['sid', 'header', 'description'], 'safe'],
+            [['id', 'old_id', 'cat_id', 'subcat_id', 'type', 'city', 'period', 'active', 'selected_old', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
+            [['sid', 'header', 'description', 'author', 'email'], 'safe'],
         ];
     }
 
@@ -47,9 +47,6 @@ class AdvertsSearch extends Adverts
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 50,
-            ],
         ]);
 
         $this->load($params);
@@ -68,12 +65,11 @@ class AdvertsSearch extends Adverts
             'subcat_id' => $this->subcat_id,
             'type' => $this->type,
             'city' => $this->city,
-            'price' => $this->price,
             'period' => $this->period,
             'active' => $this->active,
-            'selected' => $this->selected,
-            'special' => $this->special,
-            'images' => $this->images,
+            'selected_old' => $this->selected_old,
+            'special_old' => $this->special_old,
+            'images_old' => $this->images_old,
             'ip' => $this->ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -81,7 +77,9 @@ class AdvertsSearch extends Adverts
 
         $query->andFilterWhere(['like', 'sid', $this->sid])
             ->andFilterWhere(['like', 'header', $this->header])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'author', $this->author])
+            ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
     }

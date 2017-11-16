@@ -33,17 +33,19 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'city') ?>
 
-    <?php // echo $form->field($model, 'price') ?>
-
     <?php // echo $form->field($model, 'period') ?>
+
+    <?php // echo $form->field($model, 'author') ?>
+
+    <?php // echo $form->field($model, 'email') ?>
 
     <?php // echo $form->field($model, 'active') ?>
 
-    <?php // echo $form->field($model, 'selected') ?>
+    <?php // echo $form->field($model, 'selected_old') ?>
 
-    <?php // echo $form->field($model, 'special') ?>
+    <?php // echo $form->field($model, 'special_old') ?>
 
-    <?php // echo $form->field($model, 'images') ?>
+    <?php // echo $form->field($model, 'images_old') ?>
 
     <?php // echo $form->field($model, 'ip') ?>
 

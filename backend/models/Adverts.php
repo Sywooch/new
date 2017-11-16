@@ -17,6 +17,8 @@ use Yii;
  * @property string $description
  * @property integer $city
  * @property integer $period
+ * @property string $author
+ * @property string $email
  * @property integer $active
  * @property integer $selected_old
  * @property integer $special_old
@@ -47,7 +49,7 @@ class Adverts extends \yii\db\ActiveRecord
             [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'city', 'ip', 'created_at', 'updated_at'], 'required'],
             [['description'], 'string'],
             [['sid'], 'string', 'max' => 32],
-            [['header'], 'string', 'max' => 255],
+            [['header', 'author', 'email'], 'string', 'max' => 255],
             [['sid'], 'unique'],
             [['old_id'], 'unique'],
             [['city'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['city' => 'id']],
@@ -70,6 +72,8 @@ class Adverts extends \yii\db\ActiveRecord
             'description' => 'Description',
             'city' => 'City',
             'period' => 'Period',
+            'author' => 'Author',
+            'email' => 'Email',
             'active' => 'Active',
             'selected_old' => 'Selected Old',
             'special_old' => 'Special Old',

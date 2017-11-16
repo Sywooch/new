@@ -12,7 +12,7 @@ use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 
-class Advert extends ActiveRecord implements AggregateRoot
+class Adverts extends ActiveRecord implements AggregateRoot
 {
     use EventTrait;
 
@@ -28,12 +28,10 @@ class Advert extends ActiveRecord implements AggregateRoot
         $period,
         $header,
         $description,
-//        $price,
-//        $negotiable,
         $city,
-//        $username,
-//        $useremail,
-//        $userphone,
+        $username,
+        $useremail,
+        $userphone,
         $active,
         $selected,
         $special,
@@ -48,12 +46,10 @@ class Advert extends ActiveRecord implements AggregateRoot
         $advert->type = $type;
         $advert->header = $header;
         $advert->description = $description;
-//        $advert->price = $price;
-//        $advert->negotiable = $negotiable;
         $advert->city = $city;
-//        $advert->username = $username;
-//        $advert->useremail = $useremail;
-//        $advert->userphone = $userphone;
+        $advert->username = $username;
+        $advert->useremail = $useremail;
+        $advert->userphone = $userphone;
         $advert->active = $active;
         $advert->selected_old = $selected;
         $advert->special_old = $special;
@@ -72,11 +68,20 @@ class Advert extends ActiveRecord implements AggregateRoot
         ];
     }
 
-    public function addPhoto(UploadedFile $file)
+    public function addPhoto( UploadedFile $file )
     {
-        $photos = $this->photos;
-        $photos[] = Image::create($file);
-        $this->updatePhotos($photos);
+        $image = $this->photos;
+        $image[] = Image::create( $file );
+        $this->updateImages( $image );
+    }
+
+    private function updateImages(array $photos)
+    {
+        foreach ($photos as $i => $photo) {
+            $photo->setSort($i);
+        }
+        $this->photos = $photos;
+        $this->populateRelation('mainPhoto', reset($photos));
     }
 
     public function releaseEvents(){ }

@@ -28,17 +28,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'city')->textInput() ?>
 
-    <?= $form->field($model, 'price')->textInput() ?>
-
     <?= $form->field($model, 'period')->textInput() ?>
+
+    <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'active')->textInput() ?>
 
-    <?= $form->field($model, 'selected')->textInput() ?>
+    <?= $form->field($model, 'selected_old')->textInput() ?>
 
-    <?= $form->field($model, 'special')->textInput() ?>
+    <?= $form->field($model, 'special_old')->textInput() ?>
 
-    <?= $form->field($model, 'images')->textInput() ?>
+    <?= $form->field($model, 'images_old')->textInput() ?>
 
     <?= $form->field($model, 'ip')->textInput() ?>
 

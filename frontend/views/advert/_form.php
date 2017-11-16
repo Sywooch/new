@@ -82,12 +82,12 @@ FontAwesomeAsset::register( $this );
 
 	<!--	</div>-->
     <?php
-    $script = <<< JS
+    /*$script = <<< JS*/
 				// $("#input-700").fileinput({
 				// 		uploadUrl: '/uploads',
 				// 		maxFileCount: 6
 				// });
-JS;
+/*JS;*/
     //$this->registerJs( $script, yii\web\View::POS_READY );
     ?>
 	<hr>

@@ -72,9 +72,9 @@ class AdvertCreateForm extends CompositeForm
             'type'        => 'Тип',
             'header'      => 'Заголовок',
             'description' => 'Описание',
-            'city'        => 'Город',
-            'price'       => 'Цена',
-            'images'      => 'Фотографии',
+//            'city'        => 'Город',
+//            'price'       => 'Цена',
+//            'images'      => 'Фотографии',
             'username'    => 'Имя',
             'useremail'   => 'Email',
             'userphone'   => 'Телефон'

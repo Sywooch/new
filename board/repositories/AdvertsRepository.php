@@ -9,31 +9,31 @@
 namespace board\repositories;
 
 use board\dispatchers\EventDispatcher;
-use board\entities\Advert;
+use board\entities\Adverts;
 use board\repositories\events\EntityPersisted;
 
 class AdvertsRepository
 {
-    private $dispatcher;
+    private $_dispatcher;
 
     public function __construct( EventDispatcher $dispatcher )
     {
-        $this->dispatcher = $dispatcher;
+        $this->_dispatcher = $dispatcher;
     }
 
-    public function save( Advert $advert )
+    public function save( Adverts $advert )
     {
         if ( !$advert->save() ) {
             throw new \RuntimeException( 'Saving error.' );
         }
 
-        $this->dispatcher->dispatchAll( $advert->releaseEvents() );
-        $this->dispatcher->dispatch( new EntityPersisted( $advert ) );
+        $this->_dispatcher->dispatchAll( $advert->releaseEvents() );
+        $this->_dispatcher->dispatch( new EntityPersisted( $advert ) );
     }
 
     public function get( $id )
     {
-        if ( !$product = Advert::findOne( $id ) ) {
+        if ( !$product = Adverts::findOne( $id ) ) {
             throw new \DomainException( 'Product is not found.' );
         }
         return $product;

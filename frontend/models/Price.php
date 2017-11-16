@@ -15,6 +15,7 @@ use Yii;
  */
 class Price extends \yii\db\ActiveRecord
 {
+    public $currency = 1;
     /**
      * @inheritdoc
      */
