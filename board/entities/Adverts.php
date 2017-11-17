@@ -26,43 +26,6 @@ class Adverts extends ActiveRecord implements AggregateRoot
         return '{{%adverts}}';
     }
 
-    /*public static function create(
-        $cat_id,
-        $subcat_id,
-        $type,
-        $period,
-        $header,
-        $description,
-        $city,
-        $username,
-        $useremail,
-        $userphone,
-        $active,
-        $selected,
-        $special,
-        $ip
-    ){
-        $advert = new static();
-        $advert->old_id = null;
-        $advert->sid = md5(time().rand(1, 0xFFFFFF));;
-        $advert->cat_id = $cat_id;
-        $advert->subcat_id = $subcat_id;
-        $advert->period = $period;
-        $advert->type = $type;
-        $advert->header = $header;
-        $advert->description = $description;
-        $advert->city = $city;
-        $advert->username = $username;
-        $advert->useremail = $useremail;
-        $advert->userphone = $userphone;
-        $advert->active = $active;
-        $advert->selected_old = $selected;
-        $advert->special_old = $special;
-        $advert->ip = $ip;
-        $advert->created_at = time();
-        return $advert;
-    }*/
-
     public function behaviors()
     {
         return [

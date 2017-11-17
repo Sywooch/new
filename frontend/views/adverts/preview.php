@@ -7,7 +7,10 @@
  */
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use yii\helpers\Url;
+use frontend\assets\FontAwesomeAsset;
+
+FontAwesomeAsset::register( $this );
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Adverts', 'url' => ['index']];
@@ -18,7 +21,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="row" style="padding-bottom: 15px;">
 				<div class="col-sm-7">
 					<p id="adv-type">Тип: <strong><?= $model->type ?></strong>
-						<span id="place-date" class="pull-right">Период:&nbsp;<?= $model->created_at ?></span></p><hr>
+						<span id="place-date" class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDate($model->created_at, 'php:d-F-Y H:m'); ?>
+						</span>
+					</p><hr>
 
 					<div>
 						<h4><?= $model->header ?></h4>
@@ -48,7 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 				<!-- start right block -->
 				<div class="col-sm-5">
-					<div id="big-picture" class="center-block"><div id="big-img-loader"><# BIG_PICTURE #></div></div>
+					<div id="big-picture" class="center-block"><div id="big-img-loader">
+							<img id="Big<# ID #>" data-src="<# PATH #><# IMAGE #>?<# RND #>" class="img-thumbnail img-responsive" alt="<# ALT #>" title="<# ALT #>" />
+						</div></div>
 					<div id="rowSmallPics" class="row" style="margin-left: 0; margin-top: 15px;"><# SMALL_PICS #></div>
 
 					<div id="email_sender<# ID #>">
@@ -58,7 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 				<div class="clearfix"></div><hr>
 				<div class="col-sm-12">
-					<a href="" class="btn btn-primary">Сохранить</a>
+					<a href="<?= Url::to('/adverts/edit') ?>" class="btn btn-default"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Редактировать</a>
+					<a href="<?= Url::to('/adverts/save') ?>" class="btn btn-primary">Сохранить<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 				</div>
 			</div>
 </div><div class="col-sm-3">Sidebar</div> </div>
