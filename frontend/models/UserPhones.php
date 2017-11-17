@@ -33,6 +33,7 @@ class UserPhones extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'ad_id', 'phone', 'sort'], 'integer'],
+            [['phone'], 'max' => 15],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

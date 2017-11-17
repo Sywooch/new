@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use backend\models\Subcategory;
 use yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -84,11 +85,13 @@ class AdvertsController extends \yii\web\Controller
 
             $model->sid = $this->getSid();
             $model->ip = $this->getIp();
+            $model->draft = 1;
 
             $transaction = \Yii::$app->db->beginTransaction();
             try{
                 $model->save();
                 $price->ad_id = $model->id;
+                $price->currency_id = $currency->id;
                 $price->save();
 
                 foreach ( $phone['phone'] as $key => $val ) {
@@ -193,9 +196,22 @@ class AdvertsController extends \yii\web\Controller
     public function actionPreview( $id )
     {
         $model = $this->findModel( $id );
+        $category = Category::find()->where( 'id' == $model->cat_id )->one();
+        $subcategory = Subcategory::find()->where( 'id' == $model->subcat_id )->one();
+        $type = Type::find()->where( 'id' == $model->type )->one();
+        $city = Country::find()->where( 'id' == $model->city )->one();
+        $price = Price::find()->where( 'ad_id' == $id )->joinWith('currency')->one();
 
         return $this->render( 'preview', [
-            'model' => $model,
+            'model'       => $model,
+            'category'    => $category,
+            'subcategory' => $subcategory,
+            'type'        => $type,
+            //            'period'   => $_period,
+            'city'        => $city,
+            'price'       => $price,
+            //            'currency' => $_currency,
+            //            'phone'    => $phone,
         ] );
     }
 

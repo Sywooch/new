@@ -3,25 +3,28 @@
 namespace frontend\models;
 
 use Yii;
+use backend\models\Currency;
 
 /**
- * This is the model class for table "price".
+ * This is the model class for table "{{%price}}".
  *
  * @property integer $id
+ * @property integer $ad_id
  * @property integer $price
  * @property integer $price_old
- * @property integer $currency
+ * @property integer $currency_id
  * @property string $negotiable
+ *
+ * @property Currency $currency
  */
 class Price extends \yii\db\ActiveRecord
 {
-    public $currency = 1;
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'price';
+        return '{{%price}}';
     }
 
     /**
@@ -30,8 +33,9 @@ class Price extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'price_old', 'currency'], 'integer'],
+            [['ad_id', 'price', 'price_old', 'currency_id'], 'integer'],
             [['negotiable'], 'string', 'max' => 2],
+            [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
         ];
     }
 
@@ -42,10 +46,19 @@ class Price extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'price' => 'Цена',
+            'ad_id' => 'Ad ID',
+            'price' => 'Price',
             'price_old' => 'Price Old',
-            'currency' => 'Currency',
+            'currency_id' => 'Currency ID',
             'negotiable' => 'Negotiable',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrency()
+    {
+        return $this->hasOne(Currency::className(), ['id' => 'currency_id']);
     }
 }

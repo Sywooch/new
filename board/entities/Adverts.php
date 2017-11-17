@@ -77,7 +77,7 @@ class Adverts extends ActiveRecord implements AggregateRoot
 
             'header' => 'Заголовок',
             'description' => 'Описание',
-            'city' => 'Город',
+            'city' => 'Расположение',
 
             'period' => 'Период',
             'author' => 'Автор',
@@ -124,7 +124,7 @@ class Adverts extends ActiveRecord implements AggregateRoot
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCity0()
+    public function getCity()
     {
         return $this->hasOne(Country::className(), ['id' => 'city']);
     }
@@ -132,7 +132,7 @@ class Adverts extends ActiveRecord implements AggregateRoot
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPeriod0()
+    public function getPeriod()
     {
         return $this->hasOne(Period::className(), ['id' => 'period']);
     }
@@ -148,7 +148,7 @@ class Adverts extends ActiveRecord implements AggregateRoot
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getType0()
+    public function getType()
     {
         return $this->hasOne(Type::className(), ['id' => 'type']);
     }

@@ -55,6 +55,6 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getPrices()
     {
-        return $this->hasMany(Price::className(), ['currency' => 'id']);
+        return $this->hasMany(Price::className(), ['currency_id' => 'id']);
     }
 }
