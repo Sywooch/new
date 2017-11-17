@@ -11,6 +11,7 @@ use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
+use yii\helpers\ArrayHelper;
 
 FontAwesomeAsset::register( $this );
 
@@ -49,18 +50,13 @@ FontAwesomeAsset::register( $this );
 
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Цена</label>
-		<div class="col-sm-3">
+		<div class="col-sm-4">
         <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
-			<!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
 		</div>
 		<div class="col-sm-2">
-			<?= Html::activeDropDownList( $currency, 'currency', [], ['label' => false ]) ?>
+			<?= Html::activeDropDownList( new \backend\models\Currency(), 'short_name',$currency, ['class' => 'form-control', 'label' => false ]) ?>
 		</div>
 	</div>
-
-    <?/*= $form->field( $price, 'price' )->textInput( [ 'maxlength' => true ] ) */?>
-
-    <? /*= $form->field( $price, 'negotiable' )->checkboxList( [ 'Торг уместен' ] )->label( false ) */ ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">

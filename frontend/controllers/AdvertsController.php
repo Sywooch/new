@@ -20,6 +20,7 @@ use board\forms\ImageForm;
 use frontend\models\Price;
 use frontend\models\UserPhones;
 use common\models\Helpers;
+use backend\models\Currency;
 
 class AdvertsController extends \yii\web\Controller
 {
@@ -67,17 +68,23 @@ class AdvertsController extends \yii\web\Controller
     public function actionCreate()
     {
         $model = new Adverts();
-        $category = $this->_categoryList();
+        $_category = $this->_categoryList();
         $type = $this->_typeList();
-        $period = $this->_periodList();
-        $city = $this->_cityList();
+        $_period = $this->_periodList();
+        $_city = $this->_cityList();
         $price = new Price();
+        $_currency = $this->_currencyList();
+        $currency = new Currency();
         $phone = new UserPhones();
 
         if ( $model->load( Yii::$app->request->post() )
             && $price->load( Yii::$app->request->post() )
             && $phone->load( Yii::$app->request->post() )
+            && $currency->load( Yii::$app->request->post() )
         ) {
+//            print '<pre>';
+//            print_r( Yii::$app->request->post() );
+//            print '</pre>'; die;
 
             $model->sid = $this->getSid();
             $model->ip = $this->getIp();
@@ -109,11 +116,12 @@ class AdvertsController extends \yii\web\Controller
         else {
             return $this->render( 'create', [
                 'model'    => $model,
-                'category' => $category,
+                'category' => $_category,
                 'type'     => $type,
-                'period'   => $period,
-                'city'     => $city,
+                'period'   => $_period,
+                'city'     => $_city,
                 'price'    => $price,
+                'currency' => $_currency,
                 'phone'    => $phone,
             ] );
         }
@@ -149,10 +157,9 @@ class AdvertsController extends \yii\web\Controller
         echo Json::encode( [ 'output' => '', 'selected' => '' ] );
     }
 
-    private function getPhone()
+    private function _currencyList()
     {
-        // TODO:
-        return ArrayHelper::map( UserPhones::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'category_name' );
+        return ArrayHelper::map( Currency::find()->orderBy( 'id' )->asArray()->all(), 'id', 'short_name' );
     }
 
     private function _categoryList()

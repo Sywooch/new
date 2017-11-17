@@ -80,4 +80,13 @@ class Helpers
             ( $ip >> 8 & 0xFF ), ( $ip & 0xFF ) );
     }
 
+    public function p( $arg, $state = 1 )
+    {
+        if ( $state == 1 ) {
+            print '<pre>';
+            print_r( $arg );
+            print '</pre>';
+        }
+    }
+
 }

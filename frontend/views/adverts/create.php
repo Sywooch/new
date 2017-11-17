@@ -13,6 +13,7 @@ use yii\helpers\Html;
 /* @var $period frontend\controllers\AdvertsController */
 /* @var $city frontend\controllers\AdvertsController */
 /* @var $price frontend\controllers\AdvertsController */
+/* @var $currency frontend\controllers\AdvertsController */
 /* @var $phone frontend\controllers\AdvertsController */
 
 $this->title = 'Создать объявление';
@@ -21,16 +22,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="type-create">
 
-    <!--<h3><?/*= Html::encode($this->title) */?></h3>-->
+	<!--<h3><? /*= Html::encode($this->title) */ ?></h3>-->
 
-    <?= $this->render('_form', [
-        'model' => $model,
-				'category' => $category,
-        'type' => $type,
-        'period' => $period,
-        'city' => $city,
-        'price' => $price,
-        'phone' => $phone,
-    ]) ?>
+    <?= $this->render( '_form', [
+        'model'    => $model,
+        'category' => $category,
+        'type'     => $type,
+        'period'   => $period,
+        'city'     => $city,
+        'price'    => $price,
+        'currency' => $currency,
+        'phone'    => $phone,
+    ] ) ?>
 
 </div>
