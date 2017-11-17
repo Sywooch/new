@@ -5,16 +5,13 @@ namespace frontend\controllers;
 use yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use board\forms\AdvertCreateForm;
 use board\manage\AdvertManageService;
 use board\entities\Adverts;
 use yii\web\NotFoundHttpException;
 use yii\helpers\ArrayHelper;
-use backend\models\Subcategory;
 use backend\models\Type;
 use backend\models\Period;
 use backend\models\Country;
-use yii\helpers\Json;
 use backend\models\Category;
 use board\forms\ImageForm;
 use frontend\models\Price;
@@ -35,7 +32,7 @@ class AdvertsController extends \yii\web\Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'login', 'error', 'create', 'subcat' ],
+                        'actions' => [ 'login', 'error', 'create', 'subcat', 'preview' ],
                         'allow'   => true,
                     ],
                     [
@@ -82,9 +79,8 @@ class AdvertsController extends \yii\web\Controller
             && $phone->load( Yii::$app->request->post() )
             && $currency->load( Yii::$app->request->post() )
         ) {
-//            print '<pre>';
-//            print_r( Yii::$app->request->post() );
-//            print '</pre>'; die;
+
+//            Helpers::p(Yii::$app->request->post());
 
             $model->sid = $this->getSid();
             $model->ip = $this->getIp();
@@ -94,24 +90,30 @@ class AdvertsController extends \yii\web\Controller
                 $model->save();
                 $price->ad_id = $model->id;
                 $price->save();
-                $phone->ad_id = $model->id;
-                $phone->save();
+
+                foreach ( $phone['phone'] as $key => $val ) {
+                    if ( $val != '' ) {
+                        $phone->ad_id = $model->id;
+                        $phone->phone = $val;
+                        $phone->sort = $key;
+                        $phone->save();
+                    }
+                }
+
                 $transaction->commit();
             } catch ( \Exception $e ){
                 $transaction->rollBack();
                 throw $e;
+//                var_dump( $model->getErrors() );
+//                die();
             } catch ( \Throwable $e ){
                 $transaction->rollBack();
                 throw $e;
-            }
-
-//            if ( $model->save() ) {
-                return $this->redirect( [ 'view', 'id' => $model->id ] );
-//            }
-//            else {
 //                var_dump( $model->getErrors() );
 //                die();
-//            }
+            }
+
+            return $this->redirect( [ 'preview', 'id' => $model->id ] );
         }
         else {
             return $this->render( 'create', [
@@ -127,71 +129,74 @@ class AdvertsController extends \yii\web\Controller
         }
     }
 
+    private function save()
+    {
 
+    }
+
+    /**
+     * @return int|number
+     */
     private function getIp()
     {
         return Helpers::IpToNum( Yii::$app->request->userIP );
     }
 
+    /**
+     * @return string
+     */
     private function getSid()
     {
         return $sid = md5( time() . rand( 1, 0xFFFFFF ) );
     }
 
-    public function actionSubcat()
-    {
-        $out = [];
-
-        if ( Yii::$app->request->post( 'depdrop_parents' ) ) {
-
-            $parents = Yii::$app->request->post( 'depdrop_parents' );
-
-            if ( $parents != null ) {
-                $cat_id = $parents[0];
-                $out = self::subcategoryList( $cat_id );
-                echo Json::encode( [ 'output' => $out, 'selected' => '' ] );
-                return;
-            }
-        }
-
-        echo Json::encode( [ 'output' => '', 'selected' => '' ] );
-    }
-
+    /**
+     * @return array
+     */
     private function _currencyList()
     {
         return ArrayHelper::map( Currency::find()->orderBy( 'id' )->asArray()->all(), 'id', 'short_name' );
     }
 
+    /**
+     * @return array
+     */
     private function _categoryList()
     {
         return ArrayHelper::map( Category::find()->orderBy( 'menu_order' )->asArray()->all(), 'id', 'category_name' );
     }
 
-    public function subcategoryList( $cat_id )
-    {
-        $array = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'menu_order' )->asArray()->all(),
-            'id', 'subcat_name' );
-
-        $result = [];
-        foreach ( $array as $key => $value ) {
-            $result[] = [ 'id' => $key, 'name' => $value ];
-        }
-        return $result;
-    }
-
+    /**
+     * @return array
+     */
     private function _typeList()
     {
         return ArrayHelper::map( Type::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'name' );
     }
 
+    /**
+     * @return array
+     */
     private function _periodList()
     {
         return ArrayHelper::map( Period::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
     }
 
+    /**
+     * @return array
+     */
     private function _cityList()
     {
         return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
+    }
+
+    public function actionPreview( $id )
+    {
+        $model = $this->findModel( $id );
+
+        return $this->render( 'preview', [
+            'model' => $model,
+        ] );
     }
 
     public function actionView( $id )

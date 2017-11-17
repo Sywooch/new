@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use board\repositories\AdvertsRepository;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -209,5 +210,16 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Костыль для DepDrop
+     * Если сделать экшен в оригинальном контроллере,
+     * идет блокировка запроса Adblock по слову adverts/
+     */
+    public function actionSubcat()
+    {
+        $repo = new AdvertsRepository();
+        $repo->getSubcat();
     }
 }

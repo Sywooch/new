@@ -11,17 +11,22 @@ use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
-use yii\helpers\ArrayHelper;
 
 FontAwesomeAsset::register( $this );
 
-/* @var $model frontend\controllers\AdvertsController */
-/* @var $category frontend\controllers\AdvertsController */
+/* @var $model /view/create.php */
+/* @var $category /view/create.php */
+/* @var $type /view/create.php */
+/* @var $period /view/create.php */
+/* @var $price /view/create.php */
+/* @var $currency /view/create.php */
+/* @var $phone /view/create.php */
+/* @var $city /view/create.php */
 ?>
 <div class="type-form">
 
     <?php $form = ActiveForm::begin( [
-        'options'     => [ 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal', ],
+        'options'     => [ 'enctype' => 'multipart/form-data', 'action' => ['adverts/preview'], 'class' => 'form-horizontal', ],
         'fieldConfig' => [
             'template'     => '{label}<div class="col-sm-6">{input}</div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
             'labelOptions' => [ 'class' => 'col-sm-2 control-label' ],
@@ -35,7 +40,7 @@ FontAwesomeAsset::register( $this );
         'pluginOptions' => [
             'depends'     => [ 'cat-id' ],
             'placeholder' => 'Выберите подраздел',
-            'url'         => Url::to( [ '/adverts/subcat' ] )
+            'url'         => Url::to( [ '/site/subcat' ] )
         ]
     ] ) ?>
 
@@ -47,14 +52,14 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
-
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Цена</label>
 		<div class="col-sm-4">
         <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 		<div class="col-sm-2">
-			<?= Html::activeDropDownList( new \backend\models\Currency(), 'short_name',$currency, ['class' => 'form-control', 'label' => false ]) ?>
+        <?= Html::activeDropDownList( new \backend\models\Currency(), 'short_name', $currency,
+            [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 	</div>
 
@@ -134,14 +139,44 @@ FontAwesomeAsset::register( $this );
 		</div>
 	</div>
 
+    <?= $form->field( $model, 'city' )->dropDownList( $city, [ 'prompt' => 'Выберите' ] ) ?>
+
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 
     <?= $form->field( $model, 'email' )->textInput( [ 'placeholder' => 'someone@mail.ru', ] ) ?>
 
-    <?= $form->field( $phone, 'phone' )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', ] ) ?>
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Телефон</label>
+		<div class="col-sm-5">
+        <?= Html::activeInput( 'text', $phone, 'phone[]',
+            [ 'id' => 'phone0', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+		</div>
+		<div class="col-sm-1">
+			<button class="btn btn-default" type="button">+</button>
+		</div>
+	</div>
 
-    <?= $form->field( $model, 'city' )->dropDownList( $city, [ 'prompt' => 'Выберите' ] ) ?>
+	<div class="form-group hidden">
+		<div class="col-sm-offset-2 col-sm-5">
+        <?= Html::activeInput( 'text', $phone, 'phone[]',
+            [ 'id' => 'phone1', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+		</div>
+	</div>
 
+	<div class="form-group hidden">
+		<div class="col-sm-offset-2 col-sm-5">
+        <?= Html::activeInput( 'text', $phone, 'phone[]',
+            [ 'id' => 'phone2', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+		</div>
+	</div>
+    <?php
+		// TODO:
+    $addPhone = <<< JS
+    
+JS;
+    $this->registerJs( $addPhone, yii\web\View::POS_READY );
+    ?>
+	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
         <?= Html::submitButton( 'Сохранить и перейти >>', [ 'class' => 'btn btn-primary' ] ) ?>
