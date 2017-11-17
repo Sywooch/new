@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `price`.
  */
-class m171115_191949_create_price_table extends Migration
+class m171117_191949_create_price_table extends Migration
 {
     /**
      * @inheritdoc
@@ -22,6 +22,8 @@ class m171115_191949_create_price_table extends Migration
             'currency'   => $this->integer( 1 ),
             'negotiable' => $this->string( 2 ),
         ], $tableOptions );
+
+        $this->addForeignKey( 'fk-currency', '{{%price}}', 'currency', '{{%currency}}', 'id' );
     }
 
     /**

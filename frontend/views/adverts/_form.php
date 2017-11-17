@@ -46,7 +46,19 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
-    <?= $form->field( $price, 'price' )->textInput( [ 'maxlength' => true ] ) ?>
+
+	<div class="form-group">
+		<label for="" class="col-sm-2 control-label">Цена</label>
+		<div class="col-sm-3">
+        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
+			<!--<input type="email" class="form-control" id="inputEmail3" placeholder="Email">-->
+		</div>
+		<div class="col-sm-2">
+			<?= Html::activeDropDownList( $currency, 'currency', [], ['label' => false ]) ?>
+		</div>
+	</div>
+
+    <?/*= $form->field( $price, 'price' )->textInput( [ 'maxlength' => true ] ) */?>
 
     <? /*= $form->field( $price, 'negotiable' )->checkboxList( [ 'Торг уместен' ] )->label( false ) */ ?>
 

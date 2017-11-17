@@ -74,33 +74,32 @@ class AdvertsController extends \yii\web\Controller
         $price = new Price();
         $phone = new UserPhones();
 
-        if ( $model->load( Yii::$app->request->post() ) ) {
+        if ( $model->load( Yii::$app->request->post() )
+            && $price->load( Yii::$app->request->post() )
+            && $phone->load( Yii::$app->request->post() )
+        ) {
 
             $model->sid = $this->getSid();
             $model->ip = $this->getIp();
-//            $phone->phone = $model->phone;
-            print '<pre>';
-            var_dump( Yii::$app->request->post() );
-            print '</pre>';
-            die;
 
-
-            $transaction = Adverts::getDb()->beginTransaction();
-            try {
+            $transaction = \Yii::$app->db->beginTransaction();
+            try{
                 $model->save();
-
-                // ...другие операции с базой данных...
+                $price->ad_id = $model->id;
+                $price->save();
+                $phone->ad_id = $model->id;
+                $phone->save();
                 $transaction->commit();
-            } catch(\Exception $e) {
+            } catch ( \Exception $e ){
                 $transaction->rollBack();
                 throw $e;
-            } catch(\Throwable $e) {
+            } catch ( \Throwable $e ){
                 $transaction->rollBack();
                 throw $e;
             }
 
 //            if ( $model->save() ) {
-//                return $this->redirect( [ 'view', 'id' => $model->id ] );
+                return $this->redirect( [ 'view', 'id' => $model->id ] );
 //            }
 //            else {
 //                var_dump( $model->getErrors() );
@@ -119,7 +118,6 @@ class AdvertsController extends \yii\web\Controller
             ] );
         }
     }
-
 
 
     private function getIp()

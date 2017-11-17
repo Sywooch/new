@@ -31,6 +31,8 @@
 
 		<li><a href="<?= \yii\helpers\Url::to( [ '/period/index' ] ) ?>">Период</a></li>
 
+		<li><a href="<?= \yii\helpers\Url::to( [ '/currency/index' ] ) ?>">Валюта</a></li>
+
 		<li><a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>">Rbac</a></li>
 	</ul>
 
