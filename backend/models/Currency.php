@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use frontend\models\Price;
 
 /**
  * This is the model class for table "{{%currency}}".
@@ -30,10 +31,10 @@ class Currency extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['short_name', 'name'], 'required'],
-            [['value'], 'integer'],
-            [['short_name', 'name'], 'string', 'max' => 255],
-            [['short_name'], 'unique'],
+            [ [ 'short_name', 'name' ], 'required' ],
+            [ [ 'value' ], 'integer' ],
+            [ [ 'short_name', 'name' ], 'string', 'max' => 255 ],
+            [ [ 'short_name' ], 'unique' ],
         ];
     }
 
@@ -43,10 +44,10 @@ class Currency extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'         => 'ID',
             'short_name' => 'Short Name',
-            'name' => 'Name',
-            'value' => 'Value',
+            'name'       => 'Name',
+            'value'      => 'Value',
         ];
     }
 
@@ -55,6 +56,6 @@ class Currency extends \yii\db\ActiveRecord
      */
     public function getPrices()
     {
-        return $this->hasMany(Price::className(), ['currency_id' => 'id']);
+        return $this->hasMany( Price::className(), [ 'currency_id' => 'id' ] );
     }
 }

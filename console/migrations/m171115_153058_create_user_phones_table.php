@@ -22,7 +22,7 @@ class m171115_153058_create_user_phones_table extends Migration
             'sort'    => $this->integer( 2 ),
         ], $tableOptions );
 
-        $this->addForeignKey( 'fk-user_id', '{{%user_phones}}', 'user_id', 'user', 'id' );
+        //$this->addForeignKey( 'fk-user_id', '{{%user_phones}}', 'user_id', 'user', 'id' );
     }
 
     /**

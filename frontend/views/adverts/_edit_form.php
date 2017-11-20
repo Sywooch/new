@@ -11,7 +11,6 @@ use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
-use backend\models\Currency;
 
 FontAwesomeAsset::register( $this );
 
@@ -23,6 +22,8 @@ FontAwesomeAsset::register( $this );
 /* @var $currency /view/create.php */
 /* @var $phone /view/create.php */
 /* @var $city /view/create.php */
+
+\common\models\Helpers::p( $phone ); die;
 ?>
 <div class="type-form">
 
@@ -59,7 +60,7 @@ FontAwesomeAsset::register( $this );
         <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 		<div class="col-sm-2">
-        <?= Html::activeDropDownList( new Currency(), 'short_name', $currency,
+        <?= Html::activeDropDownList( new \backend\models\Currency(), 'short_name', $currency,
             [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 	</div>
@@ -149,7 +150,7 @@ FontAwesomeAsset::register( $this );
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Телефон</label>
 		<div class="col-sm-5">
-        <?= Html::activeInput( 'text', $phone, 'phone',
+        <?= Html::activeInput( 'text', $phone, 'phone[]',
             [ 'id' => 'phone0', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
 		</div>
 		<div class="col-sm-1">
@@ -157,19 +158,19 @@ FontAwesomeAsset::register( $this );
 		</div>
 	</div>
 
-	<!--<div class="form-group hidden">
+	<div class="form-group hidden">
 		<div class="col-sm-offset-2 col-sm-5">
-        <?/*= Html::activeInput( 'text', $phone, 'phone[]',
-            [ 'id' => 'phone1', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) */?>
+        <?= Html::activeInput( 'text', $phone, 'phone[]',
+            [ 'id' => 'phone1', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
 		</div>
 	</div>
 
 	<div class="form-group hidden">
 		<div class="col-sm-offset-2 col-sm-5">
-        <?/*= Html::activeInput( 'text', $phone, 'phone[]',
-            [ 'id' => 'phone2', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) */?>
+        <?= Html::activeInput( 'text', $phone, 'phone[]',
+            [ 'id' => 'phone2', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
 		</div>
-	</div>-->
+	</div>
     <?php
 		// TODO:
     $addPhone = <<< JS

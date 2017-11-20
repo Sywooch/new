@@ -3,7 +3,6 @@
 namespace frontend\models;
 
 use Yii;
-use dektrium\user\models\User;
 
 /**
  * This is the model class for table "{{%user_phones}}".
@@ -13,8 +12,6 @@ use dektrium\user\models\User;
  * @property integer $ad_id
  * @property integer $phone
  * @property integer $sort
- *
- * @property User $user
  */
 class UserPhones extends \yii\db\ActiveRecord
 {
@@ -32,9 +29,10 @@ class UserPhones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'ad_id', 'phone', 'sort'], 'integer'],
-            [['phone'], 'max' => 15],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [ [ 'user_id', 'ad_id', 'sort' ], 'integer' ],
+            [ [ 'phone', ], 'integer' ],
+//            [ [ 'phone', ], 'integer', 'min' => 5, 'max' => '20' ],
+            [ [ 'phone' ], 'required' ],
         ];
     }
 
@@ -44,19 +42,11 @@ class UserPhones extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'      => 'ID',
             'user_id' => 'User ID',
-            'ad_id' => 'Ad ID',
-            'phone' => 'Телефон',
-            'sort' => 'Sort',
+            'ad_id'   => 'Ad ID',
+            'phone'   => 'Phone',
+            'sort'    => 'Sort',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

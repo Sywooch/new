@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use backend\controllers\UsersHostController;
 use backend\models\Subcategory;
 use yii;
 use yii\filters\VerbFilter;
@@ -33,7 +34,7 @@ class AdvertsController extends \yii\web\Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'login', 'error', 'create', 'subcat', 'preview' ],
+                        'actions' => [ 'login', 'error', 'create', 'subcat', 'preview', 'save', 'success', 'edit' ],
                         'allow'   => true,
                     ],
                     [
@@ -78,10 +79,12 @@ class AdvertsController extends \yii\web\Controller
         if ( $model->load( Yii::$app->request->post() )
             && $price->load( Yii::$app->request->post() )
             && $phone->load( Yii::$app->request->post() )
-            && $currency->load( Yii::$app->request->post() )
+//            && ($phone->load( Yii::$app->request->post() ) && $phone->validate())
+//            && ($currency->load( Yii::$app->request->post()) && $currency->validate() )
+            && $currency->load( Yii::$app->request->post())
         ) {
 
-//            Helpers::p(Yii::$app->request->post());
+//            Helpers::p(Yii::$app->request->post()); die;
 
             $model->sid = $this->getSid();
             $model->ip = $this->getIp();
@@ -90,18 +93,25 @@ class AdvertsController extends \yii\web\Controller
             $transaction = \Yii::$app->db->beginTransaction();
             try{
                 $model->save();
+
                 $price->ad_id = $model->id;
-                $price->currency_id = $currency->id;
+                $price->currency_id = $currency->short_name;
                 $price->save();
 
-                foreach ( $phone['phone'] as $key => $val ) {
+//                Helpers::p($phone->phone); die;
+                var_dump( $phone->phone ); die;
+//                echo gettype( $phone->phone);die;
+                foreach ( $phone->phone as $key => $val ) {
                     if ( $val != '' ) {
                         $phone->ad_id = $model->id;
-                        $phone->phone = $val;
-                        $phone->sort = $key;
-                        $phone->save();
+//                        $phone->user_id = $model->id;
+                        $phone->phone = $val; Helpers::p($phone->phone , 1);
+                        $phone->sort = $key; //Helpers::p( $phone); die;
+                        if(!$phone->save()){
+                            echo 'no';
+                        }
                     }
-                }
+                } //die;
 
                 $transaction->commit();
             } catch ( \Exception $e ){
@@ -111,6 +121,7 @@ class AdvertsController extends \yii\web\Controller
 //                die();
             } catch ( \Throwable $e ){
                 $transaction->rollBack();
+//                \Yii::$app->session->setFlash('error','DB Error');
                 throw $e;
 //                var_dump( $model->getErrors() );
 //                die();
@@ -132,9 +143,66 @@ class AdvertsController extends \yii\web\Controller
         }
     }
 
-    private function save()
+    public function actionPreview( $id )
     {
+        $model = $this->findModel( $id );
+        $category = Category::find()->where( [ 'id' => $model->cat_id ] )->one();
+        $subcategory = Subcategory::find()->where( [ 'id' => $model->subcat_id ] )->one();
+        $type = Type::find()->where( [ 'id' => $model->type ] )->one();
+        $city = Country::find()->where( [ 'id' => $model->city ] )->one();
+        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
+        $phone = UserPhones::find()->where( [ 'ad_id' => $id ] )->one();
+        $period = Period::find()->where( [ 'id' => $model->period ] )->one();
 
+        return $this->render( 'preview', [
+            'model'       => $model,
+            'category'    => $category,
+            'subcategory' => $subcategory,
+            'type'        => $type,
+            'period'      => $period,
+            'city'        => $city,
+            'price'       => $price,
+            'phone'       => $phone,
+        ] );
+    }
+
+    public function actionEdit( $id ){
+        $model = $this->findModel( $id );
+        $category = Category::find()->where( [ 'id' => $model->cat_id ] )->one();
+        $subcategory = Subcategory::find()->where( [ 'id' => $model->subcat_id ] )->one();
+        $type = Type::find()->where( [ 'id' => $model->type ] )->one();
+        $city = Country::find()->where( [ 'id' => $model->city ] )->one();
+        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
+        $phone = UserPhones::find()->where( [ 'ad_id' => $id ] )->one(); //var_dump( $phone );
+        $period = Period::find()->where( [ 'id' => $model->period ] )->one();
+
+        return $this->render( 'edit', [
+            'model'       => $model,
+            'category'    => $category,
+            'subcategory' => $subcategory,
+            'type'        => $type,
+            'period'      => $period,
+            'city'        => $city,
+            'price'       => $price,
+            'phone'       => $phone,
+        ] );
+    }
+
+    public function actionSave( $id )
+    {
+        $model = $this->findModel( $id );
+        $model->draft = 0;
+        if ( $model->save() ) {
+            return $this->redirect( [ 'success', ] );
+        } else {
+            // TODO:
+            return $this->render( 'preview', [
+            ] );
+        }
+    }
+
+    public function actionSuccess(){
+        return $this->render( 'success' );
     }
 
     /**
@@ -191,28 +259,6 @@ class AdvertsController extends \yii\web\Controller
     private function _cityList()
     {
         return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
-    }
-
-    public function actionPreview( $id )
-    {
-        $model = $this->findModel( $id );
-        $category = Category::find()->where( 'id' == $model->cat_id )->one();
-        $subcategory = Subcategory::find()->where( 'id' == $model->subcat_id )->one();
-        $type = Type::find()->where( 'id' == $model->type )->one();
-        $city = Country::find()->where( 'id' == $model->city )->one();
-        $price = Price::find()->where( 'ad_id' == $id )->joinWith('currency')->one();
-
-        return $this->render( 'preview', [
-            'model'       => $model,
-            'category'    => $category,
-            'subcategory' => $subcategory,
-            'type'        => $type,
-            //            'period'   => $_period,
-            'city'        => $city,
-            'price'       => $price,
-            //            'currency' => $_currency,
-            //            'phone'    => $phone,
-        ] );
     }
 
     public function actionView( $id )
