@@ -18,7 +18,7 @@ class m171115_153058_create_user_phones_table extends Migration
             'id'      => $this->primaryKey(),
             'user_id' => $this->integer(),
             'ad_id'   => $this->integer(),
-            'phone'   => $this->integer( 15 ),
+            'phone'   => $this->string( 20 ),
             'sort'    => $this->integer( 2 ),
         ], $tableOptions );
 

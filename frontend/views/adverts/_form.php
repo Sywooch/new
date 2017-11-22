@@ -149,13 +149,16 @@ FontAwesomeAsset::register( $this );
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Телефон</label>
 		<div class="col-sm-5">
-        <?= Html::activeInput( 'text', $phone, 'phone',
-            [ 'id' => 'phone0', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+        <?/*= Html::activeInput( 'text', $phone, 'phone[]',
+            [ 'id' => 'phone0', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) */?>
 		</div>
 		<div class="col-sm-1">
 			<button class="btn btn-default" type="button">+</button>
 		</div>
 	</div>
+
+    <?= $form->field($phone, 'phone[]') ?>
+    <?= $form->field($phone, 'phone[]') ?>
 
 	<!--<div class="form-group hidden">
 		<div class="col-sm-offset-2 col-sm-5">

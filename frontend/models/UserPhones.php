@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $user_id
  * @property integer $ad_id
- * @property integer $phone
+ * @property string $phone
  * @property integer $sort
  */
 class UserPhones extends \yii\db\ActiveRecord
@@ -29,10 +29,8 @@ class UserPhones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'user_id', 'ad_id', 'sort' ], 'integer' ],
-            [ [ 'phone', ], 'integer' ],
-//            [ [ 'phone', ], 'integer', 'min' => 5, 'max' => '20' ],
-            [ [ 'phone' ], 'required' ],
+            [['user_id', 'ad_id', 'sort'], 'integer'],
+            [['phone'], 'string', 'max' => 20],
         ];
     }
 
@@ -42,11 +40,11 @@ class UserPhones extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id'      => 'ID',
+            'id' => 'ID',
             'user_id' => 'User ID',
-            'ad_id'   => 'Ad ID',
-            'phone'   => 'Phone',
-            'sort'    => 'Sort',
+            'ad_id' => 'Ad ID',
+            'phone' => 'Phone',
+            'sort' => 'Sort',
         ];
     }
 }

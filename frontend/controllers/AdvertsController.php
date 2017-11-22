@@ -79,8 +79,6 @@ class AdvertsController extends \yii\web\Controller
         if ( $model->load( Yii::$app->request->post() )
             && $price->load( Yii::$app->request->post() )
             && $phone->load( Yii::$app->request->post() )
-//            && ($phone->load( Yii::$app->request->post() ) && $phone->validate())
-//            && ($currency->load( Yii::$app->request->post()) && $currency->validate() )
             && $currency->load( Yii::$app->request->post())
         ) {
 
@@ -98,15 +96,12 @@ class AdvertsController extends \yii\web\Controller
                 $price->currency_id = $currency->short_name;
                 $price->save();
 
-//                Helpers::p($phone->phone); die;
-                var_dump( $phone->phone ); die;
-//                echo gettype( $phone->phone);die;
                 foreach ( $phone->phone as $key => $val ) {
                     if ( $val != '' ) {
                         $phone->ad_id = $model->id;
 //                        $phone->user_id = $model->id;
-                        $phone->phone = $val; Helpers::p($phone->phone , 1);
-                        $phone->sort = $key; //Helpers::p( $phone); die;
+                        $phone->phone = $val;
+                        $phone->sort = $key;
                         if(!$phone->save()){
                             echo 'no';
                         }

@@ -21,6 +21,8 @@ class Adverts extends ActiveRecord implements AggregateRoot
 {
     use EventTrait;
 
+//    public $form;
+
     public static function tableName()
     {
         return '{{%adverts}}';
@@ -96,6 +98,18 @@ class Adverts extends ActiveRecord implements AggregateRoot
             'updated_at' => 'Updated At',
         ];
     }
+
+    /*public function createForm(){
+        $this->form->model = new Adverts();
+        $_category = $this->_categoryList();
+        $type = $this->_typeList();
+        $_period = $this->_periodList();
+        $_city = $this->_cityList();
+        $price = new Price();
+        $_currency = $this->_currencyList();
+        $currency = new Currency();
+        $phone = new UserPhones();
+    }*/
 
     public function addPhoto( UploadedFile $file )
     {
