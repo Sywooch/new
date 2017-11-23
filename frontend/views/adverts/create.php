@@ -14,7 +14,7 @@ use yii\helpers\Html;
 /* @var $city frontend\controllers\AdvertsController */
 /* @var $price frontend\controllers\AdvertsController */
 /* @var $currency frontend\controllers\AdvertsController */
-/* @var $phone frontend\controllers\AdvertsController */
+/* @var $phones frontend\controllers\AdvertsController */
 
 $this->title = 'Создать объявление';
 $this->params['breadcrumbs'][] = $this->title;
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'city'     => $city,
         'price'    => $price,
         'currency' => $currency,
-        'phone'    => $phone,
+        'phones'    => $phones,
     ] ) ?>
 
 </div>

@@ -17,7 +17,7 @@ use backend\models\Subcategory;
 use backend\models\Period;
 use backend\models\Type;
 
-class Adverts extends ActiveRecord implements AggregateRoot
+class Adverts extends ActiveRecord
 {
     use EventTrait;
 

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use backend\controllers\UsersHostController;
 use backend\models\Subcategory;
+use board\repositories\AdvertsRepository;
 use yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -20,6 +21,7 @@ use frontend\models\Price;
 use frontend\models\UserPhones;
 use common\models\Helpers;
 use backend\models\Currency;
+use yii\base\Model;
 
 class AdvertsController extends \yii\web\Controller
 {
@@ -66,47 +68,55 @@ class AdvertsController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        $model = new Adverts();
-        $_category = $this->_categoryList();
-        $type = $this->_typeList();
-        $_period = $this->_periodList();
-        $_city = $this->_cityList();
-        $price = new Price();
-        $_currency = $this->_currencyList();
-        $currency = new Currency();
-        $phone = new UserPhones();
+       $model = new Adverts();
+       $_category = AdvertsRepository::categoryList();
+       $type = AdvertsRepository::typeList();
+       $_period = AdvertsRepository::periodList();
+       $_city = AdvertsRepository::countryList();
+       $price = new Price();
+       $_currency = AdvertsRepository::currencyList();
+       $currency = new Currency();
+       $phones = new UserPhones();
+
+
+//        $advertForm = new AdvertsRepository();
+//        $advertForm->createAdvertForm();
+
+//        if (!isset($user, $profile)) {
+//            throw new NotFoundHttpException("The user was not found.");
+//        }
 
         if ( $model->load( Yii::$app->request->post() )
             && $price->load( Yii::$app->request->post() )
-            && $phone->load( Yii::$app->request->post() )
-            && $currency->load( Yii::$app->request->post())
+            && $phones->load( Yii::$app->request->post() )
+            && $currency->load( Yii::$app->request->post() )
         ) {
-
-//            Helpers::p(Yii::$app->request->post()); die;
-
-            $model->sid = $this->getSid();
-            $model->ip = $this->getIp();
+            $model->sid = AdvertsRepository::getSid();
+            $model->ip = AdvertsRepository::getIp();
             $model->draft = 1;
 
             $transaction = \Yii::$app->db->beginTransaction();
             try{
                 $model->save();
+//                if ( !$model->save() ) {
+//                    throw new \RuntimeException( 'Saving error.' );
+//                }
 
                 $price->ad_id = $model->id;
                 $price->currency_id = $currency->short_name;
                 $price->save();
 
-                foreach ( $phone->phone as $key => $val ) {
+                foreach ( $phones->phone as $key => $val ) {
                     if ( $val != '' ) {
-                        $phone->ad_id = $model->id;
-//                        $phone->user_id = $model->id;
-                        $phone->phone = $val;
-                        $phone->sort = $key;
-                        if(!$phone->save()){
-                            echo 'no';
-                        }
+                        $userphones = new UserPhones();
+                        $userphones->ad_id = $model->id;
+                        $userphones->user_id = Yii::$app->user->id;
+                        $userphones->phone = $val;
+                        $userphones->sort = $key;
+                        $userphones->isNewRecord = true;
+                        $userphones->save();
                     }
-                } //die;
+                }
 
                 $transaction->commit();
             } catch ( \Exception $e ){
@@ -133,7 +143,7 @@ class AdvertsController extends \yii\web\Controller
                 'city'     => $_city,
                 'price'    => $price,
                 'currency' => $_currency,
-                'phone'    => $phone,
+                'phones'   => $phones,
             ] );
         }
     }
@@ -161,7 +171,8 @@ class AdvertsController extends \yii\web\Controller
         ] );
     }
 
-    public function actionEdit( $id ){
+    public function actionEdit( $id )
+    {
         $model = $this->findModel( $id );
         $category = Category::find()->where( [ 'id' => $model->cat_id ] )->one();
         $subcategory = Subcategory::find()->where( [ 'id' => $model->subcat_id ] )->one();
@@ -189,71 +200,17 @@ class AdvertsController extends \yii\web\Controller
         $model->draft = 0;
         if ( $model->save() ) {
             return $this->redirect( [ 'success', ] );
-        } else {
+        }
+        else {
             // TODO:
             return $this->render( 'preview', [
             ] );
         }
     }
 
-    public function actionSuccess(){
+    public function actionSuccess()
+    {
         return $this->render( 'success' );
-    }
-
-    /**
-     * @return int|number
-     */
-    private function getIp()
-    {
-        return Helpers::IpToNum( Yii::$app->request->userIP );
-    }
-
-    /**
-     * @return string
-     */
-    private function getSid()
-    {
-        return $sid = md5( time() . rand( 1, 0xFFFFFF ) );
-    }
-
-    /**
-     * @return array
-     */
-    private function _currencyList()
-    {
-        return ArrayHelper::map( Currency::find()->orderBy( 'id' )->asArray()->all(), 'id', 'short_name' );
-    }
-
-    /**
-     * @return array
-     */
-    private function _categoryList()
-    {
-        return ArrayHelper::map( Category::find()->orderBy( 'menu_order' )->asArray()->all(), 'id', 'category_name' );
-    }
-
-    /**
-     * @return array
-     */
-    private function _typeList()
-    {
-        return ArrayHelper::map( Type::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'name' );
-    }
-
-    /**
-     * @return array
-     */
-    private function _periodList()
-    {
-        return ArrayHelper::map( Period::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
-    }
-
-    /**
-     * @return array
-     */
-    private function _cityList()
-    {
-        return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
     }
 
     public function actionView( $id )

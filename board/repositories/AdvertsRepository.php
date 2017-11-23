@@ -15,17 +15,26 @@ use board\repositories\events\EntityPersisted;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use backend\models\Subcategory;
+use common\models\Helpers;
+use backend\models\Currency;
+use backend\models\Category;
+use backend\models\Type;
+use backend\models\Period;
+use backend\models\Country;
+use frontend\models\Price;
+use frontend\models\UserPhones;
 
-class AdvertsRepository
+class AdvertsRepository extends yii\db\ActiveRecord
 {
     private $_dispatcher;
+    public $model;
 
     /*public function __construct( EventDispatcher $dispatcher )
     {
         $this->_dispatcher = $dispatcher;
     }*/
 
-    public function save( Adverts $advert )
+    /*public function save( Adverts $advert )
     {
         if ( !$advert->save() ) {
             throw new \RuntimeException( 'Saving error.' );
@@ -33,6 +42,20 @@ class AdvertsRepository
 
 //        $this->_dispatcher->dispatchAll( $advert->releaseEvents() );
 //        $this->_dispatcher->dispatch( new EntityPersisted( $advert ) );
+    }*/
+
+    public function createAdvertForm(){
+        $this->model = new Adverts();
+        $this->model->_category = self::categoryList();
+        $this->model->type = self::typeList();
+        $this->model->_period = self::periodList();
+        $this->model->_city = self::countryList();
+        $this->model->price = new Price();
+        $this->model->_currency = self::currencyList();
+        $this->model->currency = new Currency();
+        $this->model->phones = new UserPhones();
+
+        return $this->model;
     }
 
     public function get( $id )
@@ -41,6 +64,62 @@ class AdvertsRepository
             throw new \DomainException( 'Product is not found.' );
         }
         return $product;
+    }
+
+    /**
+     * @return int|number
+     */
+    public static function getIp()
+    {
+        return Helpers::IpToNum( Yii::$app->request->userIP );
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSid()
+    {
+        return $sid = md5( time() . rand( 1, 0xFFFFFF ) );
+    }
+
+    /**
+     * @return array
+     */
+    public static function currencyList()
+    {
+        return ArrayHelper::map( Currency::find()->orderBy( 'id' )->asArray()->all(), 'id', 'short_name' );
+    }
+
+    /**
+     * @return array
+     */
+    public static function categoryList()
+    {
+        return ArrayHelper::map( Category::find()->orderBy( 'menu_order' )->asArray()->all(), 'id', 'category_name' );
+    }
+
+    /**
+     * @return array
+     */
+    public static function typeList()
+    {
+        return ArrayHelper::map( Type::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'name' );
+    }
+
+    /**
+     * @return array
+     */
+    public static function periodList()
+    {
+        return ArrayHelper::map( Period::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
+    }
+
+    /**
+     * @return array
+     */
+    public static function countryList()
+    {
+        return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
     }
 
     /**

@@ -23,7 +23,7 @@ FontAwesomeAsset::register( $this );
 /* @var $phone /view/create.php */
 /* @var $city /view/create.php */
 
-\common\models\Helpers::p( $phone ); die;
+//\common\models\Helpers::p( $phone ); die;
 ?>
 <div class="type-form">
 
