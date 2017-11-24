@@ -48,15 +48,15 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'cat_id', 'subcat_id', 'type', 'country', 'periods', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
-            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'country', 'ip',], 'required'],
+            [['old_id', 'cat_id', 'subcat_id', 'type', 'countries', 'periods', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
+            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'countries', 'ip',], 'required'],
             [['description'], 'string'],
             [['sid'], 'string', 'max' => 32],
             [['header', 'author', 'email'], 'string', 'max' => 255],
             [['sid'], 'unique'],
             [['old_id'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-            [['country'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['country' => 'id']],
+            [['countries'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['countries' => 'id']],
             [['periods'], 'exist', 'skipOnError' => true, 'targetClass' => Period::className(), 'targetAttribute' => ['periods' => 'id']],
             [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => ['subcat_id' => 'id']],
             [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Type::className(), 'targetAttribute' => ['type' => 'id']],
@@ -79,7 +79,7 @@ class Adverts extends ActiveRecord
 
             'header' => 'Заголовок',
             'description' => 'Описание',
-            'country' => 'Расположение',
+            'countries' => 'Расположение',
 
             'periods' => 'Период',
             'author' => 'Автор',

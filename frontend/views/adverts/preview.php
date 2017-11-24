@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										class="pull-right"><?= $model->period->description ?></span></span></p>
 							<hr>
 
-							<p><i class="fa fa-info fa-fw"></i>Статус:<span class="pull-right"><?= $model->active ?></span></p>
+							<p><i class="fa fa-info fa-fw"></i>Статус:<span class="pull-right"><?= $model->active == 1 ? "Активно" : "Не активно" ?></span></p>
 							<hr>
 					</div>
 				</div>

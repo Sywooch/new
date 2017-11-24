@@ -12,7 +12,7 @@ class m171117_154320_add_draft_column_to_adverts_table extends Migration
      */
     public function up()
     {
-        $this->addColumn( 'adverts', 'draft', $this->boolean() );
+        $this->addColumn( 'adverts', 'draft', $this->boolean()->defaultValue(1) );
     }
 
     /**

@@ -134,7 +134,7 @@ class AdvertCreateForm extends CompositeForm
         return ArrayHelper::map( Period::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
     }
 
-    public function cityList()
+    public function countryList()
     {
         return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
     }

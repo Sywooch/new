@@ -47,7 +47,7 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'type' )->dropDownList( $type, [ 'prompt' => 'Выберите тип' ] ) ?>
 
-    <?= $form->field( $model, 'period' )->dropDownList( $period, [ 'prompt' => 'Выберите период' ] ) ?>
+    <?= $form->field( $model, 'periods' )->dropDownList( $period, [ 'prompt' => 'Выберите период' ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
@@ -140,7 +140,7 @@ FontAwesomeAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'countries' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 

@@ -33,7 +33,7 @@ class CopyAdvertsController extends Controller
             $adverts->type = $value['AdvertType'];
             $value['AdvertHeader'] !== '' ? $adverts->header = $value['AdvertHeader'] : $adverts->header = '---';
             $adverts->description = $value['AdvertComment'];
-            $adverts->country = $value['AdvertCity'];
+            $adverts->countries = $value['AdvertCity'];
 //            $adverts->price = $value['AdvertPrice'];
             $adverts->period = $value['AdvertPeriod'];
             $adverts->active = $value['AdvertActive'];

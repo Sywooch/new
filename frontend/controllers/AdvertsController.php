@@ -93,18 +93,21 @@ class AdvertsController extends \yii\web\Controller
         ) {
             $model->sid = AdvertsRepository::getSid();
             $model->ip = AdvertsRepository::getIp();
-            $model->draft = 1;
-
+//            $model->draft = 1;
+//                Helpers::p( yii::$app->request->post() ); die;
             $transaction = \Yii::$app->db->beginTransaction();
             try{
-                $model->save();
-//                if ( !$model->save() ) {
-//                    throw new \RuntimeException( 'Saving error.' );
-//                }
-
+//                $model->save();
+                if ( !$model->save() ) {
+                    throw new \RuntimeException( 'Saving $model error.' );
+                }
+//                Helpers::p( $model->id, 1 ); die;
                 $price->ad_id = $model->id;
                 $price->currency_id = $currency->short_name;
-                $price->save();
+//                $price->save();
+                if ( !$price->save() ) {
+                    throw new \RuntimeException( 'Saving $price error.' );
+                }
 
                 foreach ( $phones->phone as $key => $val ) {
                     if ( $val != '' ) {
@@ -114,7 +117,10 @@ class AdvertsController extends \yii\web\Controller
                         $userphones->phone = $val;
                         $userphones->sort = $key;
                         $userphones->isNewRecord = true;
-                        $userphones->save();
+//                        $userphones->save();
+                        if ( !$userphones->save() ) {
+                            throw new \RuntimeException( 'Saving $userphones error.' );
+                        }
                     }
                 }
 
