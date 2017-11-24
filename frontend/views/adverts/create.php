@@ -11,7 +11,7 @@ use yii\helpers\Html;
 /* @var $category frontend\controllers\AdvertsController */
 /* @var $type frontend\controllers\AdvertsController */
 /* @var $period frontend\controllers\AdvertsController */
-/* @var $city frontend\controllers\AdvertsController */
+/* @var $country frontend\controllers\AdvertsController */
 /* @var $price frontend\controllers\AdvertsController */
 /* @var $currency frontend\controllers\AdvertsController */
 /* @var $phones frontend\controllers\AdvertsController */
@@ -29,10 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'category' => $category,
         'type'     => $type,
         'period'   => $period,
-        'city'     => $city,
+        'country'  => $country,
         'price'    => $price,
         'currency' => $currency,
-        'phones'    => $phones,
+        'phones'   => $phones,
     ] ) ?>
 
 </div>

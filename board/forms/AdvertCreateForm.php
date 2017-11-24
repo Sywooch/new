@@ -26,12 +26,12 @@ class AdvertCreateForm extends CompositeForm
     public $type;
     public $header;
     public $description;
-    public $city;
+    public $country;
     public $username;
     public $useremail;
     public $userphone;
 
-    /*public function __construct( $cat_id, $subcat_id, $period, $type, $header, $description, $city, $config = [] )
+    /*public function __construct( $cat_id, $subcat_id, $period, $type, $header, $description, $country, $config = [] )
     {
         $this->cat_id = $cat_id;
         $this->subcat_id = $subcat_id;
@@ -39,7 +39,7 @@ class AdvertCreateForm extends CompositeForm
         $this->type = $type;
         $this->header = $header;
         $this->description = $description;
-        $this->city = $city;
+        $this->country = $country;
         $this->price = new PriceForm();
         $this->images = new ImageForm();
         $this->contactInfo = new ContactInfoForm();
@@ -57,7 +57,7 @@ class AdvertCreateForm extends CompositeForm
     public function rules()
     {
         return [
-            [ [ 'cat_id', 'subcat_id', 'period', 'type', 'header', 'description', 'city', ], 'required' ],
+            [ [ 'cat_id', 'subcat_id', 'period', 'type', 'header', 'description', 'country', ], 'required' ],
             [ [ 'cat_id', 'subcat_id' ], 'integer' ],
             [ [ 'description' ], 'string', 'max' => 255 ],
         ];
@@ -72,7 +72,7 @@ class AdvertCreateForm extends CompositeForm
             'type'        => 'Тип',
             'header'      => 'Заголовок',
             'description' => 'Описание',
-//            'city'        => 'Город',
+//            'country'        => 'Город',
 //            'price'       => 'Цена',
 //            'images'      => 'Фотографии',
             'username'    => 'Имя',

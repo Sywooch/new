@@ -22,7 +22,7 @@ FontAwesomeAsset::register( $this );
 /* @var $price /view/create.php */
 /* @var $currency /view/create.php */
 /* @var $phones /view/create.php */
-/* @var $city /view/create.php */
+/* @var $country /view/create.php */
 ?>
 <div class="type-form">
 
@@ -140,7 +140,7 @@ FontAwesomeAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'city' )->dropDownList( $city, [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 

@@ -10,5 +10,5 @@ use yii\helpers\Url;
 
 <h3>Объявление добавлено!</h3>
 <p>
-	<a href="<?= Url::to('/adverts/create') ?>">Добавить объявление</a>
+	<a href="<?= Url::to('/adverts/create') ?>">Еще объявление</a>
 </p>

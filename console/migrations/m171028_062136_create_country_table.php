@@ -21,7 +21,7 @@ class m171028_062136_create_country_table extends Migration
             'sort'         => $this->integer( 3 )->notNull(),
         ], $tableOptions );
 
-//        $this->addForeignKey( 'fk-city_id', '{{%country}}', 'id', '{{%adverts}}', 'city' );
+//        $this->addForeignKey( 'fk-city_id', '{{%country}}', 'id', '{{%adverts}}', 'country' );
     }
 
     /**

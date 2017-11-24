@@ -40,7 +40,7 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model->priceForm, 'negotiable' )->checkboxList( [ 'Торг уместен' ] )->label( false ) ?>
 
-    <?= $form->field( $model, 'city' )->dropDownList( $model->cityList(), [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'country' )->dropDownList( $model->cityList(), [ 'prompt' => 'Выберите' ] ) ?>
 
 	<hr>
 	<h4>Добавить фотографии</h4>

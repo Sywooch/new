@@ -24,7 +24,7 @@ use backend\models\Country;
 use frontend\models\Price;
 use frontend\models\UserPhones;
 
-class AdvertsRepository extends yii\db\ActiveRecord
+class AdvertsRepository
 {
     private $_dispatcher;
     public $model;

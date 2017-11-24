@@ -31,9 +31,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'city') ?>
+    <?php // echo $form->field($model, 'countries') ?>
 
-    <?php // echo $form->field($model, 'period') ?>
+    <?php // echo $form->field($model, 'periods') ?>
 
     <?php // echo $form->field($model, 'author') ?>
 
@@ -41,7 +41,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'active') ?>
 
+    <?php // echo $form->field($model, 'selected') ?>
+
     <?php // echo $form->field($model, 'selected_old') ?>
+
+    <?php // echo $form->field($model, 'special') ?>
 
     <?php // echo $form->field($model, 'special_old') ?>
 
@@ -52,6 +56,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>
+
+    <?php // echo $form->field($model, 'draft') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

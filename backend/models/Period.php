@@ -5,12 +5,14 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "period".
+ * This is the model class for table "{{%period}}".
  *
  * @property integer $id
  * @property integer $period
  * @property integer $sort
  * @property string $description
+ *
+ * @property Adverts[] $adverts
  */
 class Period extends \yii\db\ActiveRecord
 {
@@ -19,7 +21,7 @@ class Period extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'period';
+        return '{{%period}}';
     }
 
     /**
@@ -46,5 +48,13 @@ class Period extends \yii\db\ActiveRecord
             'sort' => 'Sort',
             'description' => 'Description',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdverts()
+    {
+        return $this->hasMany(Adverts::className(), ['periods' => 'id']);
     }
 }

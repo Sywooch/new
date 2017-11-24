@@ -21,7 +21,7 @@ FontAwesomeAsset::register( $this );
 /* @var $price /view/create.php */
 /* @var $currency /view/create.php */
 /* @var $phone /view/create.php */
-/* @var $city /view/create.php */
+/* @var $country /view/create.php */
 
 //\common\models\Helpers::p( $phone ); die;
 ?>
@@ -35,8 +35,11 @@ FontAwesomeAsset::register( $this );
         ],
     ] ); ?>
 
+
     <?= $form->field( $model, 'cat_id' )->dropDownList( $category,
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
+
+
 
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
         'pluginOptions' => [
@@ -141,7 +144,7 @@ FontAwesomeAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'city' )->dropDownList( $city, [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 

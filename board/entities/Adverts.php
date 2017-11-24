@@ -48,16 +48,16 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'cat_id', 'subcat_id', 'type', 'city', 'period', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
-            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'city', 'ip',], 'required'],
+            [['old_id', 'cat_id', 'subcat_id', 'type', 'country', 'periods', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
+            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'country', 'ip',], 'required'],
             [['description'], 'string'],
             [['sid'], 'string', 'max' => 32],
             [['header', 'author', 'email'], 'string', 'max' => 255],
             [['sid'], 'unique'],
             [['old_id'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-            [['city'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['city' => 'id']],
-            [['period'], 'exist', 'skipOnError' => true, 'targetClass' => Period::className(), 'targetAttribute' => ['period' => 'id']],
+            [['country'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['country' => 'id']],
+            [['periods'], 'exist', 'skipOnError' => true, 'targetClass' => Period::className(), 'targetAttribute' => ['periods' => 'id']],
             [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => ['subcat_id' => 'id']],
             [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Type::className(), 'targetAttribute' => ['type' => 'id']],
         ];
@@ -79,9 +79,9 @@ class Adverts extends ActiveRecord
 
             'header' => 'Заголовок',
             'description' => 'Описание',
-            'city' => 'Расположение',
+            'country' => 'Расположение',
 
-            'period' => 'Период',
+            'periods' => 'Период',
             'author' => 'Автор',
             'email' => 'Email',
 
@@ -130,7 +130,7 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCat()
+    public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'cat_id']);
     }
@@ -138,9 +138,9 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCity()
+    public function getCountry()
     {
-        return $this->hasOne(Country::className(), ['id' => 'city']);
+        return $this->hasOne(Country::className(), ['id' => 'countries']);
     }
 
     /**
@@ -148,13 +148,13 @@ class Adverts extends ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(Period::className(), ['id' => 'period']);
+        return $this->hasOne(Period::className(), ['id' => 'periods']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSubcat()
+    public function getSubcategory()
     {
         return $this->hasOne(Subcategory::className(), ['id' => 'subcat_id']);
     }

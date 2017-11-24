@@ -45,7 +45,7 @@ class AdvertManageService
             $form->period,
             $form->header,
             $form->description,
-            $form->city,
+            $form->country,
             $form->username,
             $form->useremail,
             $form->userphone,

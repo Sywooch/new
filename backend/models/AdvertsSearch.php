@@ -18,7 +18,7 @@ class AdvertsSearch extends Adverts
     public function rules()
     {
         return [
-            [['id', 'old_id', 'cat_id', 'subcat_id', 'type', 'city', 'period', 'active', 'selected_old', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'old_id', 'cat_id', 'subcat_id', 'type', 'countries', 'periods', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at', 'draft'], 'integer'],
             [['sid', 'header', 'description', 'author', 'email'], 'safe'],
         ];
     }
@@ -64,15 +64,18 @@ class AdvertsSearch extends Adverts
             'cat_id' => $this->cat_id,
             'subcat_id' => $this->subcat_id,
             'type' => $this->type,
-            'city' => $this->city,
-            'period' => $this->period,
+            'countries' => $this->countries,
+            'periods' => $this->periods,
             'active' => $this->active,
+            'selected' => $this->selected,
             'selected_old' => $this->selected_old,
+            'special' => $this->special,
             'special_old' => $this->special_old,
             'images_old' => $this->images_old,
             'ip' => $this->ip,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'draft' => $this->draft,
         ]);
 
         $query->andFilterWhere(['like', 'sid', $this->sid])

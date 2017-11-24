@@ -5,13 +5,14 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "{{%category}}".
  *
  * @property integer $id
  * @property integer $old_id
  * @property string $category_name
  * @property integer $menu_order
  *
+ * @property Adverts[] $adverts
  * @property Subcategory[] $subcategories
  * @property Subcategory[] $subcategories0
  */
@@ -22,7 +23,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'category';
+        return '{{%category}}';
     }
 
     /**
@@ -51,6 +52,14 @@ class Category extends \yii\db\ActiveRecord
             'category_name' => 'Category Name',
             'menu_order' => 'Menu Order',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdverts()
+    {
+        return $this->hasMany(Adverts::className(), ['cat_id' => 'id']);
     }
 
     /**

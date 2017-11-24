@@ -5,11 +5,14 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "country".
+ * This is the model class for table "{{%country}}".
  *
  * @property integer $id
  * @property integer $old_id
  * @property string $country_name
+ * @property integer $sort
+ *
+ * @property Adverts[] $adverts
  */
 class Country extends \yii\db\ActiveRecord
 {
@@ -18,7 +21,7 @@ class Country extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'country';
+        return '{{%country}}';
     }
 
     /**
@@ -27,8 +30,8 @@ class Country extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'country_name'], 'required'],
-            [['old_id'], 'integer'],
+            [['old_id', 'country_name', 'sort'], 'required'],
+            [['old_id', 'sort'], 'integer'],
             [['country_name'], 'string', 'max' => 50],
         ];
     }
@@ -42,6 +45,15 @@ class Country extends \yii\db\ActiveRecord
             'id' => 'ID',
             'old_id' => 'Old ID',
             'country_name' => 'Country Name',
+            'sort' => 'Sort',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdverts()
+    {
+        return $this->hasMany(Adverts::className(), ['countries' => 'id']);
     }
 }

@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'old_id')->textInput() ?>
 
-    <?/*= $form->field($model, 'sid')->textInput(['maxlength' => true]) */?>
+    <?= $form->field($model, 'sid')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'cat_id')->textInput() ?>
 
@@ -26,9 +26,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'city')->textInput() ?>
+    <?= $form->field($model, 'countries')->textInput() ?>
 
-    <?= $form->field($model, 'period')->textInput() ?>
+    <?= $form->field($model, 'periods')->textInput() ?>
 
     <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
 
@@ -36,7 +36,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'active')->textInput() ?>
 
+    <?= $form->field($model, 'selected')->textInput() ?>
+
     <?= $form->field($model, 'selected_old')->textInput() ?>
+
+    <?= $form->field($model, 'special')->textInput() ?>
 
     <?= $form->field($model, 'special_old')->textInput() ?>
 
@@ -47,6 +51,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <?= $form->field($model, 'updated_at')->textInput() ?>
+
+    <?= $form->field($model, 'draft')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -11,7 +11,7 @@ use yii\helpers\Html;
 /* @var $category frontend\controllers\AdvertsController */
 /* @var $type frontend\controllers\AdvertsController */
 /* @var $period frontend\controllers\AdvertsController */
-/* @var $city frontend\controllers\AdvertsController */
+/* @var $country frontend\controllers\AdvertsController */
 /* @var $price frontend\controllers\AdvertsController */
 /* @var $currency frontend\controllers\AdvertsController */
 /* @var $phone frontend\controllers\AdvertsController */
@@ -24,12 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render( '_edit_form', [
         'model'    => $model,
-        'category' => $category,
-        'type'     => $type,
-        'period'   => $period,
-        'city'     => $city,
+//        'category' => $category,
+//        'type'     => $type,
+//        'period'   => $period,
+//        'country'  => $country,
         'price'    => $price,
-        'currency' => $currency,
+//        'currency' => $currency,
         'phone'    => $phone,
     ] ) ?>
 
