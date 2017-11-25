@@ -173,6 +173,7 @@ FontAwesomeAsset::register( $this );
             [ 'class' => 'form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
 		</div>
 	</div>
+
     <?php
 		// TODO:
     $addPhone = <<< JS

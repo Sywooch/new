@@ -93,8 +93,7 @@ class AdvertsController extends \yii\web\Controller
         ) {
             $model->sid = AdvertsRepository::getSid();
             $model->ip = AdvertsRepository::getIp();
-//            $model->draft = 1;
-//                Helpers::p( yii::$app->request->post() ); die;
+
             $transaction = \Yii::$app->db->beginTransaction();
             try{
 //                $model->save();
@@ -177,40 +176,115 @@ class AdvertsController extends \yii\web\Controller
 
     public function actionEdit( $id )
     {
-//        $model = $this->findModel( $id );
+        $currency = new Currency();
+        $phones = new UserPhones();
 
-        $model = Adverts::find()
-            ->select( 'adverts.*' )
-            ->where( [ 'adverts.id' => $id ] )
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'type' )
-            ->joinWith( 'period' )
-            ->joinWith( 'country' )
-            ->one();
-        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
-        $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();
+        $model = $this->findModel( $id );
 
-//        $category = Category::find()->where( [ 'id' => $model->cat_id ] )->one();
+//        $model = Adverts::find()
+//            ->select( 'adverts.*' )
+//            ->where( [ 'adverts.id' => $id ] )
+//            ->joinWith( 'category' )
+//            ->joinWith( 'subcategory' )
+//            ->joinWith( 'type' )
+//            ->joinWith( 'period' )
+//            ->joinWith( 'country' )
+//            ->one();
+
+        $categorySelected = Category::find()->where( [ 'id' => $model->cat_id ] )->one();
+        $categoryList = AdvertsRepository::categoryList();
+
 //        $subcategory = Subcategory::find()->where( [ 'id' => $model->subcat_id ] )->one();
-//        $type = Type::find()->where( [ 'id' => $model->type ] )->one();
-//        $country = Country::find()->where( [ 'id' => $model->country ] )->one();
-        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
-        $phone = UserPhones::find()->where( [ 'ad_id' => $id ] )->one(); //var_dump( $phone );
-//        $period = Period::find()->where( [ 'id' => $model->periods ] )->one();
+//        $subcategoryList = AdvertsRepository::subcategoryList();
 
-        return $this->render( 'edit', [
-            'model'       => $model,
-            'price'       => $price,
-            'phone'       => $phone,
-        ] );
+        $typeSelected = Type::find()->where( [ 'id' => $model->type ] )->one();
+        $typeList = AdvertsRepository::typeList();
+
+        $countrySelected = Country::find()->where( [ 'id' => $model->country ] )->one();
+        $countryList = AdvertsRepository::countryList();
+
+        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
+        $phones->find()->where( [ 'ad_id' => $id ] )->all();
+
+        $periodSelected = Period::find()->where( [ 'id' => $model->periods ] )->one();
+        $periodList = AdvertsRepository::periodList();
+
+        $currencyList = AdvertsRepository::currencyList();
+
+
+        if ( $model->load( Yii::$app->request->post() )
+            && $price->load( Yii::$app->request->post() )
+            && $phones->load( Yii::$app->request->post() )
+            && $currency->load( Yii::$app->request->post() )
+        ) {
+            $model->sid = AdvertsRepository::getSid();
+            $model->ip = AdvertsRepository::getIp();
+
+            $transaction = \Yii::$app->db->beginTransaction();
+            try{
+                if ( !$model->save() ) {
+                    throw new \RuntimeException( 'Saving $model error.' );
+                }
+                $price->ad_id = $model->id;
+                $price->currency_id = $currency->short_name;
+                if ( !$price->save() ) {
+                    throw new \RuntimeException( 'Saving $price error.' );
+                }
+
+                foreach ( $phones->phone as $key => $val ) {
+                    if ( $val != '' ) {
+                        $userphones = new UserPhones();
+                        $userphones->ad_id = $model->id;
+                        $userphones->user_id = Yii::$app->user->id;
+                        $userphones->phone = $val;
+                        $userphones->sort = $key;
+                        $userphones->isNewRecord = true;
+                        if ( !$userphones->save() ) {
+                            throw new \RuntimeException( 'Saving $userphones error.' );
+                        }
+                    }
+                }
+
+                $transaction->commit();
+            } catch ( \Exception $e ){
+                $transaction->rollBack();
+                throw $e;
+//                var_dump( $model->getErrors() );
+//                die();
+            } catch ( \Throwable $e ){
+                $transaction->rollBack();
+//                \Yii::$app->session->setFlash('error','DB Error');
+                throw $e;
+//                var_dump( $model->getErrors() );
+//                die();
+            }
+
+            return $this->redirect( [ 'preview', 'id' => $model->id ] );
+        }
+        else {
+            return $this->render( 'edit', [
+                'categorySelected' => $categorySelected,
+                'categoryList'     => $categoryList,
+                //            'subcategory' => $subcategory,
+                'typeSelected'     => $typeSelected,
+                'typeList'         => $typeList,
+                'periodSelected'   => $periodSelected,
+                'periodList'       => $periodList,
+                'countrySelected'  => $countrySelected,
+                'countryList'      => $countryList,
+                'model'            => $model,
+                'price'            => $price,
+                'currency'         => $currencyList,
+                'phones'           => $phones,
+            ] );
+        }
     }
 
     public function actionSave( $id )
     {
         $model = $this->findModel( $id );
 
-        if( $model->draft == 0){
+        if ( $model->draft == 0 ) {
             return $this->redirect( [ 'success', ] );
         }
         if ( !$model->save() ) {

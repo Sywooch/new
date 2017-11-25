@@ -15,20 +15,25 @@ use kartik\depdrop\DepDrop;
 FontAwesomeAsset::register( $this );
 
 /* @var $model /view/create.php */
-/* @var $category /view/create.php */
+/* @var $categoryList /view/create.php */
+/* @var $categorySelected /view/create.php */
 /* @var $type /view/create.php */
 /* @var $period /view/create.php */
 /* @var $price /view/create.php */
 /* @var $currency /view/create.php */
-/* @var $phone /view/create.php */
+/* @var $phones /view/create.php */
 /* @var $country /view/create.php */
 
-//\common\models\Helpers::p( $phone ); die;
+//\common\models\Helpers::p( $categorySelect ); die;
 ?>
 <div class="type-form">
 
     <?php $form = ActiveForm::begin( [
-        'options'     => [ 'enctype' => 'multipart/form-data', 'action' => ['adverts/preview'], 'class' => 'form-horizontal', ],
+        'options'     => [
+            'enctype' => 'multipart/form-data',
+            'action'  => [ 'adverts/preview' ],
+            'class'   => 'form-horizontal',
+        ],
         'fieldConfig' => [
             'template'     => '{label}<div class="col-sm-6">{input}</div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
             'labelOptions' => [ 'class' => 'col-sm-2 control-label' ],
@@ -36,8 +41,12 @@ FontAwesomeAsset::register( $this );
     ] ); ?>
 
 
-    <?= $form->field( $model, 'cat_id' )->dropDownList( $category,
-        [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
+    <?= $form->field( $model, 'cat_id' )->dropDownList( $categoryList,
+        [
+            'id'      => 'cat-id',
+            'prompt'  => 'Выберите раздел',
+            'options' => [ ". $categorySelected->id." => [ 'selected' => true ] ]
+        ] ) ?>
 
 
 
@@ -49,9 +58,11 @@ FontAwesomeAsset::register( $this );
         ]
     ] ) ?>
 
-    <?= $form->field( $model, 'type' )->dropDownList( $type, [ 'prompt' => 'Выберите тип' ] ) ?>
+    <?= $form->field( $model, 'type' )->dropDownList( $typeList,
+        [ 'prompt' => 'Выберите тип', 'options' => [ ". $typeSelected->id ." => [ 'selected' => true ] ] ] ) ?>
 
-    <?= $form->field( $model, 'period' )->dropDownList( $period, [ 'prompt' => 'Выберите период' ] ) ?>
+    <?= $form->field( $model, 'periods' )->dropDownList( $periodList,
+        [ 'prompt' => 'Выберите период', 'options' => [ ". $periodSelected->id ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
@@ -144,38 +155,37 @@ FontAwesomeAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'country' )->dropDownList( $countryList,
+        [ 'prompt' => 'Выберите', 'options' => [ ". $countrySelected->id ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 
     <?= $form->field( $model, 'email' )->textInput( [ 'placeholder' => 'someone@mail.ru', ] ) ?>
 
-	<div class="form-group">
-		<label for="" class="col-sm-2 control-label">Телефон</label>
-		<div class="col-sm-5">
-        <?= Html::activeInput( 'text', $phone, 'phone[]',
-            [ 'id' => 'phone0', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
-		</div>
-		<div class="col-sm-1">
-			<button class="btn btn-default" type="button">+</button>
-		</div>
-	</div>
-
-	<div class="form-group hidden">
-		<div class="col-sm-offset-2 col-sm-5">
-        <?= Html::activeInput( 'text', $phone, 'phone[]',
-            [ 'id' => 'phone1', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
-		</div>
-	</div>
-
-	<div class="form-group hidden">
-		<div class="col-sm-offset-2 col-sm-5">
-        <?= Html::activeInput( 'text', $phone, 'phone[]',
-            [ 'id' => 'phone2', 'class' => 'phone form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
-		</div>
-	</div>
     <?php
-		// TODO:
+    foreach ( $phones as $key => $val ) { ?>
+
+			<div class="form-group">
+				<label for="" class="col-sm-2 control-label">Телефон</label>
+				<div class="col-sm-5">
+            <?= Html::activeInput( 'text', $phones[$key], 'phone[]',
+                [ 'class'       => 'form-control',
+                  'placeholder' => '8 xxx xxx xx xx',
+                  'label'       => false,
+                  'value'       => $phones[$key]->phone
+                ] ) ?>
+				</div>
+				<div class="col-sm-1">
+					<button class="btn btn-default" type="button">+</button>
+				</div>
+			</div>
+
+    <?php }
+    ?>
+
+
+    <?php
+    // TODO:
     $addPhone = <<< JS
     
 JS;

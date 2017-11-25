@@ -14,7 +14,7 @@ use yii\helpers\Html;
 /* @var $country frontend\controllers\AdvertsController */
 /* @var $price frontend\controllers\AdvertsController */
 /* @var $currency frontend\controllers\AdvertsController */
-/* @var $phone frontend\controllers\AdvertsController */
+/* @var $phones frontend\controllers\AdvertsController */
 
 $this->title = 'Создать объявление';
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,14 +23,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="type-edit">
 
     <?= $this->render( '_edit_form', [
-        'model'    => $model,
-//        'category' => $category,
-//        'type'     => $type,
-//        'period'   => $period,
-//        'country'  => $country,
-        'price'    => $price,
-//        'currency' => $currency,
-        'phone'    => $phone,
+        'model'            => $model,
+        'categorySelected' => $categorySelected,
+        'categoryList'     => $categoryList,
+        'typeSelected'     => $typeSelected,
+        'typeList'         => $typeList,
+        'periodSelected'   => $periodSelected,
+        'periodList'       => $periodList,
+        'countrySelected'  => $countrySelected,
+        'countryList'      => $countryList,
+        'price'            => $price,
+        'currency'         => $currency,
+        'phones'           => $phones,
     ] ) ?>
 
 </div>
