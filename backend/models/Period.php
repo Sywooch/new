@@ -31,6 +31,7 @@ class Period extends \yii\db\ActiveRecord
     {
         return [
             [['period', 'sort'], 'integer'],
+            [['period', 'sort'], 'required'],
             [['description'], 'string', 'max' => 25],
             [['period'], 'unique'],
             [['sort'], 'unique'],

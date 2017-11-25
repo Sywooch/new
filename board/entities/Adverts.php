@@ -32,14 +32,14 @@ class Adverts extends ActiveRecord
     {
         return [
             [
-                'class' => SaveRelationsBehavior::className(),
+                'class'     => SaveRelationsBehavior::className(),
                 'relations' => [ 'images' ],
             ],
             'timestamp' => [
-                'class' => 'yii\behaviors\TimestampBehavior',
+                'class'      => 'yii\behaviors\TimestampBehavior',
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => [ 'created_at', 'updated_at' ],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => [ 'updated_at' ],
                 ],
             ],
         ];
@@ -48,18 +48,83 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'cat_id', 'subcat_id', 'type', 'countries', 'periods', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at'], 'integer'],
-            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'countries', 'ip',], 'required'],
-            [['description'], 'string'],
-            [['sid'], 'string', 'max' => 32],
-            [['header', 'author', 'email'], 'string', 'max' => 255],
-            [['sid'], 'unique'],
-            [['old_id'], 'unique'],
-            [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-            [['countries'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['countries' => 'id']],
-            [['periods'], 'exist', 'skipOnError' => true, 'targetClass' => Period::className(), 'targetAttribute' => ['periods' => 'id']],
-            [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => ['subcat_id' => 'id']],
-            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Type::className(), 'targetAttribute' => ['type' => 'id']],
+            [
+                [
+                    'old_id',
+                    'cat_id',
+                    'subcat_id',
+                    'type',
+                    'countries',
+                    'periods',
+                    'active',
+                    'selected',
+                    'selected_old',
+                    'special',
+                    'special_old',
+                    'images_old',
+                    'ip',
+                    'created_at',
+                    'updated_at'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'sid',
+                    'cat_id',
+                    'subcat_id',
+                    'type',
+                    'header',
+                    'description',
+                    'author',
+                    'email',
+                    'periods',
+                    'countries',
+                    'ip',
+                ],
+                'required'
+            ],
+            [ [ 'description' ], 'string' ],
+            [ [ 'sid' ], 'string', 'max' => 32 ],
+            [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
+            ['email', 'email'],
+            [ [ 'sid' ], 'unique' ],
+            [ [ 'old_id' ], 'unique' ],
+            [
+                [ 'cat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Category::className(),
+                'targetAttribute' => [ 'cat_id' => 'id' ]
+            ],
+            [
+                [ 'countries' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Country::className(),
+                'targetAttribute' => [ 'countries' => 'id' ]
+            ],
+            [
+                [ 'periods' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Period::className(),
+                'targetAttribute' => [ 'periods' => 'id' ]
+            ],
+            [
+                [ 'subcat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Subcategory::className(),
+                'targetAttribute' => [ 'subcat_id' => 'id' ]
+            ],
+            [
+                [ 'type' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Type::className(),
+                'targetAttribute' => [ 'type' => 'id' ]
+            ],
         ];
     }
 
@@ -69,31 +134,31 @@ class Adverts extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'     => 'ID',
             'old_id' => 'Old ID',
-            'sid' => 'Sid',
+            'sid'    => 'Sid',
 
-            'cat_id' => 'Раздел',
+            'cat_id'    => 'Раздел',
             'subcat_id' => 'Подраздел',
-            'type' => 'Тип',
+            'type'      => 'Тип',
 
-            'header' => 'Заголовок',
+            'header'      => 'Заголовок',
             'description' => 'Описание',
-            'countries' => 'Расположение',
+            'countries'   => 'Расположение',
 
             'periods' => 'Период',
-            'author' => 'Автор',
-            'email' => 'Email',
+            'author'  => 'Автор',
+            'email'   => 'Email',
 
-            'active' => 'Active',
-            'selected' => 'Selected',
+            'active'       => 'Active',
+            'selected'     => 'Selected',
             'selected_old' => 'Selected Old',
 
-            'special' => 'Special',
+            'special'     => 'Special',
             'special_old' => 'Special Old',
-            'images_old' => 'Images Old',
+            'images_old'  => 'Images Old',
 
-            'ip' => 'Ip',
+            'ip'         => 'Ip',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -118,13 +183,13 @@ class Adverts extends ActiveRecord
         $this->updateImages( $image );
     }
 
-    private function updateImages(array $photos)
+    private function updateImages( array $photos )
     {
-        foreach ($photos as $i => $photo) {
-            $photo->setSort($i);
+        foreach ( $photos as $i => $photo ) {
+            $photo->setSort( $i );
         }
         $this->photos = $photos;
-        $this->populateRelation('mainPhoto', reset($photos));
+        $this->populateRelation( 'mainPhoto', reset( $photos ) );
     }
 
     /**
@@ -132,7 +197,7 @@ class Adverts extends ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
+        return $this->hasOne( Category::className(), [ 'id' => 'cat_id' ] );
     }
 
     /**
@@ -140,7 +205,7 @@ class Adverts extends ActiveRecord
      */
     public function getCountry()
     {
-        return $this->hasOne(Country::className(), ['id' => 'countries']);
+        return $this->hasOne( Country::className(), [ 'id' => 'countries' ] );
     }
 
     /**
@@ -148,7 +213,7 @@ class Adverts extends ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne(Period::className(), ['id' => 'periods']);
+        return $this->hasOne( Period::className(), [ 'id' => 'periods' ] );
     }
 
     /**
@@ -156,7 +221,7 @@ class Adverts extends ActiveRecord
      */
     public function getSubcategory()
     {
-        return $this->hasOne(Subcategory::className(), ['id' => 'subcat_id']);
+        return $this->hasOne( Subcategory::className(), [ 'id' => 'subcat_id' ] );
     }
 
     /**
@@ -164,7 +229,7 @@ class Adverts extends ActiveRecord
      */
     public function getType()
     {
-        return $this->hasOne(Type::className(), ['id' => 'type']);
+        return $this->hasOne( Type::className(), [ 'id' => 'type' ] );
     }
 
     public function releaseEvents(){ }

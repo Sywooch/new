@@ -162,7 +162,7 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'email' )->textInput( [ 'placeholder' => 'someone@mail.ru', ] ) ?>
 
-    <?php
+    <?php //var_dump( $phones );
     foreach ( $phones as $key => $val ) { ?>
 
 			<div class="form-group">

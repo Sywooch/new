@@ -28,6 +28,7 @@ FontAwesomeAsset::register( $this );
 
     <?php $form = ActiveForm::begin( [
         'options'     => [ 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal', ],
+//        'enableAjaxValidation' => true,
         'fieldConfig' => [
             'template'     => '{label}<div class="col-sm-6">{input}</div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
             'labelOptions' => [ 'class' => 'col-sm-2 control-label' ],
@@ -38,6 +39,7 @@ FontAwesomeAsset::register( $this );
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
 
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
+        'options'       => [ 'prompt' => 'Выберите подраздел', ],
         'pluginOptions' => [
             'depends'     => [ 'cat-id' ],
             'placeholder' => 'Выберите подраздел',
@@ -74,7 +76,7 @@ FontAwesomeAsset::register( $this );
 			</div>
 		</div>
 	</div>
-
+    <?/*= $form->errorSummary( $price ); */?>
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
@@ -146,38 +148,47 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'email' )->textInput( [ 'placeholder' => 'someone@mail.ru', ] ) ?>
 
-	<div class="form-group">
-		<label for="" class="col-sm-2 control-label">Телефон</label>
-		<div class="col-sm-5">
-        <?= Html::activeInput( 'text', $phones, 'phone[]',
-            [ 'class' => 'form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+	<div id="form-phones-create">
+		<div class="form-group">
+			<label for="" class="col-sm-2 control-label">Телефон</label>
+			<div class="col-sm-5">
+          <?= Html::activeInput( 'text', $phones, 'phone[]',
+              [ 'class' => 'form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+			</div>
+			<div class="col-sm-1">
+				<button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон">+</button>
+			</div>
 		</div>
-		<div class="col-sm-1">
-			<button class="btn btn-default" type="button">+</button>
+
+		<div class="form-group hidden">
+			<div class="col-sm-offset-2 col-sm-5">
+          <?= Html::activeInput( 'text', $phones, 'phone[]',
+              [ 'class' => 'form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+			</div>
+			<div class="col-sm-1">
+				<button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон">+</button>
+			</div>
+		</div>
+
+		<div class="form-group hidden">
+			<div class="col-sm-offset-2 col-sm-5">
+          <?= Html::activeInput( 'text', $phones, 'phone[]',
+              [ 'class' => 'form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
+			</div>
 		</div>
 	</div>
-
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-5">
-        <?= Html::activeInput( 'text', $phones, 'phone[]',
-            [ 'class' => 'form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
-		</div>
-		<div class="col-sm-1">
-			<button class="btn btn-default" type="button">+</button>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-5">
-        <?= Html::activeInput( 'text', $phones, 'phone[]',
-            [ 'class' => 'form-control', 'placeholder' => '8 xxx xxx xx xx', 'label' => false ] ) ?>
-		</div>
-	</div>
-
+    <?/*= $form->errorSummary( $phones ); */?>
     <?php
-		// TODO:
+    // TODO:
     $addPhone = <<< JS
-    
+    var formPhonesCreate = $('#form-phones-create');
+    var firstElement = formPhonesCreate.children('div.form-group').first();
+		var addPhoneBtn = formPhonesCreate.find('.add-phone-btn');
+		$( addPhoneBtn ).click(function(e){
+			e.preventDefault();
+			$(this).addClass('hidden');
+			$(this).parent().parent().next().removeClass('hidden').addClass('show');
+		});
 JS;
     $this->registerJs( $addPhone, yii\web\View::POS_READY );
     ?>

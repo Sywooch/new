@@ -18,6 +18,7 @@ use yii\helpers\Html;
 
 $this->title = 'Создать объявление';
 $this->params['breadcrumbs'][] = $this->title;
+//\common\models\Helpers::p( $phones);die;
 ?>
 
 <div class="type-edit">

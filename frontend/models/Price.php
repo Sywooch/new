@@ -34,6 +34,7 @@ class Price extends \yii\db\ActiveRecord
     {
         return [
             [['ad_id', 'price', 'price_old', 'currency_id'], 'integer'],
+            ['price', 'default', 'value' => 0],
             [['negotiable'], 'string', 'max' => 2],
             [['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['currency_id' => 'id']],
         ];
@@ -47,7 +48,7 @@ class Price extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ad_id' => 'Ad ID',
-            'price' => 'Price',
+            'price' => 'Цена',
             'price_old' => 'Price Old',
             'currency_id' => 'Currency ID',
             'negotiable' => 'Negotiable',
