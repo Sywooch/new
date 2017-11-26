@@ -133,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   ] ) ?>
 					</div>
 					<div class="col-sm-1">
-						<button class="btn btn-default add-phone-btn hidden" type="button">+</button>
+						<button class="btn btn-default add-phone-btn hidden" type="button" title="Добавить телефон">+</button>
 					</div>
 				</div>
 
@@ -145,17 +145,19 @@ $this->params['breadcrumbs'][] = $this->title;
     // TODO:
     $addPhone = <<< JS
     var formPhonesUpdate = $('#form-phones-update');
-		var length = $(formPhonesUpdate).find('div.form-group').length; //console.log(length);		 
+		var length = formPhonesUpdate.find('div.form-group').length;		 
 		var addPhoneBtn = formPhonesUpdate.find('.add-phone-btn');
 		if(length === 1) addPhoneBtn.removeClass('hidden').addClass('show');
-		if(length === 2) addPhoneBtn.eq(1).removeClass('hidden').addClass('show');
-		$( addPhoneBtn ).click(function(e){
+		if(length === 2) addPhoneBtn.eq(1).removeClass('hidden').addClass('show');		
+		$(formPhonesUpdate).on('click','.add-phone-btn',function(e){
 			e.preventDefault();
-			$(this).addClass('hidden');			
+			$(this).removeClass('show').addClass('hidden');			
 			if(length<3){
 				$('<div class="form-group"><div class="col-sm-offset-2 col-sm-5"><input id="userphones-phone" class="form-control" name="UserPhones[phone][]"  placeholder="8 xxx xxx xx xx" type="text"></div><div class="col-sm-1"><button class="btn btn-default add-phone-btn hidden" type="button" title="Добавить телефон">+</button></div></div>').appendTo(formPhonesUpdate);
+				var l = formPhonesUpdate.find('.add-phone-btn');
+				if(l.length === 2) l.eq(1).removeClass('hidden').addClass('show');
 			}
-		});
+		});		 
 JS;
     $this->registerJs( $addPhone, yii\web\View::POS_READY );
     ?>
