@@ -24,7 +24,9 @@ FontAwesomeAsset::register( $this );
 /* @var $phones /view/create.php */
 /* @var $country /view/create.php */
 
-//\common\models\Helpers::p( $categorySelect ); die;
+$this->title = 'Создать объявление';
+$this->params['breadcrumbs'][] = $this->title;
+//\common\models\Helpers::p( $model->type,1 ); die;
 ?>
 <div class="type-form">
 
@@ -40,7 +42,6 @@ FontAwesomeAsset::register( $this );
         ],
     ] ); ?>
 
-
     <?= $form->field( $model, 'cat_id' )->dropDownList( $categoryList,
         [
             'id'      => 'cat-id',
@@ -48,9 +49,8 @@ FontAwesomeAsset::register( $this );
             'options' => [ ". $categorySelected->id." => [ 'selected' => true ] ]
         ] ) ?>
 
-
-
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
+        'options'       => [ 'prompt' => 'Выберите подраздел', ],
         'pluginOptions' => [
             'depends'     => [ 'cat-id' ],
             'placeholder' => 'Выберите подраздел',
@@ -59,10 +59,10 @@ FontAwesomeAsset::register( $this );
     ] ) ?>
 
     <?= $form->field( $model, 'type' )->dropDownList( $typeList,
-        [ 'prompt' => 'Выберите тип', 'options' => [ ". $typeSelected->id ." => [ 'selected' => true ] ] ] ) ?>
+        [ 'prompt' => 'Выберите тип', 'options' => [ ". $model->type ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'periods' )->dropDownList( $periodList,
-        [ 'prompt' => 'Выберите период', 'options' => [ ". $periodSelected->id ." => [ 'selected' => true ] ] ] ) ?>
+        [ 'prompt' => 'Выберите период', 'options' => [ ". $model->periods ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
@@ -96,52 +96,7 @@ FontAwesomeAsset::register( $this );
 			<h4>Добавить фотографии</h4>
 		</div>
 	</div>
-    <? /*= $form->field( $model->imagesForm, 'files[]' )->widget( FileInput::class, [
-        'options'       => [
-            'accept'   => 'image/*',
-            'multiple' => true,
-        ],
-        'pluginOptions' => [
-            'allowedFileExtensions' => [
-                'jpg',
-                'gif',
-                'png'
-            ],
-            'showUpload'            => false,
-        ],
 
-    ] ) */ ?>
-
-	<!--	<div class="file-loading">-->
-	<!--      --><? //= $form->field( $model->images, 'files[]' )->widget( FileInput::class, [
-    //          'options'       => [
-    //              'accept' => 'image/*',
-    ////                          'multiple' => true,
-    //              						'uploadUrl' => Url::to(['/uploads']),
-    ////              						'uploadUrl' => '/uploads',
-    //          ],
-    //          'pluginOptions' => [
-    //          		'allowedFileExtensions' => [
-    //          				'jpg', 'gif', 'png'
-    //							],
-    //							'showUpload' => false,
-    //							],
-    //					]
-    //			) ?>
-
-
-	<!--		<input id="input-700" name="kartik-input-700[]" type="file" multiple>-->
-
-	<!--	</div>-->
-    <?php
-    /*$script = <<< JS*/
-    // $("#input-700").fileinput({
-    // 		uploadUrl: '/uploads',
-    // 		maxFileCount: 6
-    // });
-    /*JS;*/
-    //$this->registerJs( $script, yii\web\View::POS_READY );
-    ?>
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
@@ -156,38 +111,51 @@ FontAwesomeAsset::register( $this );
 	</div>
 
     <?= $form->field( $model, 'country' )->dropDownList( $countryList,
-        [ 'prompt' => 'Выберите', 'options' => [ ". $countrySelected->id ." => [ 'selected' => true ] ] ] ) ?>
+        [ 'prompt' => 'Выберите', 'options' => [ ". $model->countries ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 
     <?= $form->field( $model, 'email' )->textInput( [ 'placeholder' => 'someone@mail.ru', ] ) ?>
 
-    <?php //var_dump( $phones );
-    foreach ( $phones as $key => $val ) { ?>
+	<div id="form-phones-update">
+      <?php
+      foreach ( $phonesArray as $key => $val ) { ?>
 
-			<div class="form-group">
-				<label for="" class="col-sm-2 control-label">Телефон</label>
-				<div class="col-sm-5">
-            <?= Html::activeInput( 'text', $phones[$key], 'phone[]',
-                [ 'class'       => 'form-control',
-                  'placeholder' => '8 xxx xxx xx xx',
-                  'label'       => false,
-                  'value'       => $phones[$key]->phone
-                ] ) ?>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">Телефон</label>
+					<div class="col-sm-5">
+              <?= Html::activeInput( 'text', $phonesArray[$key], 'phone[]',
+                  [
+                      'class'       => 'form-control',
+                      'placeholder' => '8 xxx xxx xx xx',
+                      'label'       => false,
+                      'value'       => $phonesArray[$key]->phone
+                  ] ) ?>
+					</div>
+					<div class="col-sm-1">
+						<button class="btn btn-default add-phone-btn hidden" type="button">+</button>
+					</div>
 				</div>
-				<div class="col-sm-1">
-					<button class="btn btn-default" type="button">+</button>
-				</div>
-			</div>
 
-    <?php }
-    ?>
-
+      <?php }
+      ?>
+	</div>
 
     <?php
     // TODO:
     $addPhone = <<< JS
-    
+    var formPhonesUpdate = $('#form-phones-update');
+		var length = $(formPhonesUpdate).find('div.form-group').length; //console.log(length);		 
+		var addPhoneBtn = formPhonesUpdate.find('.add-phone-btn');
+		if(length === 1) addPhoneBtn.removeClass('hidden').addClass('show');
+		if(length === 2) addPhoneBtn.eq(1).removeClass('hidden').addClass('show');
+		$( addPhoneBtn ).click(function(e){
+			e.preventDefault();
+			$(this).addClass('hidden');			
+			if(length<3){
+				$('<div class="form-group"><div class="col-sm-offset-2 col-sm-5"><input id="userphones-phone" class="form-control" name="UserPhones[phone][]"  placeholder="8 xxx xxx xx xx" type="text"></div><div class="col-sm-1"><button class="btn btn-default add-phone-btn hidden" type="button" title="Добавить телефон">+</button></div></div>').appendTo(formPhonesUpdate);
+			}
+		});
 JS;
     $this->registerJs( $addPhone, yii\web\View::POS_READY );
     ?>

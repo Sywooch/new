@@ -182,7 +182,7 @@ FontAwesomeAsset::register( $this );
     // TODO:
     $addPhone = <<< JS
     var formPhonesCreate = $('#form-phones-create');
-    var firstElement = formPhonesCreate.children('div.form-group').first();
+    //var firstElement = formPhonesCreate.children('div.form-group').first();
 		var addPhoneBtn = formPhonesCreate.find('.add-phone-btn');
 		$( addPhoneBtn ).click(function(e){
 			e.preventDefault();

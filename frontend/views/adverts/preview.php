@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="clearfix"></div>
 			<hr>
 			<div class="col-sm-12">
-				<a href="<?= Url::to( [ '/adverts/edit', 'id' => $model->id ] ) ?>" class="btn btn-default"><i
+				<a href="<?= Url::to( [ '/adverts/update', 'id' => $model->id ] ) ?>" class="btn btn-default"><i
 							class="fa fa-angle-double-left"
 							aria-hidden="true"></i>Редактировать</a>
 				<a href="<?= Url::to( [ '/adverts/save', 'id' => $model->id ] ) ?>" class="btn btn-primary">Сохранить<i
