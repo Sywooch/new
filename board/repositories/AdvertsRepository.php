@@ -145,6 +145,7 @@ class AdvertsRepository
     }
 
     /**
+     * Получение списка подкатегорий для getSubcat()
      *
      * @param $cat_id
      * @return array
@@ -159,5 +160,17 @@ class AdvertsRepository
             $result[] = [ 'id' => $key, 'name' => $value ];
         }
         return $result;
+    }
+
+    /**
+     * Функция выбора списка подкатегорий для страницы апдейта
+     *
+     * @param $cat_id
+     * @return array
+     */
+    public function subcategoryListUpdate( $cat_id )
+    {
+        return ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'menu_order' )->asArray()->all(),
+            'id', 'subcat_name' );
     }
 }

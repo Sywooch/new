@@ -49,14 +49,32 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => [ ". $categorySelected->id." => [ 'selected' => true ] ]
         ] ) ?>
 
+    <?php
+    /*if ( !$model->isNewRecord && isset( $model->cat_id ) ) {
+        echo $form->field( $model, 'subcat_id' )->dropDownList( $subcategoryList,
+            [ 'prompt' => 'Выберите подраздел', 'options' => [ ". $model->subcat_id ." => [ 'selected' => true ] ] ] );
+    } else {
+        echo $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
+            'options'       => [ 'prompt' => 'Выберите подраздел', ],
+            //        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
+            'pluginOptions' => [
+                'depends'     => [ 'cat-id' ],
+                'placeholder' => 'Выберите подраздел',
+                'url'         => Url::to( [ '/site/subcat' ] )
+            ]
+        ] );
+		}*/
+    ?>
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
         'options'       => [ 'prompt' => 'Выберите подраздел', ],
+        'data'          => $subcategoryList,
+//        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
         'pluginOptions' => [
             'depends'     => [ 'cat-id' ],
             'placeholder' => 'Выберите подраздел',
             'url'         => Url::to( [ '/site/subcat' ] )
         ]
-    ] ) ?>
+    ] )  ?>
 
     <?= $form->field( $model, 'type' )->dropDownList( $typeList,
         [ 'prompt' => 'Выберите тип', 'options' => [ ". $model->type ." => [ 'selected' => true ] ] ] ) ?>
