@@ -30,7 +30,8 @@ class UserPhones extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'ad_id', 'sort'], 'integer'],
-            [['phone'], 'string', 'max' => 20],
+            [['phone'], 'string', 'min'=>6, 'max' => 20],
+//            ['phone', 'match', 'pattern' => '/^\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Неправильно написан номер' ]
         ];
     }
 

@@ -164,3 +164,111 @@ hr {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
+/*
+OpenCart
+ */
+.product-thumb {
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+.product-list .product-thumb .image {
+  float: left;
+  padding: 0 15px;
+}
+
+.product-thumb .image {
+  text-align: center;
+}
+
+.product-thumb .image a {
+  display: block;
+}
+
+.product-thumb .image img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-list .product-thumb .caption {
+  margin-left: 230px;
+}
+
+.product-thumb .caption {
+  padding: 0 20px;
+  min-height: 180px;
+}
+
+.product-thumb h4 {
+  font-weight: bold;
+}
+h4 {
+  font-size: 15px;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #444;
+}
+
+.product-thumb .price {
+  color: #444;
+}
+
+.product-thumb .price-new {
+  font-weight: 600;
+}
+
+.product-thumb .price-old {
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 10px;
+}
+
+.product-thumb .price-tax {
+  color: #999;
+  font-size: 12px;
+  display: block;
+}
+
+.product-list .product-thumb .button-group {
+  border-left: 1px solid #ddd;
+}
+.product-thumb .button-group {
+  border-top: 1px solid #ddd;
+  background-color: #eee;
+  overflow: auto;
+}
+
+.product-thumb .button-group button {
+  width: 60%;
+  border: none;
+  display: inline-block;
+  float: left;
+  background-color: #eee;
+  color: #888;
+  line-height: 38px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fa {
+  font-size: 14px;
+}
+
+span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
+  display: inline;
+}
+
+.product-thumb .button-group button+button {
+  width: 20%;
+  border-left: 1px solid #ddd;
+}
+
+.product-thumb .button-group button:hover {
+  color: #444;
+  background-color: #ddd;
+  text-decoration: none;
+  cursor: pointer;
+}

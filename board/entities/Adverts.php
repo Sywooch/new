@@ -21,7 +21,7 @@ class Adverts extends ActiveRecord
 {
     use EventTrait;
 
-//    public $form;
+    public $verifyCode;
 
     public static function tableName()
     {
@@ -48,9 +48,7 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [
-                [
-                    'old_id',
+            [ [ 'old_id',
                     'cat_id',
                     'subcat_id',
                     'type',
@@ -68,9 +66,7 @@ class Adverts extends ActiveRecord
                 ],
                 'integer'
             ],
-            [
-                [
-                    'sid',
+            [ [ 'sid',
                     'cat_id',
                     'subcat_id',
                     'type',
@@ -119,12 +115,11 @@ class Adverts extends ActiveRecord
                 'targetAttribute' => [ 'subcat_id' => 'id' ]
             ],
             [
-                [ 'type' ],
-                'exist',
-                'skipOnError'     => true,
+                [ 'type' ], 'exist', 'skipOnError'     => true,
                 'targetClass'     => Type::className(),
                 'targetAttribute' => [ 'type' => 'id' ]
             ],
+            ['verifyCode', 'captcha'],
         ];
     }
 
@@ -161,6 +156,7 @@ class Adverts extends ActiveRecord
             'ip'         => 'Ip',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'verifyCode' => 'Проверочный код',
         ];
     }
 

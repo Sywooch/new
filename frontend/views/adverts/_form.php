@@ -12,6 +12,7 @@ use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
 use backend\models\Currency;
+use yii\captcha\Captcha;
 
 FontAwesomeAsset::register( $this );
 
@@ -23,6 +24,7 @@ FontAwesomeAsset::register( $this );
 /* @var $currency /view/create.php */
 /* @var $phones /view/create.php */
 /* @var $country /view/create.php */
+//\common\models\Helpers::p( \Yii::$app->user->identity->username); die;
 ?>
 <div class="type-form">
 
@@ -144,9 +146,9 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'countries' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
 
-    <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
+    <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', 'value' => \Yii::$app->user->identity->username ] ) ?>
 
-    <?= $form->field( $model, 'email' )->textInput( [ 'placeholder' => 'someone@mail.ru', ] ) ?>
+    <?= $form->field( $model, 'email' )->textInput( [ 'placeholder' => 'someone@mail.ru', 'value' => \Yii::$app->user->identity->email ] ) ?>
 
 	<div id="form-phones-create">
 		<div class="form-group">
@@ -182,7 +184,6 @@ FontAwesomeAsset::register( $this );
     // TODO:
     $addPhone = <<< JS
     var formPhonesCreate = $('#form-phones-create');
-    //var firstElement = formPhonesCreate.children('div.form-group').first();
 		var addPhoneBtn = formPhonesCreate.find('.add-phone-btn');
 		$( addPhoneBtn ).click(function(e){
 			e.preventDefault();
@@ -192,6 +193,9 @@ FontAwesomeAsset::register( $this );
 JS;
     $this->registerJs( $addPhone, yii\web\View::POS_READY );
     ?>
+
+    <?= $form->field($model, 'verifyCode')->widget(Captcha::className()) ?>
+
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
