@@ -48,11 +48,7 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'old_id',
-                    'cat_id',
-                    'subcat_id',
-                    'type',
-                    'countries',
+            [ [ 'old_id', 'cat_id', 'subcat_id', 'type', 'countries',
                     'periods',
                     'active',
                     'selected',
@@ -159,18 +155,6 @@ class Adverts extends ActiveRecord
             'verifyCode' => 'Проверочный код',
         ];
     }
-
-    /*public function createForm(){
-        $this->form->model = new Adverts();
-        $_category = $this->_categoryList();
-        $type = $this->_typeList();
-        $_period = $this->_periodList();
-        $_city = $this->_cityList();
-        $price = new Price();
-        $_currency = $this->_currencyList();
-        $currency = new Currency();
-        $phone = new UserPhones();
-    }*/
 
     public function addPhoto( UploadedFile $file )
     {
