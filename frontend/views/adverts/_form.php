@@ -194,7 +194,7 @@ JS;
     $this->registerJs( $addPhone, yii\web\View::POS_READY );
     ?>
 
-    <?= $form->field($model, 'verifyCode')->widget(Captcha::className()) ?>
+    <?/*= $form->field($model, 'verifyCode')->widget(Captcha::className()) */?>
 
 	<hr>
 	<div class="form-group">

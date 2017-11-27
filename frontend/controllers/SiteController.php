@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use board\entities\Adverts;
 use board\repositories\AdvertsRepository;
 use Yii;
 use yii\base\InvalidParamException;
@@ -13,6 +14,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\data\ActiveDataProvider;
 
 /**
  * Site controller
@@ -74,7 +76,28 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Adverts::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('index', [
+            'query' => $query,
+            'dataProvider' => $dataProvider,
+//            'sort' => [
+//                'defaultOrder' => ['id' => SORT_DESC],
+//                'attributes' => [
+//                    'id' => [
+//                        'asc' => ['id' => SORT_ASC],
+//                        'desc' => ['id' => SORT_DESC],
+//                    ],
+//                ],
+//            ],
+            'pagination' => [
+                'pageSizeLimit' => [15, 100],
+            ]
+        ]);
     }
 
     /**
