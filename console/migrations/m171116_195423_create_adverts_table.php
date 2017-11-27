@@ -38,11 +38,11 @@ class m171116_195423_create_adverts_table extends Migration
             'updated_at' => $this->integer()->unsigned()->notNull(),
         ] , $tableOptions);
 
-        $this->addForeignKey( 'fk-countries_id', '{{%adverts}}', 'country', '{{%country}}', 'id' );
+        $this->addForeignKey( 'fk-countries_id', '{{%adverts}}', 'countries', '{{%country}}', 'id' );
         $this->addForeignKey( 'fk-category_cat_id', '{{%adverts}}', 'cat_id', '{{%category}}', 'id' );
         $this->addForeignKey( 'fk-subcategory_subcat_id', '{{%adverts}}', 'subcat_id', '{{%subcategory}}', 'id' );
         $this->addForeignKey( 'fk-type', '{{%adverts}}', 'type', '{{%type}}', 'id' );
-        $this->addForeignKey( 'fk-periods', '{{%adverts}}', 'period', '{{%period}}', 'id' );
+        $this->addForeignKey( 'fk-periods', '{{%adverts}}', 'periods', '{{%period}}', 'id' );
 
     }
 
