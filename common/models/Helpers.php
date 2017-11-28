@@ -8,7 +8,7 @@
 
 namespace common\models;
 
-
+use yii\helpers\HtmlPurifier;
 class Helpers
 {
     /**
@@ -92,6 +92,20 @@ class Helpers
             print $arg . '<br>';
             print '</pre>';
         }
+    }
+
+    /**
+     * @param $string
+     * @param $length
+     * @return string
+     */
+    public static function getShortComment( $string, $length )
+    {
+        $s = HtmlPurifier::process( html_entity_decode( $string ) );
+
+        Utf8::strlen( $s ) > $length ? $result = Utf8::substr( $s, 0, $length ) : $result = $s;
+
+        return $result . '...';
     }
 
 }

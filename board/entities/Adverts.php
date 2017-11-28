@@ -48,7 +48,7 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'old_id', 'cat_id', 'subcat_id', 'type', 'countries',
+            [ [ 'old_id', 'cat_id', 'subcat_id', 'types', 'countries',
                     'periods',
                     'active',
                     'selected',
@@ -62,7 +62,7 @@ class Adverts extends ActiveRecord
                 ],
                 'integer'
             ],
-            [ [ 'sid', 'cat_id', 'subcat_id', 'type', 'header', 'description', 'author', 'email', 'periods', 'countries', 'ip', ], 'required' ],
+            [ [ 'sid', 'cat_id', 'subcat_id', 'types', 'header', 'description', 'author', 'email', 'periods', 'countries', 'ip', ], 'required' ],
             [ ['negotiable'], 'boolean'],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
@@ -96,9 +96,9 @@ class Adverts extends ActiveRecord
                 'targetAttribute' => [ 'subcat_id' => 'id' ]
             ],
             [
-                [ 'type' ], 'exist', 'skipOnError'     => true,
+                [ 'types' ], 'exist', 'skipOnError'     => true,
                 'targetClass'     => Type::className(),
-                'targetAttribute' => [ 'type' => 'id' ]
+                'targetAttribute' => [ 'types' => 'id' ]
             ],
             ['verifyCode', 'captcha'],
         ];
@@ -116,7 +116,7 @@ class Adverts extends ActiveRecord
 
             'cat_id'    => 'Раздел',
             'subcat_id' => 'Подраздел',
-            'type'      => 'Тип',
+            'types'      => 'Тип',
 
             'header'      => 'Заголовок',
             'description' => 'Описание',
@@ -194,7 +194,7 @@ class Adverts extends ActiveRecord
      */
     public function getType()
     {
-        return $this->hasOne( Type::className(), [ 'id' => 'type' ] );
+        return $this->hasOne( Type::className(), [ 'id' => 'types' ] );
     }
 
     public function releaseEvents(){ }

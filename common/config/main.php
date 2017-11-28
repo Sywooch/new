@@ -8,6 +8,21 @@ return [
         'cache'                => [
             'class' => 'yii\caching\FileCache',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset'       => [
+                    'sourcePath' => '@webroot/css/bootstrap/',
+                    'css'        => [
+                        'css/bootstrap.css',
+//                        'css/bootstrap-theme.css'
+                    ],
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'sourcePath' => '@webroot/css/bootstrap/',
+                    'js'         => [ 'js/bootstrap.js' ]
+                ],
+            ],
+        ],
         'authClientCollection' => [
             'class'   => \yii\authclient\Collection::className(),
             'clients' => [

@@ -7,7 +7,7 @@
  */
 use yii\helpers\Html;
 
-//\common\models\Helpers::p( $model );
+//\common\models\Helpers::p( $model->type );
 ?>
 
 <div class="ad-list col-xs-12">
@@ -52,12 +52,12 @@ use yii\helpers\Html;
 						<span class="badge"></span>
 					</li>
 					<li>Коротко:
-						<a href="javascript:void(0);" data-container="body" data-toggle="popover" animation="true"data-placement="top" data-content="наша компания занимается всеми видами строительно-монтажных и отделочных работ в архангельске и области. мы предоставляем следующий спектр у..." data-original-title="" title="" style="z-index: -222;">
+						<a href="javascript:void(0);" data-container="body" data-toggle="popover" animation="true"data-placement="top" data-content="<?= \common\models\Helpers::getShortComment( $model->description, 140 ); ?>" data-original-title="" title="" style="z-index: -222;">
 							<i class="fa fa-align-left"></i>
 						</a>
 					</li>
 					<li class="adv-type">
-						Тип:&nbsp;<strong><span>Продам</span></strong>
+						Тип:&nbsp;<strong><span><?= $model->type->name ?></span></strong>
 					</li>
 					<li>Просмотров:&nbsp;<span class="badge">1</span></li>
 				</ul>
