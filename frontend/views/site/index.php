@@ -263,8 +263,11 @@ $this->title = 'vezugruz29.ru';
 		<div class="row">
 			<div class="col-sm-12"><hr></div>
 
-<?= $this->render( '_single_adv',[] ) ?>
-
+        <?php foreach ($dataProvider->getModels() as $model): ?>
+            <?= $this->render('_single_adv', [
+                'model' => $model
+            ]) ?>
+        <?php endforeach; ?>
 
 		</div>
 </div>

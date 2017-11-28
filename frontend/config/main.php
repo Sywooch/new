@@ -45,7 +45,13 @@ return [
             'rules' => [
             ],
         ],
-
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
+                ],
+            ],
+        ],
     ],
     'modules' => [
         'user' => [
