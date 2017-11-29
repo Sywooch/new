@@ -11,7 +11,7 @@ use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
-use backend\models\Currency;
+use backend\models\Currencies;
 use yii\captcha\Captcha;
 
 FontAwesomeAsset::register( $this );
@@ -51,7 +51,7 @@ FontAwesomeAsset::register( $this );
 
     <?= $form->field( $model, 'type' )->dropDownList( $type, [ 'prompt' => 'Выберите тип' ] ) ?>
 
-    <?= $form->field( $model, 'periods' )->dropDownList( $period, [ 'prompt' => 'Выберите период' ] ) ?>
+    <?= $form->field( $model, 'period' )->dropDownList( $period, [ 'prompt' => 'Выберите период' ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
@@ -63,7 +63,7 @@ FontAwesomeAsset::register( $this );
         <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 		<div class="col-sm-2">
-        <?= Html::activeDropDownList( new Currency(), 'short_name', $currency,
+        <?= Html::activeDropDownList( new Currencies(), 'short_name', $currency,
             [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 	</div>
@@ -144,7 +144,7 @@ FontAwesomeAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'countries' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', 'value' => \Yii::$app->user->identity->username ] ) ?>
 

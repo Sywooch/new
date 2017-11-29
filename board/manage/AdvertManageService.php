@@ -13,7 +13,7 @@ use board\repositories\AdvertsRepository;
 use board\services\TransactionManager;
 use board\forms\AdvertCreateForm;
 use board\entities\Adverts;
-use frontend\models\Price;
+use frontend\models\Pricies;
 
 class AdvertManageService
 {

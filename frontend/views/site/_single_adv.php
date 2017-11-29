@@ -23,7 +23,7 @@ use yii\helpers\Html;
 			<div class="caption">
 				<a href="<?= Yii::$app->urlManager->createUrl( [
             'adverts/view-single',
-            'id' => $model['id']
+            'id' => $model->id
         ] ); ?>">
 					<h5><?= $model->header ?></h5>
 				</a>

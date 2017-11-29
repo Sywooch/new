@@ -79,8 +79,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field( $model, 'type' )->dropDownList( $typeList,
         [ 'prompt' => 'Выберите тип', 'options' => [ ". $model->type ." => [ 'selected' => true ] ] ] ) ?>
 
-    <?= $form->field( $model, 'periods' )->dropDownList( $periodList,
-        [ 'prompt' => 'Выберите период', 'options' => [ ". $model->periods ." => [ 'selected' => true ] ] ] ) ?>
+    <?= $form->field( $model, 'period' )->dropDownList( $periodList,
+        [ 'prompt' => 'Выберите период', 'options' => [ ". $model->period ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
@@ -92,7 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 		<div class="col-sm-2">
-        <?= Html::activeDropDownList( new \backend\models\Currency(), 'short_name', $currency,
+        <?= Html::activeDropDownList( new \backend\models\Currencies(), 'short_name', $currency,
             [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
 	</div>
@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 
     <?= $form->field( $model, 'country' )->dropDownList( $countryList,
-        [ 'prompt' => 'Выберите', 'options' => [ ". $model->countries ." => [ 'selected' => true ] ] ] ) ?>
+        [ 'prompt' => 'Выберите', 'options' => [ ". $model->country ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', ] ) ?>
 

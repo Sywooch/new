@@ -147,6 +147,10 @@ a.desc:after {
   margin-left: 7px;
 }
 
+.lime {
+  color: limegreen;
+}
+
 #details .label {
   font-size: 120%;
 }

@@ -15,7 +15,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
-use frontend\models\Price;
+use frontend\models\Pricies;
 use frontend\models\UserPhones;
 
 /**
@@ -82,9 +82,9 @@ class SiteController extends Controller
             ->select( 'adverts.*' )
             ->joinWith( 'category' )
             ->joinWith( 'subcategory' )
-            ->joinWith( 'type' )
-            ->joinWith( 'period' )
-            ->joinWith( 'country' );
+            ->joinWith( 'types' )
+            ->joinWith( 'periods' )
+            ->joinWith( 'countries' );
 
 //        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
 //        $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();

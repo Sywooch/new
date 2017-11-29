@@ -16,12 +16,12 @@ use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use backend\models\Subcategory;
 use common\models\Helpers;
-use backend\models\Currency;
+use backend\models\Currencies;
 use backend\models\Category;
-use backend\models\Type;
-use backend\models\Period;
-use backend\models\Country;
-use frontend\models\Price;
+use backend\models\Types;
+use backend\models\Periods;
+use backend\models\Countries;
+use frontend\models\Pricies;
 use frontend\models\UserPhones;
 
 class AdvertsRepository
@@ -50,9 +50,9 @@ class AdvertsRepository
         $this->model->type = self::typeList();
         $this->model->_period = self::periodList();
         $this->model->_city = self::countryList();
-        $this->model->price = new Price();
+        $this->model->price = new Pricies();
         $this->model->_currency = self::currencyList();
-        $this->model->currency = new Currency();
+        $this->model->currency = new Currencies();
         $this->model->phones = new UserPhones();
 
         return $this->model;
@@ -87,7 +87,7 @@ class AdvertsRepository
      */
     public static function currencyList()
     {
-        return ArrayHelper::map( Currency::find()->orderBy( 'id' )->asArray()->all(), 'id', 'short_name' );
+        return ArrayHelper::map( Currencies::find()->orderBy( 'id' )->asArray()->all(), 'id', 'short_name' );
     }
 
     /**
@@ -103,7 +103,7 @@ class AdvertsRepository
      */
     public static function typeList()
     {
-        return ArrayHelper::map( Type::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'name' );
+        return ArrayHelper::map( Types::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'name' );
     }
 
     /**
@@ -111,7 +111,7 @@ class AdvertsRepository
      */
     public static function periodList()
     {
-        return ArrayHelper::map( Period::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
+        return ArrayHelper::map( Periods::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
     }
 
     /**
@@ -119,7 +119,7 @@ class AdvertsRepository
      */
     public static function countryList()
     {
-        return ArrayHelper::map( Country::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
+        return ArrayHelper::map( Countries::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
     }
 
     /**

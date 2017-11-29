@@ -11,14 +11,14 @@ return [
         'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset'       => [
-                    'sourcePath' => '@webroot/css/bootstrap/',
+                    'sourcePath' => '@frontend/web/css/bootstrap/',
                     'css'        => [
                         'css/bootstrap.css',
 //                        'css/bootstrap-theme.css'
                     ],
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
-                    'sourcePath' => '@webroot/css/bootstrap/',
+                    'sourcePath' => '@frontend/web/css/bootstrap/',
                     'js'         => [ 'js/bootstrap.js' ]
                 ],
             ],

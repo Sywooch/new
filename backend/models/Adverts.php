@@ -31,10 +31,10 @@ use Yii;
  * @property integer $draft
  *
  * @property Category $cat
- * @property Country $countries0
- * @property Period $periods0
+ * @property Countries $countries0
+ * @property Periods $periods0
  * @property Subcategory $subcat
- * @property Type $type0
+ * @property Types $type0
  */
 class Adverts extends \yii\db\ActiveRecord
 {
@@ -60,10 +60,10 @@ class Adverts extends \yii\db\ActiveRecord
             [['sid'], 'unique'],
             [['old_id'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-            [['countries'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['countries' => 'id']],
-            [['periods'], 'exist', 'skipOnError' => true, 'targetClass' => Period::className(), 'targetAttribute' => ['periods' => 'id']],
+            [ ['countries'], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => [ 'countries' => 'id']],
+            [ ['periods'], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => [ 'periods' => 'id']],
             [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => ['subcat_id' => 'id']],
-            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Type::className(), 'targetAttribute' => ['type' => 'id']],
+            [ ['type'], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => [ 'type' => 'id']],
         ];
     }
 
@@ -111,7 +111,7 @@ class Adverts extends \yii\db\ActiveRecord
      */
     public function getCountries0()
     {
-        return $this->hasOne(Country::className(), ['id' => 'countries']);
+        return $this->hasOne(Countries::className(), [ 'id' => 'countries']);
     }
 
     /**
@@ -119,7 +119,7 @@ class Adverts extends \yii\db\ActiveRecord
      */
     public function getPeriods0()
     {
-        return $this->hasOne(Period::className(), ['id' => 'periods']);
+        return $this->hasOne(Periods::className(), [ 'id' => 'periods']);
     }
 
     /**
@@ -135,6 +135,6 @@ class Adverts extends \yii\db\ActiveRecord
      */
     public function getType0()
     {
-        return $this->hasOne(Type::className(), ['id' => 'type']);
+        return $this->hasOne(Types::className(), [ 'id' => 'type']);
     }
 }
