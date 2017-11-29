@@ -262,7 +262,7 @@ $this->title = 'vezugruz29.ru';
 
 		<div class="row">
 			<div class="col-sm-12"><hr></div>
-
+<?php // \common\models\Helpers::p( $dataProvider->getModels() );  die; ?>
         <?php foreach ($dataProvider->getModels() as $model): ?>
             <?= $this->render('_single_adv', [
                 'model' => $model

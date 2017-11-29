@@ -120,24 +120,16 @@ a.desc:after {
 }
 
 /* Временные стили */
-.navbar-inverse {
-  background-color: #197da1;
-  border-color: #135b75;
-}
 
-.navbar-inverse .navbar-brand {
-  color: #ffffff;
+/*.navbar-inverse .navbar-nav > .active > a,*/
+/*.navbar-inverse .navbar-nav > .active > a:hover,*/
+/*.navbar-inverse .navbar-nav > .active > a:focus {*/
+  /*color: #ffffff;*/
+  /*background-color: #125b75;*/
+/*}*/
+#sub-btn-search{
+  min-width: 160px;
 }
-
-.navbar-inverse .navbar-nav > li > a {
-  color: #ffffff;
-}
-
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
-  color: #ffffff;
-  background-color: #125b75;
-}
-
 #add-ads-main-red {
   border-bottom-width: 4px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);

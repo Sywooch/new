@@ -15,6 +15,8 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
+use frontend\models\Price;
+use frontend\models\UserPhones;
 
 /**
  * Site controller
@@ -76,7 +78,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Adverts::find();
+        $query = Adverts::find()
+            ->select( 'adverts.*' )
+            ->joinWith( 'category' )
+            ->joinWith( 'subcategory' )
+            ->joinWith( 'type' )
+            ->joinWith( 'period' )
+            ->joinWith( 'country' );
+
+//        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
+//        $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
