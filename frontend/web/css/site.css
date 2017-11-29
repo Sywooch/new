@@ -1,139 +1,297 @@
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 .wrap {
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
+  min-height: 100%;
+  height: auto;
+  margin: 0 auto -60px;
+  padding: 0 0 60px;
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+  padding: 70px 15px 20px;
 }
 
 .footer {
-    height: 60px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
+  height: 60px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
 }
 
 .jumbotron {
-    text-align: center;
-    background-color: transparent;
+  text-align: center;
+  background-color: transparent;
 }
 
 .jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
+  font-size: 21px;
+  padding: 14px 24px;
 }
 
 .not-set {
-    color: #c55;
-    font-style: italic;
+  color: #c55;
+  font-style: italic;
 }
 
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
-    position: relative;
-    top: 1px;
-    display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: normal;
-    line-height: 1;
-    padding-left: 5px;
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  padding-left: 5px;
 }
 
 a.asc:after {
-    content: "\e151";
+  content: "\e151";
 }
 
 a.desc:after {
-    content: "\e152";
+  content: "\e152";
 }
 
 .sort-numerical a.asc:after {
-    content: "\e153";
+  content: "\e153";
 }
 
 .sort-numerical a.desc:after {
-    content: "\e154";
+  content: "\e154";
 }
 
 .sort-ordinal a.asc:after {
-    content: "\e155";
+  content: "\e155";
 }
 
 .sort-ordinal a.desc:after {
-    content: "\e156";
+  content: "\e156";
 }
 
 .grid-view td {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .grid-view .filters input,
 .grid-view .filters select {
-    min-width: 50px;
+  min-width: 50px;
 }
 
 .hint-block {
-    display: block;
-    margin-top: 5px;
-    color: #999;
+  display: block;
+  margin-top: 5px;
+  color: #999;
 }
 
 .error-summary {
-    color: #a94442;
-    background: #fdf7f7;
-    border-left: 3px solid #eed3d7;
-    padding: 10px 20px;
-    margin: 0 0 15px 0;
+  color: #a94442;
+  background: #fdf7f7;
+  border-left: 3px solid #eed3d7;
+  padding: 10px 20px;
+  margin: 0 0 15px 0;
 }
 
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
-    padding: 15px;
-    border: none;
+  padding: 15px;
+  border: none;
 }
 
-@media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 15px;
-    }
+@media (max-width: 767px) {
+  .nav li > form > button.logout {
+    display: block;
+    text-align: left;
+    width: 100%;
+    padding: 10px 15px;
+  }
 }
 
 .nav > li > form > button.logout:focus,
 .nav > li > form > button.logout:hover {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .nav > li > form > button.logout:focus {
-    outline: none;
+  outline: none;
 }
 
 /* Временные стили */
 .navbar-inverse {
-    background-color: #197da1;
-    border-color: #135b75;
+  background-color: #197da1;
+  border-color: #135b75;
+}
+/*.navbar-inverse .navbar-nav > .active > a,*/
+/*.navbar-inverse .navbar-nav > .active > a:hover,*/
+/*.navbar-inverse .navbar-nav > .active > a:focus {*/
+  /*color: #ffffff;*/
+  /*background-color: #125b75;*/
+/*}*/
+#sub-btn-search{
+  min-width: 160px;
+}
+#add-ads-main-red {
+  border-bottom-width: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
-.navbar-inverse .navbar-brand {
-    color: #ffffff;
+#sec-lk-enter {
+  float: right;
+  font-size: smaller;
 }
 
-.navbar-inverse .navbar-nav > li > a {
-    color: #ffffff;
+.fa {
+  margin-right: 7px;
+  margin-left: 7px;
 }
 
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
-    color: #ffffff;
-    background-color: #125b75;
+.lime {
+  color: limegreen;
+}
+
+#details .label {
+  font-size: 120%;
+}
+
+hr {
+  border-top: 1px solid #EEE;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+/*
+OpenCart
+ */
+.ad-thumb {
+  /*border: 1px solid #ddd;*/
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 20px;
+  overflow: auto;
+}
+
+.ad-list .ad-thumb .image {
+  float: left;
+  padding: 0 15px;
+}
+
+.ad-thumb .image {
+  text-align: center;
+}
+
+.ad-thumb .image a {
+  display: block;
+}
+
+.ad-thumb .image img {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ad-list .ad-thumb .caption {
+  margin-left: 160px;
+}
+
+.ad-thumb .caption {
+  padding: 0 20px;
+  min-height: 100px;
+}
+
+.ad-thumb h4 {
+  font-weight: bold;
+}
+h4 {
+  font-size: 15px;
+}
+/*h1, h2, h3, h4, h5, h6 {*/
+  /*color: #444;*/
+/*}*/
+
+.ad-thumb .price {
+  font-size: 180%;
+  /*font-size: 22px;*/
+  margin-top: 10px;
+  margin-bottom: 0;
+  color: #a94442;
+}
+
+.ad-thumb .price-new {
+  font-weight: 600;
+}
+
+.ad-thumb .price-old {
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 10px;
+}
+
+.ad-thumb .price-tax {
+  color: #999;
+  font-size: 12px;
+  display: block;
+}
+
+.ad-list .ad-thumb .button-group {
+  border-left: 1px solid #ddd;
+}
+.ad-thumb .button-group {
+  border-top: 1px solid #ddd;
+  background-color: #eee;
+  overflow: auto;
+}
+
+.ad-thumb .button-group button {
+  width: 60%;
+  border: none;
+  display: inline-block;
+  float: left;
+  background-color: #eee;
+  color: #888;
+  line-height: 38px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fa {
+  font-size: 14px;
+}
+
+span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
+  display: inline;
+}
+
+.ad-thumb .button-group button+button {
+  width: 20%;
+  border-left: 1px solid #ddd;
+}
+
+.ad-thumb .button-group button:hover {
+  color: #444;
+  background-color: #ddd;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ad-thumb .data-extra{
+  color: #aaa;
+}
+.ad-thumb .data-extra:hover{
+  color: #666;
+}
+
+.ad-thumb .data-extra .badge {
+  background-color: #ccc;
+}
+.ad-thumb .data-extra:hover .badge {
+  background-color: #8c8c8c;
+}
+
+.ad-list h5 {
+  font-size: 16px;
+  margin: 0 0 5px;
 }

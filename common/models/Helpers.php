@@ -8,61 +8,104 @@
 
 namespace common\models;
 
-
+use yii\helpers\HtmlPurifier;
 class Helpers
 {
     /**
-     * Функция перевода кириллицы в транслит
+     * Функция для перевода типа объявления
      *
-     * @param $s
-     * @return mixed|string
+     * @param $arg
+     * @return string
      */
-    public static function translit( $s )
+    public function convertType( $arg )
     {
-        $s = (string)$s; // преобразуем в строковое значение
-        $s = strip_tags( $s ); // убираем HTML-теги
-        $s = str_replace( array( "\n", "\r" ), " ", $s ); // убираем перевод каретки
-        $s = preg_replace( "/\s+/", ' ', $s ); // удаляем повторяющие пробелы
-        $s = trim( $s ); // убираем пробелы в начале и конце строки
-        $s = function_exists( 'mb_strtolower' ) ? mb_strtolower( $s ) : strtolower( $s ); // переводим строку в нижний регистр (иногда надо задать локаль)
-        $s = strtr( $s, array(
-            'а' => 'a',
-            'б' => 'b',
-            'в' => 'v',
-            'г' => 'g',
-            'д' => 'd',
-            'е' => 'e',
-            'ё' => 'e',
-            'ж' => 'j',
-            'з' => 'z',
-            'и' => 'i',
-            'й' => 'y',
-            'к' => 'k',
-            'л' => 'l',
-            'м' => 'm',
-            'н' => 'n',
-            'о' => 'o',
-            'п' => 'p',
-            'р' => 'r',
-            'с' => 's',
-            'т' => 't',
-            'у' => 'u',
-            'ф' => 'f',
-            'х' => 'h',
-            'ц' => 'c',
-            'ч' => 'ch',
-            'ш' => 'sh',
-            'щ' => 'shch',
-            'ы' => 'y',
-            'э' => 'e',
-            'ю' => 'yu',
-            'я' => 'ya',
-            'ъ' => '',
-            'ь' => ''
-        ) );
-        $s = preg_replace( "/[^0-9a-z-_ ]/i", "", $s ); // очищаем строку от недопустимых символов
-        $s = str_replace( " ", "-", $s ); // заменяем пробелы знаком минус
+        $type = '';
 
-        return $s; // возвращаем результат
+        switch ( $arg ) {
+            case 1:
+                $type = 'Продам';
+                break;
+            case 2:
+                $type = 'Сдам';
+                break;
+            case 3:
+                $type = 'Сниму';
+                break;
+            case 4:
+                $type = 'Предлагаю';
+                break;
+            case 5:
+                $type = 'Воспользуюсь';
+                break;
+            case 6:
+                $type = 'Ищу';
+                break;
+            case 7:
+                $type = 'Отдам';
+                break;
+            case 8:
+                $type = 'Приму в дар';
+                break;
+            case 9:
+                $type = 'Обменяю';
+                break;
+        }
+
+        return $type;
     }
+
+    /**
+     * Функция для перевода ip в integer
+     * @param $ip
+     * @return int|number
+     */
+    public static function IpToNum( $ip )
+    {
+        if ( $ip == "" ) {
+            return 0;
+        }
+        $num = explode( ".", $ip );
+        return hexdec( sprintf( "%02x%02x%02x%02x", $num[0], $num[1], $num[2], $num[3] ) );
+    }
+
+    /**
+     * Функция для перевода integer в ip
+     * @param $num
+     * @return string
+     */
+    public static function NumToIp( $num )
+    {
+        $ip = $num + 0.0;
+        return sprintf( "%d.%d.%d.%d", ( $ip >> 24 & 0xFF ), ( $ip >> 16 & 0xFF ),
+            ( $ip >> 8 & 0xFF ), ( $ip & 0xFF ) );
+    }
+
+    public static function p( $arg, $state = 0 )
+    {
+        if ( $state == 0 ) {
+            print '<pre>';
+            print_r( $arg );
+            print '</pre>';
+        }
+        if ( $state == 1 ) {
+            print '<pre>';
+            print $arg . '<br>';
+            print '</pre>';
+        }
+    }
+
+    /**
+     * @param $string
+     * @param $length
+     * @return string
+     */
+    public static function getShortComment( $string, $length )
+    {
+        $s = HtmlPurifier::process( html_entity_decode( $string ) );
+
+        Utf8::strlen( $s ) > $length ? $result = Utf8::substr( $s, 0, $length ) : $result = $s;
+
+        return $result . '...';
+    }
+
 }

@@ -1,6 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use board\entities\Adverts;
+use board\repositories\AdvertsRepository;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -12,6 +14,9 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\data\ActiveDataProvider;
+use frontend\models\Pricies;
+use frontend\models\UserPhones;
 
 /**
  * Site controller
@@ -60,6 +65,7 @@ class SiteController extends Controller
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
+//                    'class' => 'common\components\MathCaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
@@ -72,7 +78,37 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Adverts::find()
+            ->select( 'adverts.*' )
+            ->joinWith( 'category' )
+            ->joinWith( 'subcategory' )
+            ->joinWith( 'types' )
+            ->joinWith( 'periods' )
+            ->joinWith( 'countries' );
+
+//        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
+//        $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('index', [
+            'query' => $query,
+            'dataProvider' => $dataProvider,
+//            'sort' => [
+//                'defaultOrder' => ['id' => SORT_DESC],
+//                'attributes' => [
+//                    'id' => [
+//                        'asc' => ['id' => SORT_ASC],
+//                        'desc' => ['id' => SORT_DESC],
+//                    ],
+//                ],
+//            ],
+            'pagination' => [
+                'pageSizeLimit' => [15, 100],
+            ]
+        ]);
     }
 
     /**
@@ -209,5 +245,16 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Костыль для DepDrop
+     * Если сделать экшен в оригинальном контроллере,
+     * идет блокировка запроса Adblock по слову adverts/
+     */
+    public function actionSubcat()
+    {
+        $repo = new AdvertsRepository();
+        $repo->getSubcat();
     }
 }

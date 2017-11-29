@@ -8,6 +8,21 @@ return [
         'cache'                => [
             'class' => 'yii\caching\FileCache',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset'       => [
+                    'sourcePath' => '@frontend/web/css/bootstrap/',
+                    'css'        => [
+                        'css/bootstrap.css',
+//                        'css/bootstrap-theme.css'
+                    ],
+                ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'sourcePath' => '@frontend/web/css/bootstrap/',
+                    'js'         => [ 'js/bootstrap.js' ]
+                ],
+            ],
+        ],
         'authClientCollection' => [
             'class'   => \yii\authclient\Collection::className(),
             'clients' => [
@@ -50,13 +65,13 @@ return [
             // you will configure your module inside this file
             // or if need different configuration for frontend and backend you may
             // configure in needed configs
-            'adminPermission' => 'role, permission',
+//            'adminPermission' => 'role, permission',
             'admins'                   => [ 'beckson' ],
             'modelMap'        => [
-                'RegistrationForm' => 'common\models\RegistrationForm',
+//                'RegistrationForm' => 'common\models\RegistrationForm',
             ],
             // Автоматическая генерация пароля
-            'enableGeneratingPassword' => true,
+//            'enableGeneratingPassword' => true,
             'enableFlashMessages'      => false,
 
              // Admin-layout
