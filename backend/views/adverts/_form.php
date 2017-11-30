@@ -26,9 +26,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'countries')->textInput() ?>
+    <?= $form->field($model, 'country')->textInput() ?>
 
-    <?= $form->field($model, 'periods')->textInput() ?>
+    <?= $form->field($model, 'period')->textInput() ?>
 
     <?= $form->field($model, 'author')->textInput(['maxlength' => true]) ?>
 

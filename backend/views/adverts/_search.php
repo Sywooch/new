@@ -31,9 +31,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'description') ?>
 
-    <?php // echo $form->field($model, 'countries') ?>
+    <?php // echo $form->field($model, 'country') ?>
 
-    <?php // echo $form->field($model, 'periods') ?>
+    <?php // echo $form->field($model, 'period') ?>
 
     <?php // echo $form->field($model, 'author') ?>
 

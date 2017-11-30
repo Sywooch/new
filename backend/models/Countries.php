@@ -46,4 +46,12 @@ class Countries extends \yii\db\ActiveRecord
             'sort' => 'Sort',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdverts()
+    {
+        return $this->hasMany(Adverts::className(), ['country' => 'id']);
+    }
 }
