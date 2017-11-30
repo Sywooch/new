@@ -15,8 +15,8 @@ use Yii;
  * @property integer $type
  * @property string $header
  * @property string $description
- * @property integer $countries
- * @property integer $periods
+ * @property integer $country
+ * @property integer $period
  * @property string $author
  * @property string $email
  * @property integer $active
@@ -31,8 +31,8 @@ use Yii;
  * @property integer $draft
  *
  * @property Category $cat
- * @property Countries $countries0
- * @property Periods $periods0
+ * @property Countries $country0
+ * @property Periods $period0
  * @property Subcategory $subcat
  * @property Types $type0
  */
@@ -52,18 +52,18 @@ class Adverts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'cat_id', 'subcat_id', 'type', 'countries', 'periods', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at', 'draft'], 'integer'],
-            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'countries', 'ip', 'created_at', 'updated_at'], 'required'],
+            [['old_id', 'cat_id', 'subcat_id', 'type', 'country', 'period', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at', 'draft'], 'integer'],
+            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'country', 'ip', 'created_at', 'updated_at'], 'required'],
             [['description'], 'string'],
             [['sid'], 'string', 'max' => 32],
             [['header', 'author', 'email'], 'string', 'max' => 255],
             [['sid'], 'unique'],
             [['old_id'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-            [ ['countries'], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => [ 'countries' => 'id']],
-            [ ['periods'], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => [ 'periods' => 'id']],
+            [['country'], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => ['country' => 'id']],
+            [['period'], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => ['period' => 'id']],
             [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => ['subcat_id' => 'id']],
-            [ ['type'], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => [ 'type' => 'id']],
+            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
 
@@ -81,8 +81,8 @@ class Adverts extends \yii\db\ActiveRecord
             'type' => 'Type',
             'header' => 'Header',
             'description' => 'Description',
-            'countries' => 'Countries',
-            'periods' => 'Periods',
+            'country' => 'Country',
+            'period' => 'Period',
             'author' => 'Author',
             'email' => 'Email',
             'active' => 'Active',
@@ -109,17 +109,17 @@ class Adverts extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCountries0()
+    public function getCountries()
     {
-        return $this->hasOne(Countries::className(), [ 'id' => 'countries']);
+        return $this->hasOne(Countries::className(), ['id' => 'country']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPeriods0()
+    public function getPeriods()
     {
-        return $this->hasOne(Periods::className(), [ 'id' => 'periods']);
+        return $this->hasOne(Periods::className(), ['id' => 'period']);
     }
 
     /**
@@ -133,8 +133,8 @@ class Adverts extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getType0()
+    public function getTypes()
     {
-        return $this->hasOne(Types::className(), [ 'id' => 'type']);
+        return $this->hasOne(Types::className(), ['id' => 'type']);
     }
 }
