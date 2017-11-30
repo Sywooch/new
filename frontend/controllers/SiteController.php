@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use board\entities\Adverts;
 use board\repositories\AdvertsRepository;
+use common\models\Helpers;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -84,9 +85,10 @@ class SiteController extends Controller
             ->joinWith( 'subcategory' )
             ->joinWith( 'types' )
             ->joinWith( 'periods' )
-            ->joinWith( 'countries' );
+            ->joinWith( 'countries' )
+            ->joinWith('pricies');
 
-//        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
+//        $price = Pricies::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
 //        $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();
 
         $dataProvider = new ActiveDataProvider([

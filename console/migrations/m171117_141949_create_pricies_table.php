@@ -17,10 +17,11 @@ class m171117_141949_create_pricies_table extends Migration
         $this->createTable( '{{%pricies}}', [
             'id'          => $this->primaryKey(),
             'ad_id'       => $this->integer(),
+            'old_id'      => $this->integer(),
             'price'       => $this->integer(),
             'price_old'   => $this->integer(),
             'currency_id' => $this->integer( 1 ),
-            'negotiable'  => $this->boolean(),
+            'negotiable'  => $this->boolean()->defaultValue(0),
         ], $tableOptions );
 
         $this->addForeignKey( 'fk-currency_id', '{{%pricies}}', 'currency_id', '{{%currencies}}', 'id' );

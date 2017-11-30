@@ -8,6 +8,7 @@
 
 namespace board\entities;
 
+use frontend\models\Pricies;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
@@ -22,6 +23,7 @@ class Adverts extends ActiveRecord
     use EventTrait;
 
     public $verifyCode;
+//    public $pricies;
 
     public static function tableName()
     {
@@ -48,24 +50,84 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'old_id', 'cat_id', 'subcat_id', 'type', 'country', 'period', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at' ], 'integer' ],
-            [ [ 'sid', 'cat_id', 'subcat_id', 'type', 'header', 'description', 'author', 'email', 'period', 'country', 'ip', ], 'required' ],
+            [
+                [
+                    'old_id',
+                    'cat_id',
+                    'subcat_id',
+                    'type',
+                    'country',
+                    'period',
+                    'active',
+                    'selected',
+                    'selected_old',
+                    'special',
+                    'special_old',
+                    'images_old',
+                    'ip',
+                    'created_at',
+                    'updated_at'
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'sid',
+                    'cat_id',
+                    'subcat_id',
+                    'type',
+                    'header',
+                    'description',
+                    'author',
+                    'email',
+                    'period',
+                    'country',
+                    'ip',
+                ],
+                'required'
+            ],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
-            ['email', 'email'],
+            [ 'email', 'email' ],
             [ [ 'sid' ], 'unique' ],
             [ [ 'old_id' ], 'unique' ],
-            [ [ 'cat_id' ], 'exist', 'skipOnError' => true, 'targetClass'     => Category::className(), 'targetAttribute' => [ 'cat_id' => 'id' ] ],
             [
-                [ 'country' ], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => [ 'country' => 'id' ] ],
+                [ 'cat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Category::className(),
+                'targetAttribute' => [ 'cat_id' => 'id' ]
+            ],
             [
-                [ 'period' ], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => [ 'period' => 'id' ] ],
+                [ 'country' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Countries::className(),
+                'targetAttribute' => [ 'country' => 'id' ]
+            ],
             [
-                [ 'subcat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => [ 'subcat_id' => 'id' ] ],
+                [ 'period' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Periods::className(),
+                'targetAttribute' => [ 'period' => 'id' ]
+            ],
             [
-                [ 'type' ], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => [ 'type' => 'id' ] ],
-//            ['verifyCode', 'captcha'],
+                [ 'subcat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Subcategory::className(),
+                'targetAttribute' => [ 'subcat_id' => 'id' ]
+            ],
+            [
+                [ 'type' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Types::className(),
+                'targetAttribute' => [ 'type' => 'id' ]
+            ],
+            //            ['verifyCode', 'captcha'],
         ];
     }
 
@@ -85,11 +147,11 @@ class Adverts extends ActiveRecord
 
             'header'      => 'Заголовок',
             'description' => 'Описание',
-            'country'   => 'Расположение',
+            'country'     => 'Расположение',
 
             'period' => 'Период',
-            'author'  => 'Автор',
-            'email'   => 'Email',
+            'author' => 'Автор',
+            'email'  => 'Email',
 
             'active'       => 'Active',
             'selected'     => 'Selected',
@@ -160,6 +222,11 @@ class Adverts extends ActiveRecord
     public function getTypes()
     {
         return $this->hasOne( Types::className(), [ 'id' => 'type' ] );
+    }
+
+    public function getPricies()
+    {
+        return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
     }
 
     public function releaseEvents(){ }
