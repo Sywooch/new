@@ -24,7 +24,7 @@ class m171117_154220_create_adverts_table extends Migration
             'header' => $this->string(255)->notNull(),
             'description' => $this->text(),
             'country' => $this->integer(3)->notNull(),
-            'period' => $this->integer(11),
+            'period' => $this->integer(2)->notNull(),
             'author' => $this->string(),
             'email' => $this->string(),
             'active' => $this->boolean()->defaultValue(1),
@@ -36,13 +36,14 @@ class m171117_154220_create_adverts_table extends Migration
             'ip' => $this->integer(11)->notNull(),
             'created_at' => $this->integer()->unsigned()->notNull(),
             'updated_at' => $this->integer()->unsigned()->notNull(),
+            'draft' => $this->boolean()->defaultValue(1),
         ] , $tableOptions);
 
         $this->addForeignKey( 'fk-countries_id', '{{%adverts}}', 'country', '{{%countries}}', 'id' );
         $this->addForeignKey( 'fk-category_cat_id', '{{%adverts}}', 'cat_id', '{{%category}}', 'id' );
         $this->addForeignKey( 'fk-subcategory_subcat_id', '{{%adverts}}', 'subcat_id', '{{%subcategory}}', 'id' );
         $this->addForeignKey( 'fk-type_id', '{{%adverts}}', 'type', '{{%types}}', 'id' );
-        $this->addForeignKey( 'fk-periods_id', '{{%adverts}}', 'period', '{{%periods}}', 'id' );
+        $this->addForeignKey( 'fk-period_id', '{{%adverts}}', 'period', '{{%periods}}', 'id' );
     }
 
     /**

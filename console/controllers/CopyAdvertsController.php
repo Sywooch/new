@@ -30,19 +30,29 @@ class CopyAdvertsController extends Controller
             $adverts->sid = $value['AdvertsID'];
             $adverts->cat_id = $this->convertCategory( $value['AdvertFolder'] );
             $adverts->subcat_id = $this->convertSubcategory( $value['AdvertFolder'] );
+
             $adverts->type = $value['AdvertType'];
             $value['AdvertHeader'] !== '' ? $adverts->header = $value['AdvertHeader'] : $adverts->header = '---';
             $adverts->description = $value['AdvertComment'];
-            $adverts->countries = $value['AdvertCity'];
-//            $adverts->price = $value['AdvertPrice'];
-            $adverts->period = $value['AdvertPeriod'];
+            $adverts->country = $value['AdvertCity']; //$this->stdout( $value['AdvertPeriod'] . PHP_EOL );
+
+//            $adverts->period = $value['AdvertPeriod'];
+            $adverts->period = 5;
+            $adverts->author = $value['AdvertUserName'];
+            $adverts->email = $value['AdvertUserEmail'];
             $adverts->active = $value['AdvertActive'];
+
+            $adverts->selected = 0;
             $adverts->selected_old = $value['AdvertSelected'];
+            $adverts->special = 0;
             $adverts->special_old = $value['AdvertSpecial'];
+
             $adverts->images_old = $value['AdvertImg']; // TODO:
             $value['AdvertIPAdress'] != null ? $adverts->ip = $value['AdvertIPAdress'] : $adverts->ip = 1414544319;
             $adverts->created_at = $value['AdvertTime'];
             $adverts->updated_at = $value['AdvertTimeOriginated'];
+
+            $adverts->draft = 1;
 
             if ( !$adverts->save() ) {
                 $this->stdout( "Can't save advert " . $value['AdvertID'] . PHP_EOL );
