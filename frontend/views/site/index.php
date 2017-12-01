@@ -3,6 +3,8 @@ use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\widgets\LinkPager;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
@@ -255,7 +257,26 @@ $this->title = 'vezugruz29.ru';
 					 title="Вывод объявлений списком"><i class="fa fa-th-list"></i></a>
 				<a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);"
 					 title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
+
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="false">
+						<i class="fa fa-arrows-v" aria-hidden="true"></i>
+						<span class="caret"></span>
+					</button>
+            <?php
+            $values = [ 15, 25, 50, 75, 100 ];
+            $current = $dataProvider->getPagination()->getPageSize();
+            ?>
+					<ul class="dropdown-menu">
+              <?php foreach ( $values as $value ): ?>
+								<li><a href="<?= Html::encode( Url::current( [ 'per-page' => $value ] ) ) ?>"><?= $value ?></a></li>
+              <?php endforeach; ?>
+					</ul>
+				</div>
+
 			</div>
+
 		</div>
 	</div>
 
@@ -267,13 +288,13 @@ $this->title = 'vezugruz29.ru';
 			<div class="panel-body">
 
           <?php $form = ActiveForm::begin( [
-          		'options' => ['action' => '/site/index','class' => 'form-horizontal']
-          		]); ?>
+              'options' => [ 'action' => '/site/index', 'class' => 'form-horizontal' ]
+          ] ); ?>
 
           <?= Html::hiddenInput( 'form_action', 'ads_sort' ) ?>
 
 				<div class="form-group">
-            <?/*= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) */?>
+            <? /*= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) */ ?>
 
 					<div class="col-sm-3">
 						<div id="date-sort">
@@ -329,11 +350,19 @@ $this->title = 'vezugruz29.ru';
 			<hr>
 		</div>
       <?php // \common\models\Helpers::p( $dataProvider->getModels() );  die; ?>
-      <?php foreach ( $dataProvider->getModels() as $model ){ //print_r( $model ); exit;?>
+      <?php foreach ( $dataProvider->getModels() as $model ) { //print_r( $model ); exit;?>
           <?= $this->render( '_single_adv', [
               'model' => $model
           ] ) ?>
       <?php } ?>
 
+	</div>
+	<div class="row">
+		<div class="col-sx-12">
+        <?= LinkPager::widget( [
+//            'pagination' => $pages,
+'pagination' => $dataProvider->getPagination(),
+        ] ) ?>
+		</div>
 	</div>
 </div>

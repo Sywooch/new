@@ -8,6 +8,7 @@
 
 namespace board\entities;
 
+use backend\models\Currencies;
 use frontend\models\Pricies;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
@@ -228,6 +229,7 @@ class Adverts extends ActiveRecord
     {
         return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
     }
+
 
     public function releaseEvents(){ }
 }

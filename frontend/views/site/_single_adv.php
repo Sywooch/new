@@ -7,7 +7,7 @@
  */
 use yii\helpers\Html;
 
-//\common\models\Helpers::p( $model ); die;
+//\common\models\Helpers::p(  ); die;
 ?>
 
 <div class="ad-list col-xs-12">
@@ -40,7 +40,7 @@ use yii\helpers\Html;
 					</small>
 				</p>
 
-				<p class="price"><?= $model->pricies->price ?> руб.</p>
+				<p class="price"><?= $model->pricies->price ?>&nbsp;<?= $model->pricies->currencies->short_name ?>.</p>
 			</div>
 
 			<div class="pull-right data-extra">
