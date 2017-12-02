@@ -11,7 +11,7 @@ use frontend\widgets\catmenu\CatmenuTabs;
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
-
+//print Html::encode('<i class="fa fa-car" aria-hidden="true"></i>'); die;
 //\common\models\Helpers::p( $dataProvider->getModels() ); die;
 ?>
 <div class="site-index">
@@ -119,7 +119,9 @@ $this->title = 'vezugruz29.ru';
 	</div>
 
 	<div class="row">
+		<div class="col-xs-12">
       <?= CatmenuTabs::widget(); ?>
+		</div>
 	</div>
 
 	<br>
@@ -173,7 +175,7 @@ $this->title = 'vezugruz29.ru';
           <?= Html::hiddenInput( 'form_action', 'ads_sort' ) ?>
 
 				<div class="form-group">
-            <?/*= $form->field( $model, 'country' )->dropDownList( AdvertsRepository::countryList(), [ 'prompt' => 'Выберите' ] ) */?>
+            <? /*= $form->field( $model, 'country' )->dropDownList( AdvertsRepository::countryList(), [ 'prompt' => 'Выберите' ] ) */ ?>
 
 					<div class="col-sm-3">
 						<div id="date-sort">
@@ -225,21 +227,20 @@ $this->title = 'vezugruz29.ru';
 	</div>
 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-xs-12">
 			<hr>
 		</div>
       <?php foreach ( $dataProvider->getModels() as $model ) { ?>
-          <?= $this->render( '_single_adv', [
+          <?= $this->render( Yii::getAlias('@web') . '/adverts-views/_single_adv', [
               'model' => $model
           ] ) ?>
       <?php } ?>
 
 	</div>
 	<div class="row">
-		<div class="col-sx-12">
+		<div class="col-xs-12">
         <?= LinkPager::widget( [
-//            'pagination' => $pages,
-'pagination' => $dataProvider->getPagination(),
+            'pagination' => $dataProvider->getPagination(),
         ] ) ?>
 		</div>
 	</div>

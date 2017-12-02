@@ -10,7 +10,9 @@ use Yii;
  * @property integer $id
  * @property integer $old_id
  * @property string $category_name
- * @property integer $menu_order
+ * @property integer $sort
+ * @property string $class_name
+ * @property string $icon
  *
  * @property Adverts[] $adverts
  * @property Subcategory[] $subcategories
@@ -35,6 +37,7 @@ class Category extends \yii\db\ActiveRecord
             [['old_id', 'category_name', 'sort'], 'required'],
             [['old_id', 'sort'], 'integer'],
             [['category_name'], 'string', 'max' => 50],
+            [['class_name', 'icon'], 'string', 'max' => 255],
             [['old_id'], 'unique'],
             [['category_name'], 'unique'],
             [['sort'], 'unique'],
@@ -50,7 +53,9 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'old_id' => 'Old ID',
             'category_name' => 'Category Name',
-            'sort' => 'Menu Order',
+            'sort' => 'Sort',
+            'class_name' => 'Class Name',
+            'icon' => 'Icon',
         ];
     }
 

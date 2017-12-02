@@ -12,7 +12,7 @@ namespace console\controllers;
 use backend\models\Advert;
 use backend\models\Adverts;
 use backend\models\Subcategory;
-use frontend\models\Pricies;
+use backend\models\Pricies;
 use yii\console\Controller;
 use yii\data\ActiveDataProvider;
 

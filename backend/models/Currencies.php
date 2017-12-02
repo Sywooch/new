@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-use frontend\models\Pricies;
+use backend\models\Pricies;
 
 /**
  * This is the model class for table "{{%currency}}".

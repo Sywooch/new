@@ -23,6 +23,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'sort') ?>
 
+    <?= $form->field($model, 'class_name') ?>
+
+    <?php // echo $form->field($model, 'icon') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

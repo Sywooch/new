@@ -18,7 +18,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
-use frontend\models\Pricies;
+use backend\models\Pricies;
 use frontend\models\UserPhones;
 
 /**
@@ -82,7 +82,6 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $query = Adverts::find()
-            ->select( 'adverts.*' )
             ->joinWith( 'category' )
             ->joinWith( 'subcategory' )
             ->joinWith( 'types' )

@@ -9,7 +9,7 @@
 namespace board\entities;
 
 use backend\models\Currencies;
-use frontend\models\Pricies;
+use backend\models\Pricies;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;

@@ -8,11 +8,13 @@
 
 namespace frontend\controllers;
 
-
+use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use board\manage\AdvertManageService;
+use yii\data\ActiveDataProvider;
+use board\entities\Adverts;
 
 class AdvertsViewsController extends Controller
 {
@@ -70,10 +72,44 @@ class AdvertsViewsController extends Controller
     /**
      * @return string
      */
-    public function actionSubcategoryPage()
+    public function actionSubcategoryPage( $id )
     {
-        return $this->render( 'subcategory-page', [
+        $query = Adverts::find()
+            ->where( [ 'adverts.cat_id' =>$id ] )
+            ->joinWith( 'category' )
+            ->joinWith( 'subcategory' )
+            ->joinWith( 'types' )
+            ->joinWith( 'periods' )
+            ->joinWith( 'countries' )
+            ->joinWith( [
+                'pricies p' => function ( $q ){
+                    $q->joinWith( 'currencies c' );
+                }
+            ] );
 
+        $dataProvider = new ActiveDataProvider( [
+            'query'      => $query,
+            'pagination' => [
+//                'pagesize' => 25,
+            ]
+        ] );
+
+        return $this->render( 'subcategory-page', [
+            'query'        => $query,
+            'dataProvider' => $dataProvider,
+            'header'       => Yii::$app->request->get( 'header' ),
+            'sort'         => [
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+                'attributes'   => [
+                    'id' => [
+                        'asc'  => [ 'id' => SORT_ASC ],
+                        'desc' => [ 'id' => SORT_DESC ],
+                    ],
+                ],
+            ],
+            'pagination'   => [
+                'pageSizeLimit' => [ 15, 100 ],
+            ]
         ] );
     }
 }

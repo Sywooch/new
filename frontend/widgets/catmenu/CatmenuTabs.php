@@ -66,24 +66,32 @@ class CatmenuTabs extends Widget
         $sub_category = [];
         $items = [];
 
-        foreach ( $array as $value ) { //Helpers::p( $value ); die;
+        foreach ( $array as $value ) {
             if ( $i >= 5 ) {
                 array_push( $extra_items, [
                     'label' => Html::encode( $value['category_name'] ),
-                    'url'   => Url::to( [ 'adverts-views/category-page', 'id' => $value['id'], ] )
+                    'url'   => Url::to( [
+                        'adverts-views/subcategory-page',
+                        'id'     => $value['id'],
+                        'header' => $value['category_name']
+                    ] )
                 ] );
             }
             else {
 
-                foreach ( $value['subcategories'] as $val ) { //Helpers::p( $val ); die;
+                foreach ( $value['subcategories'] as $val ) {
 
                     array_push( $sub_category, [
                         'label' => Html::encode( $val['subcat_name'] ),
-                        'url'   => Url::to( [ 'adverts-views/subcategory-page', 'id' => $value['id'], ] )
+                        'url'   => Url::to( [
+                            'adverts-views/subcategory-page',
+                            'id'     => $value['id'],
+                            'header' => $value['category_name']
+                        ] )
                     ] );
 
                 }
-                unset( $val ); //Helpers::p( $sub_category ); die;
+                unset( $val );
 
                 array_push( $items, [
                     'label' => Html::encode( $value['category_name'] ),
@@ -98,7 +106,7 @@ class CatmenuTabs extends Widget
         unset( $value );
 
         array_push( $items, [ 'label' => 'Прочее', 'items' => $extra_items ] );
-
+//        Helpers::p( $items ); die;
         return $items;
     }
 }

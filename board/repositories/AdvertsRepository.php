@@ -21,7 +21,7 @@ use backend\models\Category;
 use backend\models\Types;
 use backend\models\Periods;
 use backend\models\Countries;
-use frontend\models\Pricies;
+use backend\models\Pricies;
 use frontend\models\UserPhones;
 
 class AdvertsRepository

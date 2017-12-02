@@ -32,6 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'old_id',
             'category_name',
             'sort',
+            'class_name',
+            'icon',
         ],
     ]) ?>
 

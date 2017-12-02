@@ -27,16 +27,10 @@ use yii\helpers\Html;
         ] ); ?>">
 					<h5><?= $model->header ?></h5>
 				</a>
-				<p>
-					<small>
-				<span>06.03.2017
-                    &nbsp;&nbsp;&nbsp;<span>
-						<i class="fa fa-map-marker"></i>
-						г. Каргополь</span>,
+				<p><small><span><?= Yii::$app->formatter->asDatetime($model->created_at, Yii::$app->params['dateFormat']); ?><span>
+						<i class="fa fa-map-marker"></i><?= $model->countries->country_name ?></span>,
 					&nbsp;&nbsp;&nbsp;
-					<i class="fa fa-folder-open"></i>
-                     Хобби и отдых / Животные и растения
-				</span>
+					<i class="fa fa-folder-open"></i><?= $model->category->category_name ?>&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?></span>
 					</small>
 				</p>
 
