@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
+use board\repositories\AdvertsRepository;
+use frontend\widgets\menu12btns\Menu12Btns;
 
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
@@ -117,130 +119,7 @@ $this->title = 'vezugruz29.ru';
 	</div>
 
 	<div class="row">
-		<ul id="w2" class="nav-tabs nav">
-			<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Недвижимость <b class="caret"></b></a>
-				<ul id="w3" class="dropdown-menu">
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=1&amp;f=1" tabindex="-1">Квартиры</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=2&amp;f=1"
-								 tabindex="-1">Комнаты</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=3&amp;f=1" tabindex="-1">Дома и
-							коттеджи</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=4&amp;f=1" tabindex="-1">Коммерческая
-							недвижимость</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=5&amp;f=1" tabindex="-1">Участки
-							и дачи</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=6&amp;f=1"
-								 tabindex="-1">Гаражи</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=7&amp;f=1"
-								 tabindex="-1">Прочее</a></li>
-				</ul>
-			</li>
-			<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Транспорт <b
-							class="caret"></b></a>
-				<ul id="w4" class="dropdown-menu">
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=8&amp;f=1" tabindex="-1">Легковые
-							автомобили</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=9&amp;f=1" tabindex="-1">Грузовые
-							автомобили</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=10&amp;f=1" tabindex="-1">Коммерческий
-							транспорт</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=11&amp;f=1" tabindex="-1">Мото и
-							велотранспорт</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=12&amp;f=1" tabindex="-1">Водный
-							транспорт</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=13&amp;f=1" tabindex="-1">Запчасти</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=14&amp;f=1"
-								 tabindex="-1">Прочее</a></li>
-				</ul>
-			</li>
-			<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Работа <b class="caret"></b></a>
-				<ul id="w5" class="dropdown-menu">
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=23&amp;f=1" tabindex="-1">Поиск
-							сотрудников</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=24&amp;f=1" tabindex="-1">Поиск
-							работы</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=25&amp;f=1" tabindex="-1">Обучение
-							и образование</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=26&amp;f=1"
-								 tabindex="-1">Прочее</a></li>
-				</ul>
-			</li>
-			<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Услуги <b class="caret"></b></a>
-				<ul id="w6" class="dropdown-menu">
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=35&amp;f=1" tabindex="-1">Транспортные</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=36&amp;f=1" tabindex="-1">Ремонтные</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=37&amp;f=1" tabindex="-1">Фото и
-							видеосъемка</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=38&amp;f=1" tabindex="-1">Юридические</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=39&amp;f=1" tabindex="-1">Бухгалтерские</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=40&amp;f=1" tabindex="-1">Бытовые
-							услуги</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=41&amp;f=1" tabindex="-1">Репетиторство</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=42&amp;f=1"
-								 tabindex="-1">Прочее</a></li>
-				</ul>
-			</li>
-			<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Строительство <b
-							class="caret"></b></a>
-				<ul id="w7" class="dropdown-menu">
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=43&amp;f=1" tabindex="-1">Стройматериалы</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=44&amp;f=1" tabindex="-1">Инструменты</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=45&amp;f=1" tabindex="-1">Электрика</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=46&amp;f=1" tabindex="-1">Срубы,
-							бани и пр.</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=47&amp;f=1" tabindex="-1">Сантехника</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=48&amp;f=1"
-								 tabindex="-1">Прочее</a></li>
-				</ul>
-			</li>
-			<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Электроника <b class="caret"></b></a>
-				<ul id="w8" class="dropdown-menu">
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=49&amp;f=1" tabindex="-1">Аудио
-							и видео</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=50&amp;f=1" tabindex="-1">Компьютеры
-							и комплектующие</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=51&amp;f=1" tabindex="-1">Телефоны
-							и аксессуары</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=52&amp;f=1" tabindex="-1">Офисная
-							техника</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=53&amp;f=1" tabindex="-1">Фото и
-							оптика</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=54&amp;f=1" tabindex="-1">Игровые
-							приставки</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=55&amp;f=1" tabindex="-1">Приборы
-							и радиодетали</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-subcategory-page&amp;id=56&amp;f=1"
-								 tabindex="-1">Прочее</a></li>
-				</ul>
-			</li>
-			<li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">Прочее <b class="caret"></b></a>
-				<ul id="w9" class="dropdown-menu">
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-category-page&amp;id=7&amp;f=0" tabindex="-1">Оборудование</a>
-					</li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-category-page&amp;id=8&amp;f=0" tabindex="-1">Хозяйство
-							и быт</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-category-page&amp;id=9&amp;f=0" tabindex="-1">Хобби и
-							отдых</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-category-page&amp;id=10&amp;f=0" tabindex="-1">Все для
-							дачи</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-category-page&amp;id=11&amp;f=0" tabindex="-1">Отдам
-							даром</a></li>
-					<li><a href="/frontend/web/index.php?r=adverts%2Fshow-category-page&amp;id=12&amp;f=0"
-								 tabindex="-1">Обращения</a></li>
-				</ul>
-			</li>
-		</ul>
+      <?= Menu12Btns::widget(); ?>
 	</div>
 
 	<br>
@@ -294,7 +173,7 @@ $this->title = 'vezugruz29.ru';
           <?= Html::hiddenInput( 'form_action', 'ads_sort' ) ?>
 
 				<div class="form-group">
-            <? /*= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) */ ?>
+            <?/*= $form->field( $model, 'country' )->dropDownList( AdvertsRepository::countryList(), [ 'prompt' => 'Выберите' ] ) */?>
 
 					<div class="col-sm-3">
 						<div id="date-sort">
@@ -349,8 +228,7 @@ $this->title = 'vezugruz29.ru';
 		<div class="col-sm-12">
 			<hr>
 		</div>
-      <?php // \common\models\Helpers::p( $dataProvider->getModels() );  die; ?>
-      <?php foreach ( $dataProvider->getModels() as $model ) { //print_r( $model ); exit;?>
+      <?php foreach ( $dataProvider->getModels() as $model ) { ?>
           <?= $this->render( '_single_adv', [
               'model' => $model
           ] ) ?>

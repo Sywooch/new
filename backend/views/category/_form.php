@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'menu_order')->textInput() ?>
+    <?= $form->field($model, 'sort')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

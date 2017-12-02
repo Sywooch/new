@@ -32,12 +32,12 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'category_name', 'menu_order'], 'required'],
-            [['old_id', 'menu_order'], 'integer'],
+            [['old_id', 'category_name', 'sort'], 'required'],
+            [['old_id', 'sort'], 'integer'],
             [['category_name'], 'string', 'max' => 50],
             [['old_id'], 'unique'],
             [['category_name'], 'unique'],
-            [['menu_order'], 'unique'],
+            [['sort'], 'unique'],
         ];
     }
 
@@ -50,7 +50,7 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'old_id' => 'Old ID',
             'category_name' => 'Category Name',
-            'menu_order' => 'Menu Order',
+            'sort' => 'Menu Order',
         ];
     }
 

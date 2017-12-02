@@ -20,7 +20,7 @@ class m171028_164213_create_subcategory_table extends Migration
             'old_cat_id'  => $this->integer( 3 )->notNull(),
             'cat_id'      => $this->integer( 2 )->notNull(),
             'subcat_name' => $this->string( 50 )->notNull(),
-            'menu_order'  => $this->integer( 2 )->notNull(),
+            'sort'  => $this->integer( 2 )->notNull(),
         ] , $tableOptions);
 
         $this->addForeignKey( 'fk-subcat-category', 'subcategory', 'cat_id', 'category', 'id', 'CASCADE' );

@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'subcat_name') ?>
 
-    <?php // echo $form->field($model, 'menu_order') ?>
+    <?php // echo $form->field($model, 'sort') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

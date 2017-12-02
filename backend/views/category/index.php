@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'old_id',
             'category_name',
-            'menu_order',
+            'sort',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

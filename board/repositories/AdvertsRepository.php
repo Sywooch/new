@@ -95,7 +95,7 @@ class AdvertsRepository
      */
     public static function categoryList()
     {
-        return ArrayHelper::map( Category::find()->orderBy( 'menu_order' )->asArray()->all(), 'id', 'category_name' );
+        return ArrayHelper::map( Category::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'category_name' );
     }
 
     /**
@@ -152,7 +152,7 @@ class AdvertsRepository
      */
     public function subcategoryList( $cat_id )
     {
-        $array = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'menu_order' )->asArray()->all(),
+        $array = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
             'id', 'subcat_name' );
 
         $result = [];
@@ -170,7 +170,7 @@ class AdvertsRepository
      */
     public function subcategoryListUpdate( $cat_id )
     {
-        return ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'menu_order' )->asArray()->all(),
+        return ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
             'id', 'subcat_name' );
     }
 }
