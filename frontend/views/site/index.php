@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
 use board\repositories\AdvertsRepository;
-use frontend\widgets\menu12btns\Menu12Btns;
+use frontend\widgets\catmenu\CatmenuTabs;
 
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
@@ -119,7 +119,7 @@ $this->title = 'vezugruz29.ru';
 	</div>
 
 	<div class="row">
-      <?= Menu12Btns::widget(); ?>
+      <?= CatmenuTabs::widget(); ?>
 	</div>
 
 	<br>
