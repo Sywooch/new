@@ -36,13 +36,13 @@ AppAsset::register( $this );
         ],
     ] );
     $menuItems = [
-        [ 'label' => 'Home', 'url' => [ '/site/index' ] ],
-        [ 'label' => 'About', 'url' => [ '/site/about' ] ],
-        [ 'label' => 'Contact', 'url' => [ '/site/contact' ] ],
+        [ 'label' => 'Главная', 'url' => [ '/site/index' ] ],
+        [ 'label' => 'О нас', 'url' => [ '/site/about' ] ],
+        [ 'label' => 'Контакты', 'url' => [ '/site/contact' ] ],
     ];
     if ( Yii::$app->user->isGuest ) {
-        $menuItems[] = [ 'label' => 'Signup', 'url' => [ '/user/registration/register' ] ];
-        $menuItems[] = [ 'label' => 'Login', 'url' => [ '/user/security/login' ] ];
+        $menuItems[] = [ 'label' => 'Регистрация', 'url' => [ '/user/registration/register' ] ];
+        $menuItems[] = [ 'label' => 'Вход', 'url' => [ '/user/security/login' ] ];
     }
     else {
         $menuItems[] = '<li>'
