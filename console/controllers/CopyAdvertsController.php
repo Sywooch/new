@@ -64,9 +64,7 @@ class CopyAdvertsController extends Controller
 
             $transaction = \Yii::$app->db->beginTransaction();
             try{
-//                $adverts->save();
                 $this->stdout( 'Process...' . PHP_EOL );
-
 
                 if ( !$adverts->save() ) {
                     $this->stdout( "Can't save advert: " . $value['AdvertID'] . PHP_EOL );
