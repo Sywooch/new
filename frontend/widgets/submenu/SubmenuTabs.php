@@ -29,7 +29,7 @@ class SubmenuTabs extends Widget
     {
         parent::run();
 
-        return $this->render( 'menu_pills', [
+        return $this->render( 'index', [
             'items' => $this->_getSubItems( $this->_getSubcategory( Yii::$app->request->queryParams['id'] ) )
         ] );
     }

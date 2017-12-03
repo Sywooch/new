@@ -1,12 +1,10 @@
 <?php
 use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
-use board\repositories\AdvertsRepository;
 use frontend\widgets\catmenu\CatmenuTabs;
+use frontend\widgets\adsort\AdSort;
 
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
@@ -19,84 +17,7 @@ $this->title = 'vezugruz29.ru';
 	<div class="row">
 		<div class="col-xs-12">
 			<form id="searchForm" class="form" action="/" method="post">
-				<input type="hidden" name="_csrf-frontend" value="OTctbkpoMHcBZUgLJC1RGm5ASD8rXkBGAGZBHwlZcihPfABXHDBvBg==">
-				<div class="form-group field-searchform-qact">
 
-					<input type="hidden" id="searchform-qact" class="form-control" name="SearchForm[qact]"
-								 options="{&quot;value&quot;:&quot;search_adv&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-sortby">
-
-					<input type="hidden" id="searchform-sortby" class="form-control" name="SearchForm[SortBy]"
-								 options="{&quot;value&quot;:&quot;Time&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-dir">
-
-					<input type="hidden" id="searchform-dir" class="form-control" name="SearchForm[Dir]"
-								 option="{&quot;value&quot;:&quot;d&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-city">
-
-					<input type="hidden" id="searchform-city" class="form-control" name="SearchForm[City]"
-								 option="{&quot;value&quot;:&quot;-1&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-folder">
-
-					<input type="hidden" id="searchform-folder" class="form-control" name="SearchForm[Folder]"
-								 option="{&quot;value&quot;:&quot;-1&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-type">
-
-					<input type="hidden" id="searchform-type" class="form-control" name="SearchForm[Type]"
-								 option="{&quot;value&quot;:&quot;-1&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-price_start">
-
-					<input type="hidden" id="searchform-price_start" class="form-control" name="SearchForm[Price_Start]"
-								 option="{&quot;value&quot;:&quot;&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-price_end">
-
-					<input type="hidden" id="searchform-price_end" class="form-control" name="SearchForm[Price_End]"
-								 option="{&quot;value&quot;:&quot;&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-currency">
-
-					<input type="hidden" id="searchform-currency" class="form-control" name="SearchForm[Currency]"
-								 option="{&quot;value&quot;:&quot;1&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-period">
-
-					<input type="hidden" id="searchform-period" class="form-control" name="SearchForm[Period]"
-								 option="{&quot;value&quot;:&quot;3000&quot;}">
-
-
-				</div>
-				<div class="form-group field-searchform-owneradvid">
-
-					<input type="hidden" id="searchform-owneradvid" class="form-control" name="SearchForm[OwnerAdvID]"
-								 option="{&quot;value&quot;:&quot;0&quot;}">
-
-
-				</div>
 				<div class="form-group field-searchform-searchword has-success">
 
 					<div class="input-group"><input type="text" id="searchform-searchword" class="form-control"
@@ -165,76 +86,7 @@ $this->title = 'vezugruz29.ru';
 	<div class="clearfix"></div>
 	<div class="row">
 		<div id="ads-sort-block" class="col-sm-12 collapse">
-			<div class="panel panel-default">
-				<div class="panel-body">
-
-            <?= Html::beginForm( [
-                '/site/index'
-            ],
-                'post', [
-                    'class' => 'form-horizontal'
-                ] ) ?>
-
-            <?= Html::hiddenInput( 'form_action', 'ads_sort' ) ?>
-
-					<div class="form-group">
-						<div id="city-sort" class="col-sm-3">
-                <?= Html::dropDownList( 'city_sort', -1, AdvertsRepository::countryList(), [ 'class' => 'form-control', 'prompt' => 'Расположение' ] ) ?>
-						</div>
-
-						<div class="col-sm-3">
-							<div id="type-sort">
-                  <?= Html::dropDownList( 'type_sort', -1, AdvertsRepository::typeList(), [ 'class' => 'form-control', 'prompt' => 'Тип' ] ) ?>
-							</div>
-						</div>
-
-						<div class="col-sm-3">
-							<div id="date-sort">
-								По дате&nbsp;&nbsp;
-                  <?= Html::hiddenInput( 'date_sort', '', [ 'id' => 'date' ] ) ?>
-                  <?= Html::button( '<i class="fa fa-angle-up" aria-hidden="true"></i>',
-                      [ 'data-id' => 2, 'class' => 'btn btn-default btn-sm', 'title' => 'По возрастанию' ] ) ?>
-                  <?= Html::button( '<i class="fa fa-angle-down" aria-hidden="true"></i>',
-                      [ 'data-id' => 1, 'class' => 'btn btn-default btn-sm', 'title' => 'По убыванию' ] ) ?>
-							</div>
-						</div>
-
-						<div class="col-sm-3">
-							<div id="price-sort">
-								По цене&nbsp;&nbsp;
-                  <?= Html::hiddenInput( 'price_sort', '', [ 'id' => 'price' ] ) ?>
-
-                  <?= Html::button( '<i class="fa fa-angle-up" aria-hidden="true"></i>',
-                      [ 'data-id' => 2, 'class' => 'btn btn-default btn-sm', 'title' => 'По возрастанию' ] ) ?>
-                  <?= Html::button( '<i class="fa fa-angle-down" aria-hidden="true"></i>',
-                      [ 'data-id' => 1, 'class' => 'btn btn-default btn-sm', 'title' => 'По убыванию' ] ) ?>
-							</div>
-						</div>
-					</div>
-					<div class="clearfix"></div>
-
-					<div class="form-group">
-						<div class="col-sm-offset-3 col-sm-3 hide">
-                <?= Html::checkbox( 'img_only', true, [ 'label' => false, 'id' => 'img-only' ] ) ?>
-							Только с фотографиями
-						</div>
-						<div class="col-sm-offset-6 col-sm-3">
-                <?= Html::checkbox( 'save_sort', true,
-                    [ 'label' => false, 'id' => 'save-sort', 'checked' => 'checked' ] ) ?>
-							Сохранить сортировку
-						</div>
-						<div class="col-sm-3">
-                <?= Html::submitButton( 'Сортировать', [ 'class' => 'btn btn-success btn-sm' ] ) ?>
-                <?= Html::resetButton( 'Сбросить', [ 'class' => 'btn btn-default btn-sm' ] ) ?>
-						</div>
-					</div>
-
-					<div class="clearfix"></div>
-
-            <?= Html::endForm() ?>
-
-				</div>
-			</div>
+        <?= AdSort::widget(); ?>
 		</div>
 	</div>
 

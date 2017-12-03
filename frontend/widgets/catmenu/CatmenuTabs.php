@@ -29,7 +29,7 @@ class CatmenuTabs extends Widget
     {
         parent::run();
 
-        return $this->render( 'menu_tabs', [
+        return $this->render( 'index', [
             'items' => $this->_getItems( $this->_getCategory() )
         ] );
     }
