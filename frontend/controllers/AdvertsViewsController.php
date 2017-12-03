@@ -73,10 +73,10 @@ class AdvertsViewsController extends Controller
     /**
      * @return string
      */
-    public function actionSubcategoryPage( $id )
+    public function actionCategoryPage( $id )
     {
         $query = Adverts::find()
-            ->where( [ 'adverts.cat_id' =>$id ] )
+            ->where( [ 'adverts.cat_id' => $id ] )
             ->joinWith( 'category' )
             ->joinWith( 'subcategory' )
             ->joinWith( 'types' )
@@ -88,16 +88,15 @@ class AdvertsViewsController extends Controller
                 }
             ] );
 
-        $dataProvider = new ActiveDataProvider( [
+        $provider = new ActiveDataProvider( [
             'query'      => $query,
             'pagination' => [
 //                'pagesize' => 25,
             ]
         ] );
 
-        return $this->render( 'subcategory-page', [
-            'query'        => $query,
-            'dataProvider' => $dataProvider,
+        return $this->render( 'category-page', [
+            'provider' => $provider,
             'header'       => Yii::$app->request->get( 'header' ),
             'sort'         => [
                 'defaultOrder' => [ 'id' => SORT_DESC ],
@@ -114,9 +113,53 @@ class AdvertsViewsController extends Controller
         ] );
     }
 
-    public function actionDetails( $id ){
+    public function actionSubcategoryPage( $catid, $id )
+    {
+        $query = Adverts::find()
+            ->where( [ 'adverts.cat_id' => $catid ] )
+            ->andWhere( [ 'adverts.subcat_id' => $id ] )
+            ->joinWith( 'category' )
+            ->joinWith( 'subcategory' )
+            ->joinWith( 'types' )
+            ->joinWith( 'periods' )
+            ->joinWith( 'countries' )
+            ->joinWith( [
+                'pricies p' => function ( $q ){
+                    $q->joinWith( 'currencies c' );
+                }
+            ] );
+
+        $provider = new ActiveDataProvider( [
+            'query'      => $query,
+            'pagination' => [
+                // TODO: pagesize
+                //                'pagesize' => 25,
+            ]
+        ] );
+
+        return $this->render( 'subcategory-page', [
+            'provider' => $provider,
+//            'category' =>
+//            'header'       => Yii::$app->request->get( 'header' ),
+            'sort'         => [
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+                'attributes'   => [
+                    'id' => [
+                        'asc'  => [ 'id' => SORT_ASC ],
+                        'desc' => [ 'id' => SORT_DESC ],
+                    ],
+                ],
+            ],
+            'pagination'   => [
+                'pageSizeLimit' => [ 15, 100 ],
+            ]
+        ] );
+    }
+
+    public function actionDetails( $id )
+    {
         return $this->render( 'details', [
             'id' => $id,
-        ]);
+        ] );
     }
 }

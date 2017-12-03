@@ -5,6 +5,7 @@
  * Date: 02.12.2017
  * Time: 5:29
  */
+use frontend\widgets\submenu\SubmenuTabs;
 use yii\widgets\LinkPager;
 use frontend\assets\FontAwesomeAsset;
 
@@ -12,15 +13,14 @@ use frontend\assets\FontAwesomeAsset;
 
 FontAwesomeAsset::register( $this );
 
-$this->params['breadcrumbs'][] = [ 'label' => Yii::$app->request->get( 'cat' ),
-                                   'url'   => [
-                                       'adverts-views/category-page',
-                                       'id' => Yii::$app->request->get( 'catid' ),
-																			 'cat' => Yii::$app->request->get( 'cat' )
-                                   ]
-];
-$this->params['breadcrumbs'][] = Yii::$app->request->get( 'subcat' );
+$this->params['breadcrumbs'][] = Yii::$app->request->get('cat');
 ?>
+
+<div class="row">
+	<div class="col-xs-12">
+      <?= SubmenuTabs::widget(); ?>
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-sx-12">

@@ -71,9 +71,9 @@ class CatmenuTabs extends Widget
                 array_push( $extra_items, [
                     'label' => Html::encode( $value['category_name'] ),
                     'url'   => Url::to( [
-                        'adverts-views/subcategory-page',
+                        'adverts-views/category-page',
                         'id'     => $value['id'],
-                        'header' => $value['category_name']
+                        'cat' => $value['category_name']
                     ] )
                 ] );
             }
@@ -85,8 +85,10 @@ class CatmenuTabs extends Widget
                         'label' => Html::encode( $val['subcat_name'] ),
                         'url'   => Url::to( [
                             'adverts-views/subcategory-page',
-                            'id'     => $value['id'],
-                            'header' => $value['category_name']
+                            'catid'     => $value['id'],
+                            'id' => $val['id'],
+                            'cat' => $value['category_name'],
+                            'subcat' => $val['subcat_name']
                         ] )
                     ] );
 
