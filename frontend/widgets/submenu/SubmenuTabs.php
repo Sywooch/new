@@ -29,8 +29,8 @@ class SubmenuTabs extends Widget
     {
         parent::run();
 
-        return $this->render( 'menu_pills', [
-            'items' => $this->_getSubItems( $this->_getSubcategory( Yii::$app->request->queryParams['id'] ) )
+        return $this->render( 'index', [
+            'items' => $this->_getSubItems( $this->_getSubcategory( Yii::$app->request->get( 'id' ) ) )
         ] );
     }
 
@@ -45,7 +45,13 @@ class SubmenuTabs extends Widget
         foreach ( $array as $value ) {
             array_push( $extra_items, [
                 'label' => Html::encode( $value['subcat_name'] ),
-                'url'   => Url::to( [ 'adverts-views/subcategory-page', 'id' => $value['sub_id'], ] )
+                'url'   => Url::to( [
+                    'adverts-views/subcategory-page',
+                    'catid'  => Yii::$app->request->get( 'id' ),
+                    'id'     => $value['id'],
+                    'cat' => Yii::$app->request->get( 'cat' ),
+                    'subcat' => $value['subcat_name']
+                ] )
             ] );
         }
         unset ( $value );
@@ -61,8 +67,8 @@ class SubmenuTabs extends Widget
     {
         $subcategory = Subcategory::find()
             ->asArray()
-            ->where(['cat_id' => $id ])
-            ->orderBy('sort')
+            ->where( [ 'cat_id' => $id ] )
+            ->orderBy( 'sort' )
             ->all();
 
         if ( !$subcategory ) {
