@@ -9,6 +9,8 @@ use frontend\widgets\submenu\SubmenuTabs;
 use yii\widgets\LinkPager;
 use frontend\assets\FontAwesomeAsset;
 
+/* @var $dataProvider frontend\controllers\AdvertsViewsController */
+
 FontAwesomeAsset::register( $this );
 $this->title = $header;
 $this->params['breadcrumbs'][] = $this->title;

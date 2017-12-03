@@ -8,6 +8,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Helpers;
 use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -111,5 +112,11 @@ class AdvertsViewsController extends Controller
                 'pageSizeLimit' => [ 15, 100 ],
             ]
         ] );
+    }
+
+    public function actionDetails( $id ){
+        return $this->render( 'details', [
+            'id' => $id,
+        ]);
     }
 }

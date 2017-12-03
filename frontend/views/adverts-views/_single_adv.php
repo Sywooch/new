@@ -6,8 +6,10 @@
  * Time: 22:04
  */
 use yii\helpers\Html;
+use yii\helpers\Url;
 
-//\common\models\Helpers::p(  ); die;
+/* @var $model frontend\controllers\AdvertsViewsController */
+//\common\models\Helpers::p( $model ); die;
 ?>
 
 <div class="ad-list col-xs-12">
@@ -21,16 +23,19 @@ use yii\helpers\Html;
 
 		<div>
 			<div class="caption">
-				<a href="<?= Yii::$app->urlManager->createUrl( [
-            'adverts/view-single',
+				<a href="<?= Url::to( [
+            'adverts-views/details',
             'id' => $model->id
         ] ); ?>">
 					<h5><?= $model->header ?></h5>
 				</a>
-				<p><small><span><?= Yii::$app->formatter->asDatetime($model->created_at, Yii::$app->params['dateFormat']); ?><span>
+				<p>
+					<small><span><?= Yii::$app->formatter->asDatetime( $model->created_at, Yii::$app->params['dateFormat'] ); ?>
+							<span>
 						<i class="fa fa-map-marker"></i><?= $model->countries->country_name ?></span>,
 					&nbsp;&nbsp;&nbsp;
-					<i class="fa fa-folder-open"></i><?= $model->category->category_name ?>&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?></span>
+					<i class="fa fa-folder-open"></i><?= $model->category->category_name ?>
+							&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?></span>
 					</small>
 				</p>
 
@@ -46,7 +51,10 @@ use yii\helpers\Html;
 						<span class="badge"></span>
 					</li>
 					<li>Коротко:
-						<a href="javascript:void(0);" data-container="body" data-toggle="popover" animation="true"data-placement="top" data-content="<?= \common\models\Helpers::getShortComment( $model->description, 140 ); ?>" data-original-title="" title="" style="z-index: -222;">
+						<a href="javascript:void(0);" data-container="body" data-toggle="popover" animation="true"
+							 data-placement="top"
+							 data-content="<?= \common\models\Helpers::getShortComment( $model->description, 140 ); ?>"
+							 data-original-title="" title="" style="z-index: -222;">
 							<i class="fa fa-align-left"></i>
 						</a>
 					</li>
