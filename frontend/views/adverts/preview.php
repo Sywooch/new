@@ -25,8 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p>ID объявления:<span class="pull-right"><?= $model->id ?></span></p>
 				<hr>
 				<p id="adv-type">Тип:&nbsp;<?= $model->type->name ?>
-					<span id="place-date" class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDate( $model->created_at,
-                  'php:d-F-Y H:m' ); ?>
+					<span id="place-date" class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDatetime( $model->created_at,
+                  Yii::$app->params['dateFormat'] ); ?>
 						</span>
 				</p>
 				<hr>

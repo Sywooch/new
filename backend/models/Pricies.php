@@ -1,9 +1,10 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
 use backend\models\Currencies;
+use board\entities\Adverts;
 
 /**
  * This is the model class for table "{{%price}}".
@@ -33,7 +34,7 @@ class Pricies extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ad_id', 'price', 'price_old', 'currency_id'], 'integer'],
+            [['ad_id', 'old_id', 'price', 'price_old', 'currency_id'], 'integer'],
             ['price', 'default', 'value' => 0],
 //            [['negotiable'], 'string', 'max' => 2],
             [ ['negotiable'], 'boolean'],
@@ -49,6 +50,7 @@ class Pricies extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ad_id' => 'Ad ID',
+            'old_id' => 'Old_ID',
             'price' => 'Цена',
             'price_old' => 'Price Old',
             'currency_id' => 'Currency ID',
@@ -62,5 +64,10 @@ class Pricies extends \yii\db\ActiveRecord
     public function getCurrencies()
     {
         return $this->hasOne(Currencies::className(), [ 'id' => 'currency_id']);
+    }
+
+    public function getAdverts()
+    {
+        return $this->hasMany(Adverts::className(), ['id' => 'ad_id']);
     }
 }

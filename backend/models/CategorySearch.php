@@ -18,8 +18,8 @@ class CategorySearch extends Category
     public function rules()
     {
         return [
-            [['id', 'old_id', 'menu_order'], 'integer'],
-            [['category_name'], 'safe'],
+            [['id', 'old_id', 'sort'], 'integer'],
+            [['category_name', 'class_name', 'icon'], 'safe'],
         ];
     }
 
@@ -61,10 +61,12 @@ class CategorySearch extends Category
         $query->andFilterWhere([
             'id' => $this->id,
             'old_id' => $this->old_id,
-            'menu_order' => $this->menu_order,
+            'sort' => $this->sort,
         ]);
 
-        $query->andFilterWhere(['like', 'category_name', $this->category_name]);
+        $query->andFilterWhere(['like', 'category_name', $this->category_name])
+            ->andFilterWhere(['like', 'class_name', $this->class_name])
+            ->andFilterWhere(['like', 'icon', $this->icon]);
 
         return $dataProvider;
     }

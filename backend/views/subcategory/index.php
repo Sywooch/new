@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'old_cat_id',
             'cat_id',
             'subcat_name',
-            // 'menu_order',
+            // 'sort',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
