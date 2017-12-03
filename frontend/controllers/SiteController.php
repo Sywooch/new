@@ -2,11 +2,9 @@
 
 namespace frontend\controllers;
 
-use backend\models\Currencies;
+use Yii;
 use board\entities\Adverts;
 use board\repositories\AdvertsRepository;
-use common\models\Helpers;
-use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -18,8 +16,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
-use backend\models\Pricies;
-use frontend\models\UserPhones;
+use yii\data\Sort;
 
 /**
  * Site controller
@@ -87,32 +84,32 @@ class SiteController extends Controller
             ->joinWith( 'types' )
             ->joinWith( 'periods' )
             ->joinWith( 'countries' )
-            ->joinWith([ 'pricies p' => function ( $q ){
-                        $q->joinWith('currencies c');
-                    }]);
+            ->joinWith( [
+                'pricies p' => function ( $q ){
+                    $q->joinWith( 'currencies c' );
+                }
+            ] );
 
         $dataProvider = new ActiveDataProvider( [
-            'query' => $query,
-            'pagination' => [
-//                'pagesize' => 25,
-            ]
-        ] );
-
-        return $this->render( 'index', [
-            'query'        => $query,
-            'dataProvider' => $dataProvider,
-                        'sort' => [
-                            'defaultOrder' => ['id' => SORT_DESC],
-                            'attributes' => [
-                                'id' => [
-                                    'asc' => ['id' => SORT_ASC],
-                                    'desc' => ['id' => SORT_DESC],
-                                ],
-                            ],
-                        ],
+            'query'      => $query,
+            'sort'       => [
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+                'attributes'   => [
+                    'id' => [
+                        'asc'  => [ 'id' => SORT_ASC ],
+                        'desc' => [ 'id' => SORT_DESC ],
+                    ],
+                ],
+            ],
             'pagination'   => [
                 'pageSizeLimit' => [ 15, 100 ],
-            ]
+            ],
+        ] );
+
+        $dataProvider->sort->enableMultiSort = true;
+
+        return $this->render( 'index', [
+            'dataProvider' => $dataProvider,
         ] );
     }
 

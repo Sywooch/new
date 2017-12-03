@@ -7,14 +7,11 @@
  */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
 use backend\models\Currencies;
 use yii\captcha\Captcha;
-
-FontAwesomeAsset::register( $this );
 
 /* @var $model /view/create.php */
 /* @var $category /view/create.php */

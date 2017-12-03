@@ -6,11 +6,8 @@
  * Time: 5:29
  */
 use yii\widgets\LinkPager;
-use frontend\assets\FontAwesomeAsset;
 
 /* @var $provider frontend\controllers\AdvertsViewsController */
-
-FontAwesomeAsset::register( $this );
 
 $this->params['breadcrumbs'][] = [ 'label' => Yii::$app->request->get( 'cat' ),
                                    'url'   => [
