@@ -33,8 +33,8 @@ class Subcategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['old_id', 'old_cat_id', 'cat_id', 'subcat_name', 'menu_order'], 'required'],
-            [['old_id', 'old_cat_id', 'cat_id', 'menu_order'], 'integer'],
+            [['old_id', 'old_cat_id', 'cat_id', 'subcat_name', 'sort'], 'required'],
+            [['old_id', 'old_cat_id', 'cat_id', 'sort'], 'integer'],
             [['subcat_name'], 'string', 'max' => 50],
             [['old_id'], 'unique'],
             [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
@@ -53,7 +53,7 @@ class Subcategory extends \yii\db\ActiveRecord
             'old_cat_id' => 'Old Cat ID',
             'cat_id' => 'Cat ID',
             'subcat_name' => 'Subcat Name',
-            'menu_order' => 'Menu Order',
+            'sort' => 'Menu Order',
         ];
     }
 

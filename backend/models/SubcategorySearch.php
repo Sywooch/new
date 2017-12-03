@@ -18,7 +18,7 @@ class SubcategorySearch extends Subcategory
     public function rules()
     {
         return [
-            [['id', 'old_id', 'old_cat_id', 'cat_id', 'menu_order'], 'integer'],
+            [['id', 'old_id', 'old_cat_id', 'cat_id', 'sort'], 'integer'],
             [['subcat_name'], 'safe'],
         ];
     }
@@ -66,7 +66,7 @@ class SubcategorySearch extends Subcategory
             'old_id' => $this->old_id,
             'old_cat_id' => $this->old_cat_id,
             'cat_id' => $this->cat_id,
-            'menu_order' => $this->menu_order,
+            'sort' => $this->sort,
         ]);
 
         $query->andFilterWhere(['like', 'subcat_name', $this->subcat_name]);
