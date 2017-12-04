@@ -1,9 +1,10 @@
 <?php
+
 namespace frontend\controllers;
 
+use Yii;
 use board\entities\Adverts;
 use board\repositories\AdvertsRepository;
-use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -15,8 +16,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
-use frontend\models\Price;
-use frontend\models\UserPhones;
+use yii\data\Sort;
 
 /**
  * Site controller
@@ -31,24 +31,24 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only'  => [ 'logout', 'signup' ],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
+                        'actions' => [ 'signup' ],
+                        'allow'   => true,
+                        'roles'   => [ '?' ],
                     ],
                     [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => [ 'logout' ],
+                        'allow'   => true,
+                        'roles'   => [ '@' ],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'verbs'  => [
+                'class'   => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => [ 'post' ],
                 ],
             ],
         ];
@@ -60,12 +60,12 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            'error' => [
+            'error'   => [
                 'class' => 'yii\web\ErrorAction',
             ],
             'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-//                    'class' => 'common\components\MathCaptchaAction',
+                'class'           => 'yii\captcha\CaptchaAction',
+                //                    'class' => 'common\components\MathCaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
@@ -79,36 +79,38 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $query = Adverts::find()
-            ->select( 'adverts.*' )
             ->joinWith( 'category' )
             ->joinWith( 'subcategory' )
-            ->joinWith( 'type' )
-            ->joinWith( 'period' )
-            ->joinWith( 'country' );
+            ->joinWith( 'types' )
+            ->joinWith( 'periods' )
+            ->joinWith( 'countries' )
+            ->joinWith( [
+                'pricies p' => function ( $q ){
+                    $q->joinWith( 'currencies c' );
+                }
+            ] );
 
-//        $price = Price::find()->where( [ 'ad_id' => $id ] )->joinWith( 'currency' )->one();
-//        $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();
+        $dataProvider = new ActiveDataProvider( [
+            'query'      => $query,
+            'sort'       => [
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+                'attributes'   => [
+                    'id' => [
+                        'asc'  => [ 'id' => SORT_ASC ],
+                        'desc' => [ 'id' => SORT_DESC ],
+                    ],
+                ],
+            ],
+            'pagination'   => [
+                'pageSizeLimit' => [ 15, 100 ],
+            ],
+        ] );
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider->sort->enableMultiSort = true;
 
-        return $this->render('index', [
-            'query' => $query,
+        return $this->render( 'index', [
             'dataProvider' => $dataProvider,
-//            'sort' => [
-//                'defaultOrder' => ['id' => SORT_DESC],
-//                'attributes' => [
-//                    'id' => [
-//                        'asc' => ['id' => SORT_ASC],
-//                        'desc' => ['id' => SORT_DESC],
-//                    ],
-//                ],
-//            ],
-            'pagination' => [
-                'pageSizeLimit' => [15, 100],
-            ]
-        ]);
+        ] );
     }
 
     /**
@@ -118,17 +120,18 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+        if ( !Yii::$app->user->isGuest ) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ( $model->load( Yii::$app->request->post() ) && $model->login() ) {
             return $this->goBack();
-        } else {
-            return $this->render('login', [
+        }
+        else {
+            return $this->render( 'login', [
                 'model' => $model,
-            ]);
+            ] );
         }
     }
 
@@ -152,18 +155,21 @@ class SiteController extends Controller
     public function actionContact()
     {
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
-                Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
-            } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
+        if ( $model->load( Yii::$app->request->post() ) && $model->validate() ) {
+            if ( $model->sendEmail( Yii::$app->params['adminEmail'] ) ) {
+                Yii::$app->session->setFlash( 'success',
+                    'Thank you for contacting us. We will respond to you as soon as possible.' );
+            }
+            else {
+                Yii::$app->session->setFlash( 'error', 'There was an error sending your message.' );
             }
 
             return $this->refresh();
-        } else {
-            return $this->render('contact', [
+        }
+        else {
+            return $this->render( 'contact', [
                 'model' => $model,
-            ]);
+            ] );
         }
     }
 
@@ -174,7 +180,7 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        return $this->render( 'about' );
     }
 
     /**
@@ -185,17 +191,17 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
+        if ( $model->load( Yii::$app->request->post() ) ) {
+            if ( $user = $model->signup() ) {
+                if ( Yii::$app->getUser()->login( $user ) ) {
                     return $this->goHome();
                 }
             }
         }
 
-        return $this->render('signup', [
+        return $this->render( 'signup', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -206,19 +212,21 @@ class SiteController extends Controller
     public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+        if ( $model->load( Yii::$app->request->post() ) && $model->validate() ) {
+            if ( $model->sendEmail() ) {
+                Yii::$app->session->setFlash( 'success', 'Check your email for further instructions.' );
 
                 return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+            }
+            else {
+                Yii::$app->session->setFlash( 'error',
+                    'Sorry, we are unable to reset password for the provided email address.' );
             }
         }
 
-        return $this->render('requestPasswordResetToken', [
+        return $this->render( 'requestPasswordResetToken', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**
@@ -228,23 +236,23 @@ class SiteController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword( $token )
     {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
+        try{
+            $model = new ResetPasswordForm( $token );
+        } catch ( InvalidParamException $e ){
+            throw new BadRequestHttpException( $e->getMessage() );
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+        if ( $model->load( Yii::$app->request->post() ) && $model->validate() && $model->resetPassword() ) {
+            Yii::$app->session->setFlash( 'success', 'New password saved.' );
 
             return $this->goHome();
         }
 
-        return $this->render('resetPassword', [
+        return $this->render( 'resetPassword', [
             'model' => $model,
-        ]);
+        ] );
     }
 
     /**

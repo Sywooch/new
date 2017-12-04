@@ -8,20 +8,23 @@
 
 namespace board\entities;
 
+use backend\models\Currencies;
+use backend\models\Pricies;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
-use backend\models\Country;
+use backend\models\Countries;
 use backend\models\Category;
 use backend\models\Subcategory;
-use backend\models\Period;
-use backend\models\Type;
+use backend\models\Periods;
+use backend\models\Types;
 
 class Adverts extends ActiveRecord
 {
     use EventTrait;
 
     public $verifyCode;
+//    public $pricies;
 
     public static function tableName()
     {
@@ -48,8 +51,14 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'old_id', 'cat_id', 'subcat_id', 'types', 'countries',
-                    'periods',
+            [
+                [
+                    'old_id',
+                    'cat_id',
+                    'subcat_id',
+                    'type',
+                    'country',
+                    'period',
                     'active',
                     'selected',
                     'selected_old',
@@ -62,31 +71,48 @@ class Adverts extends ActiveRecord
                 ],
                 'integer'
             ],
-            [ [ 'sid', 'cat_id', 'subcat_id', 'types', 'header', 'description', 'author', 'email', 'periods', 'countries', 'ip', ], 'required' ],
-            [ ['negotiable'], 'boolean'],
+            [
+                [
+                    'sid',
+                    'cat_id',
+                    'subcat_id',
+                    'type',
+                    'header',
+                    'description',
+                    'author',
+                    'email',
+                    'period',
+                    'country',
+                    'ip',
+                ],
+                'required'
+            ],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
-            ['email', 'email'],
+            [ 'email', 'email' ],
             [ [ 'sid' ], 'unique' ],
             [ [ 'old_id' ], 'unique' ],
-            [ [ 'cat_id' ], 'exist', 'skipOnError'     => true,
+            [
+                [ 'cat_id' ],
+                'exist',
+                'skipOnError'     => true,
                 'targetClass'     => Category::className(),
                 'targetAttribute' => [ 'cat_id' => 'id' ]
             ],
             [
-                [ 'countries' ],
+                [ 'country' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Country::className(),
-                'targetAttribute' => [ 'countries' => 'id' ]
+                'targetClass'     => Countries::className(),
+                'targetAttribute' => [ 'country' => 'id' ]
             ],
             [
-                [ 'periods' ],
+                [ 'period' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Period::className(),
-                'targetAttribute' => [ 'periods' => 'id' ]
+                'targetClass'     => Periods::className(),
+                'targetAttribute' => [ 'period' => 'id' ]
             ],
             [
                 [ 'subcat_id' ],
@@ -96,11 +122,13 @@ class Adverts extends ActiveRecord
                 'targetAttribute' => [ 'subcat_id' => 'id' ]
             ],
             [
-                [ 'types' ], 'exist', 'skipOnError'     => true,
-                'targetClass'     => Type::className(),
-                'targetAttribute' => [ 'types' => 'id' ]
+                [ 'type' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Types::className(),
+                'targetAttribute' => [ 'type' => 'id' ]
             ],
-            ['verifyCode', 'captcha'],
+            //            ['verifyCode', 'captcha'],
         ];
     }
 
@@ -116,15 +144,15 @@ class Adverts extends ActiveRecord
 
             'cat_id'    => 'Раздел',
             'subcat_id' => 'Подраздел',
-            'types'      => 'Тип',
+            'type'      => 'Тип',
 
             'header'      => 'Заголовок',
             'description' => 'Описание',
-            'countries'   => 'Расположение',
+            'country'     => 'Расположение',
 
-            'periods' => 'Период',
-            'author'  => 'Автор',
-            'email'   => 'Email',
+            'period' => 'Период',
+            'author' => 'Автор',
+            'email'  => 'Email',
 
             'active'       => 'Active',
             'selected'     => 'Selected',
@@ -141,7 +169,7 @@ class Adverts extends ActiveRecord
         ];
     }
 
-    public function addPhoto( UploadedFile $file )
+    /*public function addPhoto( UploadedFile $file )
     {
         $image = $this->photos;
         $image[] = Image::create( $file );
@@ -155,7 +183,7 @@ class Adverts extends ActiveRecord
         }
         $this->photos = $photos;
         $this->populateRelation( 'mainPhoto', reset( $photos ) );
-    }
+    }*/
 
     /**
      * @return \yii\db\ActiveQuery
@@ -168,17 +196,17 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCountry()
+    public function getCountries()
     {
-        return $this->hasOne( Country::className(), [ 'id' => 'countries' ] );
+        return $this->hasOne( Countries::className(), [ 'id' => 'country' ] );
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPeriod()
+    public function getPeriods()
     {
-        return $this->hasOne( Period::className(), [ 'id' => 'periods' ] );
+        return $this->hasOne( Periods::className(), [ 'id' => 'period' ] );
     }
 
     /**
@@ -192,10 +220,16 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getType()
+    public function getTypes()
     {
-        return $this->hasOne( Type::className(), [ 'id' => 'types' ] );
+        return $this->hasOne( Types::className(), [ 'id' => 'type' ] );
     }
+
+    public function getPricies()
+    {
+        return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
+    }
+
 
     public function releaseEvents(){ }
 }

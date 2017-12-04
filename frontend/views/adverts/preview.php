@@ -8,9 +8,6 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use frontend\assets\FontAwesomeAsset;
-
-FontAwesomeAsset::register( $this );
 
 $this->title = $model->header;
 //$this->params['breadcrumbs'][] = ['label' => 'Adverts', 'url' => ['index']];
@@ -25,8 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p>ID объявления:<span class="pull-right"><?= $model->id ?></span></p>
 				<hr>
 				<p id="adv-type">Тип:&nbsp;<?= $model->type->name ?>
-					<span id="place-date" class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDate( $model->created_at,
-                  'php:d-F-Y H:m' ); ?>
+					<span id="place-date" class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDatetime( $model->created_at,
+                  Yii::$app->params['dateFormat'] ); ?>
 						</span>
 				</p>
 				<hr>
@@ -45,11 +42,12 @@ $this->params['breadcrumbs'][] = $this->title;
 					<div id="details">
 						<!--<# CUSTOM_FORM #>-->
 							<p><i class="fa fa-map-marker fa-fw"></i>Расположение:<span
-										class="pull-right"><strong><?= $model->country->country_name ?></strong></span></p>
+										class="pull-right"><strong><?= $model->countries->country_name ?></strong></span></p>
 							<hr>
 							<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
 										<span class="label label-danger"><strong><?= $price->price ?>
-												&nbsp;<?= $price->currency->short_name ?></strong></span></span>
+												&nbsp;<?= $price->currencies->short_name ?></strong></span></span>
+								<?=  $price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
 							</p>
 							<hr>
 
@@ -64,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							?>
 
 							<p><i class="fa fa-calendar fa-fw"></i>Период:<span
-										class="pull-right"><?= $model->period->description ?></span></span></p>
+										class="pull-right"><?= $model->periods->description ?></span></span></p>
 							<hr>
 
 							<p><i class="fa fa-info fa-fw"></i>Статус:<span class="pull-right"><?= $model->active == 1 ? "Активно" : "Не активно" ?></span></p>

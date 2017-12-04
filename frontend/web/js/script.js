@@ -14,3 +14,10 @@ $(function () {
 		});
 	});
 });
+
+// Сортировка объявлений
+var block = $('#ads-sort-block');
+
+$('#ads-sort').click(function(){
+	block.collapse('toggle');
+});

@@ -29,13 +29,13 @@ $this->title = 'My Yii Application';
 
 					<li><a href="<?= \yii\helpers\Url::to( [ '/subcategory/index' ] ) ?>">Подкатегории</a></li>
 
-					<li><a href="<?= \yii\helpers\Url::to( [ '/country/index' ] ) ?>">Города</a></li>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/countries/index' ] ) ?>">Города</a></li>
 
-					<li><a href="<?= \yii\helpers\Url::to( [ '/type/index' ] ) ?>">Тип объявления</a></li>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/types/index' ] ) ?>">Тип объявления</a></li>
 
-					<li><a href="<?= \yii\helpers\Url::to( [ '/period/index' ] ) ?>">Период</a></li>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/periods/index' ] ) ?>">Период</a></li>
 
-					<li><a href="<?= \yii\helpers\Url::to( [ '/currency/index' ] ) ?>">Валюта</a></li>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/currencies/index' ] ) ?>">Валюта</a></li>
 
 					<li><a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>">Rbac</a></li>
 				</ol>

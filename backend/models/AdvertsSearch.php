@@ -18,7 +18,7 @@ class AdvertsSearch extends Adverts
     public function rules()
     {
         return [
-            [['id', 'old_id', 'cat_id', 'subcat_id', 'type', 'countries', 'periods', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at', 'draft'], 'integer'],
+            [['id', 'old_id', 'cat_id', 'subcat_id', 'type', 'country', 'period', 'active', 'selected', 'selected_old', 'special', 'special_old', 'images_old', 'ip', 'created_at', 'updated_at', 'draft'], 'integer'],
             [['sid', 'header', 'description', 'author', 'email'], 'safe'],
         ];
     }
@@ -64,8 +64,8 @@ class AdvertsSearch extends Adverts
             'cat_id' => $this->cat_id,
             'subcat_id' => $this->subcat_id,
             'type' => $this->type,
-            'countries' => $this->countries,
-            'periods' => $this->periods,
+            'country' => $this->country,
+            'period' => $this->period,
             'active' => $this->active,
             'selected' => $this->selected,
             'selected_old' => $this->selected_old,
