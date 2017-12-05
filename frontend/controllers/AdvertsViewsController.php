@@ -73,6 +73,41 @@ class AdvertsViewsController extends Controller
         $this->_service = $service;
     }
 
+    public static function homeAdvertsPage(){
+        $query = Adverts::find()
+            ->joinWith( 'category' )
+            ->joinWith( 'subcategory' )
+            ->joinWith( 'types' )
+            ->joinWith( 'periods' )
+            ->joinWith( 'countries' )
+            ->joinWith( [
+                'pricies p' => function ( $q ){
+                    $q->joinWith( 'currencies c' );
+                }
+            ] );
+
+        $dataProvider = new ActiveDataProvider( [
+            'query'      => $query,
+            'sort'       => [
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+                'attributes'   => [
+                    'id' => [
+                        'asc'  => [ 'id' => SORT_ASC ],
+                        'desc' => [ 'id' => SORT_DESC ],
+                    ],
+                ],
+            ],
+            'pagination'   => [
+                'defaultPageSize' => 25,
+                'pageSizeLimit' => [ 15, 100 ],
+            ],
+        ] );
+
+        $dataProvider->sort->enableMultiSort = true;
+
+        return $dataProvider;
+    }
+
     /**
      * @return string
      */
@@ -115,6 +150,7 @@ class AdvertsViewsController extends Controller
                 ],
             ],
             'pagination' => [
+                'defaultPageSize' => 25,
                 'pageSizeLimit' => [ 15, 100 ],
             ]
         ] );
@@ -154,6 +190,7 @@ class AdvertsViewsController extends Controller
                 ],
             ],
             'pagination' => [
+                'defaultPageSize' => 25,
                 'pageSizeLimit' => [ 15, 100 ],
             ]
         ] );

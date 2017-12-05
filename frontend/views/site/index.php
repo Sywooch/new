@@ -9,8 +9,9 @@ use frontend\widgets\adsort\AdSort;
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
+//\common\models\Helpers::p( $dataProvider->getPagination()->pageSizeParam); die;
 //print Html::encode('<i class="fa fa-car" aria-hidden="true"></i>'); die;
-//\common\models\Helpers::p( $dataProvider->getModels() ); die;
+//\common\models\Helpers::p( count($dataProvider->getModels()), 1 ); die;
 ?>
 <div class="site-index">
 
@@ -34,7 +35,7 @@ $this->title = 'vezugruz29.ru';
 				<b><a id="ext-search-link" href="javascript:void();"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;Расширенный
 						поиск</a></b>
 				<!-- Статистика объявлений -->
-				<span class="pull-right">Всего в базе объявлений <strong class="text-primary">666</strong>, за месяц 444, за сутки
+				<span class="pull-right">Всего в базе объявлений <strong class="text-primary"><?= $dataProvider->totalCount ?></strong>, за месяц 444, за сутки
 	333</span>
 			</p></div>
 	</div>

@@ -25,9 +25,9 @@ $this->params['breadcrumbs'][] = [
     'label' => $model->subcategory->subcat_name,
     'url'   => [
         'adverts-views/subcategory-page',
-        'catid'     => $model->cat_id,
+        'catid'  => $model->cat_id,
         'id'     => $model->subcat_id,
-        'cat' => $model->category->category_name,
+        'cat'    => $model->category->category_name,
         'subcat' => $model->subcategory->subcat_name
     ]
 ];
@@ -86,7 +86,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<hr>
 			</div>
 		</div>
-<!-- --------------------------------------------------------------------------------------------------------------- -->
+		<!-- --------------------------------------------------------------------------------------------------------------- -->
 		<div id="resp_mail" class="row">
 
 			<div class="col-xs-12">
@@ -100,8 +100,8 @@ $this->params['breadcrumbs'][] = $this->title;
 			  $(this).fadeOut('slow');
 		  })</script>-->
 
-			<div id="response-ad" class="col-sm-12 collapse">
-
+			<div id="response-ad" class="col-xs-12 collapse">
+				<hr>
           <?= Html::beginForm( [
               'action',
               'id' => 'email'
@@ -148,7 +148,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<div class="form-group">
 					<div class="col-sm-offset-3 col-sm-4">
-              <?= Captcha::widget( ['name' => 'captcha', 'attribute' => 'captcha', ] ); ?>
+              <?= Captcha::widget( [ 'name' => 'captcha', 'attribute' => 'captcha', ] ); ?>
 					</div>
 				</div>
 
@@ -195,29 +195,34 @@ $this->params['breadcrumbs'][] = $this->title;
 				<!-- Соцсети -->
 				<noindex>
 					<div id="new-social-viewadv">
-						<a href="#" class="social_share" data-type="vk"><img src="/frontend/web/files/i/social/vk.png"
-																																 title="Вконтакте"></a>
-						<a id="fb" href="#" class="social_share" data-type="fb"><img src="/frontend/web/files/i/social/fb.png"
-																																				 title="Фейсбук"></a>
-						<a href="#" class="social_share" data-type="tw"><img src="/frontend/web/files/i/social/tw.png"
-																																 title="Твиттер"></a>
-						<a href="#" class="social_share" data-type="ok"><img src="/frontend/web/files/i/social/ok.png"
-																																 title="Одноклассники"></a>
-						<a href="#" class="social_share" data-type="mr"><img src="/frontend/web/files/i/social/mail.png"
-																																 title="Mail.Ru"></a>
-						<a href="#" class="social_share" data-type="gg"><img src="/frontend/web/files/i/social/g+.png"
-																																 title="Google+"></a>
+						<a href="#" class="social_share" data-type="vk"><?= Html::img( '@web/i/social/vk.png',
+                    [ 'title' => 'Вконтакте', 'alt' => 'Вконтакте' ] ) ?></a>
+						<a href="#" class="social_share" data-type="ok"><?= Html::img( '@web/i/social/ok.png',
+                    [ 'title' => 'Одноклассники', 'alt' => 'Одноклассники' ] ) ?></a>
+						<a href="#" class="social_share" data-type="mr"><?= Html::img( '@web/i/social/mail.png',
+                    [ 'title' => 'Mail.ru', 'alt' => 'Mail.ru' ] ) ?></a>
+						<a id="fb" href="#" class="social_share" data-type="fb"><?= Html::img( '@web/i/social/fb.png',
+                    [ 'title' => 'Facebook', 'alt' => 'Фейсбук' ] ) ?></a>
+						<a href="#" class="social_share" data-type="tw"><?= Html::img( '@web/i/social/tw.png',
+                    [ 'title' => 'Twitter', 'alt' => 'Twitter' ] ) ?></a>
+						<a href="#" class="social_share" data-type="gg"><?= Html::img( '@web/i/social/g+.png',
+                    [ 'title' => 'Google+', 'alt' => 'Google+' ] ) ?></a>
 					</div>
-					<script type="text/javascript">
+
+					<!--<script type="text/javascript">
 			  var text = $('#new-adv-text').text();
 			  var bigImage = $('#big-picture').find('img').attr('data-src');
 			  $('#new-social-viewadv').find('a').attr('data-image', 'http://www.dob29.ru' + bigImage).find('a').attr('data-text', text);
-					</script>
+					</script>-->
+
 				</noindex>
 			</div>
 		</div>
 	</div>
 
 	<div class="clearfix"></div>
-	<hr>
+	<div class="col-xs-12">
+		<hr>
+	</div>
+
 </div>

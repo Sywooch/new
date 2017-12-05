@@ -40,12 +40,12 @@ class CopyAdvertsController extends Controller
             $value['AdvertType'] !== 0 ? $adverts->type = $value['AdvertType'] : $adverts->type = $value['AdvertType'] = 4;
             $value['AdvertHeader'] !== '' ? $adverts->header = $value['AdvertHeader'] : $adverts->header = '---';
             $adverts->description = $value['AdvertComment'];
-            $adverts->country = $value['AdvertCity'];
+//            $adverts->country = $value['AdvertCity'];
+            $adverts->country = $this->convertCountries( $value['AdvertCity'] );
 
             $adverts->period = $this->convertPeriod( $value['AdvertPeriod'] );
             $value['AdvertUserName'] !== null ? $adverts->author = $value['AdvertUserName'] : $adverts->author = 'Пользователь';
             $adverts->email = $value['AdvertUserEmail'];
-//            $adverts->email = 'vasja@pupkin.ru';
             $adverts->active = $value['AdvertActive'];
 
             $adverts->selected = 0;
@@ -97,7 +97,7 @@ class CopyAdvertsController extends Controller
                     $phones->ad_id = $adverts->id;
                     $phones->phone = $value['AdvertUserPhone'];
                     $phones->sort = 0;
-                    if( !$phones->save() ) {
+                    if ( !$phones->save() ) {
                         $this->stdout( "Can't save phones: " . $value['AdvertID'] . PHP_EOL );
                     }
                 }
@@ -107,13 +107,6 @@ class CopyAdvertsController extends Controller
                 $transaction->rollBack();
                 throw $e;
             }
-
-//            if ( !$adverts->save() ) {
-//                $this->stdout( "Can't save advert " . $value['AdvertID'] . PHP_EOL );
-//            }
-//            else {
-//                $this->stdout( 'Process...' . PHP_EOL );
-//            }
         }
 
         $this->stdout( 'Done!' . PHP_EOL );
@@ -160,8 +153,13 @@ class CopyAdvertsController extends Controller
         return $subcut_id;
     }
 
+    /**
+     * @param $AdvertPeriod
+     * @return int
+     */
     private function convertPeriod( $AdvertPeriod )
     {
+        $period = null;
         switch ( $AdvertPeriod ) {
             case 7:
                 $period = 1;
@@ -180,5 +178,65 @@ class CopyAdvertsController extends Controller
                 break;
         }
         return $period;
+    }
+
+    private function convertCountries( $AdvertCity )
+    {
+        $country = null;
+        switch ( $AdvertCity ) {
+            case 6:
+                $country = 1;
+                break;
+            case 7:
+                $country = 1;
+                break;
+            case 395:
+                $country = 2;
+                break;
+            case 397:
+                $country = 3;
+                break;
+            case 398:
+                $country = 4;
+                break;
+            case 399:
+                $country = 5;
+                break;
+            case 402:
+                $country = 6;
+                break;
+            case 403:
+                $country = 7;
+                break;
+            case 404:
+                $country = 8;
+                break;
+            case 405:
+                $country = 9;
+                break;
+            case 406:
+                $country = 10;
+                break;
+            case 407:
+                $country = 11;
+                break;
+            case 409:
+                $country = 12;
+                break;
+            case 410:
+                $country = 13;
+                break;
+            case 411:
+                $country = 14;
+                break;
+            case 414:
+                $country = 15;
+                break;
+            case 415:
+                $country = 16;
+                break;
+        }
+
+        return $country;
     }
 }
