@@ -10,9 +10,10 @@ namespace console\controllers;
 
 
 use backend\models\Advert;
-use backend\models\Adverts;
+use board\entities\Adverts;
 use backend\models\Subcategory;
 use backend\models\Pricies;
+use frontend\models\UserPhones;
 use yii\console\Controller;
 use yii\data\ActiveDataProvider;
 
@@ -27,6 +28,7 @@ class CopyAdvertsController extends Controller
 
             $adverts = new Adverts();
             $pricies = new Pricies();
+            $phones = new UserPhones();
 
             $adverts->old_id = $value['AdvertID'];
             $adverts->sid = $value['AdvertsID'];
@@ -42,8 +44,8 @@ class CopyAdvertsController extends Controller
 
             $adverts->period = $this->convertPeriod( $value['AdvertPeriod'] );
             $value['AdvertUserName'] !== null ? $adverts->author = $value['AdvertUserName'] : $adverts->author = 'Пользователь';
-//            $adverts->email = $value['AdvertUserEmail'];
-            $adverts->email = 'vasja@pupkin.ru';
+            $adverts->email = $value['AdvertUserEmail'];
+//            $adverts->email = 'vasja@pupkin.ru';
             $adverts->active = $value['AdvertActive'];
 
             $adverts->selected = 0;
@@ -90,6 +92,13 @@ class CopyAdvertsController extends Controller
                     $pricies->ad_id = $adverts->id;
                     if ( !$pricies->save() ) {
                         $this->stdout( "Can't save price: " . $value['AdvertID'] . PHP_EOL );
+                    }
+
+                    $phones->ad_id = $adverts->id;
+                    $phones->phone = $value['AdvertUserPhone'];
+                    $phones->sort = 0;
+                    if( !$phones->save() ) {
+                        $this->stdout( "Can't save phones: " . $value['AdvertID'] . PHP_EOL );
                     }
                 }
 

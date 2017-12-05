@@ -48,37 +48,32 @@ $this->title = 'vezugruz29.ru';
 	<br>
 
 	<div id="sort-site-index" class="row">
-		<div class="col-sm-5">
+		<div class="col-xs-7">
 			<h4>Последние добавленные объявления</h4>
 		</div>
 
-		<div class="col-sm-7 text-right">
-			<div id="list-btn-a-link" class="btn-group" role="group" aria-label="...">
-				<button id="ads-sort" type="button" class="btn btn-default"><i class="fa fa-sort"></i>Сортировать</button>
-				<a id="list-btn-toggle-a" class="btn btn-default" href="javascript:void(0);"
-					 title="Вывод объявлений списком"><i class="fa fa-th-list"></i></a>
-				<a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);"
-					 title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
+		<div class="col-xs-5">
 
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">
-						<i class="fa fa-arrows-v" aria-hidden="true"></i>
-						<span class="caret"></span>
-					</button>
+			<div class="input-group pull-right">
+
+				<span class="input-group-btn">
+					<button id="ads-sort" type="button" class="btn btn-default"><i class="fa fa-sort"></i>Сортировать</button>
+				  <a id="list-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений списком"><i class="fa fa-th-list"></i></a>
+				  <a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
+				</span>
+
+				<select id="input-limit" class="form-control" style="width: 70px;" onchange="location = this.value;">
             <?php
             $values = [ 15, 25, 50, 75, 100 ];
             $current = $dataProvider->getPagination()->getPageSize();
             ?>
-					<ul class="dropdown-menu">
-              <?php foreach ( $values as $value ): ?>
-								<li><a href="<?= Html::encode( Url::current( [ 'per-page' => $value ] ) ) ?>"><?= $value ?></a></li>
-              <?php endforeach; ?>
-					</ul>
-				</div>
+            <?php foreach ( $values as $value ): ?>
+							<option value="<?= Html::encode( Url::current( [ 'per-page' => $value ] ) ) ?>"
+                      <?php if ( $current == $value ): ?>selected="selected"<?php endif; ?>><?= $value ?></option>
+            <?php endforeach; ?>
+				</select>
 
 			</div>
-
 		</div>
 	</div>
 
