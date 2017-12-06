@@ -9,7 +9,7 @@ use frontend\widgets\adsort\AdSort;
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
-//\common\models\Helpers::p( $dataProvider->getPagination()->pageSizeParam); die;
+//\common\models\Helpers::p( $dataProvider->getPagination()); die;
 //print Html::encode('<i class="fa fa-car" aria-hidden="true"></i>'); die;
 //\common\models\Helpers::p( count($dataProvider->getModels()), 1 ); die;
 ?>
@@ -63,7 +63,7 @@ $this->title = 'vezugruz29.ru';
 				  <a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
 				</span>
 
-				<select id="input-limit" class="form-control" style="width: 70px;" onchange="location = this.value;">
+				<select id="input-limit" class="form-control" onchange="location = this.value;">
             <?php
             $values = [ 15, 25, 50, 75, 100 ];
             $current = $dataProvider->getPagination()->getPageSize();
@@ -77,6 +77,8 @@ $this->title = 'vezugruz29.ru';
 			</div>
 		</div>
 	</div>
+
+
 
 
 	<div class="clearfix"></div>
@@ -100,6 +102,7 @@ $this->title = 'vezugruz29.ru';
 	<div class="row">
 		<div class="col-xs-12">
         <?= LinkPager::widget( [
+//            $dataProvider->getPagination()->pageSize = 100,
             'pagination' => $dataProvider->getPagination(),
         ] ) ?>
 		</div>

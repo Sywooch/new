@@ -74,6 +74,8 @@ class AdvertsViewsController extends Controller
     }
 
     public static function homeAdvertsPage(){
+        $pageSize = null;
+
         $query = Adverts::find()
             ->joinWith( 'category' )
             ->joinWith( 'subcategory' )
@@ -85,6 +87,20 @@ class AdvertsViewsController extends Controller
                     $q->joinWith( 'currencies c' );
                 }
             ] );
+
+        if ( !empty( Yii::$app->request->get( 'per-page' ) ) ) {
+            $cookies = Yii::$app->response->cookies;
+            $cookies->remove('per-page');
+            $cookies->add( new \yii\web\Cookie( [
+                'name'  => 'per-page',
+                'value' => Yii::$app->request->get( 'per-page' ),
+            ] ) );
+        }
+
+        $cookies = Yii::$app->request->cookies;
+        if ( ( $cookie = $cookies->get( 'per-page' ) ) !== null ) {
+            $pageSize = $cookie->value;
+        }
 
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
@@ -99,6 +115,7 @@ class AdvertsViewsController extends Controller
             ],
             'pagination'   => [
                 'defaultPageSize' => 25,
+                'pageSize' => $pageSize,
                 'pageSizeLimit' => [ 15, 100 ],
             ],
         ] );
