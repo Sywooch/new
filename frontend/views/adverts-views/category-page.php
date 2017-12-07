@@ -7,11 +7,8 @@
  */
 use frontend\widgets\submenu\SubmenuTabs;
 use yii\widgets\LinkPager;
-use frontend\assets\FontAwesomeAsset;
 
 /* @var $provider frontend\controllers\AdvertsViewsController */
-
-FontAwesomeAsset::register( $this );
 
 $this->params['breadcrumbs'][] = Yii::$app->request->get('cat');
 ?>

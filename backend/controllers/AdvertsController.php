@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Adverts;
+use board\entities\Adverts;
 use backend\models\AdvertsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

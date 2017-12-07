@@ -205,7 +205,7 @@ OpenCart
   font-weight: bold;
 }
 h4 {
-  font-size: 15px;
+  /*font-size: 15px;*/
 }
 /*h1, h2, h3, h4, h5, h6 {*/
   /*color: #444;*/
@@ -294,4 +294,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 .ad-list h5 {
   font-size: 16px;
   margin: 0 0 5px;
+}
+
+#input-limit {
+  width: 70px;
 }

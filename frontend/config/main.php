@@ -15,6 +15,8 @@ return [
         'request'      => [
             'csrfParam'           => '_csrf-frontend',
             'cookieValidationKey' => 'ear8GcRjBGXQgKVwfEpbApyj7Fb0UKXk',
+//            'enableCookieValidation' => false,
+//            'enableCsrfValidation' => false,
             'baseUrl'             => '',
         ],
         'session'      => [
