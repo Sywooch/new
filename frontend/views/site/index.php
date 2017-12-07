@@ -9,8 +9,6 @@ use frontend\widgets\adsort\AdSort;
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
-//\common\models\Helpers::p( $dataProvider->getPagination()); die;
-//print Html::encode('<i class="fa fa-car" aria-hidden="true"></i>'); die;
 //\common\models\Helpers::p( count($dataProvider->getModels()), 1 ); die;
 ?>
 <div class="site-index">
@@ -78,13 +76,10 @@ $this->title = 'vezugruz29.ru';
 		</div>
 	</div>
 
-
-
-
 	<div class="clearfix"></div>
 	<div class="row">
 		<div id="ads-sort-block" class="col-sm-12 collapse">
-        <?= AdSort::widget(); ?>
+        <?= AdSort::widget(['action' => 'site/index']); ?>
 		</div>
 	</div>
 
@@ -102,7 +97,6 @@ $this->title = 'vezugruz29.ru';
 	<div class="row">
 		<div class="col-xs-12">
         <?= LinkPager::widget( [
-//            $dataProvider->getPagination()->pageSize = 100,
             'pagination' => $dataProvider->getPagination(),
         ] ) ?>
 		</div>

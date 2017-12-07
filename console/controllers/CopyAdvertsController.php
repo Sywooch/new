@@ -40,7 +40,6 @@ class CopyAdvertsController extends Controller
             $value['AdvertType'] !== 0 ? $adverts->type = $value['AdvertType'] : $adverts->type = $value['AdvertType'] = 4;
             $value['AdvertHeader'] !== '' ? $adverts->header = $value['AdvertHeader'] : $adverts->header = '---';
             $adverts->description = $value['AdvertComment'];
-//            $adverts->country = $value['AdvertCity'];
             $adverts->country = $this->convertCountries( $value['AdvertCity'] );
 
             $adverts->period = $this->convertPeriod( $value['AdvertPeriod'] );
