@@ -240,8 +240,7 @@ class AdvertsViewsController extends Controller
     {
         $pageSize = null;
 
-        if ( isset( \Yii::$app->request ) &&  !empty( \Yii::$app->request->get( 'per-page' ) ) )
-        {
+        if ( Yii::$app->request->get( 'per-page' ) !== null ) {
             $cookies = Yii::$app->response->cookies;
             $cookies->remove( 'per-page' );
             $cookies->add( new \yii\web\Cookie( [
