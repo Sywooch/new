@@ -74,7 +74,6 @@ class AdvertsViewsController extends Controller
     }
 
     public static function homeAdvertsPage(){
-        $pageSize = null;
 
         $query = Adverts::find()
             ->joinWith( 'category' )
@@ -88,19 +87,7 @@ class AdvertsViewsController extends Controller
                 }
             ] );
 
-        if ( !empty( Yii::$app->request->get( 'per-page' ) ) ) {
-            $cookies = Yii::$app->response->cookies;
-            $cookies->remove('per-page');
-            $cookies->add( new \yii\web\Cookie( [
-                'name'  => 'per-page',
-                'value' => Yii::$app->request->get( 'per-page' ),
-            ] ) );
-        }
-
-        $cookies = Yii::$app->request->cookies;
-        if ( ( $cookie = $cookies->get( 'per-page' ) ) !== null ) {
-            $pageSize = $cookie->value;
-        }
+        $pageSize = self::_setPageSize();
 
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
@@ -247,5 +234,28 @@ class AdvertsViewsController extends Controller
             return $model;
         }
         throw new NotFoundHttpException( 'The requested page does not exist.' );
+    }
+
+    private function _setPageSize()
+    {
+        $pageSize = null;
+
+        if ( !empty( Yii::$app->request->get( 'per-page' ) ) ) {
+            $cookies = Yii::$app->response->cookies;
+            $cookies->remove('per-page');
+            $cookies->add( new \yii\web\Cookie( [
+                'name'  => 'per-page',
+                'value' => Yii::$app->request->get( 'per-page' ),
+            ] ) );
+
+            return $pageSize = Yii::$app->request->get( 'per-page' );
+        }
+
+        $cookies = Yii::$app->request->cookies;
+        if ( ( $cookie = $cookies->get( 'per-page' ) ) !== null ) {
+            $pageSize = $cookie->value;
+        }
+
+        return $pageSize;
     }
 }
