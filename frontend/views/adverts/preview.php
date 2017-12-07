@@ -8,9 +8,6 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
-use frontend\assets\FontAwesomeAsset;
-
-FontAwesomeAsset::register( $this );
 
 $this->title = $model->header;
 //$this->params['breadcrumbs'][] = ['label' => 'Adverts', 'url' => ['index']];

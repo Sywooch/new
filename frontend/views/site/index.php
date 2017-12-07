@@ -9,8 +9,9 @@ use frontend\widgets\adsort\AdSort;
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
+//\common\models\Helpers::p( $dataProvider->getPagination()); die;
 //print Html::encode('<i class="fa fa-car" aria-hidden="true"></i>'); die;
-//\common\models\Helpers::p( $dataProvider->getModels() ); die;
+//\common\models\Helpers::p( count($dataProvider->getModels()), 1 ); die;
 ?>
 <div class="site-index">
 
@@ -34,7 +35,7 @@ $this->title = 'vezugruz29.ru';
 				<b><a id="ext-search-link" href="javascript:void();"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;Расширенный
 						поиск</a></b>
 				<!-- Статистика объявлений -->
-				<span class="pull-right">Всего в базе объявлений <strong class="text-primary">666</strong>, за месяц 444, за сутки
+				<span class="pull-right">Всего в базе объявлений <strong class="text-primary"><?= $dataProvider->totalCount ?></strong>, за месяц 444, за сутки
 	333</span>
 			</p></div>
 	</div>
@@ -48,39 +49,36 @@ $this->title = 'vezugruz29.ru';
 	<br>
 
 	<div id="sort-site-index" class="row">
-		<div class="col-sm-5">
+		<div class="col-xs-7">
 			<h4>Последние добавленные объявления</h4>
 		</div>
 
-		<div class="col-sm-7 text-right">
-			<div id="list-btn-a-link" class="btn-group" role="group" aria-label="...">
-				<button id="ads-sort" type="button" class="btn btn-default"><i class="fa fa-sort"></i>Сортировать</button>
-				<a id="list-btn-toggle-a" class="btn btn-default" href="javascript:void(0);"
-					 title="Вывод объявлений списком"><i class="fa fa-th-list"></i></a>
-				<a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);"
-					 title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
+		<div class="col-xs-5">
 
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">
-						<i class="fa fa-arrows-v" aria-hidden="true"></i>
-						<span class="caret"></span>
-					</button>
+			<div class="input-group pull-right">
+
+				<span class="input-group-btn">
+					<button id="ads-sort" type="button" class="btn btn-default"><i class="fa fa-sort"></i>Сортировать</button>
+				  <a id="list-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений списком"><i class="fa fa-th-list"></i></a>
+				  <a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
+				</span>
+
+				<select id="input-limit" class="form-control" onchange="location = this.value;">
             <?php
             $values = [ 15, 25, 50, 75, 100 ];
             $current = $dataProvider->getPagination()->getPageSize();
             ?>
-					<ul class="dropdown-menu">
-              <?php foreach ( $values as $value ): ?>
-								<li><a href="<?= Html::encode( Url::current( [ 'per-page' => $value ] ) ) ?>"><?= $value ?></a></li>
-              <?php endforeach; ?>
-					</ul>
-				</div>
+            <?php foreach ( $values as $value ): ?>
+							<option value="<?= Html::encode( Url::current( [ 'per-page' => $value ] ) ) ?>"
+                      <?php if ( $current == $value ): ?>selected="selected"<?php endif; ?>><?= $value ?></option>
+            <?php endforeach; ?>
+				</select>
 
 			</div>
-
 		</div>
 	</div>
+
+
 
 
 	<div class="clearfix"></div>
@@ -104,6 +102,7 @@ $this->title = 'vezugruz29.ru';
 	<div class="row">
 		<div class="col-xs-12">
         <?= LinkPager::widget( [
+//            $dataProvider->getPagination()->pageSize = 100,
             'pagination' => $dataProvider->getPagination(),
         ] ) ?>
 		</div>

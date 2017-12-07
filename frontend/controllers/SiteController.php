@@ -2,11 +2,10 @@
 
 namespace frontend\controllers;
 
-use backend\models\Currencies;
-use board\entities\Adverts;
-use board\repositories\AdvertsRepository;
 use common\models\Helpers;
 use Yii;
+use board\entities\Adverts;
+use board\repositories\AdvertsRepository;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
@@ -18,8 +17,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\data\ActiveDataProvider;
-use backend\models\Pricies;
-use frontend\models\UserPhones;
+use yii\data\Sort;
 
 /**
  * Site controller
@@ -81,38 +79,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Adverts::find()
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
-            ->joinWith([ 'pricies p' => function ( $q ){
-                        $q->joinWith('currencies c');
-                    }]);
-
-        $dataProvider = new ActiveDataProvider( [
-            'query' => $query,
-            'pagination' => [
-//                'pagesize' => 25,
-            ]
-        ] );
+        $dataProvider = AdvertsViewsController::homeAdvertsPage();
 
         return $this->render( 'index', [
-            'query'        => $query,
             'dataProvider' => $dataProvider,
-                        'sort' => [
-                            'defaultOrder' => ['id' => SORT_DESC],
-                            'attributes' => [
-                                'id' => [
-                                    'asc' => ['id' => SORT_ASC],
-                                    'desc' => ['id' => SORT_DESC],
-                                ],
-                            ],
-                        ],
-            'pagination'   => [
-                'pageSizeLimit' => [ 15, 100 ],
-            ]
         ] );
     }
 
