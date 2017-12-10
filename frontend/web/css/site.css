@@ -97,7 +97,7 @@ a.desc:after {
 
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
-    /*padding: 15px;*/
+    padding: 15px;
     border: none;
 }
 
@@ -139,10 +139,10 @@ a.desc:after {
 }
 
 .navbar-inverse .btn-link {
-    color: #333;
+    color: #FFF;
 }
 
 .navbar-inverse .btn-link:hover, .navbar-inverse .btn-link:focus{
-    color: #333;
+    color: #FFF;
     text-decoration: none;
 }
