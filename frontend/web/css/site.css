@@ -299,3 +299,12 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #input-limit {
   width: 70px;
 }
+
+.navbar-inverse .btn-link {
+    color: #FFF;
+}
+
+.navbar-inverse .btn-link:hover, .navbar-inverse .btn-link:focus{
+    color: #FFF;
+    text-decoration: none;
+}
