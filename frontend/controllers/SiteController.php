@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Helpers;
 use Yii;
 use board\entities\Adverts;
 use board\repositories\AdvertsRepository;
@@ -78,35 +79,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Adverts::find()
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
-            ->joinWith( [
-                'pricies p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
-                }
-            ] );
-
-        $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-                'attributes'   => [
-                    'id' => [
-                        'asc'  => [ 'id' => SORT_ASC ],
-                        'desc' => [ 'id' => SORT_DESC ],
-                    ],
-                ],
-            ],
-            'pagination'   => [
-                'pageSizeLimit' => [ 15, 100 ],
-            ],
-        ] );
-
-        $dataProvider->sort->enableMultiSort = true;
+        $dataProvider = AdvertsViewsController::homeAdvertsPage();
 
         return $this->render( 'index', [
             'dataProvider' => $dataProvider,

@@ -24,7 +24,6 @@ class Adverts extends ActiveRecord
     use EventTrait;
 
     public $verifyCode;
-//    public $pricies;
 
     public static function tableName()
     {
@@ -67,7 +66,8 @@ class Adverts extends ActiveRecord
                     'images_old',
                     'ip',
                     'created_at',
-                    'updated_at'
+                    'updated_at',
+                    'draft'
                 ],
                 'integer'
             ],
@@ -93,41 +93,11 @@ class Adverts extends ActiveRecord
             [ 'email', 'email' ],
             [ [ 'sid' ], 'unique' ],
             [ [ 'old_id' ], 'unique' ],
-            [
-                [ 'cat_id' ],
-                'exist',
-                'skipOnError'     => true,
-                'targetClass'     => Category::className(),
-                'targetAttribute' => [ 'cat_id' => 'id' ]
-            ],
-            [
-                [ 'country' ],
-                'exist',
-                'skipOnError'     => true,
-                'targetClass'     => Countries::className(),
-                'targetAttribute' => [ 'country' => 'id' ]
-            ],
-            [
-                [ 'period' ],
-                'exist',
-                'skipOnError'     => true,
-                'targetClass'     => Periods::className(),
-                'targetAttribute' => [ 'period' => 'id' ]
-            ],
-            [
-                [ 'subcat_id' ],
-                'exist',
-                'skipOnError'     => true,
-                'targetClass'     => Subcategory::className(),
-                'targetAttribute' => [ 'subcat_id' => 'id' ]
-            ],
-            [
-                [ 'type' ],
-                'exist',
-                'skipOnError'     => true,
-                'targetClass'     => Types::className(),
-                'targetAttribute' => [ 'type' => 'id' ]
-            ],
+            [[ 'cat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => [ 'cat_id' => 'id' ]],
+            [[ 'country' ], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => [ 'country' => 'id' ]],
+            [[ 'period' ], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => [ 'period' => 'id' ]],
+            [[ 'subcat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => [ 'subcat_id' => 'id' ]],
+            [[ 'type' ], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => [ 'type' => 'id' ]],
             //            ['verifyCode', 'captcha'],
         ];
     }
@@ -165,6 +135,7 @@ class Adverts extends ActiveRecord
             'ip'         => 'Ip',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'draft'      => 'Draft',
             'verifyCode' => 'Проверочный код',
         ];
     }

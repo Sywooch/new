@@ -39,11 +39,12 @@ class m171117_154220_create_adverts_table extends Migration
             'draft'        => $this->boolean()->defaultValue( 1 ),
         ], $tableOptions );
 
-//        $this->addForeignKey( 'fk-countries_id', '{{%adverts}}', 'country', '{{%countries}}', 'id' );
+        $this->addForeignKey( 'fk-countries_id', '{{%adverts}}', 'country', '{{%countries}}', 'id' );
 //        $this->addForeignKey( 'fk-category_cat_id', '{{%adverts}}', 'cat_id', '{{%category}}', 'id' );
 //        $this->addForeignKey( 'fk-subcategory_subcat_id', '{{%adverts}}', 'subcat_id', '{{%subcategory}}', 'id' );
 //        $this->addForeignKey( 'fk-type_id', '{{%adverts}}', 'type', '{{%types}}', 'id' );
 //        $this->addForeignKey( 'fk-period_id', '{{%adverts}}', 'period', '{{%periods}}', 'id' );
+//        $this->addForeignKey( 'fk-pricies_id', '{{%adverts}}', 'id', '{{%pricies}}', 'ad_id' );
     }
 
     /**
