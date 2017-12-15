@@ -23,7 +23,8 @@
         "FortAwesome/Font-Awesome": "*",
         "kartik-v/yii2-widgets": "*",
         "la-haute-societe/yii2-save-relations-behavior": "*",
-        "kartik-v/yii2-widget-depdrop": "@dev"
+        "kartik-v/yii2-widget-depdrop": "@dev",
+        "2amigos/yii2-file-upload-widget": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
