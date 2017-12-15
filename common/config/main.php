@@ -68,18 +68,21 @@ return [
 //            'adminPermission' => 'role, permission',
             'admins'                   => [ 'beckson' ],
             'modelMap'        => [
-//                'RegistrationForm' => 'common\models\RegistrationForm',
+                'User' => 'frontend\models\user\User',
             ],
-            // Автоматическая генерация пароля
-//            'enableGeneratingPassword' => true,
+//            'enableGeneratingPassword' => true, // Автоматическая генерация пароля
             'enableFlashMessages'      => false,
-
-             // Admin-layout
              'controllerMap' => [
                 'admin' => [
                     'class'  => 'dektrium\user\controllers\AdminController',
-                    'layout' => '/admin-layout',
+                    'layout' => '/dashboard', // Admin-layout
                 ],
+                'settings' => [
+                    'class' => 'frontend\controllers\user\SettingsController'
+                ],
+                'profile' => [
+                    'class' => 'frontend\controllers\user\ProfileController'
+                ]
             ],
             // Отправка писем
             'mailer'                   => [
