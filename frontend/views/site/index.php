@@ -20,7 +20,7 @@ $this->title = 'vezugruz29.ru';
 				<div class="form-group field-searchform-searchword has-success">
 
 					<div class="input-group"><input type="text" id="searchform-searchword" class="form-control"
-																					name="SearchForm[searchWord]" placeholder="Поиск объявления" autofocus=""
+																					name="SearchForm[searchWord]" placeholder="Поиск объявления"
 																					style="" aria-invalid="false"><span class="input-group-btn"><button
 									id="sub-btn-search" class="btn btn-primary" type="button">Найти</button></span></div>
 
@@ -47,11 +47,11 @@ $this->title = 'vezugruz29.ru';
 	<br>
 
 	<div id="sort-site-index" class="row">
-		<div class="col-xs-7">
+		<div class="col-sm-7 col-xs-12">
 			<h4>Последние добавленные объявления</h4>
 		</div>
 
-		<div class="col-xs-5">
+		<div class="col-sm-5 col-xs-12">
 
 			<div class="input-group pull-right">
 

@@ -15,10 +15,15 @@ use yii\helpers\Url;
 <div class="ad-list col-xs-12">
 	<div class="ad-thumb">
 		<div class="image">
-			<a href="https://demo.opencart.com/index.php?route=product/product&amp;path=25_28&amp;product_id=42">
-				<img src="https://demo.opencart.com/image/cache/catalog/demo/apple_cinema_30-228x228.jpg"
-						 alt="Apple Cinema 30&quot;" title="Apple Cinema 30&quot;" class="img-responsive" width="140">
-			</a>
+			<div class="row">
+				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6 blank-img">
+					<i class="fa fa-camera fa-2x" aria-hidden="true"></i></div>
+			</div>
+
+			<!--<a href="#">
+          <?/*= Html::img( '/i/blank_img.jpg', [ 'class' => 'img-responsive', 'alt' => '', 'title' => '', ] ) */?>
+			</a>-->
+
 		</div>
 
 		<div>

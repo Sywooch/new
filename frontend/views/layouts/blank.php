@@ -45,13 +45,7 @@ FontAwesomeAsset::register( $this );
 	</div>
 </div>
 
-<footer class="footer">
-	<div class="container">
-		<p class="pull-left">&copy; <?= Yii::$app->name ?> <?= date( 'Y' ) ?></p>
-
-		<p class="pull-right"><?= Yii::powered() ?></p>
-	</div>
-</footer>
+<?= $this->render( 'footer' ) ?>
 
 <?php $this->endBody() ?>
 </body>

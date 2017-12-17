@@ -40,7 +40,7 @@ FontAwesomeAsset::register( $this );
           <?= $content ?>
 			</div>
 
-			<div class="col-sm-3">
+			<div class="col-sm-3 col-xs-12">
           <?= Html::a( '<i class="fa fa-pencil-square-o"></i>Подать объявление', [ '/adverts/create' ],
               [ 'id' => 'add-ads-main-red', 'class' => 'btn btn-lg btn-danger btn-block', 'type' => 'button' ] ) ?>
 			</div>
@@ -48,13 +48,7 @@ FontAwesomeAsset::register( $this );
 	</div>
 </div>
 
-<footer class="footer">
-	<div class="container">
-		<p class="pull-left">&copy; <?= Yii::$app->name ?> <?= date( 'Y' ) ?></p>
-
-		<p class="pull-right"><?= Yii::powered() ?></p>
-	</div>
-</footer>
+<?= $this->render( 'footer' ) ?>
 
 <?php $this->endBody() ?>
 </body>

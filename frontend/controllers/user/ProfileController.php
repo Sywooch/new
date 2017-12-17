@@ -34,7 +34,10 @@ class ProfileController extends BaseProfileController
      */
     public function actionIndex()
     {
-        echo 'kkk'; die;
+        // route --> user/profile
+        echo '<div class="alert alert-success">
+    <p>This view file has been overriden!</p>
+</div>'; die;
         return parent::actionIndex();
     }
 }
