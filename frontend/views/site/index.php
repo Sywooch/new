@@ -9,8 +9,6 @@ use frontend\widgets\adsort\AdSort;
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
-//\common\models\Helpers::p( $dataProvider->getPagination()); die;
-//print Html::encode('<i class="fa fa-car" aria-hidden="true"></i>'); die;
 //\common\models\Helpers::p( count($dataProvider->getModels()), 1 ); die;
 ?>
 <div class="site-index">
@@ -22,7 +20,7 @@ $this->title = 'vezugruz29.ru';
 				<div class="form-group field-searchform-searchword has-success">
 
 					<div class="input-group"><input type="text" id="searchform-searchword" class="form-control"
-																					name="SearchForm[searchWord]" placeholder="Поиск объявления" autofocus=""
+																					name="SearchForm[searchWord]" placeholder="Поиск объявления"
 																					style="" aria-invalid="false"><span class="input-group-btn"><button
 									id="sub-btn-search" class="btn btn-primary" type="button">Найти</button></span></div>
 
@@ -49,11 +47,11 @@ $this->title = 'vezugruz29.ru';
 	<br>
 
 	<div id="sort-site-index" class="row">
-		<div class="col-xs-7">
+		<div class="col-sm-7 col-xs-12">
 			<h4>Последние добавленные объявления</h4>
 		</div>
 
-		<div class="col-xs-5">
+		<div class="col-sm-5 col-xs-12">
 
 			<div class="input-group pull-right">
 
@@ -78,13 +76,10 @@ $this->title = 'vezugruz29.ru';
 		</div>
 	</div>
 
-
-
-
 	<div class="clearfix"></div>
 	<div class="row">
 		<div id="ads-sort-block" class="col-sm-12 collapse">
-        <?= AdSort::widget(); ?>
+        <?= AdSort::widget(['action' => 'site/index']); ?>
 		</div>
 	</div>
 
@@ -102,7 +97,6 @@ $this->title = 'vezugruz29.ru';
 	<div class="row">
 		<div class="col-xs-12">
         <?= LinkPager::widget( [
-//            $dataProvider->getPagination()->pageSize = 100,
             'pagination' => $dataProvider->getPagination(),
         ] ) ?>
 		</div>

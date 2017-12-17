@@ -17,7 +17,7 @@ class m171117_141949_create_pricies_table extends Migration
         $this->createTable( '{{%pricies}}', [
 //            'id'          => $this->primaryKey(),
             'ad_id'       => $this->integer(),
-            'old_id'      => $this->integer(),
+            'old_id'      => $this->integer()->defaultValue(null),
             'price'       => $this->integer(),
             'price_old'   => $this->integer(),
             'currency_id' => $this->integer( 1 ),

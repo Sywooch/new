@@ -8,7 +8,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
 use backend\models\Currencies;
 use yii\captcha\Captcha;
@@ -82,52 +81,7 @@ use yii\captcha\Captcha;
 			<h4>Добавить фотографии</h4>
 		</div>
 	</div>
-    <? /*= $form->field( $model->imagesForm, 'files[]' )->widget( FileInput::class, [
-        'options'       => [
-            'accept'   => 'image/*',
-            'multiple' => true,
-        ],
-        'pluginOptions' => [
-            'allowedFileExtensions' => [
-                'jpg',
-                'gif',
-                'png'
-            ],
-            'showUpload'            => false,
-        ],
 
-    ] ) */ ?>
-
-	<!--	<div class="file-loading">-->
-	<!--      --><? //= $form->field( $model->images, 'files[]' )->widget( FileInput::class, [
-    //          'options'       => [
-    //              'accept' => 'image/*',
-    ////                          'multiple' => true,
-    //              						'uploadUrl' => Url::to(['/uploads']),
-    ////              						'uploadUrl' => '/uploads',
-    //          ],
-    //          'pluginOptions' => [
-    //          		'allowedFileExtensions' => [
-    //          				'jpg', 'gif', 'png'
-    //							],
-    //							'showUpload' => false,
-    //							],
-    //					]
-    //			) ?>
-
-
-	<!--		<input id="input-700" name="kartik-input-700[]" type="file" multiple>-->
-
-	<!--	</div>-->
-    <?php
-    /*$script = <<< JS*/
-    // $("#input-700").fileinput({
-    // 		uploadUrl: '/uploads',
-    // 		maxFileCount: 6
-    // });
-    /*JS;*/
-    //$this->registerJs( $script, yii\web\View::POS_READY );
-    ?>
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
