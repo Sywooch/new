@@ -29,39 +29,8 @@ FontAwesomeAsset::register( $this );
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin( [
-        'brandLabel' => Yii::$app->name,
-        'brandUrl'   => Yii::$app->homeUrl,
-        'options'    => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ] );
-    $menuItems = [
-        [ 'label' => 'Главная', 'url' => [ '/site/index' ] ],
-        [ 'label' => 'О нас', 'url' => [ '/site/about' ] ],
-        [ 'label' => 'Контакты', 'url' => [ '/site/contact' ] ],
-    ];
-    if ( Yii::$app->user->isGuest ) {
-        $menuItems[] = [ 'label' => 'Регистрация', 'url' => [ '/user/registration/register' ] ];
-        $menuItems[] = [ 'label' => 'Вход', 'url' => [ '/user/security/login' ] ];
-    }
-    else {
-        $menuItems[] = '<li>'
-            . Html::beginForm( [ '/user/security/logout' ], 'post' )
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                [ 'class' => 'btn btn-link logout' ]
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget( [
-        'options' => [ 'class' => 'navbar-nav navbar-right' ],
-        'items'   => $menuItems,
-    ] );
-    NavBar::end();
-    ?>
+
+    <?= $this->render( '_navbartop', [] ); ?>
 
 	<div class="container">
 		<div class="row">
@@ -76,13 +45,7 @@ FontAwesomeAsset::register( $this );
 	</div>
 </div>
 
-<footer class="footer">
-	<div class="container">
-		<p class="pull-left">&copy; <?= Yii::$app->name ?> <?= date( 'Y' ) ?></p>
-
-		<p class="pull-right"><?= Yii::powered() ?></p>
-	</div>
-</footer>
+<?= $this->render( 'footer' ) ?>
 
 <?php $this->endBody() ?>
 </body>

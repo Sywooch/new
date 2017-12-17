@@ -122,6 +122,11 @@ class AdvertsRepository
         return ArrayHelper::map( Countries::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
     }
 
+    public static function subcatList($cat_id)
+    {
+        return ArrayHelper::map( Subcategory::find()->where(['cat_id' => $cat_id ])->orderBy('sort')->asArray()->all(), 'id', 'subcat_name' );
+    }
+
     /**
      * Функция для получения подкатегории для DepDrop
      */
