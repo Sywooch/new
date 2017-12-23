@@ -68,13 +68,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
         'options'       => [ 'prompt' => 'Выберите подраздел', ],
         'data'          => $subcategoryList,
-//        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
+        //        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
         'pluginOptions' => [
             'depends'     => [ 'cat-id' ],
             'placeholder' => 'Выберите подраздел',
             'url'         => Url::to( [ '/site/subcat' ] )
         ]
-    ] )  ?>
+    ] ) ?>
 
     <?= $form->field( $model, 'type' )->dropDownList( $typeList,
         [ 'prompt' => 'Выберите тип', 'options' => [ ". $model->type ." => [ 'selected' => true ] ] ] ) ?>
@@ -137,47 +137,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div id="form-phones-update">
       <?php
-      foreach ( $phonesArray as $key => $val ) { ?>
-
-				<div class="form-group">
-					<label for="" class="col-sm-2 control-label">Телефон</label>
-					<div class="col-sm-5">
-              <?= Html::activeInput( 'text', $phonesArray[$key], 'phone[]',
-                  [
-                      'class'       => 'form-control',
-                      'placeholder' => '8 xxx xxx xx xx',
-                      'label'       => false,
-                      'value'       => $phonesArray[$key]->phone
-                  ] ) ?>
-					</div>
-					<div class="col-sm-1">
-						<button class="btn btn-default add-phone-btn hidden" type="button" title="Добавить телефон">+</button>
-					</div>
-				</div>
-
-      <?php }
+      foreach ( $phonesArray as $key => $val ) {
+          if ( $key == 0 ) {
+              echo $form->field( $phonesArray[$key], 'phone[]', [
+                  'template' => '{label}<div class="col-sm-5">{input}</div><div class="col-sm-1"><button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон"><i class="fa fa-plus" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
+              ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'value' => $phonesArray[$key]->phone ] );
+          }
+          else {
+              echo $form->field( $phonesArray[$key], 'phone[]', [
+                  'template' => '<div class="col-sm-offset-2 col-sm-5">{input}</div><div class="col-sm-1"><button class="btn btn-default remove-phone-btn" type="button" title="Удалить телефон"><i class="fa fa-times" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
+              ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'value' => $phonesArray[$key]->phone ] ) ?>
+          <?php }
+      }
       ?>
 	</div>
 
     <?php
     // TODO:
     $addPhone = <<< JS
-    var formPhonesUpdate = $('#form-phones-update');
-		var length = formPhonesUpdate.find('div.form-group').length;		 
-		var addPhoneBtn = formPhonesUpdate.find('.add-phone-btn');
-		if(length === 1) addPhoneBtn.removeClass('hidden').addClass('show');
-		if(length === 2) addPhoneBtn.eq(1).removeClass('hidden').addClass('show');		
-		$(formPhonesUpdate).on('click','.add-phone-btn',function(e){
-			e.preventDefault();
-			$(this).removeClass('show').addClass('hidden');			
-			if(length<3){
-				$('<div class="form-group"><div class="col-sm-offset-2 col-sm-5"><input id="userphones-phone" class="form-control" name="UserPhones[phone][]"  placeholder="8 xxx xxx xx xx" type="text"></div><div class="col-sm-1"><button class="btn btn-default add-phone-btn hidden" type="button" title="Добавить телефон">+</button></div></div>').appendTo(formPhonesUpdate);
-				var l = formPhonesUpdate.find('.add-phone-btn');
-				if(l.length === 2) l.eq(1).removeClass('hidden').addClass('show');
-			}
-		});		 
+    
 JS;
-    $this->registerJs( $addPhone, yii\web\View::POS_READY );
+    $this->registerJsFile( '/js/add_phones.js', yii\web\View::POS_READY );
     ?>
 	<hr>
 	<div class="form-group">

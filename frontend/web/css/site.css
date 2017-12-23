@@ -374,3 +374,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
   color: #FFF;
   text-decoration: none;
 }
+
+/* Обязательные поля формы */
+div.required label.control-label:after {
+  content: " *";
+  color: red;
+}
+
+#form-phones-create .fa{
+  color: #666;
+}

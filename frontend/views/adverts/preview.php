@@ -54,8 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							<p><i class="fa fa-user fa-fw"></i>Автор:<span
 										class="pull-right"><strong><?= $model->author ?></strong></span></p>
 							<hr>
-							<?php
-							foreach ( $phones as $key => $val ){ ?>
+							<?php foreach ( $phones as $key => $val ){ ?>
 								<p><i class="fa fa-phone fa-fw"></i>Телефон:<span class="pull-right"><?= $phones[$key]->phone ?></span></p>
 								<hr>
 							<?php }
