@@ -26,7 +26,6 @@ FontAwesomeAsset::register( $this );
 
 $this->title = 'Создать объявление';
 $this->params['breadcrumbs'][] = $this->title;
-//\common\models\Helpers::p( $model->type,1 ); die;
 ?>
 <div class="type-form">
 
@@ -86,10 +85,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
+    <?/*= $form->field( $price, 'price', [
+        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-1"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>'
+    ] )->textInput( [ 'placeholder' => 'Целое число', 'value' => number_format( $price->price, 0, '', ' ' ) ] )
+    */?>
+
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Цена</label>
 		<div class="col-sm-4">
-        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
+        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false, 'value' => number_format( $price->price, 0, '', ' ' ) ] ) ?>
 		</div>
 		<div class="col-sm-2">
         <?= Html::activeDropDownList( new \backend\models\Currencies(), 'short_name', $currency,
@@ -152,13 +156,7 @@ $this->params['breadcrumbs'][] = $this->title;
       ?>
 	</div>
 
-    <?php
-    // TODO:
-    $addPhone = <<< JS
-    
-JS;
-    $this->registerJsFile( '/js/add_phones.js', yii\web\View::POS_READY );
-    ?>
+    <?php $this->registerJsFile( '@web/js/add_phones.js', ['depends' => [\yii\web\JqueryAsset::className()]] ); ?>
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">

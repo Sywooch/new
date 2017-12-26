@@ -137,7 +137,7 @@ use yii\captcha\Captcha;
     $addPhone = <<< JS
     
 JS;
-    $this->registerJsFile( 'js/add_phones.js', yii\web\View::POS_READY );
+    $this->registerJsFile( 'js/add_phones.js', [ 'position' => yii\web\View::POS_READY ] );
     ?>
 
     <?/*= $form->field($model, 'verifyCode')->widget(Captcha::className()) */?>
