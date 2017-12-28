@@ -11,6 +11,7 @@ use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
+use common\models\Helpers;
 
 FontAwesomeAsset::register( $this );
 
@@ -48,22 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => [ ". $categorySelected->id." => [ 'selected' => true ] ]
         ] ) ?>
 
-    <?php
-    /*if ( !$model->isNewRecord && isset( $model->cat_id ) ) {
-        echo $form->field( $model, 'subcat_id' )->dropDownList( $subcategoryList,
-            [ 'prompt' => 'Выберите подраздел', 'options' => [ ". $model->subcat_id ." => [ 'selected' => true ] ] ] );
-    } else {
-        echo $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
-            'options'       => [ 'prompt' => 'Выберите подраздел', ],
-            //        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
-            'pluginOptions' => [
-                'depends'     => [ 'cat-id' ],
-                'placeholder' => 'Выберите подраздел',
-                'url'         => Url::to( [ '/site/subcat' ] )
-            ]
-        ] );
-		}*/
-    ?>
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
         'options'       => [ 'prompt' => 'Выберите подраздел', ],
         'data'          => $subcategoryList,
@@ -78,26 +63,31 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field( $model, 'type' )->dropDownList( $typeList,
         [ 'prompt' => 'Выберите тип', 'options' => [ ". $model->type ." => [ 'selected' => true ] ] ] ) ?>
 
-    <?= $form->field( $model, 'period' )->dropDownList( $periodList,
-        [ 'prompt' => 'Выберите период', 'options' => [ ". $model->period ." => [ 'selected' => true ] ] ] ) ?>
+    <?= $form->field( $model, 'period' )->dropDownList( $periodList, [ 'prompt' => 'Выберите период', 'options' => [ ". $model->period ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
     <?/*= $form->field( $price, 'price', [
-        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-1"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>'
+        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-2"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>'
     ] )->textInput( [ 'placeholder' => 'Целое число', 'value' => number_format( $price->price, 0, '', ' ' ) ] )
-    */?>
+    */?><!--
+
+    --><?/*= $form->field( $currency, 'short_name', [
+        'template' => '<div class="col-sm-offset-6 col-sm-2">{input}</div>'
+    ] )->dropDownList( $currencyList, [ 'options' => [ ". $currency->id ." => [ 'selected' => true ] ], ] )->label( false ) */?>
+
 
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Цена</label>
 		<div class="col-sm-4">
-        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false, 'value' => number_format( $price->price, 0, '', ' ' ) ] ) ?>
+        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false, 'value' => Helpers::format($price->price) ] ) ?>
 		</div>
+
 		<div class="col-sm-2">
-        <?= Html::activeDropDownList( new \backend\models\Currencies(), 'short_name', $currency,
-            [ 'class' => 'form-control', 'label' => false ] ) ?>
+        <?= Html::activeDropDownList( $currency, 'short_name', $currencyList,
+            [ 'class' => 'form-control', 'label' => false, 'value' => $price->currency_id] ) ?>
 		</div>
 	</div>
 

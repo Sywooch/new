@@ -27,10 +27,10 @@ use yii\captcha\Captcha;
 
     <?php $form = ActiveForm::begin( [
         'options'     => [ 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal', ],
-//        'enableAjaxValidation' => true,
+        //        'enableAjaxValidation' => true,
         'fieldConfig' => [
-            'template'     => '{label}<div class="col-sm-6">{input}</div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
-            'labelOptions' => [ 'class' => 'col-sm-2 control-label' ],
+            'template'     => '{label}<div class="col-sm-6 col-xs-12">{input}</div><div class="col-sm-offset-2 col-sm-6 col-xs-10">{error}</div>',
+            'labelOptions' => [ 'class' => 'col-sm-2 col-xs-12 control-label' ],
         ],
     ] ); ?>
 
@@ -55,33 +55,33 @@ use yii\captcha\Captcha;
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
 
-<!--	<div class="input-group">-->
-<!--		<input type="text" class="form-control" aria-label="...">-->
-<!--		<div class="input-group-btn">-->
-<!--			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>-->
-<!--			<ul class="dropdown-menu dropdown-menu-right">-->
-<!--				<li><a href="#">Action</a></li>-->
-<!--				<li><a href="#">Another action</a></li>-->
-<!--				<li><a href="#">Something else here</a></li>-->
-<!--				<li role="separator" class="divider"></li>-->
-<!--				<li><a href="#">Separated link</a></li>-->
-<!--			</ul>-->
-<!--		</div><!-- /btn-group -->
-<!--	</div><!-- /input-group -->
+	<!--	<div class="input-group">-->
+	<!--		<input type="text" class="form-control" aria-label="...">-->
+	<!--		<div class="input-group-btn">-->
+	<!--			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>-->
+	<!--			<ul class="dropdown-menu dropdown-menu-right">-->
+	<!--				<li><a href="#">Action</a></li>-->
+	<!--				<li><a href="#">Another action</a></li>-->
+	<!--				<li><a href="#">Something else here</a></li>-->
+	<!--				<li role="separator" class="divider"></li>-->
+	<!--				<li><a href="#">Separated link</a></li>-->
+	<!--			</ul>-->
+	<!--		</div><!-- /btn-group -->
+	<!--	</div><!-- /input-group -->
 
 
-<?//= $form->field( $price, 'price', [
-//        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-2"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
-//
-//				'inputTemplate' => '<div class="input-group"><div class="col-sm-6">{input}<span class="input-group-addon">@</span></div></div>',
-//    ] )->textInput() ?>
+    <? //= $form->field( $price, 'price', [
+    //        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-2"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
+    //
+    //				'inputTemplate' => '<div class="input-group"><div class="col-sm-6">{input}<span class="input-group-addon">@</span></div></div>',
+    //    ] )->textInput() ?>
 
 	<div class="form-group">
-		<label for="" class="col-sm-2 control-label">Цена</label>
-		<div class="col-sm-4">
+		<label for="" class="col-sm-2 col-xs-12 control-label">Цена</label>
+		<div class="col-sm-4 col-xs-8">
         <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
-		<div class="col-sm-2">
+		<div class="col-sm-2 col-xs-4">
         <?= Html::activeDropDownList( new Currencies(), 'short_name', $currency,
             [ 'class' => 'form-control', 'label' => false ] ) ?>
 		</div>
@@ -120,14 +120,18 @@ use yii\captcha\Captcha;
 
     <?= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
 
-    <?= $form->field( $model, 'author' )->textInput( [ 'placeholder' => 'Иванов Иван', 'value' => \Yii::$app->user->identity->username ] ) ?>
+    <?= $form->field( $model, 'author' )->textInput( [
+        'placeholder' => 'Иванов Иван',
+        'value'       => \Yii::$app->user->identity->username
+    ] ) ?>
 
-    <?= $form->field( $model, 'email' )->input( 'email', [ 'placeholder' => 'someone@mail.ru', 'value' => \Yii::$app->user->identity->email ] ) ?>
+    <?= $form->field( $model, 'email' )->input( 'email',
+        [ 'placeholder' => 'someone@mail.ru', 'value' => \Yii::$app->user->identity->email ] ) ?>
 
 	<div id="form-phones-create">
 
       <?= $form->field( $phones, 'phone[]', [
-          'template' => '{label}<div class="col-sm-5">{input}</div><div class="col-sm-1"><button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон"><i class="fa fa-plus" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
+          'template' => '{label}<div class="col-sm-5 col-xs-9">{input}</div><div class="col-sm-1 col-xs-2"><button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон"><i class="fa fa-plus" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
       ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', ] ) ?>
 
 	</div>
@@ -140,7 +144,7 @@ JS;
     $this->registerJsFile( 'js/add_phones.js', [ 'position' => yii\web\View::POS_READY ] );
     ?>
 
-    <?/*= $form->field($model, 'verifyCode')->widget(Captcha::className()) */?>
+    <? /*= $form->field($model, 'verifyCode')->widget(Captcha::className()) */ ?>
 
 	<hr>
 	<div class="form-group">

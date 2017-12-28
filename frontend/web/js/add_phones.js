@@ -33,7 +33,6 @@ $(formPhonesUpdate).on('click', '.add-phone-btn', function (e) {
 		length++;
 		formPhonesUpdate.append('<div class="form-group field-userphones-phone required"><div class="col-sm-offset-2 col-sm-5">' + input + '</div><div class="col-sm-1">' + removeBtn + '</div>' + errorDiv + '</div>');
 	}
-
 });
 
 $(formPhonesUpdate).on('click', '.remove-phone-btn', function (e) {
