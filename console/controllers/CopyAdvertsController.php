@@ -57,7 +57,7 @@ class CopyAdvertsController extends Controller
             $adverts->created_at = $value['AdvertTime'];
             $adverts->updated_at = $value['AdvertTimeOriginated'];
 
-            $adverts->draft = 1;
+            $adverts->draft = 0;
 
             $value['AdvertPrice'] !== null ? $pricies->price = $value['AdvertPrice'] : $pricies->price = 0;
             $pricies->old_id = $value['AdvertID'];
