@@ -8,6 +8,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\models\Helpers;
 
 $this->title = $model->header;
 //$this->params['breadcrumbs'][] = ['label' => 'Adverts', 'url' => ['index']];
@@ -22,7 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p>ID объявления:<span class="pull-right"><?= $model->id ?></span></p>
 				<hr>
 				<p id="adv-type">Тип:&nbsp;<?= $model->type->name ?>
-					<span id="place-date" class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDatetime( $model->created_at,
+					<span id="place-date"
+								class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDatetime( $model->created_at,
                   Yii::$app->params['dateFormat'] ); ?>
 						</span>
 				</p>
@@ -41,32 +43,33 @@ $this->params['breadcrumbs'][] = $this->title;
 					<hr>
 					<div id="details">
 						<!--<# CUSTOM_FORM #>-->
-							<p><i class="fa fa-map-marker fa-fw"></i>Расположение:<span
-										class="pull-right"><strong><?= $model->countries->country_name ?></strong></span></p>
-							<hr>
-							<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
-										<span class="label label-danger"><strong><?= $price->price ?>
-												&nbsp;<?= $price->currencies->short_name ?></strong></span></span>
-								<?=  $price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
-							</p>
-							<hr>
+						<p><i class="fa fa-map-marker fa-fw"></i>Расположение:<span
+									class="pull-right"><strong><?= $model->countries->country_name ?></strong></span></p>
+						<hr>
+						<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
+										<span class="label label-danger"><strong><?= Helpers::format($price->price) ?>
+												&nbsp;<?= $price->currencies->name ?></strong></span></span>
+                <?= $price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
+						</p>
+						<hr>
 
-							<p><i class="fa fa-user fa-fw"></i>Автор:<span
-										class="pull-right"><strong><?= $model->author ?></strong></span></p>
-							<hr>
-							<?php
-							foreach ( $phones as $key => $val ){ ?>
-								<p><i class="fa fa-phone fa-fw"></i>Телефон:<span class="pull-right"><?= $phones[$key]->phone ?></span></p>
+						<p><i class="fa fa-user fa-fw"></i>Автор:<span
+									class="pull-right"><strong><?= $model->author ?></strong></span></p>
+						<hr>
+              <?php foreach ( $phones as $key => $val ) { ?>
+								<p><i class="fa fa-phone fa-fw"></i>Телефон:<span class="pull-right"><?= $phones[$key]->phone ?></span>
+								</p>
 								<hr>
-							<?php }
-							?>
+              <?php }
+              ?>
 
-							<p><i class="fa fa-calendar fa-fw"></i>Период:<span
-										class="pull-right"><?= $model->periods->description ?></span></span></p>
-							<hr>
+						<p><i class="fa fa-calendar fa-fw"></i>Период:<span
+									class="pull-right"><?= $model->periods->description ?></span></span></p>
+						<hr>
 
-							<p><i class="fa fa-info fa-fw"></i>Статус:<span class="pull-right"><?= $model->active == 1 ? "Активно" : "Не активно" ?></span></p>
-							<hr>
+						<p><i class="fa fa-info fa-fw"></i>Статус:<span
+									class="pull-right"><?= $model->active == 1 ? "Активно" : "Не активно" ?></span></p>
+						<hr>
 					</div>
 				</div>
 			</div>
@@ -74,16 +77,31 @@ $this->params['breadcrumbs'][] = $this->title;
 			<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 			<!-- start right block -->
 			<div class="col-sm-5">
-				<div id="big-picture" class="center-block">
-					<div id="big-img-loader">
-						<img id="Big<# ID #>" data-src="<# PATH #><# IMAGE #>?<# RND #>" class="img-thumbnail img-responsive"
-								 alt="<# ALT #>" title="<# ALT #>"/>
-					</div>
-				</div>
-				<div id="rowSmallPics" class="row" style="margin-left: 0; margin-top: 15px;">
-					<# SMALL_PICS #>
-				</div>
-
+				<ul class="thumbnails list-unstyled">
+					<li>
+						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title="">
+                <?= Html::img('@web/uploads/CnuPAL_.png') ?>
+						</a>
+					</li>
+					<li class="image-additional">
+						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
+					</li>
+					<li class="image-additional">
+						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
+					</li>
+					<li class="image-additional">
+						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
+					</li>
+					<li class="image-additional">
+						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
+					</li>
+					<li class="image-additional">
+						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
+					</li>
+					<li class="image-additional">
+						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
+					</li>
+				</ul>
 			</div>
 			<div class="clearfix"></div>
 			<hr>
@@ -99,3 +117,4 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 	<div class="col-sm-3">Sidebar</div>
 </div>
+<?php $this->registerJsFile( '@web/js/jquery.magnific-popup.min.js', ['depends' => [\yii\web\JqueryAsset::className()]] ); ?>

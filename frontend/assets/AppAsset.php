@@ -13,6 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/magnific-popup.css',
     ];
     public $js = [
         'js/js.cookie.js',

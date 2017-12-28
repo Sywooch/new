@@ -29,9 +29,10 @@ class UserPhones extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'ad_id', 'sort'], 'integer'],
-            [['phone'], 'string', 'min'=>6, 'max' => 20],
-//            ['phone', 'match', 'pattern' => '/^\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Неправильно написан номер' ]
+            [ [ 'user_id', 'ad_id', 'sort' ], 'integer' ],
+            [ [ 'phone' ], 'string', 'min' => 6, 'max' => 20 ],
+            [ [ 'ad_id', 'phone', 'sort' ], 'required' ],
+//            [ 'phone', 'match', 'pattern' => '/^\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/', 'message' => 'Неправильно написан номер' ]
         ];
     }
 
@@ -41,11 +42,11 @@ class UserPhones extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'      => 'ID',
             'user_id' => 'User ID',
-            'ad_id' => 'Ad ID',
-            'phone' => 'Phone',
-            'sort' => 'Sort',
+            'ad_id'   => 'Ad ID',
+            'phone'   => 'Телефон',
+            'sort'    => 'Sort',
         ];
     }
 }

@@ -11,6 +11,7 @@ use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use kartik\file\FileInput;
 use kartik\depdrop\DepDrop;
+use common\models\Helpers;
 
 FontAwesomeAsset::register( $this );
 
@@ -26,7 +27,6 @@ FontAwesomeAsset::register( $this );
 
 $this->title = 'Создать объявление';
 $this->params['breadcrumbs'][] = $this->title;
-//\common\models\Helpers::p( $model->type,1 ); die;
 ?>
 <div class="type-form">
 
@@ -49,51 +49,45 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => [ ". $categorySelected->id." => [ 'selected' => true ] ]
         ] ) ?>
 
-    <?php
-    /*if ( !$model->isNewRecord && isset( $model->cat_id ) ) {
-        echo $form->field( $model, 'subcat_id' )->dropDownList( $subcategoryList,
-            [ 'prompt' => 'Выберите подраздел', 'options' => [ ". $model->subcat_id ." => [ 'selected' => true ] ] ] );
-    } else {
-        echo $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
-            'options'       => [ 'prompt' => 'Выберите подраздел', ],
-            //        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
-            'pluginOptions' => [
-                'depends'     => [ 'cat-id' ],
-                'placeholder' => 'Выберите подраздел',
-                'url'         => Url::to( [ '/site/subcat' ] )
-            ]
-        ] );
-		}*/
-    ?>
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
         'options'       => [ 'prompt' => 'Выберите подраздел', ],
         'data'          => $subcategoryList,
-//        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
+        //        'data'          => [ $model->subcat_id => $subcategoryList[$model->subcat_id] ],
         'pluginOptions' => [
             'depends'     => [ 'cat-id' ],
             'placeholder' => 'Выберите подраздел',
             'url'         => Url::to( [ '/site/subcat' ] )
         ]
-    ] )  ?>
+    ] ) ?>
 
     <?= $form->field( $model, 'type' )->dropDownList( $typeList,
         [ 'prompt' => 'Выберите тип', 'options' => [ ". $model->type ." => [ 'selected' => true ] ] ] ) ?>
 
-    <?= $form->field( $model, 'period' )->dropDownList( $periodList,
-        [ 'prompt' => 'Выберите период', 'options' => [ ". $model->period ." => [ 'selected' => true ] ] ] ) ?>
+    <?= $form->field( $model, 'period' )->dropDownList( $periodList, [ 'prompt' => 'Выберите период', 'options' => [ ". $model->period ." => [ 'selected' => true ] ] ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
+    <?/*= $form->field( $price, 'price', [
+        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-2"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>'
+    ] )->textInput( [ 'placeholder' => 'Целое число', 'value' => number_format( $price->price, 0, '', ' ' ) ] )
+    */?><!--
+
+    --><?/*= $form->field( $currency, 'short_name', [
+        'template' => '<div class="col-sm-offset-6 col-sm-2">{input}</div>'
+    ] )->dropDownList( $currencyList, [ 'options' => [ ". $currency->id ." => [ 'selected' => true ] ], ] )->label( false ) */?>
+
+
 	<div class="form-group">
 		<label for="" class="col-sm-2 control-label">Цена</label>
 		<div class="col-sm-4">
-        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
+        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false, 'value' => Helpers::format($price->price) ] ) ?>
 		</div>
+
 		<div class="col-sm-2">
-        <?= Html::activeDropDownList( new \backend\models\Currencies(), 'short_name', $currency,
-            [ 'class' => 'form-control', 'label' => false ] ) ?>
+        <?= Html::activeDropDownList( $currency, 'short_name', $currencyList,
+            [ 'class' => 'form-control', 'label' => false, 'value' => $price->currency_id] ) ?>
 		</div>
 	</div>
 
@@ -137,48 +131,22 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	<div id="form-phones-update">
       <?php
-      foreach ( $phonesArray as $key => $val ) { ?>
-
-				<div class="form-group">
-					<label for="" class="col-sm-2 control-label">Телефон</label>
-					<div class="col-sm-5">
-              <?= Html::activeInput( 'text', $phonesArray[$key], 'phone[]',
-                  [
-                      'class'       => 'form-control',
-                      'placeholder' => '8 xxx xxx xx xx',
-                      'label'       => false,
-                      'value'       => $phonesArray[$key]->phone
-                  ] ) ?>
-					</div>
-					<div class="col-sm-1">
-						<button class="btn btn-default add-phone-btn hidden" type="button" title="Добавить телефон">+</button>
-					</div>
-				</div>
-
-      <?php }
+      foreach ( $phonesArray as $key => $val ) {
+          if ( $key == 0 ) {
+              echo $form->field( $phonesArray[$key], 'phone[]', [
+                  'template' => '{label}<div class="col-sm-5">{input}</div><div class="col-sm-1"><button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон"><i class="fa fa-plus" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
+              ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'value' => $phonesArray[$key]->phone ] );
+          }
+          else {
+              echo $form->field( $phonesArray[$key], 'phone[]', [
+                  'template' => '<div class="col-sm-offset-2 col-sm-5">{input}</div><div class="col-sm-1"><button class="btn btn-default remove-phone-btn" type="button" title="Удалить телефон"><i class="fa fa-times" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
+              ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'value' => $phonesArray[$key]->phone ] ) ?>
+          <?php }
+      }
       ?>
 	</div>
 
-    <?php
-    // TODO:
-    $addPhone = <<< JS
-    var formPhonesUpdate = $('#form-phones-update');
-		var length = formPhonesUpdate.find('div.form-group').length;		 
-		var addPhoneBtn = formPhonesUpdate.find('.add-phone-btn');
-		if(length === 1) addPhoneBtn.removeClass('hidden').addClass('show');
-		if(length === 2) addPhoneBtn.eq(1).removeClass('hidden').addClass('show');		
-		$(formPhonesUpdate).on('click','.add-phone-btn',function(e){
-			e.preventDefault();
-			$(this).removeClass('show').addClass('hidden');			
-			if(length<3){
-				$('<div class="form-group"><div class="col-sm-offset-2 col-sm-5"><input id="userphones-phone" class="form-control" name="UserPhones[phone][]"  placeholder="8 xxx xxx xx xx" type="text"></div><div class="col-sm-1"><button class="btn btn-default add-phone-btn hidden" type="button" title="Добавить телефон">+</button></div></div>').appendTo(formPhonesUpdate);
-				var l = formPhonesUpdate.find('.add-phone-btn');
-				if(l.length === 2) l.eq(1).removeClass('hidden').addClass('show');
-			}
-		});		 
-JS;
-    $this->registerJs( $addPhone, yii\web\View::POS_READY );
-    ?>
+    <?php $this->registerJsFile( '@web/js/add_phones.js', ['depends' => [\yii\web\JqueryAsset::className()]] ); ?>
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">

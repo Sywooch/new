@@ -34,9 +34,9 @@ class Pricies extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ad_id', 'old_id', 'price', 'price_old', 'currency_id'], 'integer'],
-            ['price', 'default', 'value' => 0],
-//            [['negotiable'], 'string', 'max' => 2],
+            [ ['ad_id', 'old_id', 'price', 'price_old', 'currency_id' ], 'integer' ],
+            [ ['price'], 'integer', 'max' => 50000000 ],
+            [ 'price', 'default', 'value' => 0 ],
             [ ['negotiable'], 'boolean'],
             [ ['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currencies::className(), 'targetAttribute' => [ 'currency_id' => 'id']],
         ];
