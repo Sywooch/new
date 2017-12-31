@@ -64,7 +64,7 @@ use yii\helpers\Url;
 						</a>
 					</li>
 					<li class="adv-type">
-						Тип:&nbsp;<strong><span><?= $model->type->name ?></span></strong>
+						Тип:&nbsp;<strong><span><?= $model->types->name ?></span></strong>
 					</li>
 					<li>Просмотров:&nbsp;<span class="badge">1</span></li>
 				</ul>

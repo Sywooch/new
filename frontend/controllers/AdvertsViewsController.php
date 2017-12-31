@@ -25,6 +25,7 @@ class AdvertsViewsController extends Controller
     public $layout = 'main';
 
     private $_service;
+    public $pricies;
 
     public function behaviors()
     {
@@ -76,11 +77,7 @@ class AdvertsViewsController extends Controller
     public static function homeAdvertsPage(){
 
         $query = Adverts::find()
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
+            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
             ->joinWith( [
                 'pricies p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
@@ -91,15 +88,6 @@ class AdvertsViewsController extends Controller
 
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-                'attributes'   => [
-                    'id' => [
-                        'asc'  => [ 'id' => SORT_ASC ],
-                        'desc' => [ 'id' => SORT_DESC ],
-                    ],
-                ],
-            ],
             'pagination'   => [
                 'defaultPageSize' => 25,
                 'pageSize' => $pageSize,
@@ -120,10 +108,24 @@ class AdvertsViewsController extends Controller
         $sort = new Sort( [
             'attributes' => [
                 'header'       => [
-                    'asc'  => [ 'header' => SORT_ASC, ],
-                    'desc' => [ 'header' => SORT_DESC, ],
-
-                    //                    'label' => 'Name',
+                    'asc'     => [ 'header' => SORT_ASC, ],
+                    'desc'    => [ 'header' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'price'        => [ //TODO:
+                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
+                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'subcat'       => [
+                    'asc'     => [ 'subcategory.subcat_name' => SORT_ASC, ],
+                    'desc'    => [ 'subcategory.subcat_name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'type'       => [
+                    'asc'     => [ 'types.name' => SORT_ASC, ],
+                    'desc'    => [ 'types.name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
                 ],
                 'defaultOrder' => [ 'id' => SORT_DESC ],
             ],
@@ -131,28 +133,16 @@ class AdvertsViewsController extends Controller
 
         $query = Adverts::find()
             ->where( [ 'adverts.cat_id' => $id ] )
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
+            ->joinWith( ['category', 'subcategory', 'types', 'periods', 'countries', 'pricies'] )
             ->joinWith( [
                 'pricies p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
                 }
-            ] );
+            ] )
+            ->orderBy( $sort->orders );
 
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-                'attributes'   => [
-                    'id' => [
-                        'asc'  => [ 'id' => SORT_ASC ],
-                        'desc' => [ 'id' => SORT_DESC ],
-                    ],
-                ],
-            ],
             'pagination' => [
                 'defaultPageSize' => 25,
                 'pageSizeLimit' => [ 15, 100 ],
@@ -163,36 +153,46 @@ class AdvertsViewsController extends Controller
 
         return $this->render( 'category-page', [
             'provider' => $dataProvider,
+            'sort' => $sort,
         ] );
     }
 
     public function actionSubcategoryPage( $catid, $id )
     {
+        $sort = new Sort( [
+            'attributes' => [
+                'header'       => [
+                    'asc'     => [ 'header' => SORT_ASC, ],
+                    'desc'    => [ 'header' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'price'        => [
+                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
+                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'type'         => [
+                    'asc'     => [ 'types.name' => SORT_ASC, ],
+                    'desc'    => [ 'types.name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+            ],
+        ] );
+
         $query = Adverts::find()
             ->where( [ 'adverts.cat_id' => $catid ] )
             ->andWhere( [ 'adverts.subcat_id' => $id ] )
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
+            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
             ->joinWith( [
                 'pricies p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
                 }
-            ] );
+            ] )
+            ->orderBy( $sort->orders );
 
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-                'attributes'   => [
-                    'id' => [
-                        'asc'  => [ 'id' => SORT_ASC ],
-                        'desc' => [ 'id' => SORT_DESC ],
-                    ],
-                ],
-            ],
             'pagination' => [
                 'defaultPageSize' => 25,
                 'pageSizeLimit' => [ 15, 100 ],
@@ -203,6 +203,7 @@ class AdvertsViewsController extends Controller
 
         return $this->render( 'subcategory-page', [
             'provider' => $dataProvider,
+            'sort' => $sort,
         ] );
     }
 
@@ -222,11 +223,7 @@ class AdvertsViewsController extends Controller
     {
         if ( ( $model = Adverts::find()
                 ->where( [ 'adverts.id' => $id ] )
-                ->joinWith( 'category' )
-                ->joinWith( 'subcategory' )
-                ->joinWith( 'types' )
-                ->joinWith( 'periods' )
-                ->joinWith( 'countries' )
+                ->joinWith( ['category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
                 ->joinWith( [ 'pricies p' => function ( $q ){ $q->joinWith( 'currencies c' ); } ] )
                 ->one()
             ) !== null

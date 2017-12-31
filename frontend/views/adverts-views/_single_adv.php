@@ -7,6 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\models\Helpers;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
 //\common\models\Helpers::p( $model ); die;
@@ -44,7 +45,7 @@ use yii\helpers\Url;
 					</small>
 				</p>
 
-				<p class="price"><?= $model->pricies->price ?>&nbsp;<?= $model->pricies->currencies->short_name ?>.</p>
+				<p class="price"><?= Helpers::format( $model->pricies->price ) ?><?= $model->pricies->currencies->name ?></p>
 			</div>
 
 			<div class="pull-right data-extra">
@@ -64,7 +65,7 @@ use yii\helpers\Url;
 						</a>
 					</li>
 					<li class="adv-type">
-						Тип:&nbsp;<strong><span><?= $model->type->name ?></span></strong>
+						Тип:&nbsp;<strong><span><?= $model->types->name ?></span></strong>
 					</li>
 					<li>Просмотров:&nbsp;<span class="badge">1</span></li>
 				</ul>

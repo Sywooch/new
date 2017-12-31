@@ -261,6 +261,10 @@ OpenCart
   color: #a94442;
 }
 
+.ad-thumb .price .fa{
+  font-size: 70%;
+}
+
 @media (max-width: 767px) {
   .ad-thumb .price {
     font-size: 120%;
