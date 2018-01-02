@@ -19,7 +19,8 @@
 		citysortCookie : Cookies.get('citysortCookie'),
 		categorysortCookie : Cookies.get('categorysortCookie'),
 		subcatsortCookie : Cookies.get('subcatsortCookie'),
-		savesortCookie : Cookies.get('savesortCookie')
+		savesortCookie : Cookies.get('savesortCookie'),
+		self : window.location.href
 	};
 	var options = {};
 
@@ -51,36 +52,49 @@
 			 }*/
 
 		},
-		show: function () {
+		resets: function (parent) {
+			parent.find(':input').not(':button, :submit, :reset').val('');
+			parent.find('select').attr('selected', false);
+			parent.find('#subcategory-sort').find('select').attr('disabled', true);
+			parent.find('button:not([type=submit],[type=reset])').removeClass('btn-primary').addClass('btn-default');
+
+			Cookies.remove('typesortCookie');
+			Cookies.remove('datesortCookies');
+			Cookies.remove('pricesortCookies');
+			Cookies.remove('citysortCookie');
+			Cookies.remove('categorysortCookie');
+			Cookies.remove('subcatsortCookie');
+			Cookies.remove('savesortCookie');
+			$(location).attr('href', defaults.self);
 		},
-		change: function (val) {
+		changes: function (val) {
 			$(this).prop('selected', false);
 			$(this).find('[value=' + val + ']').attr('selected', true);
 			$(this).val(val);
 		},
 		update: function (content) {
 		},
-		createList: function (response) {
+		createList: function (response, el) {
 			var data;
 			if (typeof response === 'object') {
 				// mime type application/json responsed
 				data = response;
 			} else {
 				try {
-					data = JSON.parse(response);
+					data = JSON.parse(response); //console.log(data);
 					var options = '';
 					if (data.output !== null) {
 						$(data.output).each(function (i, val) {
 							options += '<option value="' + val.id + '">' + val.name + '</option>';
 						});
 
-						subSelect.html(options);
-						subSelect.prepend( $('<option value="">По подкатегории</option>'));
-						subSelect.find('option:first').attr("selected", "selected");
-						subSelect.attr('disabled', false);
+						el.html(options);
+						el.prepend( $('<option value="">По подкатегории</option>'));
+						el.find('option:first').attr("selected", "selected");
+						el.attr('disabled', false);
 					}
 				} catch (e) {
-					window.alert(methods.tr('error:ajax-request'));
+					console.log(methods.tr('error:ajax-request'));
 				}
 			}
 		},
@@ -118,7 +132,6 @@
 		var form = $this.find(form),
 			subSelect = $this.find('#subcategory-sort').find('select'),
 			categorySelect = $this.find('#category-sort').find('select'),
-			self = window.location.href,
 			url = '/site/subcat';
 
 		// Смотрим куки и ставим выпадающие списки
@@ -153,13 +166,6 @@
 			Cookies.remove('sortCookie');
 		});
 
-		// Create a myPlugin instance if not available.
-		// if (!this.myPluginInstance) {
-		// 	this.myPluginInstance = new advSort(this, options || {});
-		// } else {
-		// 	this.myPluginInstance.update(options || {});
-		// }
-
 		// Обработка кнопок больше/меньше
 		$this.find('button:not([type=submit],[type=reset])').click(function (e) {
 			e.preventDefault();
@@ -180,24 +186,12 @@
 			// } else if (val === id) {
 			// 	inputHidden.val('');
 			// }
-			// TODO: запись в куки
 		});
 
 		// Кнопка сброса
-		$this.find('button[type=reset]').click(function () {
-			$(':input', $this).not(':button, :submit, :reset').val('');
-			$this.find('select').attr('selected', false);
-			$this.find('#subcategory-sort').find('select').attr('disabled', true);
-			$this.find('button:not([type=submit],[type=reset])').removeClass('btn-primary').addClass('btn-default');
-
-			Cookies.remove('typesortCookie');
-			Cookies.remove('datesortCookies');
-			Cookies.remove('pricesortCookies');
-			Cookies.remove('citysortCookie');
-			Cookies.remove('categorysortCookie');
-			Cookies.remove('subcatsortCookie');
-			Cookies.remove('savesortCookie');
-			$(location).attr('href', self);
+		$this.find('button[type=reset]').on('click', function (e) {
+			e.preventDefault();
+			methods.resets($this);
 		});
 
 		// Подкатегория
@@ -208,7 +202,7 @@
 				method: 'post',
 				data: 'depdrop_parents[0]=' + categorySelectVal + "&depdrop_all_params[cat-id]=" + categorySelectVal,
 				success: function (data) {
-					methods.createList(data);
+					methods.createList(data, subSelect);
 					subSelect.find('[value="' + defaults.subcatsortCookie + '"]').attr('selected', true);
 				},
 				error: function () {
@@ -219,7 +213,7 @@
 
 		subSelect.change(function () {
 			var val = $(this).val();
-			methods.change(val);
+			methods.changes(val);
 			Cookies.set("subcatsortCookie", val, 7);
 		});
 
@@ -231,7 +225,7 @@
 				subSelect.empty().prepend( $('<option value="">По подкатегории</option>'));
 				return false;
 			}
-			methods.change(val);
+			methods.changes(val);
 			Cookies.set("categorysortCookie", val, 7);
 
 			$.ajax({
@@ -239,7 +233,7 @@
 				data: "depdrop_parents[0]=" + val + "&depdrop_all_params[cat-id]=" + val,
 				method: 'post',
 				success: function (data) {
-					methods.createList(data);
+					methods.createList(data, subSelect);
 				},
 				error: function () {
 					console.log('get connect error');
