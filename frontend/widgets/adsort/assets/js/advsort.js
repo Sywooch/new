@@ -1,7 +1,7 @@
 /*!
- jQuery [name] plugin
+ jQuery [advsort] plugin
  @name jquery.[name].js
- @author [author name] ([author email] or @[author twitter])
+ @author [beckson] ([becksonq@gmail.com] or @[author twitter])
  @version 1.0
  @date 01/01/2013
  @category jQuery Plugin
@@ -26,31 +26,7 @@
 
 	var methods = {
 		init: function (params) {
-
-			// если опции существуют, то совмещаем их
-			// со значениями по умолчанию
-			options = $.extend({}, defaults, options, params); // при этом важен порядок совмещения
-
-			// var $this = $(this),
-			// 	data = $this.data('tooltip'),
-			// 	tooltip = $('<div />', {
-			// 		text : $this.attr('title')
-			// 	});
-
-			// плагин еще не инициализирован
-			/*if ( ! data ) {
-
-			 /!*
-			 Дополнительные возможности установки
-			 *!/
-
-			 $(this).data('tooltip', {
-			 target : $this,
-			 tooltip : tooltip
-			 });
-
-			 }*/
-
+			options = $.extend({}, defaults, options, params);
 		},
 		resets: function (parent) {
 			parent.find(':input').not(':button, :submit, :reset').val('');
@@ -128,8 +104,10 @@
 
 		options = $.extend({}, defaults, options, method);
 
-		var $this = $(this);
-		var form = $this.find(form),
+		var $this = $(this),
+			action = $this.find('form').attr('action'),
+			citySort = $this.find('#city-sort').find('select'),
+			typeSort = $this.find('#type-sort').find('select'),
 			subSelect = $this.find('#subcategory-sort').find('select'),
 			categorySelect = $this.find('#category-sort').find('select'),
 			url = '/site/subcat';
@@ -167,31 +145,50 @@
 		});
 
 		// Обработка кнопок больше/меньше
-		$this.find('button:not([type=submit],[type=reset])').click(function (e) {
+		$this.find('button:not([type=submit],[type=reset])').on( 'click', function (e) {
 			e.preventDefault();
 			var siblingsBtn = $(this).siblings('.btn');
-			// var inputHidden = $(this).siblings('input[type=hidden]');
 			var name = $(this).parent().attr('id').replace(/-/g, "");
-			var id = $(this).attr('data-id');
+			var id = $(this).attr('data-id'); //console.log( id );
 			Cookies.set(name + "Cookies", id, 7);
+			var inputHidden = $(this).siblings('input[type=hidden]');
+			if( id === '1' ){ console.log( id );
+				inputHidden.val(inputHidden.attr('id'));
+			} else if ( id === '0' ) { console.log( id );
+				inputHidden.val('-' + inputHidden.attr('id'));
+			}
 			// var val = inputHidden.val();
+			// if (( val === '' ) || ( val !== id )) {
+			// 	inputHidden.val(id);
+			// } else if (val === id) {
+			// 	inputHidden.val('');
+			// }
 
 			$(this).toggleClass('btn-default btn-primary');
 			if (siblingsBtn.hasClass('btn-primary')) {
 				siblingsBtn.removeClass('btn-primary').addClass('btn-default');
 			}
 
-			// if (( val === '' ) || ( val !== id )) {
-			// 	inputHidden.val(id);
-			// } else if (val === id) {
-			// 	inputHidden.val('');
-			// }
 		});
 
 		// Кнопка сброса
-		$this.find('button[type=reset]').on('click', function (e) {
+		$this.find('button[type=reset]').on( 'click', function (e) {
 			e.preventDefault();
 			methods.resets($this);
+		});
+
+		// Расположение
+		citySort.on( 'change', function () {
+			var val = $(this).val();
+			methods.changes(val);
+			Cookies.set("citysortCookie", val, 7);
+		});
+
+		//Тип объявления
+		typeSort.on( 'change', function () {
+			var val = $(this).val();
+			methods.changes(val);
+			Cookies.set("typesortCookie", val, 7);
 		});
 
 		// Подкатегория
@@ -211,14 +208,14 @@
 			});
 		}
 
-		subSelect.change(function () {
+		subSelect.on( 'change', function () {
 			var val = $(this).val();
 			methods.changes(val);
 			Cookies.set("subcatsortCookie", val, 7);
 		});
 
 		// Категория
-		categorySelect.change(function () {
+		categorySelect.on( 'change', function () {
 			var val = $(this).val();
 			if (val === '') {
 				subSelect.attr('disabled', true);

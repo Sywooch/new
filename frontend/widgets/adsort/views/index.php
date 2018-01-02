@@ -6,6 +6,7 @@
  * Time: 11:54
  */
 use yii\helpers\Html;
+use yii\helpers\Url;
 use board\repositories\AdvertsRepository;
 use frontend\widgets\adsort\AdvSortAsset;
 
@@ -16,9 +17,7 @@ AdvSortAsset::register( $this );
 	<div class="panel panel-default">
 		<div class="panel-body">
 
-        <?= Html::beginForm( $action, 'post', [ 'class' => 'form-horizontal' ] ) ?>
-
-        <?= Html::hiddenInput( 'form_action', 'ads_sort' ) ?>
+        <?= Html::beginForm( Url::to(['site/index']), 'post', [ 'class' => 'form-horizontal' ] ) ?>
 
 			<div class="form-group">
 				<div id="city-sort" class="col-sm-3">
@@ -42,7 +41,7 @@ AdvSortAsset::register( $this );
 
 				<div id="price-sort" class="col-sm-3">
 					По цене&nbsp;&nbsp;
-            <?= Html::hiddenInput( 'price_sort', '', [ 'id' => 'price' ] ) ?>
+            <?= Html::hiddenInput( 'sort', '', [ 'id' => 'price' ] ) ?>
             <?= Html::button( '<i class="fa fa-long-arrow-up" aria-hidden="true"></i>',
                 [ 'data-id' => 1, 'class' => 'btn btn-default btn-sm', 'title' => 'По возрастанию' ] ) ?>
             <?= Html::button( '<i class="fa fa-long-arrow-down" aria-hidden="true"></i>',
@@ -80,4 +79,3 @@ AdvSortAsset::register( $this );
 		</div>
 	</div>
 </div>
-<?php //$this->registerJsFile( Yii::getAlias('@frontend') . '/widgets/adsort/assets/js/advsort.js', [ 'position' => yii\web\View::POS_END ] ); ?>

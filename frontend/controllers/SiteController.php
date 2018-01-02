@@ -79,6 +79,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+//        $post = yii::$app->request->post();
+//        Helpers::p($post); die;
+
         $dataProvider = AdvertsViewsController::homeAdvertsPage();
 
         return $this->render( 'index', [

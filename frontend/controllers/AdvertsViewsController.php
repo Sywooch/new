@@ -76,6 +76,9 @@ class AdvertsViewsController extends Controller
 
     public static function homeAdvertsPage(){
 
+//        $post = yii::$app->request->post();
+//        Helpers::p($post); die;
+
         $sort = new Sort( [
             'attributes' => [
                 'header'       => [
