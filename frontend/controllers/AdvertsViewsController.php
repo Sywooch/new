@@ -76,13 +76,40 @@ class AdvertsViewsController extends Controller
 
     public static function homeAdvertsPage(){
 
+        $sort = new Sort( [
+            'attributes' => [
+                'header'       => [
+                    'asc'     => [ 'header' => SORT_ASC, ],
+                    'desc'    => [ 'header' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'price'        => [
+                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
+                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'subcat'       => [
+                    'asc'     => [ 'subcategory.subcat_name' => SORT_ASC, ],
+                    'desc'    => [ 'subcategory.subcat_name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'type'         => [
+                    'asc'     => [ 'types.name' => SORT_ASC, ],
+                    'desc'    => [ 'types.name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+            ],
+        ] );
+
         $query = Adverts::find()
             ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
             ->joinWith( [
                 'pricies p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
                 }
-            ] );
+            ] )
+            ->orderBy( $sort->orders );
 
         $pageSize = self::_setPageSize();
 

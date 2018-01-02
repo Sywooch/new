@@ -10,7 +10,7 @@
 
 namespace frontend\widgets\adsort;
 
-
+use Yii;
 use yii\base\Widget;
 
 class AdSort extends Widget
@@ -33,4 +33,5 @@ class AdSort extends Widget
             'action' => $this->action,
         ] );
     }
+
 }

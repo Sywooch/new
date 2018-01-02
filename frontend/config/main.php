@@ -47,6 +47,11 @@ return [
                     'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
                 ],
             ],
+            // Для разработки
+            'linkAssets' => true,
+            // Еще вариант отключения браузерного кэша
+//            'class' => 'yii\web\AssetManager',
+//            'appendTimestamp' => true,
         ],
         'view' => [
             'theme' => [

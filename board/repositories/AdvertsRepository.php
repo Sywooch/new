@@ -139,6 +139,7 @@ class AdvertsRepository
             $parents = Yii::$app->request->post( 'depdrop_parents' );
 
             if ( $parents != null ) {
+//                $cat_id = $parents;
                 $cat_id = $parents[0];
                 $out = self::subcategoryList( $cat_id );
                 echo Json::encode( [ 'output' => $out, 'selected' => '' ] );

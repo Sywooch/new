@@ -33,7 +33,8 @@ $this->title = 'vezugruz29.ru';
 				<b><a id="ext-search-link" href="javascript:void();"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;Расширенный
 						поиск</a></b>
 				<!-- Статистика объявлений -->
-				<span class="pull-right">Всего в базе объявлений <strong class="text-primary"><?= $dataProvider->totalCount ?></strong>, за месяц 444, за сутки
+				<span class="pull-right">Всего в базе объявлений <strong
+							class="text-primary"><?= $dataProvider->totalCount ?></strong>, за месяц 444, за сутки
 	333</span>
 			</p></div>
 	</div>
@@ -57,8 +58,10 @@ $this->title = 'vezugruz29.ru';
 
 				<span class="input-group-btn">
 					<button id="ads-sort" type="button" class="btn btn-default"><i class="fa fa-sort"></i>Сортировать</button>
-				  <a id="list-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений списком"><i class="fa fa-th-list"></i></a>
-				  <a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
+				  <a id="list-btn-toggle-a" class="btn btn-default" href="javascript:void(0);" title="Вывод объявлений списком"><i
+								class="fa fa-th-list"></i></a>
+				  <a id="block-btn-toggle-a" class="btn btn-default" href="javascript:void(0);"
+						 title="Вывод объявлений блоками"><i class="fa fa-th-large"></i></a>
 				</span>
 
 				<select id="input-limit" class="form-control" onchange="location = this.value;">
@@ -78,10 +81,10 @@ $this->title = 'vezugruz29.ru';
 
 	<div class="clearfix"></div>
 	<div class="row">
-		<div id="ads-sort-block" class="col-sm-12 collapse">
-        <?= AdSort::widget(['action' => 'site/index']); ?>
-		</div>
+      <?= AdSort::widget( [ 'action' => 'site/index' ] ); ?>
 	</div>
+
+
 
 	<div class="row">
 		<div class="col-xs-12">
