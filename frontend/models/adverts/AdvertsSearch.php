@@ -89,13 +89,13 @@ class AdvertsSearch extends Adverts
         return $dataProvider;
     }
 
-    public function whereCity()
+    public function whereCountry()
     {
-        $post = yii::$app->request->post('city_sort');
-        return $this->where(['']);
+        $countryPost = yii::$app->request->post('city_sort');
+        return ($countryPost) ? $country = "countries.id=$countryPost" : $country = 'countries.id is not null';
     }
 
-    public static function homeAdvertsPage(){
+    public function homeAdvertsPage(){
 
         $post = yii::$app->request->post('city_sort');
         Helpers::p($post); die;
@@ -133,6 +133,7 @@ class AdvertsSearch extends Adverts
                     $q->joinWith( 'currencies c' );
                 }
             ] )
+            ->andWhere( $this->whereCountry() )
             ->orderBy( $sort->orders );
 
         $pageSize = self::_setPageSize();
