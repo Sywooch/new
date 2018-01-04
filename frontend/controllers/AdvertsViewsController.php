@@ -74,62 +74,6 @@ class AdvertsViewsController extends Controller
         $this->_service = $service;
     }
 
-    public static function homeAdvertsPage(){
-
-//        $post = yii::$app->request->post();
-//        Helpers::p($post); die;
-
-        $sort = new Sort( [
-            'attributes' => [
-                'header'       => [
-                    'asc'     => [ 'header' => SORT_ASC, ],
-                    'desc'    => [ 'header' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'price'        => [
-                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
-                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'subcat'       => [
-                    'asc'     => [ 'subcategory.subcat_name' => SORT_ASC, ],
-                    'desc'    => [ 'subcategory.subcat_name' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'type'         => [
-                    'asc'     => [ 'types.name' => SORT_ASC, ],
-                    'desc'    => [ 'types.name' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-            ],
-        ] );
-
-        $query = Adverts::find()
-            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
-            ->joinWith( [
-                'pricies p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
-                }
-            ] )
-            ->orderBy( $sort->orders );
-
-        $pageSize = self::_setPageSize();
-
-        $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'pagination'   => [
-                'defaultPageSize' => 25,
-                'pageSize' => $pageSize,
-                'pageSizeLimit' => [ 15, 100 ],
-            ],
-        ] );
-
-        $dataProvider->sort->enableMultiSort = true;
-
-        return $dataProvider;
-    }
-
     /**
      * @return string
      */
@@ -261,28 +205,5 @@ class AdvertsViewsController extends Controller
             return $model;
         }
         throw new NotFoundHttpException( 'The requested page does not exist.' );
-    }
-
-    private function _setPageSize()
-    {
-        $pageSize = null;
-
-        if ( Yii::$app->request->get( 'per-page' ) !== null ) {
-            $cookies = Yii::$app->response->cookies;
-            $cookies->remove( 'per-page' );
-            $cookies->add( new \yii\web\Cookie( [
-                'name'  => 'per-page',
-                'value' => Yii::$app->request->get( 'per-page' ),
-            ] ) );
-
-            return $pageSize = Yii::$app->request->get( 'per-page' );
-        }
-
-        $cookies = Yii::$app->request->cookies;
-        if ( ( $cookie = $cookies->get( 'per-page' ) ) !== null ) {
-            $pageSize = $cookie->value;
-        }
-
-        return $pageSize;
     }
 }

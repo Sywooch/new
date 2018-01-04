@@ -2,9 +2,9 @@
 
 namespace frontend\controllers;
 
-use common\models\Helpers;
+
+use frontend\models\adverts\AdvertsSearch;
 use Yii;
-use board\entities\Adverts;
 use board\repositories\AdvertsRepository;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -16,8 +16,6 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-use yii\data\ActiveDataProvider;
-use yii\data\Sort;
 
 /**
  * Site controller
@@ -79,10 +77,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-//        $post = yii::$app->request->post();
-//        Helpers::p($post); die;
-
-        $dataProvider = AdvertsViewsController::homeAdvertsPage();
+        $dataProvider = AdvertsSearch::homeAdvertsPage();
 
         return $this->render( 'index', [
             'dataProvider' => $dataProvider,
