@@ -77,7 +77,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = AdvertsSearch::homeAdvertsPage();
+        $searchModel = new AdvertsSearch();
+        $dataProvider = $searchModel->searchHomeAdverts();
 
         return $this->render( 'index', [
             'dataProvider' => $dataProvider,

@@ -109,6 +109,30 @@ class AdvertsRepository
     /**
      * @return array
      */
+    public static function dateList()
+    {
+        $arr = [
+            [ 'id' => 0, 'name' => 'По убыванию' ],
+            [ 'id' => 1, 'name' => 'По возрастанию' ]
+        ];
+        return ArrayHelper::map( $arr, 'id', 'name' );
+    }
+
+    /**
+     * @return array
+     */
+    public static function priceList()
+    {
+        $arr = [
+            [ 'id' => 'sort=-price', 'name' => 'По убыванию' ],
+            [ 'id' => 'sort=price', 'name' => 'По возрастанию' ]
+        ];
+        return ArrayHelper::map( $arr, 'id', 'name' );
+    }
+
+    /**
+     * @return array
+     */
     public static function periodList()
     {
         return ArrayHelper::map( Periods::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
@@ -139,7 +163,6 @@ class AdvertsRepository
             $parents = Yii::$app->request->post( 'depdrop_parents' );
 
             if ( $parents != null ) {
-//                $cat_id = $parents;
                 $cat_id = $parents[0];
                 $out = self::subcategoryList( $cat_id );
                 echo Json::encode( [ 'output' => $out, 'selected' => '' ] );

@@ -31,7 +31,7 @@
 		resets: function (parent) {
 			parent.find(':input').not(':button, :submit, :reset').val('');
 			parent.find('select').attr('selected', false);
-			parent.find('#subcategory-sort').find('select').attr('disabled', true);
+			parent.find('#subcategory-sort').attr('disabled', true);
 			parent.find('button:not([type=submit],[type=reset])').removeClass('btn-primary').addClass('btn-default');
 
 			Cookies.remove('typesortCookie');
@@ -66,8 +66,9 @@
 
 						el.html(options);
 						el.prepend( $('<option value="">По подкатегории</option>'));
-						el.find('option:first').attr("selected", "selected");
+						// el.find('option:first').attr("selected", "selected");
 						el.attr('disabled', false);
+						return el;
 					}
 				} catch (e) {
 					console.log(methods.tr('error:ajax-request'));
@@ -106,10 +107,10 @@
 
 		var $this = $(this),
 			action = $this.find('form').attr('action'),
-			citySort = $this.find('#city-sort').find('select'),
+			citySort = $this.find('#city-sort'),
 			typeSort = $this.find('#type-sort').find('select'),
-			subSelect = $this.find('#subcategory-sort').find('select'),
-			categorySelect = $this.find('#category-sort').find('select'),
+			subSelect = $this.find('#subcategory-sort'),
+			categorySelect = $this.find('#category-sort'),
 			url = '/site/subcat';
 
 		// Смотрим куки и ставим выпадающие списки
@@ -117,11 +118,14 @@
 			$this.find('#type-sort').find('select [value="' + defaults.typesortCookie + '"]').attr('selected', 'selected');
 		}
 		if (defaults.citysortCookie) {
-			$this.find('#city-sort').find('select [value="' + defaults.citysortCookie + '"]').attr('selected', 'selected');
+			$this.find('#city-sort').find('[value="' + defaults.citysortCookie + '"]').attr('selected', 'selected');
 		}
 		if (defaults.categorysortCookie) {
-			$this.find('#category-sort').find('select [value="' + defaults.categorysortCookie + '"]').attr('selected', 'selected');
+			$this.find('#category-sort').find('[value="' + defaults.categorysortCookie + '"]').attr('selected', 'selected');
 		}
+		// if (defaults.subcatsortCookie) {
+		// 	$this.find('#subcategory-sort').find('[value="' + defaults.categorysortCookie + '"]').attr('selected', 'selected');
+		// }
 		if (defaults.datesortCookies) {
 			$this.find('#date-sort').find('button[data-id=' + defaults.datesortCookies + ']').toggleClass('btn-default btn-primary').siblings('input[type=hidden]').val(defaults.datesortCookies);
 		}
@@ -191,16 +195,17 @@
 			Cookies.set("typesortCookie", val, 7);
 		});
 
-		// Подкатегория
-		var categorySelectVal = categorySelect.find(':selected').val();
-		if ((categorySelectVal !== '') && (typeof categorySelectVal !== 'undefined')) {
+		// Создаем подкатерогию после перезагрузки
+		var categorySelectedVal = categorySelect.find(':selected').val();
+		if ((categorySelectedVal !== '') && (typeof categorySelectedVal !== 'undefined')) {
 			$.ajax({
 				url: url,
 				method: 'post',
-				data: 'depdrop_parents[0]=' + categorySelectVal + "&depdrop_all_params[cat-id]=" + categorySelectVal,
+				data: 'depdrop_parents[0]=' + categorySelectedVal + "&depdrop_all_params[cat-id]=" + categorySelectedVal,
 				success: function (data) {
-					methods.createList(data, subSelect);
+					methods.createList(data, subSelect);  //console.log( defaults.subcatsortCookie );
 					subSelect.find('[value="' + defaults.subcatsortCookie + '"]').attr('selected', true);
+					// methods.changes( defaults.subcatsortCookie );
 				},
 				error: function () {
 					console.log('error');
@@ -208,18 +213,21 @@
 			});
 		}
 
+		// Действие при изменении подкатегории
 		subSelect.on( 'change', function () {
 			var val = $(this).val();
 			methods.changes(val);
 			Cookies.set("subcatsortCookie", val, 7);
 		});
 
-		// Категория
+		// Действие при переключении категории
 		categorySelect.on( 'change', function () {
 			var val = $(this).val();
 			if (val === '') {
 				subSelect.attr('disabled', true);
 				subSelect.empty().prepend( $('<option value="">По подкатегории</option>'));
+				Cookies.remove('categorysortCookie');
+				Cookies.remove('subcatsortCookie');
 				return false;
 			}
 			methods.changes(val);
@@ -231,6 +239,7 @@
 				method: 'post',
 				success: function (data) {
 					methods.createList(data, subSelect);
+					subSelect.find('option:first').attr("selected", "selected");
 				},
 				error: function () {
 					console.log('get connect error');

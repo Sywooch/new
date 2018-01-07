@@ -89,17 +89,45 @@ class AdvertsSearch extends Adverts
         return $dataProvider;
     }
 
+    /**
+     * @return string
+     */
     public function whereCountry()
     {
-        $countryPost = yii::$app->request->post('city_sort');
-        return ($countryPost) ? $country = "countries.id=$countryPost" : $country = 'countries.id is not null';
+        $countryPost = yii::$app->request->post( 'city_sort' );
+        return ( $countryPost ) ? $country = "countries.id=$countryPost" : $country = 'countries.id is not null';
     }
 
-    public function homeAdvertsPage(){
+    /**
+     * @return string
+     */
+    public function whereType()
+    {
+        $typePost = yii::$app->request->post( 'type_sort' );
+        return ( $typePost ) ? $type = "types.id=$typePost" : $type = 'types.id is not null';
+    }
 
-        $post = yii::$app->request->post('city_sort');
-        Helpers::p($post); die;
+    public function whereCat()
+    {
+        $categoryPost = yii::$app->request->post( 'category_sort' );
+        return ( $categoryPost ) ? $category = "category.id=$categoryPost" : $category = 'category.id is not null';
+    }
 
+    public function whereSubcat()
+    {
+        $sybcatPost = yii::$app->request->post( 'subcategory_sort' );
+        return ( $sybcatPost ) ? $subcategory = "subcategory.id=$sybcatPost" : $subcategory = 'subcategory.id is not null';
+    }
+
+    /*public function whereDate()
+    {
+        $datePost = yii::$app->request->post( 'date_sort' );
+        return ( $datePost ) ? $date = 'updated_at'
+    }*/
+
+    public function searchHomeAdverts()
+    {
+//        echo yii::$app->request->post('price_sort'); die;
         $sort = new Sort( [
             'attributes' => [
                 'header'       => [
@@ -110,16 +138,6 @@ class AdvertsSearch extends Adverts
                 'price'        => [
                     'asc'     => [ 'pricies.price' => SORT_ASC, ],
                     'desc'    => [ 'pricies.price' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'subcat'       => [
-                    'asc'     => [ 'subcategory.subcat_name' => SORT_ASC, ],
-                    'desc'    => [ 'subcategory.subcat_name' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'type'         => [
-                    'asc'     => [ 'types.name' => SORT_ASC, ],
-                    'desc'    => [ 'types.name' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
                 'defaultOrder' => [ 'id' => SORT_DESC ],
@@ -134,16 +152,19 @@ class AdvertsSearch extends Adverts
                 }
             ] )
             ->andWhere( $this->whereCountry() )
+            ->andWhere( $this->whereType() )
+            ->andWhere( $this->whereCat() )
+            ->andWhere( $this->whereSubcat() )
             ->orderBy( $sort->orders );
 
         $pageSize = self::_setPageSize();
 
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
-            'pagination'   => [
+            'pagination' => [
                 'defaultPageSize' => 25,
-                'pageSize' => $pageSize,
-                'pageSizeLimit' => [ 15, 100 ],
+                'pageSize'        => $pageSize,
+                'pageSizeLimit'   => [ 15, 100 ],
             ],
         ] );
 
