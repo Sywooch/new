@@ -119,15 +119,20 @@ class AdvertsSearch extends Adverts
         return ( $sybcatPost ) ? $subcategory = "subcategory.id=$sybcatPost" : $subcategory = 'subcategory.id is not null';
     }
 
-    /*public function whereDate()
+    public function whereDate()
     {
         $datePost = yii::$app->request->post( 'date_sort' );
-        return ( $datePost ) ? $date = 'updated_at'
-    }*/
+        return ( $datePost ) ? $date =  [ 'adverts.updated_at' => SORT_ASC ] : $date =  [ 'adverts.updated_at' => SORT_DESC ];
+    }
+
+    public function wherePrice()
+    {
+        $pricePost = yii::$app->request->post( 'price_sort' );
+        return ( $pricePost ) ? $price =  [ 'pricies.price' => SORT_ASC ] : $price =  [ 'pricies.price' => SORT_DESC ];
+    }
 
     public function searchHomeAdverts()
     {
-//        echo yii::$app->request->post('price_sort'); die;
         $sort = new Sort( [
             'attributes' => [
                 'header'       => [
@@ -135,12 +140,7 @@ class AdvertsSearch extends Adverts
                     'desc'    => [ 'header' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
-                'price'        => [
-                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
-                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'defaultOrder' => [ 'id' => SORT_DESC ],
+                'defaultOrder' => [ 'id' => SORT_DESC, ],
             ],
         ] );
 
@@ -155,7 +155,9 @@ class AdvertsSearch extends Adverts
             ->andWhere( $this->whereType() )
             ->andWhere( $this->whereCat() )
             ->andWhere( $this->whereSubcat() )
-            ->orderBy( $sort->orders );
+//            ->orderBy( $sort->orders )
+            ->addOrderBy( $this->whereDate() )
+            ->addOrderBy( $this->wherePrice() );
 
         $pageSize = self::_setPageSize();
 

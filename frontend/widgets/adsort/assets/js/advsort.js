@@ -14,8 +14,8 @@
 
 	var defaults = {
 		typesortCookie : Cookies.get('typesortCookie'),
-		datesortCookies : Cookies.get('datesortCookies'),
-		pricesortCookies : Cookies.get('pricesortCookies'),
+		datesortCookie : Cookies.get('datesortCookie'),
+		pricesortCookie : Cookies.get('pricesortCookie'),
 		citysortCookie : Cookies.get('citysortCookie'),
 		categorysortCookie : Cookies.get('categorysortCookie'),
 		subcatsortCookie : Cookies.get('subcatsortCookie'),
@@ -107,10 +107,12 @@
 
 		var $this = $(this),
 			action = $this.find('form').attr('action'),
-			citySort = $this.find('#city-sort'),
-			typeSort = $this.find('#type-sort').find('select'),
+			citySelect = $this.find('#city-sort'),
+			typeSelect = $this.find('#type-sort').find('select'),
 			subSelect = $this.find('#subcategory-sort'),
 			categorySelect = $this.find('#category-sort'),
+			dateSelect = $this.find('#date-sort'),
+			priceSelect = $this.find('#price-sort'),
 			url = '/site/subcat';
 
 		// Смотрим куки и ставим выпадающие списки
@@ -118,19 +120,16 @@
 			$this.find('#type-sort').find('select [value="' + defaults.typesortCookie + '"]').attr('selected', 'selected');
 		}
 		if (defaults.citysortCookie) {
-			$this.find('#city-sort').find('[value="' + defaults.citysortCookie + '"]').attr('selected', 'selected');
+			citySelect.find('[value="' + defaults.citysortCookie + '"]').attr('selected', 'selected');
 		}
 		if (defaults.categorysortCookie) {
-			$this.find('#category-sort').find('[value="' + defaults.categorysortCookie + '"]').attr('selected', 'selected');
+			categorySelect.find('[value="' + defaults.categorysortCookie + '"]').attr('selected', 'selected');
 		}
-		// if (defaults.subcatsortCookie) {
-		// 	$this.find('#subcategory-sort').find('[value="' + defaults.categorysortCookie + '"]').attr('selected', 'selected');
-		// }
-		if (defaults.datesortCookies) {
-			$this.find('#date-sort').find('button[data-id=' + defaults.datesortCookies + ']').toggleClass('btn-default btn-primary').siblings('input[type=hidden]').val(defaults.datesortCookies);
+		if (defaults.datesortCookie) {
+			dateSelect.find('[value="' + defaults.datesortCookie + '"]').attr('selected', 'selected');
 		}
-		if (defaults.pricesortCookies) {
-			$this.find('#price-sort').find('button[data-id=' + defaults.pricesortCookies + ']').toggleClass('btn-default btn-primary').siblings('input[type=hidden]').val(defaults.pricesortCookies);
+		if (defaults.pricesortCookie) {
+			priceSelect.find('[value="' + defaults.pricesortCookie + '"]').attr('selected', 'selected');
 		}
 
 		// Панель сортировки
@@ -182,17 +181,29 @@
 		});
 
 		// Расположение
-		citySort.on( 'change', function () {
+		citySelect.on( 'change', function () {
 			var val = $(this).val();
 			methods.changes(val);
 			Cookies.set("citysortCookie", val, 7);
 		});
 
 		//Тип объявления
-		typeSort.on( 'change', function () {
+		typeSelect.on( 'change', function () {
 			var val = $(this).val();
 			methods.changes(val);
 			Cookies.set("typesortCookie", val, 7);
+		});
+
+		// По дате
+		dateSelect.on( 'change', function () {
+			var val = $(this).val();
+			Cookies.set("datesortCookie", val, 7);
+		});
+
+		// По цене
+		priceSelect.on( 'change', function () {
+			var val = $(this).val();
+			Cookies.set("pricesortCookie", val, 7);
 		});
 
 		// Создаем подкатерогию после перезагрузки

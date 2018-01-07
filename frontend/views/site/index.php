@@ -9,7 +9,6 @@ use frontend\widgets\adsort\AdSort;
 /* @var $this yii\web\View */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
-//\common\models\Helpers::p( count($dataProvider->getModels()), 1 ); die;
 ?>
 <div class="site-index">
 
@@ -83,8 +82,6 @@ $this->title = 'vezugruz29.ru';
 	<div class="row">
       <?= AdSort::widget( [ 'action' => 'site/index' ] ); ?>
 	</div>
-
-
 
 	<div class="row">
 		<div class="col-xs-12">

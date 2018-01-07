@@ -30,32 +30,14 @@ AdvSortAsset::register( $this );
                 [ 'class' => 'form-control', 'prompt' => 'По типу' ] ) ?>
 				</div>
 
-				<div id="date-sort" class="col-sm-3">
+				<div class="col-sm-3">
             <?= Html::dropDownList( 'date_sort', '', AdvertsRepository::dateList(),
-                [ 'class' => 'form-control', 'prompt' => 'По дате' ] ) ?>
+                [ 'id' => 'date-sort', 'class' => 'form-control', 'prompt' => 'По дате' ] ) ?>
 				</div>
 
-				<!--<div id="date-sort" class="col-sm-3">
-					По дате&nbsp;&nbsp;
-            <?/*= Html::hiddenInput( 'date_sort', '', [ 'id' => 'date' ] ) */?>
-            <?/*= Html::button( '<i class="fa fa-long-arrow-up" aria-hidden="true"></i>',
-                [ 'data-id' => 1, 'class' => 'btn btn-default btn-sm', 'title' => 'По возрастанию' ] ) */?>
-            <?/*= Html::button( '<i class="fa fa-long-arrow-down" aria-hidden="true"></i>',
-                [ 'data-id' => 0, 'class' => 'btn btn-default btn-sm', 'title' => 'По убыванию' ] ) */?>
-				</div>-->
-
-				<!--<div id="price-sort" class="col-sm-3">
-					По цене&nbsp;&nbsp;
-            <?/*= Html::hiddenInput( 'sort', '', [ 'id' => 'price' ] ) */?>
-            <?/*= Html::button( '<i class="fa fa-long-arrow-up" aria-hidden="true"></i>',
-                [ 'data-id' => 1, 'class' => 'btn btn-default btn-sm', 'title' => 'По возрастанию' ] ) */?>
-            <?/*= Html::button( '<i class="fa fa-long-arrow-down" aria-hidden="true"></i>',
-                [ 'data-id' => 0, 'class' => 'btn btn-default btn-sm', 'title' => 'По убыванию' ] ) */?>
-				</div>-->
-
-				<div id="price-sort" class="col-sm-3">
+				<div class="col-sm-3">
             <?= Html::dropDownList( 'price_sort', '', AdvertsRepository::priceList(),
-                [ 'class' => 'form-control', 'prompt' => 'По цене' ] ) ?>
+                [ 'id' => 'price-sort', 'class' => 'form-control', 'prompt' => 'По цене' ] ) ?>
 				</div>
 
 			</div>
