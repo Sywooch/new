@@ -134,17 +134,6 @@ a.desc:after {
 }
 
 /* Временные стили */
-.navbar-inverse {
-  background-color: #197da1;
-  border-color: #135b75;
-}
-
-/*.navbar-inverse .navbar-nav > .active > a,*/
-/*.navbar-inverse .navbar-nav > .active > a:hover,*/
-/*.navbar-inverse .navbar-nav > .active > a:focus {*/
-/*color: #ffffff;*/
-/*background-color: #125b75;*/
-/*}*/
 #sub-btn-search {
   min-width: 160px;
 }

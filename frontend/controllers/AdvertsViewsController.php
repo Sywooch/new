@@ -8,17 +8,16 @@
 
 namespace frontend\controllers;
 
-use common\models\Helpers;
+
 use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use board\manage\AdvertManageService;
-use yii\data\ActiveDataProvider;
 use board\entities\Adverts;
-use yii\data\Sort;
 use yii\web\NotFoundHttpException;
 use frontend\models\UserPhones;
+use frontend\models\adverts\AdvertsSearch;
 
 class AdvertsViewsController extends Controller
 {
@@ -77,110 +76,33 @@ class AdvertsViewsController extends Controller
     /**
      * @return string
      */
-    public function actionCategoryPage( $id )
+    public function actionCategoryPage()
     {
-        $sort = new Sort( [
-            'attributes' => [
-                'header'       => [
-                    'asc'     => [ 'header' => SORT_ASC, ],
-                    'desc'    => [ 'header' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'price'        => [ //TODO:
-                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
-                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'subcat'       => [
-                    'asc'     => [ 'subcategory.subcat_name' => SORT_ASC, ],
-                    'desc'    => [ 'subcategory.subcat_name' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'type'       => [
-                    'asc'     => [ 'types.name' => SORT_ASC, ],
-                    'desc'    => [ 'types.name' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-            ],
-        ] );
-
-        $query = Adverts::find()
-            ->where( [ 'adverts.cat_id' => $id ] )
-            ->joinWith( ['category', 'subcategory', 'types', 'periods', 'countries', 'pricies'] )
-            ->joinWith( [
-                'pricies p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
-                }
-            ] )
-            ->orderBy( $sort->orders );
-
-        $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'pagination' => [
-                'defaultPageSize' => 25,
-                'pageSizeLimit' => [ 15, 100 ],
-            ]
-        ] );
-
-        $dataProvider->sort->enableMultiSort = true;
+        $searchModel = new AdvertsSearch();
+        $dataProvider = $searchModel->searchCategoryPage( Yii::$app->request->queryParams );
 
         return $this->render( 'category-page', [
             'provider' => $dataProvider,
-            'sort' => $sort,
         ] );
     }
 
-    public function actionSubcategoryPage( $catid, $id )
+    /**
+     * @return string
+     */
+    public function actionSubcategoryPage()
     {
-        $sort = new Sort( [
-            'attributes' => [
-                'header'       => [
-                    'asc'     => [ 'header' => SORT_ASC, ],
-                    'desc'    => [ 'header' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'price'        => [
-                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
-                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'type'         => [
-                    'asc'     => [ 'types.name' => SORT_ASC, ],
-                    'desc'    => [ 'types.name' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-            ],
-        ] );
-
-        $query = Adverts::find()
-            ->where( [ 'adverts.cat_id' => $catid ] )
-            ->andWhere( [ 'adverts.subcat_id' => $id ] )
-            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
-            ->joinWith( [
-                'pricies p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
-                }
-            ] )
-            ->orderBy( $sort->orders );
-
-        $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'pagination' => [
-                'defaultPageSize' => 25,
-                'pageSizeLimit' => [ 15, 100 ],
-            ]
-        ] );
-
-        $dataProvider->sort->enableMultiSort = true;
+        $searchModel = new AdvertsSearch();
+        $dataProvider = $searchModel->searchSubcategoryPage( Yii::$app->request->queryParams );
 
         return $this->render( 'subcategory-page', [
             'provider' => $dataProvider,
-            'sort' => $sort,
         ] );
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionDetails( $id )
     {
         $model = $this->findModel( $id );
@@ -193,6 +115,11 @@ class AdvertsViewsController extends Controller
         ] );
     }
 
+    /**
+     * @param $id
+     * @return array|null|yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
     protected function findModel( $id )
     {
         if ( ( $model = Adverts::find()

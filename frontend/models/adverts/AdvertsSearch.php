@@ -146,19 +146,13 @@ class AdvertsSearch extends Adverts
         return null;
     }
 
+    /**
+     * Поиск и сортировка объявлений на главной странице
+     *
+     * @return ActiveDataProvider
+     */
     public function searchHomeAdverts()
     {
-        $sort = new Sort( [
-            'attributes' => [
-//                'header'       => [
-//                    'asc'     => [ 'header' => SORT_ASC, ],
-//                    'desc'    => [ 'header' => SORT_DESC, ],
-//                    'default' => SORT_DESC,
-//                ],
-                    'defaultOrder' => [ 'id' => SORT_DESC, ],
-            ],
-        ] );
-
         $query = Adverts::find()
             ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
             ->joinWith( [
@@ -172,7 +166,6 @@ class AdvertsSearch extends Adverts
             ->andWhere( $this->whereSubcat() )
             ->orderBy( $this->whereDate() )
             ->addOrderBy( $this->wherePrice() );
-//            ->orderBy( $sort->orders );
 
         $pageSize = self::_setPageSize();
 
@@ -190,7 +183,116 @@ class AdvertsSearch extends Adverts
         ] );
 
         $dataProvider->sort->enableMultiSort = true;
+        return $dataProvider;
+    }
 
+    /**
+     * Поиск объявлений по категории
+     *
+     * @param $params
+     * @return ActiveDataProvider
+     */
+    public function searchCategoryPage( $params )
+    {
+        $sort = new Sort( [
+            'attributes' => [
+                'header'       => [
+                    'asc'     => [ 'header' => SORT_ASC, ],
+                    'desc'    => [ 'header' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'subcat'       => [
+                    'asc'     => [ 'subcategory.subcat_name' => SORT_ASC, ],
+                    'desc'    => [ 'subcategory.subcat_name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'price'        => [
+                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
+                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'type'         => [
+                    'asc'     => [ 'types.name' => SORT_ASC, ],
+                    'desc'    => [ 'types.name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+            ],
+        ] );
+
+        $query = Adverts::find()
+            ->where( [ 'adverts.cat_id' => $params['id'] ] )
+            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
+            ->joinWith( [
+                'pricies p' => function ( $q ){
+                    $q->joinWith( 'currencies c' );
+                }
+            ] )
+            ->orderBy( $sort->orders );
+
+        $dataProvider = new ActiveDataProvider( [
+            'query'      => $query,
+            'pagination' => [
+                'defaultPageSize' => 25,
+                'pageSizeLimit'   => [ 15, 100 ],
+            ],
+            'sort'       => $sort,
+        ] );
+
+        $dataProvider->sort->enableMultiSort = true;
+        return $dataProvider;
+    }
+
+    /**
+     * Поиск объявлений по подкатегории
+     *
+     * @param $params
+     * @return ActiveDataProvider
+     */
+    public function searchSubcategoryPage( $params )
+    {
+        $sort = new Sort( [
+            'attributes' => [
+                'header'       => [
+                    'asc'     => [ 'header' => SORT_ASC, ],
+                    'desc'    => [ 'header' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'price'        => [
+                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
+                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'type'         => [
+                    'asc'     => [ 'types.name' => SORT_ASC, ],
+                    'desc'    => [ 'types.name' => SORT_DESC, ],
+                    'default' => SORT_DESC,
+                ],
+                'defaultOrder' => [ 'id' => SORT_DESC ],
+            ],
+        ] );
+
+        $query = Adverts::find()
+            ->where( [ 'adverts.cat_id' => $params ['catid'] ] )
+            ->andWhere( [ 'adverts.subcat_id' => $params ['id'] ] )
+            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
+            ->joinWith( [
+                'pricies p' => function ( $q ){
+                    $q->joinWith( 'currencies c' );
+                }
+            ] )
+            ->orderBy( $sort->orders );
+
+        $dataProvider = new ActiveDataProvider( [
+            'query'      => $query,
+            'pagination' => [
+                'defaultPageSize' => 25,
+                'pageSizeLimit'   => [ 15, 100 ],
+            ],
+            'sort'       => $sort,
+        ] );
+
+        $dataProvider->sort->enableMultiSort = true;
         return $dataProvider;
     }
 
