@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = Yii::$app->request->get( 'subcat' );
 ?>
 
 <div class="row">
-	<div class="col-sm-offset-8 col-sm-4 col-xs-12">
+	<div class="col-sm-offset-7 col-sm-5 col-xs-12">
 		<div class="form-group input-group input-group">
-			<label class="input-group-addon" for="input-sort">Фильтр:</label>
+			<label class="input-group-addon" for="input-sort"><i class="fa fa-filter" aria-hidden="true"></i>Фильтр:</label>
 			<select id="input-sort" class="form-control" onchange="location = this.value;">
           <?php
           $values = [

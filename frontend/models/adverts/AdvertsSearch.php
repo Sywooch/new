@@ -121,26 +121,41 @@ class AdvertsSearch extends Adverts
 
     public function whereDate()
     {
-        $datePost = yii::$app->request->post( 'date_sort' );
-        return ( $datePost ) ? $date =  [ 'adverts.updated_at' => SORT_ASC ] : $date =  [ 'adverts.updated_at' => SORT_DESC ];
+        $datePost = yii::$app->request->post( 'date_sort' ); //var_dump( $datePost ); die;
+        switch ( $datePost ) {
+            case 'desc':
+                return [ 'adverts.updated_at' => SORT_DESC ];
+                break;
+            case 'asc':
+                return [ 'adverts.updated_at' => SORT_ASC ];
+                break;
+        }
+        return null;
     }
 
     public function wherePrice()
     {
-        $pricePost = yii::$app->request->post( 'price_sort' );
-        return ( $pricePost ) ? $price =  [ 'pricies.price' => SORT_ASC ] : $price =  [ 'pricies.price' => SORT_DESC ];
+        $pricePost = yii::$app->request->post( 'price_sort' );  //var_dump( $pricePost ); //die;
+        switch ( $pricePost ) {
+            case 'desc':
+                return [ 'pricies.price' => SORT_DESC ];
+                break;
+            case 'asc':
+                return [ 'pricies.price' => SORT_ASC ];
+        }
+        return null;
     }
 
     public function searchHomeAdverts()
     {
         $sort = new Sort( [
             'attributes' => [
-                'header'       => [
-                    'asc'     => [ 'header' => SORT_ASC, ],
-                    'desc'    => [ 'header' => SORT_DESC, ],
-                    'default' => SORT_DESC,
-                ],
-                'defaultOrder' => [ 'id' => SORT_DESC, ],
+//                'header'       => [
+//                    'asc'     => [ 'header' => SORT_ASC, ],
+//                    'desc'    => [ 'header' => SORT_DESC, ],
+//                    'default' => SORT_DESC,
+//                ],
+                    'defaultOrder' => [ 'id' => SORT_DESC, ],
             ],
         ] );
 
@@ -155,19 +170,23 @@ class AdvertsSearch extends Adverts
             ->andWhere( $this->whereType() )
             ->andWhere( $this->whereCat() )
             ->andWhere( $this->whereSubcat() )
-//            ->orderBy( $sort->orders )
-            ->addOrderBy( $this->whereDate() )
+            ->orderBy( $this->whereDate() )
             ->addOrderBy( $this->wherePrice() );
+//            ->orderBy( $sort->orders );
 
         $pageSize = self::_setPageSize();
 
         $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'pagination' => [
+            'query'        => $query,
+            'pagination'   => [
                 'defaultPageSize' => 25,
                 'pageSize'        => $pageSize,
                 'pageSizeLimit'   => [ 15, 100 ],
             ],
+            'sort' => [
+                'defaultOrder' => [ 'id' => SORT_DESC, ],
+            ]
+
         ] );
 
         $dataProvider->sort->enableMultiSort = true;

@@ -112,8 +112,8 @@ class AdvertsRepository
     public static function dateList()
     {
         $arr = [
-            [ 'id' => 0, 'name' => 'Сначала новые' ],
-            [ 'id' => 1, 'name' => 'Сначала старые' ]
+            [ 'id' => 'desc', 'name' => 'Сначала новые' ],
+            [ 'id' => 'asc', 'name' => 'Сначала старые' ]
         ];
         return ArrayHelper::map( $arr, 'id', 'name' );
     }
@@ -124,8 +124,8 @@ class AdvertsRepository
     public static function priceList()
     {
         $arr = [
-            [ 'id' => 0, 'name' => 'По убыванию' ],
-            [ 'id' => 1, 'name' => 'По возрастанию' ]
+            [ 'id' => 'desc', 'name' => 'По убыванию' ],
+            [ 'id' => 'asc', 'name' => 'По возрастанию' ]
         ];
         return ArrayHelper::map( $arr, 'id', 'name' );
     }

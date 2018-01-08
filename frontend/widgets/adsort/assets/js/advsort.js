@@ -22,11 +22,22 @@
 		savesortCookie : Cookies.get('savesortCookie'),
 		self : window.location.href
 	};
-	var options = {};
+	var options = {
+		cookieTime : 7,
+		type : ['type','date','price','city','category']
+	};
 
 	var methods = {
 		init: function (params) {
 			options = $.extend({}, defaults, options, params);
+		},
+		on: function ( type ) {
+			// var el = type + 'Select'; console.log(el);
+			// el.on( 'change', function () {
+			// 	var val = $(this).val();
+			// 	methods.changes(val);
+			// 	Cookies.set( type + "sortCookie", val, options.cookieTime);
+			// });
 		},
 		resets: function (parent) {
 			parent.find(':input').not(':button, :submit, :reset').val('');
@@ -35,8 +46,8 @@
 			parent.find('button:not([type=submit],[type=reset])').removeClass('btn-primary').addClass('btn-default');
 
 			Cookies.remove('typesortCookie');
-			Cookies.remove('datesortCookies');
-			Cookies.remove('pricesortCookies');
+			Cookies.remove('datesortCookie');
+			Cookies.remove('pricesortCookie');
 			Cookies.remove('citysortCookie');
 			Cookies.remove('categorysortCookie');
 			Cookies.remove('subcatsortCookie');
@@ -116,8 +127,16 @@
 			url = '/site/subcat';
 
 		// Смотрим куки и ставим выпадающие списки
+		// $.each(options.type, function (i, val) {
+		// 	var select = val + 'Select';
+		// 	var cookie = defaults + '.' + val + 'sortCookie';
+		// 	if (cookie) {
+		// 		$(select).find('[value="' + cookie + '"]').attr('selected', 'selected');
+		// 	}
+		// });
+
 		if (defaults.typesortCookie) {
-			$this.find('#type-sort').find('select [value="' + defaults.typesortCookie + '"]').attr('selected', 'selected');
+			typeSelect.find('[value="' + defaults.typesortCookie + '"]').attr('selected', 'selected');
 		}
 		if (defaults.citysortCookie) {
 			citySelect.find('[value="' + defaults.citysortCookie + '"]').attr('selected', 'selected');
@@ -145,33 +164,6 @@
 		});
 		$this.on('hidden.bs.collapse', function () {
 			Cookies.remove('sortCookie');
-		});
-
-		// Обработка кнопок больше/меньше
-		$this.find('button:not([type=submit],[type=reset])').on( 'click', function (e) {
-			e.preventDefault();
-			var siblingsBtn = $(this).siblings('.btn');
-			var name = $(this).parent().attr('id').replace(/-/g, "");
-			var id = $(this).attr('data-id'); //console.log( id );
-			Cookies.set(name + "Cookies", id, 7);
-			var inputHidden = $(this).siblings('input[type=hidden]');
-			if( id === '1' ){ console.log( id );
-				inputHidden.val(inputHidden.attr('id'));
-			} else if ( id === '0' ) { console.log( id );
-				inputHidden.val('-' + inputHidden.attr('id'));
-			}
-			// var val = inputHidden.val();
-			// if (( val === '' ) || ( val !== id )) {
-			// 	inputHidden.val(id);
-			// } else if (val === id) {
-			// 	inputHidden.val('');
-			// }
-
-			$(this).toggleClass('btn-default btn-primary');
-			if (siblingsBtn.hasClass('btn-primary')) {
-				siblingsBtn.removeClass('btn-primary').addClass('btn-default');
-			}
-
 		});
 
 		// Кнопка сброса
@@ -214,9 +206,8 @@
 				method: 'post',
 				data: 'depdrop_parents[0]=' + categorySelectedVal + "&depdrop_all_params[cat-id]=" + categorySelectedVal,
 				success: function (data) {
-					methods.createList(data, subSelect);  //console.log( defaults.subcatsortCookie );
+					methods.createList(data, subSelect);
 					subSelect.find('[value="' + defaults.subcatsortCookie + '"]').attr('selected', true);
-					// methods.changes( defaults.subcatsortCookie );
 				},
 				error: function () {
 					console.log('error');
