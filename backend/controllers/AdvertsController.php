@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use board\entities\Adverts;
-use backend\models\AdvertsSearch;
+use frontend\models\adverts\AdvertsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

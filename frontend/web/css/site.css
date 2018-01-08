@@ -134,17 +134,6 @@ a.desc:after {
 }
 
 /* Временные стили */
-.navbar-inverse {
-  background-color: #197da1;
-  border-color: #135b75;
-}
-
-/*.navbar-inverse .navbar-nav > .active > a,*/
-/*.navbar-inverse .navbar-nav > .active > a:hover,*/
-/*.navbar-inverse .navbar-nav > .active > a:focus {*/
-/*color: #ffffff;*/
-/*background-color: #125b75;*/
-/*}*/
 #sub-btn-search {
   min-width: 160px;
 }
@@ -259,6 +248,10 @@ OpenCart
   margin-top: 10px;
   margin-bottom: 0;
   color: #a94442;
+}
+
+.ad-thumb .price .fa{
+  font-size: 70%;
 }
 
 @media (max-width: 767px) {
@@ -384,3 +377,9 @@ div.required label.control-label:after {
 #form-phones-create .fa{
   color: #666;
 }
+
+/* временный Костыль */
+.panel{
+  border-radius: 2px !important;
+}
+

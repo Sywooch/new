@@ -40,7 +40,7 @@ class SubmenuTabs extends Widget
      */
     private function _getSubItems( $array )
     {
-        $extra_items = []; //Helpers::p( $array ); die;
+        $extra_items = [];
 
         foreach ( $array as $value ) {
             array_push( $extra_items, [
