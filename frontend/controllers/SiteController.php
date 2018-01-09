@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 
+use common\models\Helpers;
 use frontend\models\adverts\AdvertsSearch;
 use Yii;
 use board\repositories\AdvertsRepository;
@@ -90,7 +91,7 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionLogin()
+    /*public function actionLogin()
     {
         if ( !Yii::$app->user->isGuest ) {
             return $this->goHome();
@@ -105,7 +106,7 @@ class SiteController extends Controller
                 'model' => $model,
             ] );
         }
-    }
+    }*/
 
     /**
      * Logs out the current user.

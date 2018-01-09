@@ -82,7 +82,7 @@ return [
                 ],
                 'profile' => [
                     'class' => 'frontend\controllers\user\ProfileController'
-                ]
+                ],
             ],
             // Отправка писем
             'mailer'                   => [
