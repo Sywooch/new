@@ -23,10 +23,10 @@ $('#ads-sort').click(function () {
 });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-/*$('#fileupload')
+$('#fileupload')
 	.fileupload({
 		dropZone: $('#dropzone')
-	});*/
+	});
 
 
 // Изменение размеров dropzone

@@ -94,9 +94,5 @@ use dosamigos\fileupload\FileUploadUI;
     ],
 ] );
 
-//$this->registerJsFile(
-//    '@web/js/fileupload.js',
-//    ['depends' => [\yii\web\JqueryAsset::className()]]
-//);
 ?>
 
