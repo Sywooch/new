@@ -202,7 +202,8 @@
                 "selection",
                 "upload",
                 "widget"
-            ]
+            ],
+            "time": "2017-12-01T10:27:17+00:00"
         },
         {
             "name": "bower-asset/blueimp-gallery",
@@ -359,7 +360,8 @@
                 "jquery",
                 "mask",
                 "plugins"
-            ]
+            ],
+            "time": "2017-11-21T11:46:23+00:00"
         },
         {
             "name": "bower-asset/jquery",
