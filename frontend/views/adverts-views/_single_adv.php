@@ -7,6 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\helpers\Url;
+use common\models\Helpers;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
 //\common\models\Helpers::p( $model ); die;
@@ -15,10 +16,15 @@ use yii\helpers\Url;
 <div class="ad-list col-xs-12">
 	<div class="ad-thumb">
 		<div class="image">
-			<a href="https://demo.opencart.com/index.php?route=product/product&amp;path=25_28&amp;product_id=42">
-				<img src="https://demo.opencart.com/image/cache/catalog/demo/apple_cinema_30-228x228.jpg"
-						 alt="Apple Cinema 30&quot;" title="Apple Cinema 30&quot;" class="img-responsive" width="140">
-			</a>
+			<div class="row">
+				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6 blank-img">
+					<i class="fa fa-camera fa-2x" aria-hidden="true"></i></div>
+				</div>
+
+			<!--<a href="#">
+          <? /*= Html::img( '/i/blank_img.jpg', [ 'class' => 'img-responsive', 'alt' => '', 'title' => '', ] ) */ ?>
+			</a>-->
+
 		</div>
 
 		<div>
@@ -30,16 +36,16 @@ use yii\helpers\Url;
 					<h5><?= $model->header ?></h5>
 				</a>
 				<p>
-					<small><span><?= Yii::$app->formatter->asDatetime( $model->created_at, Yii::$app->params['dateFormat'] ); ?>
-							<span>
-						<i class="fa fa-map-marker"></i><?= $model->countries->country_name ?></span>,
-					&nbsp;&nbsp;&nbsp;
-					<i class="fa fa-folder-open"></i><?= $model->category->category_name ?>
-							&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?></span>
+					<small><i class="fa fa-calendar" aria-hidden="true"></i>
+							<?= Yii::$app->formatter->asDatetime( $model->created_at, Yii::$app->params['dateFormat'] ); ?>
+						<br>
+						<i class="fa fa-map-marker"></i><?= $model->countries->country_name ?>
+						<i class="fa fa-folder-open" aria-hidden="true"></i><?= $model->category->category_name ?>
+						&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?>
 					</small>
 				</p>
 
-				<p class="price"><?= $model->pricies->price ?>&nbsp;<?= $model->pricies->currencies->short_name ?>.</p>
+				<p class="price"><?= Helpers::format( $model->pricies->price ) ?><?= $model->pricies->currencies->name ?></p>
 			</div>
 
 			<div class="pull-right data-extra">
@@ -59,7 +65,7 @@ use yii\helpers\Url;
 						</a>
 					</li>
 					<li class="adv-type">
-						Тип:&nbsp;<strong><span><?= $model->type->name ?></span></strong>
+						Тип:&nbsp;<strong><span><?= $model->types->name ?></span></strong>
 					</li>
 					<li>Просмотров:&nbsp;<span class="badge">1</span></li>
 				</ul>

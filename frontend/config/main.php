@@ -15,6 +15,8 @@ return [
         'request'      => [
             'csrfParam'           => '_csrf-frontend',
             'cookieValidationKey' => 'ear8GcRjBGXQgKVwfEpbApyj7Fb0UKXk',
+//            'enableCookieValidation' => false,
+//            'enableCsrfValidation' => false,
             'baseUrl'             => '',
         ],
         'session'      => [
@@ -43,6 +45,18 @@ return [
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'jsOptions' => [ 'position' => \yii\web\View::POS_HEAD ],
+                ],
+            ],
+            // Для разработки
+            'linkAssets' => true,
+            // Еще вариант отключения браузерного кэша
+//            'class' => 'yii\web\AssetManager',
+//            'appendTimestamp' => true,
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/user/views' => '@frontend/views/user'
                 ],
             ],
         ],

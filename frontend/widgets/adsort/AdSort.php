@@ -10,11 +10,13 @@
 
 namespace frontend\widgets\adsort;
 
-
+use Yii;
 use yii\base\Widget;
 
 class AdSort extends Widget
 {
+    public $action;
+
     public function init()
     {
         parent::init();
@@ -27,6 +29,9 @@ class AdSort extends Widget
     {
         parent::run();
 
-        return $this->render( 'index', [ ] );
+        return $this->render( 'index', [
+            'action' => $this->action,
+        ] );
     }
+
 }

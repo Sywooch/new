@@ -6,78 +6,69 @@
  * Time: 11:54
  */
 use yii\helpers\Html;
+use yii\helpers\Url;
 use board\repositories\AdvertsRepository;
+use frontend\widgets\adsort\AdvSortAsset;
 
+AdvSortAsset::register( $this );
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
 
-      <?= Html::beginForm( [
-          '/site/index'
-      ],
-          'post', [
-              'class' => 'form-horizontal'
-          ] ) ?>
+<div id="ads-sort-block" class="col-sm-12 collapse">
+	<div class="panel panel-default">
+		<div class="panel-body">
 
-      <?= Html::hiddenInput( 'form_action', 'ads_sort' ) ?>
+        <?= Html::beginForm( Url::to(['site/index']), 'post', [ 'class' => 'form-horizontal' ] ) ?>
 
-		<div class="form-group">
-			<div id="city-sort" class="col-sm-3">
-          <?= Html::dropDownList( 'city_sort', -1, AdvertsRepository::countryList(),
-              [ 'class' => 'form-control', 'prompt' => 'Расположение' ] ) ?>
+			<div class="form-group">
+				<div class="col-sm-3">
+            <?= Html::dropDownList( 'city_sort', '', AdvertsRepository::countryList(),
+                [ 'id' => 'city-sort', 'class' => 'form-control', 'prompt' => 'По расположению' ] ) ?>
+				</div>
+
+				<div id="type-sort" class="col-sm-3">
+            <?= Html::dropDownList( 'type_sort', '', AdvertsRepository::typeList(),
+                [ 'class' => 'form-control', 'prompt' => 'По типу' ] ) ?>
+				</div>
+
+				<div class="col-sm-3">
+            <?= Html::dropDownList( 'date_sort', '', AdvertsRepository::dateList(),
+                [ 'id' => 'date-sort', 'class' => 'form-control', 'prompt' => 'По дате' ] ) ?>
+				</div>
+
+				<div class="col-sm-3">
+            <?= Html::dropDownList( 'price_sort', '', AdvertsRepository::priceList(),
+                [ 'id' => 'price-sort', 'class' => 'form-control', 'prompt' => 'По цене' ] ) ?>
+				</div>
+
 			</div>
+			<div class="clearfix"></div>
 
-			<div class="col-sm-3">
-				<div id="type-sort">
-            <?= Html::dropDownList( 'type_sort', -1, AdvertsRepository::typeList(),
-                [ 'class' => 'form-control', 'prompt' => 'Тип' ] ) ?>
+			<div class="form-group">
+				<div class="col-sm-3">
+            <?= Html::dropDownList( 'category_sort', '', AdvertsRepository::categoryList(),
+                [ 'id' => 'category-sort', 'class' => 'form-control', 'prompt' => 'По категории' ] ) ?>
+				</div>
+
+				<div class="col-sm-3">
+            <?= Html::dropDownList( 'subcategory_sort', '', [],
+                [ 'id' => 'subcategory-sort', 'class' => 'form-control', 'disabled' => 'disabled', 'prompt' => 'По подкатегории' ] ) ?>
+				</div>
+
+				<div class="col-sm-3">
+            <?= Html::checkbox( 'save_sort', true,
+                [ 'label' => false, 'id' => 'save-sort', 'checked' => 'checked' ] ) ?>
+					Сохранить сортировку
+				</div>
+				<div class="col-sm-3">
+            <?= Html::submitButton( 'Сортировать', [ 'class' => 'btn btn-success btn-sm' ] ) ?>
+            <?= Html::resetButton( 'Сбросить', [ 'class' => 'btn btn-default btn-sm' ] ) ?>
 				</div>
 			</div>
 
-			<div class="col-sm-3">
-				<div id="date-sort">
-					По дате&nbsp;&nbsp;
-            <?= Html::hiddenInput( 'date_sort', '', [ 'id' => 'date' ] ) ?>
-            <?= Html::button( '<i class="fa fa-angle-up" aria-hidden="true"></i>',
-                [ 'data-id' => 2, 'class' => 'btn btn-default btn-sm', 'title' => 'По возрастанию' ] ) ?>
-            <?= Html::button( '<i class="fa fa-angle-down" aria-hidden="true"></i>',
-                [ 'data-id' => 1, 'class' => 'btn btn-default btn-sm', 'title' => 'По убыванию' ] ) ?>
-				</div>
-			</div>
+			<div class="clearfix"></div>
 
-			<div class="col-sm-3">
-				<div id="price-sort">
-					По цене&nbsp;&nbsp;
-            <?= Html::hiddenInput( 'price_sort', '', [ 'id' => 'price' ] ) ?>
+        <?= Html::endForm() ?>
 
-            <?= Html::button( '<i class="fa fa-angle-up" aria-hidden="true"></i>',
-                [ 'data-id' => 2, 'class' => 'btn btn-default btn-sm', 'title' => 'По возрастанию' ] ) ?>
-            <?= Html::button( '<i class="fa fa-angle-down" aria-hidden="true"></i>',
-                [ 'data-id' => 1, 'class' => 'btn btn-default btn-sm', 'title' => 'По убыванию' ] ) ?>
-				</div>
-			</div>
 		</div>
-		<div class="clearfix"></div>
-
-		<div class="form-group">
-			<div class="col-sm-offset-3 col-sm-3 hide">
-          <?= Html::checkbox( 'img_only', true, [ 'label' => false, 'id' => 'img-only' ] ) ?>
-				Только с фотографиями
-			</div>
-			<div class="col-sm-offset-6 col-sm-3">
-          <?= Html::checkbox( 'save_sort', true,
-              [ 'label' => false, 'id' => 'save-sort', 'checked' => 'checked' ] ) ?>
-				Сохранить сортировку
-			</div>
-			<div class="col-sm-3">
-          <?= Html::submitButton( 'Сортировать', [ 'class' => 'btn btn-success btn-sm' ] ) ?>
-          <?= Html::resetButton( 'Сбросить', [ 'class' => 'btn btn-default btn-sm' ] ) ?>
-			</div>
-		</div>
-
-		<div class="clearfix"></div>
-
-      <?= Html::endForm() ?>
-
 	</div>
 </div>

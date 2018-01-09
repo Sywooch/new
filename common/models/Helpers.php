@@ -108,4 +108,13 @@ class Helpers
         return $result . '...';
     }
 
+    /**
+     * @param $price
+     * @return string
+     */
+    public static function format( $price )
+    {
+        return number_format( $price, 0, '.', ' ' );
+    }
+
 }

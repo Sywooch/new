@@ -99,7 +99,6 @@ class CatmenuTabs extends Widget
                     'label' => Html::encode( $value['category_name'] ),
                     'items' => $sub_category
                 ] );
-
                 $sub_category = [];
             }
 
@@ -108,7 +107,7 @@ class CatmenuTabs extends Widget
         unset( $value );
 
         array_push( $items, [ 'label' => 'Прочее', 'items' => $extra_items ] );
-//        Helpers::p( $items ); die;
+
         return $items;
     }
 }

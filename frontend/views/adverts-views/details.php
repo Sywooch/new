@@ -180,12 +180,16 @@ $this->params['breadcrumbs'][] = $this->title;
 			</div>
 		</div>
 
-		<div id="big-picture" class="center-block thumbnail" style="width:100%; height: 120px; margin-top:10px;">
+		<div class="row">
+			<div class="col-xs-12">
+				<div id="big-picture" class="thumbnail">
 
-			<!--						<img src="/frontend/web/files/i/1x1.png" class="img-responsive" alt="Responsive image">-->
-			<i class="fa fa-picture-o fa-4x" aria-hidden="true"></i>
-
+					<!--						<img src="/frontend/web/files/i/1x1.png" class="img-responsive" alt="Responsive image">-->
+					<i class="fa fa-picture-o fa-4x" aria-hidden="true"></i>
+				</div>
+			</div>
 		</div>
+
 		<div id="rowSmallPics" class="row" style="margin-left: 0; margin-top: 15px;">
 			<# SMALL_PICS #>
 		</div>

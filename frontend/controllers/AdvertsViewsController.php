@@ -8,23 +8,23 @@
 
 namespace frontend\controllers;
 
-use common\models\Helpers;
+
 use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use board\manage\AdvertManageService;
-use yii\data\ActiveDataProvider;
 use board\entities\Adverts;
-use yii\data\Sort;
 use yii\web\NotFoundHttpException;
 use frontend\models\UserPhones;
+use frontend\models\adverts\AdvertsSearch;
 
 class AdvertsViewsController extends Controller
 {
     public $layout = 'main';
 
     private $_service;
+    public $pricies;
 
     public function behaviors()
     {
@@ -73,135 +73,36 @@ class AdvertsViewsController extends Controller
         $this->_service = $service;
     }
 
-    public static function homeAdvertsPage(){
-        $query = Adverts::find()
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
-            ->joinWith( [
-                'pricies p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
-                }
-            ] );
-
-        $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-                'attributes'   => [
-                    'id' => [
-                        'asc'  => [ 'id' => SORT_ASC ],
-                        'desc' => [ 'id' => SORT_DESC ],
-                    ],
-                ],
-            ],
-            'pagination'   => [
-                'defaultPageSize' => 25,
-                'pageSizeLimit' => [ 15, 100 ],
-            ],
-        ] );
-
-        $dataProvider->sort->enableMultiSort = true;
-
-        return $dataProvider;
-    }
-
     /**
      * @return string
      */
-    public function actionCategoryPage( $id )
+    public function actionCategoryPage()
     {
-        $sort = new Sort( [
-            'attributes' => [
-                'header'       => [
-                    'asc'  => [ 'header' => SORT_ASC, ],
-                    'desc' => [ 'header' => SORT_DESC, ],
-
-                    //                    'label' => 'Name',
-                ],
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-            ],
-        ] );
-
-        $query = Adverts::find()
-            ->where( [ 'adverts.cat_id' => $id ] )
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
-            ->joinWith( [
-                'pricies p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
-                }
-            ] );
-
-        $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-                'attributes'   => [
-                    'id' => [
-                        'asc'  => [ 'id' => SORT_ASC ],
-                        'desc' => [ 'id' => SORT_DESC ],
-                    ],
-                ],
-            ],
-            'pagination' => [
-                'defaultPageSize' => 25,
-                'pageSizeLimit' => [ 15, 100 ],
-            ]
-        ] );
-
-        $dataProvider->sort->enableMultiSort = true;
+        $searchModel = new AdvertsSearch();
+        $dataProvider = $searchModel->searchCategoryPage( Yii::$app->request->queryParams );
 
         return $this->render( 'category-page', [
             'provider' => $dataProvider,
         ] );
     }
 
-    public function actionSubcategoryPage( $catid, $id )
+    /**
+     * @return string
+     */
+    public function actionSubcategoryPage()
     {
-        $query = Adverts::find()
-            ->where( [ 'adverts.cat_id' => $catid ] )
-            ->andWhere( [ 'adverts.subcat_id' => $id ] )
-            ->joinWith( 'category' )
-            ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
-            ->joinWith( [
-                'pricies p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
-                }
-            ] );
-
-        $dataProvider = new ActiveDataProvider( [
-            'query'      => $query,
-            'sort'       => [
-                'defaultOrder' => [ 'id' => SORT_DESC ],
-                'attributes'   => [
-                    'id' => [
-                        'asc'  => [ 'id' => SORT_ASC ],
-                        'desc' => [ 'id' => SORT_DESC ],
-                    ],
-                ],
-            ],
-            'pagination' => [
-                'defaultPageSize' => 25,
-                'pageSizeLimit' => [ 15, 100 ],
-            ]
-        ] );
-
-        $dataProvider->sort->enableMultiSort = true;
+        $searchModel = new AdvertsSearch();
+        $dataProvider = $searchModel->searchSubcategoryPage( Yii::$app->request->queryParams );
 
         return $this->render( 'subcategory-page', [
             'provider' => $dataProvider,
         ] );
     }
 
+    /**
+     * @param $id
+     * @return string
+     */
     public function actionDetails( $id )
     {
         $model = $this->findModel( $id );
@@ -214,15 +115,16 @@ class AdvertsViewsController extends Controller
         ] );
     }
 
+    /**
+     * @param $id
+     * @return array|null|yii\db\ActiveRecord
+     * @throws NotFoundHttpException
+     */
     protected function findModel( $id )
     {
         if ( ( $model = Adverts::find()
                 ->where( [ 'adverts.id' => $id ] )
-                ->joinWith( 'category' )
-                ->joinWith( 'subcategory' )
-                ->joinWith( 'types' )
-                ->joinWith( 'periods' )
-                ->joinWith( 'countries' )
+                ->joinWith( ['category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
                 ->joinWith( [ 'pricies p' => function ( $q ){ $q->joinWith( 'currencies c' ); } ] )
                 ->one()
             ) !== null

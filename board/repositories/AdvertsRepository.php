@@ -109,6 +109,30 @@ class AdvertsRepository
     /**
      * @return array
      */
+    public static function dateList()
+    {
+        $arr = [
+            [ 'id' => 'desc', 'name' => 'Сначала новые' ],
+            [ 'id' => 'asc', 'name' => 'Сначала старые' ]
+        ];
+        return ArrayHelper::map( $arr, 'id', 'name' );
+    }
+
+    /**
+     * @return array
+     */
+    public static function priceList()
+    {
+        $arr = [
+            [ 'id' => 'desc', 'name' => 'По убыванию' ],
+            [ 'id' => 'asc', 'name' => 'По возрастанию' ]
+        ];
+        return ArrayHelper::map( $arr, 'id', 'name' );
+    }
+
+    /**
+     * @return array
+     */
     public static function periodList()
     {
         return ArrayHelper::map( Periods::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'description' );
@@ -120,6 +144,11 @@ class AdvertsRepository
     public static function countryList()
     {
         return ArrayHelper::map( Countries::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'country_name' );
+    }
+
+    public static function subcatList($cat_id)
+    {
+        return ArrayHelper::map( Subcategory::find()->where(['cat_id' => $cat_id ])->orderBy('sort')->asArray()->all(), 'id', 'subcat_name' );
     }
 
     /**

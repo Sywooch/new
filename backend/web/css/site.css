@@ -135,7 +135,7 @@ a.desc:after {
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
     color: #ffffff;
-    background-color: #125b75;
+    /*background-color: #125b75;*/
 }
 
 .navbar-inverse .btn-link {
