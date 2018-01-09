@@ -8,15 +8,32 @@
 
 namespace frontend\controllers;
 
+use board\entities\Image;
+use common\models\Helpers;
 use frontend\models\Images;
 use Yii;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\UploadedFile;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
 class ImagesController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'uploaded-images' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $model = new Images;
@@ -48,9 +65,9 @@ class ImagesController extends Controller
 
                 $model->ad_id = Yii::$app->session->id;
                 $model->name = $imageFile->baseName;
-                $model->avatar = $imageFile->name;
+                $model->image = $imageFile->name;
                 $model->filename = $fileName;
-                $model->image = $fileName;
+                $model->size = $imageFile->size;
                 $model->path = $folder;
                 if( !$model->save() ){
                     // Если не удалось сохранить модель, удаляем загруженные файлы
@@ -58,7 +75,8 @@ class ImagesController extends Controller
                     return Json::encode([
                         'files' => [
                             [
-                                'error' => 'Файл уже загружен',
+//                                'error' => 'Файл уже загружен',
+                                'error' => Yii::t('app', 'Unable to save picture')
                             ]
                         ]
                     ]);
@@ -89,11 +107,13 @@ class ImagesController extends Controller
             unlink( $directory . DIRECTORY_SEPARATOR . $name );
         }
 
+        $this->deleteModelByName( $name );
+
         $files = FileHelper::findFiles( $directory );
         $output = [];
         foreach ( $files as $file ) {
             $fileName = basename( $file );
-            $path = '/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR . $fileName;
+            $path = '@frontend/web/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR . $fileName;
             $output['files'][] = [
                 'name'         => $fileName,
                 'size'         => filesize( $file ),
@@ -104,5 +124,48 @@ class ImagesController extends Controller
             ];
         }
         return Json::encode( $output );
+    }
+
+    public function beforeAction( $action )
+    {
+        $this->enableCsrfValidation = ( $action->id !== "uploaded-images" );
+        return parent::beforeAction( $action );
+    }
+
+    public function actionUploadedImages()
+    {
+        $output = [];
+
+        if ( Yii::$app->request->isAjax ) {
+
+            $sid = Yii::$app->session->id;
+            $images = $this->findImagesBySession( $sid );
+
+            if ( !empty( $images ) ) {
+                $output = [ 'images' => $images ];
+            }
+        }
+
+        return Json::encode( $output );
+    }
+
+    public function findImagesBySession( $sid )
+    {
+//        if ( ( $model = Images::find()->where( [ 'ad_id' => $sid ] )->asArray()->all() ) !== null ) {
+        if ( ( $model = Images::findAll( [ 'ad_id' => $sid ] ) ) !== null ) {
+            return $model;
+        }
+        else {
+            throw new NotFoundHttpException( 'The requested page does not exist.' );
+        }
+    }
+
+    public function deleteModelByName( $filename )
+    {
+        $sid = Yii::$app->session->id;
+        $model = Images::find()->where( [ 'ad_id' => $sid, 'filename' => $filename ] )->one();
+        $model->delete();
+
+        return;
     }
 }

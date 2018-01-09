@@ -18,6 +18,33 @@ $(function () {
 // Сортировка объявлений
 var block = $('#ads-sort-block');
 
-$('#ads-sort').click(function(){
+$('#ads-sort').click(function () {
 	block.collapse('toggle');
 });
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/*$('#fileupload')
+	.fileupload({
+		dropZone: $('#dropzone')
+	});*/
+
+
+// Изменение размеров dropzone
+$(document).bind('dragover', function (e) {
+	var dropZone = $('#dropzone'),
+		timeout = window.dropZoneTimeout;
+	if (timeout) {
+		clearTimeout(timeout);
+	} else {
+		dropZone.addClass('in');
+	}
+	var hoveredDropZone = $(e.target).closest(dropZone);
+	dropZone.toggleClass('hover', hoveredDropZone.length);
+	window.dropZoneTimeout = setTimeout(function () {
+		window.dropZoneTimeout = null;
+		dropZone.removeClass('in hover');
+	}, 100);
+}).bind('drop dragover', function (e) {
+	e.preventDefault();
+});
+
