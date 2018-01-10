@@ -61,11 +61,12 @@ class Helpers
      */
     public static function IpToNum( $ip )
     {
-        if ( $ip == "" ) {
-            return 0;
-        }
-        $num = explode( ".", $ip );
-        return hexdec( sprintf( "%02x%02x%02x%02x", $num[0], $num[1], $num[2], $num[3] ) );
+//        if ( $ip == "" ) {
+//            return 0;
+//        }
+//        $num = explode( ".", $ip );
+//        return hexdec( sprintf( "%02x%02x%02x%02x", $num[0], $num[1], $num[2], $num[3] ) );
+        return ip2long( $ip );
     }
 
     /**
@@ -75,9 +76,10 @@ class Helpers
      */
     public static function NumToIp( $num )
     {
-        $ip = $num + 0.0;
-        return sprintf( "%d.%d.%d.%d", ( $ip >> 24 & 0xFF ), ( $ip >> 16 & 0xFF ),
-            ( $ip >> 8 & 0xFF ), ( $ip & 0xFF ) );
+//        $ip = $num + 0.0;
+//        return sprintf( "%d.%d.%d.%d", ( $ip >> 24 & 0xFF ), ( $ip >> 16 & 0xFF ),
+//            ( $ip >> 8 & 0xFF ), ( $ip & 0xFF ) );
+        return long2ip( $num );
     }
 
     public static function p( $arg, $state = 0 )
