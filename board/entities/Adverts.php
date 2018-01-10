@@ -24,7 +24,6 @@ class Adverts extends ActiveRecord
     use EventTrait;
 
     public $verifyCode;
-//    public $phones;
 
     public static function tableName()
     {

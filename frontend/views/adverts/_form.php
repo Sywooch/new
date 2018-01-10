@@ -12,6 +12,12 @@ use yii\helpers\Url;
 use kartik\depdrop\DepDrop;
 use backend\models\Currencies;
 use yii\captcha\Captcha;
+use dosamigos\fileupload\FileUploadUI;
+use frontend\assets\ImagesAsset;
+use frontend\assets\PhonesAsset;
+
+ImagesAsset::register( $this );
+PhonesAsset::register( $this );
 
 /* @var $model /view/create.php */
 /* @var $category /view/create.php */
@@ -21,6 +27,8 @@ use yii\captcha\Captcha;
 /* @var $currency /view/create.php */
 /* @var $phones /view/create.php */
 /* @var $country /view/create.php */
+/* @var $images /view/create.php */
+
 //\common\models\Helpers::p( \Yii::$app->user->identity->username); die;
 ?>
 <div class="type-form">
@@ -104,6 +112,60 @@ use yii\captcha\Captcha;
 			<h4>Добавить фотографии</h4>
 		</div>
 	</div>
+	<div class="form-group">
+		<div class="col-sm-10">
+
+<!--    --><?//= FileUploadUI::widget( [
+//        'model'         => $images,
+//        'attribute'     => 'image',
+//        'url'           => [ 'images/image-upload', 'id' => $images->id ],
+//        'gallery'       => false,
+//        'fieldOptions'  => [
+//            'accept' => 'image/*'
+//        ],
+//        'clientOptions' => [
+//				//    		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
+//				'maxFileSize' => 2000000,
+//				'minFileSize' => 100,
+//				'maxNumberOfFiles' => 4,
+//        ],
+//        // ...
+//        'clientEvents'  => [
+//            'fileuploadprocessdone' => 'function(e, data) {
+//
+//    				console.log("Processing " + data.files[data.index].name + " done . ");
+//    		}',
+//            'fileuploaddone' => 'function(e, data) {
+//
+//        		$.each(data.files, function (index, file) {
+//								console.log("Added file: " + file.name);
+//						});
+//                                console.log( "Event: " + e);
+//                                console.log( "Data: " + data ) ;
+//										console.log( "Result: " + data.result );
+//										console.log( "Text status: " + data.textStatus );
+//										console.log( "Data jq: " + data.jqXHR );
+//										console.log( "Data context: " + data.context );
+//                            }',
+//            'fileuploadfail' => 'function(e, data) {
+//                                console.log(e);
+//                                console.log(data);
+//                            }',
+//            //				'fileuploadsubmit' => 'function(e, data) {
+//            //						var input = $("#input");
+//            //						data.formData = {example: input.val()};
+//            //						if (!data.formData.example) {
+//            //								data.context.find("button").prop("disabled", false);
+//            //								input.focus();
+//            //								return false;
+//            //						}
+//            //				}',
+//        ],
+//    ] );
+//
+//    ?>
+		</div>
+	</div>
 
 	<hr>
 	<div class="form-group">
@@ -135,14 +197,6 @@ use yii\captcha\Captcha;
       ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', ] ) ?>
 
 	</div>
-
-    <?php
-    // TODO:
-    $addPhone = <<< JS
-    
-JS;
-    $this->registerJsFile( 'js/add_phones.js', [ 'position' => yii\web\View::POS_READY ] );
-    ?>
 
     <? /*= $form->field($model, 'verifyCode')->widget(Captcha::className()) */ ?>
 

@@ -67,22 +67,6 @@ class AdvertsRepository
     }
 
     /**
-     * @return int|number
-     */
-    public static function getIp()
-    {
-        return Helpers::IpToNum( Yii::$app->request->userIP );
-    }
-
-    /**
-     * @return string
-     */
-    public static function getSid()
-    {
-        return $sid = md5( time() . rand( 1, 0xFFFFFF ) );
-    }
-
-    /**
      * @return array
      */
     public static function currencyList()

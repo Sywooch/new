@@ -31,10 +31,11 @@ class Images extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ad_id', 'name'], 'required'],
-            [['ad_id', 'name', 'image', 'filename', 'path'], 'string', 'max' => 255],
-            [['size'],'integer'],
-            [['filename'], 'unique'],
+            [ [ 'sid' ], 'required' ],
+            [ [ 'image', 'filename', 'path' ], 'string', 'max' => 255 ],
+            [ [ 'sid' ], 'string', 'max' => 32 ],
+            [ [ 'ad_id', 'size' ], 'integer' ],
+            [ [ 'filename' ], 'unique' ],
         ];
     }
 
@@ -44,13 +45,13 @@ class Images extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'ad_id' => 'Ad ID',
-            'name' => 'Name',
-            'image' => 'Image',
+            'id'       => 'ID',
+            'ad_id'    => 'Ad ID',
+            'sid'      => 'Sid',
+            'image'    => 'Image',
             'filename' => 'Filename',
-            'size' => 'Size',
-            'path' => 'Path',
+            'size'     => 'Size',
+            'path'     => 'Path',
         ];
     }
 

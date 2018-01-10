@@ -34,16 +34,25 @@ class ImagesController extends Controller
         ];
     }
 
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
+        // TODO: изменить sid
+        $sid = Yii::$app->session->id;
+
         $model = new Images;
-        $model->find();
+        $model->findAll( [ 'sid' => $sid ] );
 
         return $this->render( 'index', [
             'model' => $model,
         ] );
     }
 
+    /**
+     * @return string
+     */
     public function actionImageUpload()
     {
         $model = new Images();
@@ -63,9 +72,8 @@ class ImagesController extends Controller
                 $path = '/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR . $fileName;
                 $folder = '/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR;
 
-                $model->ad_id = Yii::$app->session->id;
-                $model->name = $imageFile->baseName;
-                $model->image = $imageFile->name;
+                $model->sid = Yii::$app->session->id;
+                $model->image = $imageFile->baseName;
                 $model->filename = $fileName;
                 $model->size = $imageFile->size;
                 $model->path = $folder;
@@ -89,7 +97,7 @@ class ImagesController extends Controller
                             'size'         => $imageFile->size,
                             'url'          => $path,
                             'thumbnailUrl' => $path,
-                            'deleteUrl'    => 'image-delete?name=' . $fileName,
+                            'deleteUrl'    => '/images/image-delete?name=' . $fileName,
                             'deleteType'   => 'POST',
                         ],
                     ],
@@ -100,6 +108,10 @@ class ImagesController extends Controller
         return '';
     }
 
+    /**
+     * @param $name
+     * @return string
+     */
     public function actionImageDelete( $name )
     {
         $directory = Yii::getAlias( '@frontend/web/img/temp' ) . DIRECTORY_SEPARATOR . Yii::$app->session->id;
@@ -119,25 +131,22 @@ class ImagesController extends Controller
                 'size'         => filesize( $file ),
                 'url'          => $path,
                 'thumbnailUrl' => $path,
-                'deleteUrl'    => 'image-delete?name=' . $fileName,
+                'deleteUrl'    => '/images/image-delete?name=' . $fileName,
                 'deleteType'   => 'POST',
             ];
         }
         return Json::encode( $output );
     }
 
-    public function beforeAction( $action )
-    {
-        $this->enableCsrfValidation = ( $action->id !== "uploaded-images" );
-        return parent::beforeAction( $action );
-    }
-
+    /**
+     * @return string
+     */
     public function actionUploadedImages()
     {
         $output = [];
 
         if ( Yii::$app->request->isAjax ) {
-
+            // TODO: изменить sid
             $sid = Yii::$app->session->id;
             $images = $this->findImagesBySession( $sid );
 
@@ -149,10 +158,14 @@ class ImagesController extends Controller
         return Json::encode( $output );
     }
 
+    /**
+     * @param $sid
+     * @return static[]
+     * @throws NotFoundHttpException
+     */
     public function findImagesBySession( $sid )
     {
-//        if ( ( $model = Images::find()->where( [ 'ad_id' => $sid ] )->asArray()->all() ) !== null ) {
-        if ( ( $model = Images::findAll( [ 'ad_id' => $sid ] ) ) !== null ) {
+        if ( ( $model = Images::findAll( [ 'sid' => $sid ] ) ) !== null ) {
             return $model;
         }
         else {
@@ -160,10 +173,14 @@ class ImagesController extends Controller
         }
     }
 
+    /**
+     * @param $filename
+     */
     public function deleteModelByName( $filename )
     {
+        // TODO: изменить sid
         $sid = Yii::$app->session->id;
-        $model = Images::find()->where( [ 'ad_id' => $sid, 'filename' => $filename ] )->one();
+        $model = Images::find()->where( [ 'sid' => $sid, 'filename' => $filename ] )->one();
         $model->delete();
 
         return;

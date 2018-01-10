@@ -16,7 +16,7 @@ class AdvSortAsset extends AssetBundle
     public $sourcePath = '@frontend/widgets/adsort/assets';
     public $css = [];
     public $js = [
-        YII_ENV_DEV ? 'js/advsort.js' : 'js/advsort.min.js',
+        'js/advsort.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

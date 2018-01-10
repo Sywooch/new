@@ -16,11 +16,11 @@ class m180109_174602_create_images_table extends Migration
 
         $this->createTable( '{{%images}}', [
             'id'       => $this->primaryKey(),
-            'ad_id'    => $this->string(255)->notNull(),
-            'name'     => $this->string(255)->notNull(),
-            'image'    => $this->string(255)->notNull(),
-            'filename' => $this->string( 255)->notNull()->unique(),
-            'size'     => $this->integer( 255 )->defaultValue( null ),
+            'ad_id'    => $this->integer()->defaultValue( null ),
+            'sid'      => $this->string( 32 )->notNull(),
+            'image'    => $this->string( 255 )->notNull(),
+            'filename' => $this->string( 255 )->notNull()->unique(),
+            'size'     => $this->integer()->defaultValue( null ),
             'path'     => $this->string( 255 )->notNull()
         ], $tableOptions );
     }
