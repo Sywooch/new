@@ -4,6 +4,9 @@
  * Email: becksonq@gmail.com
  * Date: 09.11.2017
  * Time: 15:47
+ *
+ * Класс для копирования старых объявлений в новую базу
+ * Изменено преобразование ip
  */
 
 namespace console\controllers;
@@ -13,13 +16,18 @@ use backend\models\Advert;
 use board\entities\Adverts;
 use backend\models\Subcategory;
 use backend\models\Pricies;
+use common\models\Helpers;
 use frontend\models\UserPhones;
 use yii\console\Controller;
 use yii\data\ActiveDataProvider;
 
-class CopyAdvertsController extends Controller
+class CopyController extends Controller
 {
-    public function actionCopyOldAd()
+    /**
+     * @return int
+     * @throws \Exception
+     */
+    public function actionCopy()
     {
         $advert = new Advert();
         $query = $advert->find()->asArray()->limit( 100 )->all();
@@ -53,7 +61,15 @@ class CopyAdvertsController extends Controller
             $value['AdvertSpecial'] !== null ? $adverts->special_old = $value['AdvertSpecial'] : $adverts->special_old = 0;
 
             $adverts->images_old = $value['AdvertImg']; // TODO:
-            $value['AdvertIPAdress'] != null ? $adverts->ip = $value['AdvertIPAdress'] : $adverts->ip = 1414544319;
+//            $value['AdvertIPAdress'] != null ? $adverts->ip = $value['AdvertIPAdress'] : $adverts->ip = 1414544319;
+
+            if($value['AdvertIPAdress'] != null){
+                $oldIp = Helpers::NumToIpOld($value['AdvertIPAdress']);
+                $adverts->ip = Helpers::IpToNum( $oldIp );
+            } else {
+                $adverts->ip = 1414544319;
+            }
+
             $adverts->created_at = $value['AdvertTime'];
             $adverts->updated_at = $value['AdvertTimeOriginated'];
 

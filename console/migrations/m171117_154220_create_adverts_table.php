@@ -17,7 +17,7 @@ class m171117_154220_create_adverts_table extends Migration
         $this->createTable( '{{%adverts}}', [
             'id'           => $this->primaryKey(),
             'old_id'       => $this->integer()->unique()->defaultValue( null ),
-            'sid'          => $this->string( 32 )->notNull()->unique(),
+            'sid'          => $this->string( 32 )->notNull(),
             'cat_id'       => $this->integer( 3 )->notNull(),
             'subcat_id'    => $this->integer( 3 )->notNull(),
             'type'         => $this->integer( 2 )->notNull(),
@@ -33,7 +33,7 @@ class m171117_154220_create_adverts_table extends Migration
             'special'      => $this->boolean()->defaultValue( 0 ),
             'special_old'  => $this->boolean()->defaultValue( 0 ),
             'images_old'   => $this->boolean()->defaultValue( 0 ),
-            'ip'           => $this->integer( 11 )->notNull(),
+            'ip'           => $this->integer( 15 )->notNull(),
             'created_at'   => $this->integer()->unsigned()->notNull(),
             'updated_at'   => $this->integer()->unsigned()->notNull(),
             'draft'        => $this->boolean()->defaultValue( 1 ),
