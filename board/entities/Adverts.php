@@ -23,7 +23,16 @@ class Adverts extends ActiveRecord
 {
     use EventTrait;
 
+    /**
+     * @var
+     */
     public $verifyCode;
+
+    /**
+     * Свойство для временной маркировки изображений
+     * @var
+     */
+    public $marker;
 
     public static function tableName()
     {
@@ -50,26 +59,18 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [[ 'old_id','cat_id','subcat_id','type','country','period','active','selected','selected_old','special','special_old','images_old',
-                    'ip',
-                    'created_at',
-                    'updated_at',
-                    'draft'
-                ], 'integer'
-            ],
-            [[ 'sid','cat_id','subcat_id','type','header','description','author','email','period','country','ip',],'required'],
+            [ [ 'old_id','cat_id','subcat_id','type','country','period','active','selected','selected_old','special','special_old','images_old', 'ip', 'created_at', 'updated_at', 'draft', 'marker' ], 'integer' ],
+            [ [ 'sid','cat_id','subcat_id','type','header','description','author','email','period','country','ip',],'required'],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
             [ 'email', 'email' ],
-            [ [ 'sid', 'old_id' ], 'unique' ],
-//            [ [ 'old_id' ], 'unique' ],
-//            [ [ 'phones' ], 'required' ],
-            [[ 'cat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => [ 'cat_id' => 'id' ]],
-            [[ 'country' ], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => [ 'country' => 'id' ]],
-            [[ 'period' ], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => [ 'period' => 'id' ]],
-            [[ 'subcat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => [ 'subcat_id' => 'id' ]],
-            [[ 'type' ], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => [ 'type' => 'id' ]],
+            [ [ 'old_id' ], 'unique' ],
+            [ [ 'cat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => [ 'cat_id' => 'id' ] ],
+            [ [ 'country' ], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => [ 'country' => 'id' ] ],
+            [ [ 'period' ], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => [ 'period' => 'id' ] ],
+            [ [ 'subcat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => [ 'subcat_id' => 'id' ] ],
+            [ [ 'type' ], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => [ 'type' => 'id' ] ],
             //            ['verifyCode', 'captcha'],
         ];
     }

@@ -9,11 +9,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
-use kartik\file\FileInput;
+use dosamigos\fileupload\FileUploadUI;
 use kartik\depdrop\DepDrop;
 use common\models\Helpers;
+use frontend\assets\ImagesAsset;
+use frontend\assets\PhonesAsset;
 
 FontAwesomeAsset::register( $this );
+ImagesAsset::register( $this );
+PhonesAsset::register( $this );
 
 /* @var $model /view/create.php */
 /* @var $categoryList /view/create.php */
@@ -34,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'options'     => [
             'enctype' => 'multipart/form-data',
             'action'  => [ 'adverts/preview' ],
+            'id' => 'update-ad',
             'class'   => 'form-horizontal',
         ],
         'fieldConfig' => [
@@ -41,6 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'labelOptions' => [ 'class' => 'col-sm-2 control-label' ],
         ],
     ] ); ?>
+
+    <?= $form->field( $model, 'ad_id' )->hiddenInput( [ 'id' => 'ad_id', 'value' => $model->id ] )->label( false ) ?>
 
     <?= $form->field( $model, 'cat_id' )->dropDownList( $categoryList,
         [
@@ -109,15 +116,65 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 	</div>
 
+	<div class="form-group">
+		<div class="col-sm-10">
+
+        <?= FileUploadUI::widget( [
+            'model'         => $images,
+            'attribute'     => 'image',
+            'url'           => [ 'images/image-upload', 'id' => $images->id ],
+            'gallery'       => false,
+            'fieldOptions'  => [
+                'accept' => 'image/*'
+            ],
+            'clientOptions' => [
+                //    		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
+                'maxFileSize' => 2000000,
+                'minFileSize' => 100,
+                'maxNumberOfFiles' => 4,
+            ],
+            // ...
+            'clientEvents'  => [
+                'fileuploadprocessdone' => 'function(e, data) {
+
+    				console.log("Processing " + data.files[data.index].name + " done . ");
+    		}',
+                'fileuploaddone' => 'function(e, data) {
+
+        		$.each(data.files, function (index, file) {
+								console.log("Added file: " + file.name);
+						});
+                                console.log( "Event: " + e);
+                                console.log( "Data: " + data ) ;
+										console.log( "Result: " + data.result );
+										console.log( "Text status: " + data.textStatus );
+										console.log( "Data jq: " + data.jqXHR );
+										console.log( "Data context: " + data.context );
+                            }',
+                'fileuploadfail' => 'function(e, data) {
+                                console.log(e);
+                                console.log(data);
+                            }',
+								'fileuploadsubmit' => 'function(e, data) {
+										var input = $("#ad_id");
+										data.formData = {ad_id: input.val()};
+//										if (!data.formData.example) {
+//												data.context.find("button").prop("disabled", false);
+//												input.focus();
+//												return false;
+//										}
+								}',
+            ],
+        ] );
+
+        ?>
+		</div>
+	</div>
+
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
 			<h4>Контактная информация
-          <?php
-          if ( Yii::$app->user->isGuest ) {
-              echo '<a id="sec-lk-enter" href="' . Url::to( "/user/login" ) . '" title="Войти под своим именем">
-			<i class="fa fa-user"></i>Я зарегистрирован</a>';
-          } ?>
 			</h4>
 		</div>
 	</div>

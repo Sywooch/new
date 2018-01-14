@@ -13,10 +13,10 @@ use kartik\depdrop\DepDrop;
 use backend\models\Currencies;
 use yii\captcha\Captcha;
 use dosamigos\fileupload\FileUploadUI;
-use frontend\assets\ImagesAsset;
+//use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
 
-ImagesAsset::register( $this );
+//ImagesAsset::register( $this );
 PhonesAsset::register( $this );
 
 /* @var $model /view/create.php */
@@ -41,6 +41,8 @@ PhonesAsset::register( $this );
             'labelOptions' => [ 'class' => 'col-sm-2 col-xs-12 control-label' ],
         ],
     ] ); ?>
+
+    <?= $form->field( $model, 'marker' )->hiddenInput( [ 'id' => 'marker', 'value' => random_int( 11111111, 99999999 ) ] )->label( false ) ?>
 
     <?= $form->field( $model, 'cat_id' )->dropDownList( $category,
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
@@ -113,57 +115,45 @@ PhonesAsset::register( $this );
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-10">
+		<div class="col-sm-offset-2 col-sm-10">
 
-<!--    --><?//= FileUploadUI::widget( [
-//        'model'         => $images,
-//        'attribute'     => 'image',
-//        'url'           => [ 'images/image-upload', 'id' => $images->id ],
-//        'gallery'       => false,
-//        'fieldOptions'  => [
-//            'accept' => 'image/*'
-//        ],
-//        'clientOptions' => [
-//				//    		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
-//				'maxFileSize' => 2000000,
-//				'minFileSize' => 100,
-//				'maxNumberOfFiles' => 4,
-//        ],
-//        // ...
-//        'clientEvents'  => [
-//            'fileuploadprocessdone' => 'function(e, data) {
-//
-//    				console.log("Processing " + data.files[data.index].name + " done . ");
-//    		}',
-//            'fileuploaddone' => 'function(e, data) {
-//
-//        		$.each(data.files, function (index, file) {
-//								console.log("Added file: " + file.name);
-//						});
-//                                console.log( "Event: " + e);
-//                                console.log( "Data: " + data ) ;
-//										console.log( "Result: " + data.result );
-//										console.log( "Text status: " + data.textStatus );
-//										console.log( "Data jq: " + data.jqXHR );
-//										console.log( "Data context: " + data.context );
-//                            }',
-//            'fileuploadfail' => 'function(e, data) {
-//                                console.log(e);
-//                                console.log(data);
-//                            }',
-//            //				'fileuploadsubmit' => 'function(e, data) {
-//            //						var input = $("#input");
-//            //						data.formData = {example: input.val()};
-//            //						if (!data.formData.example) {
-//            //								data.context.find("button").prop("disabled", false);
-//            //								input.focus();
-//            //								return false;
-//            //						}
-//            //				}',
-//        ],
-//    ] );
-//
-//    ?>
+        <?= FileUploadUI::widget( [
+            'model'         => $images,
+            'attribute'     => 'image',
+            'url'           => [ 'images/image-upload', 'id' => $images->id ],
+            'gallery'       => false,
+            'fieldOptions'  => [
+                'accept' => 'image/*'
+            ],
+            'clientOptions' => [
+                //    		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
+                'maxFileSize'      => 2000000,
+                'minFileSize'      => 100,
+                'maxNumberOfFiles' => 4,
+            ],
+            'clientEvents'  => [
+                'fileuploadprocessdone' => 'function(e, data) {}',
+                'fileuploaddone'        => 'function(e, data) {
+
+							$.each(data.files, function (index, file) {});
+						}',
+						'fileuploadfail'        => 'function(e, data) {
+														console.log(e);
+														console.log(data);
+												}',
+						'fileuploadsubmit' => 'function(e, data) {
+							var input = $("#marker");
+							data.formData = { marker: input.val() };
+//							if (!data.formData.marker) {
+//									data.context.find("button").prop("disabled", false);
+//									input.focus();
+//									return false;
+//							}
+						}',
+            ],
+        ] );
+
+        ?>
 		</div>
 	</div>
 
@@ -171,11 +161,11 @@ PhonesAsset::register( $this );
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
 			<h4>Контактная информация
-          <?php
-          if ( Yii::$app->user->isGuest ) {
-              echo '<a id="sec-lk-enter" href="' . Url::to( "/user/login" ) . '" title="Войти под своим именем">
-			<i class="fa fa-user"></i>Я зарегистрирован</a>';
-          } ?>
+				<!-- --><?php
+          /*          if ( Yii::$app->user->isGuest ) {
+                        echo '<a id="sec-lk-enter" href="' . Url::to( "/user/login" ) . '" title="Войти под своим именем">
+                      <i class="fa fa-user"></i>Я зарегистрирован</a>';
+                    } */ ?>
 			</h4>
 		</div>
 	</div>

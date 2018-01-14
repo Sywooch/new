@@ -77,13 +77,16 @@ class ImagesController extends Controller
                 $model->filename = $fileName;
                 $model->size = $imageFile->size;
                 $model->path = $folder;
+
+                !empty( Yii::$app->request->post('marker') ) ? $model->marker = Yii::$app->request->post('marker') : null;
+                !empty( Yii::$app->request->post('ad_id') ) ? $model->ad_id = Yii::$app->request->post('ad_id') : null;
+
                 if( !$model->save() ){
                     // Если не удалось сохранить модель, удаляем загруженные файлы
                     $this->actionImageDelete( $fileName );
                     return Json::encode([
                         'files' => [
                             [
-//                                'error' => 'Файл уже загружен',
                                 'error' => Yii::t('app', 'Unable to save picture')
                             ]
                         ]
@@ -144,15 +147,25 @@ class ImagesController extends Controller
     public function actionUploadedImages()
     {
         $output = [];
+        $id = Yii::$app->request->post( 'id' );
 
         if ( Yii::$app->request->isAjax ) {
             // TODO: изменить sid
             $sid = Yii::$app->session->id;
-            $images = $this->findImagesBySession( $sid );
 
-            if ( !empty( $images ) ) {
-                $output = [ 'images' => $images ];
+            if ( ( $model = Images::findAll( [ 'ad_id' => $id, 'sid' => $sid ] ) ) !== null ) {
+
+                if ( !empty( $model ) ) {
+                    $output = [ 'images' => $model ];
+                }
+
+                return Json::encode( $output );
             }
+            else {
+                throw new NotFoundHttpException( 'The requested page does not exist.' );
+            }
+
+
         }
 
         return Json::encode( $output );

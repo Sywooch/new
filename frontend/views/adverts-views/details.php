@@ -11,6 +11,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
+use frontend\assets\MagnificAsset;
+
+MagnificAsset::register( $this );
 
 $this->title = $model->header;
 $this->params['breadcrumbs'][] = [
@@ -170,7 +173,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-sm-5">
 
 		<div class="row">
-			<div class="col-sm-12 ">
+			<div class="col-sm-12 col-xs-12 mb10">
 				<div id="lr-btns" class="btn-group pull-right">
 					<a class="btn btn-primary" href=""
 						 title="Предыдущее объявление"><i class="fa fa-chevron-left"></i></a>
@@ -181,21 +184,30 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 
 		<div class="row">
-			<div class="col-xs-12">
-				<div id="big-picture" class="thumbnail">
-
-					<!--						<img src="/frontend/web/files/i/1x1.png" class="img-responsive" alt="Responsive image">-->
-					<i class="fa fa-picture-o fa-4x" aria-hidden="true"></i>
-				</div>
+			<div class="col-sm-12 col-xs-12">
+				<ul class="thumbnails list-unstyled">
+            <?php
+            foreach ( $images as $key => $value ){
+                if ($key == 0){ ?>
+									<li>
+										<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>" title="">
+                        <?= Html::img('@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+										</a>
+									</li>
+                <?php } else { ?>
+									<li class="image-additional">
+										<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>" title="">
+                        <?= Html::img('@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+										</a>
+									</li>
+                <?php }} ?>
+				</ul>
 			</div>
 		</div>
 
-		<div id="rowSmallPics" class="row" style="margin-left: 0; margin-top: 15px;">
-			<# SMALL_PICS #>
-		</div>
-
 		<div class="row">
-			<div class="col-xs-12">
+			<div class="col-sm-12 col-xs-12 text-right"><hr></div>
+			<div class="col-sm-12 col-xs-12 text-right">
 				<!-- Соцсети -->
 				<noindex>
 					<div id="new-social-viewadv">

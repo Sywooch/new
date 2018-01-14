@@ -3,25 +3,50 @@
  */
 $(document).ready(function () {
 
-	var targetUrl='/images/uploaded-images';
+	$('#fileupload')
+		.fileupload({
+			dropZone: $('#dropzone')
+		});
+
+
+	// Изменение размеров dropzone
+	$(document).bind('dragover', function (e) {
+		var dropZone = $('#dropzone'),
+			timeout = window.dropZoneTimeout;
+		if (timeout) {
+			clearTimeout(timeout);
+		} else {
+			dropZone.addClass('in');
+		}
+		var hoveredDropZone = $(e.target).closest(dropZone);
+		dropZone.toggleClass('hover', hoveredDropZone.length);
+		window.dropZoneTimeout = setTimeout(function () {
+			window.dropZoneTimeout = null;
+			dropZone.removeClass('in hover');
+		}, 100);
+	}).bind('drop dragover', function (e) {
+		e.preventDefault();
+	});
+
+	var targetUrl = '/images/uploaded-images';
+	var ad_id = $(document).find('#ad_id').val(); //console.log(marker);
 
 	$.ajax({
-		url:targetUrl,
-		dataType:'json',
-		method:'post',
-		data: {
-
-		},
+		url: targetUrl,
+		dataType: 'json',
+		method: 'post',
+		data: {id:ad_id},
 		beforeSend: function () {
 
 		},
 		error: function () {
 
 		},
-		success: function(data){
+		success: function (data) {
 
 			var table = $(document).find('#images-image-fileupload').find('table');
-			$.each( data.images, function (i, val ) {
+
+			$.each(data.images, function (i, val) {
 				table.append('<tr class="template-download fade in">' +
 					'<td><span class="preview">' +
 					'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +

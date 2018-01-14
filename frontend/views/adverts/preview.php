@@ -9,6 +9,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\models\Helpers;
+use frontend\assets\MagnificAsset;
+
+MagnificAsset::register( $this );
 
 $this->title = $model->header;
 //$this->params['breadcrumbs'][] = ['label' => 'Adverts', 'url' => ['index']];
@@ -78,29 +81,21 @@ $this->params['breadcrumbs'][] = $this->title;
 			<!-- start right block -->
 			<div class="col-sm-5">
 				<ul class="thumbnails list-unstyled">
-					<li>
-						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title="">
-                <?= Html::img('@web/uploads/CnuPAL_.png') ?>
-						</a>
-					</li>
-					<li class="image-additional">
-						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
-					</li>
-					<li class="image-additional">
-						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
-					</li>
-					<li class="image-additional">
-						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
-					</li>
-					<li class="image-additional">
-						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
-					</li>
-					<li class="image-additional">
-						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
-					</li>
-					<li class="image-additional">
-						<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/uploads/CnuPAL_.png' ?>" title=""><?= Html::img('@web/uploads/CnuPAL_.png') ?></a>
-					</li>
+						<?php
+						foreach ( $images as $key => $value ){
+							if ($key == 0){ ?>
+								<li>
+									<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>" title="">
+                      <?= Html::img('@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+									</a>
+								</li>
+                <?php } else { ?>
+							<li class="image-additional">
+								<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>" title="">
+										<?= Html::img('@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+								</a>
+							</li>
+						<?php }} ?>
 				</ul>
 			</div>
 			<div class="clearfix"></div>

@@ -331,7 +331,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
   }
 }
 
-
+.mb10 {
+  margin-bottom: 10px;
+}
 
 .ad-thumb .data-extra:hover {
   color: #666;

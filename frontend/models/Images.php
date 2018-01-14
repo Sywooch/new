@@ -34,7 +34,7 @@ class Images extends \yii\db\ActiveRecord
             [ [ 'sid' ], 'required' ],
             [ [ 'image', 'filename', 'path' ], 'string', 'max' => 255 ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
-            [ [ 'ad_id', 'size' ], 'integer' ],
+            [ [ 'ad_id', 'marker', 'size' ], 'integer' ],
             [ [ 'filename' ], 'unique' ],
         ];
     }
@@ -48,6 +48,7 @@ class Images extends \yii\db\ActiveRecord
             'id'       => 'ID',
             'ad_id'    => 'Ad ID',
             'sid'      => 'Sid',
+            'marker'   => 'Marker',
             'image'    => 'Image',
             'filename' => 'Filename',
             'size'     => 'Size',

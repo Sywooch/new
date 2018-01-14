@@ -170,13 +170,13 @@ class AdvertsSearch extends Adverts
         $pageSize = self::_setPageSize();
 
         $dataProvider = new ActiveDataProvider( [
-            'query'        => $query,
-            'pagination'   => [
+            'query'      => $query,
+            'pagination' => [
                 'defaultPageSize' => 25,
                 'pageSize'        => $pageSize,
                 'pageSizeLimit'   => [ 15, 100 ],
             ],
-            'sort' => [
+            'sort'       => [
                 'defaultOrder' => [ 'id' => SORT_DESC, ],
             ]
 
