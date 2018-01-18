@@ -108,7 +108,9 @@ class AdvertsViewsController extends Controller
     {
         $sid = Yii::$app->session->id;
         $model = $this->findModel( $id );
-        // TODO:
+        // Обновление счетчика просмотров
+        $model->updateCounters(['views' => 1]);
+        // TODO: sid
         $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();
         $images = Images::find()->where( [ 'ad_id' => $id, 'sid' => $sid ] )->all();
         return $this->render( 'details', [

@@ -10,16 +10,30 @@ use yii\helpers\Url;
 use common\models\Helpers;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
-//\common\models\Helpers::p( $model ); die;
+//\common\models\Helpers::p( $model->images ); die;
 ?>
 
 <div class="ad-list col-xs-12">
 	<div class="ad-thumb">
 		<div class="image">
 			<div class="row">
-				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6 blank-img">
-					<i class="fa fa-camera fa-2x" aria-hidden="true"></i></div>
+				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6">
+						<?php
+            if ( $model->has_images ) {
+
+                echo Html::img('@web/img/temp/' . $model->images->sid . '/' . $model->images->filename, [ 'class' => 'thumbnail' ] );
+
+             } else { ?>
+
+							<div class="blank-img">
+								<i class="fa fa-camera fa-2x" aria-hidden="true"></i>
+							</div>
+
+					<?php } ?>
+
 				</div>
+
+			</div>
 
 			<!--<a href="#">
           <? /*= Html::img( '/i/blank_img.jpg', [ 'class' => 'img-responsive', 'alt' => '', 'title' => '', ] ) */ ?>
@@ -67,7 +81,7 @@ use common\models\Helpers;
 					<li class="adv-type">
 						Тип:&nbsp;<strong><span><?= $model->types->name ?></span></strong>
 					</li>
-					<li>Просмотров:&nbsp;<span class="badge">1</span></li>
+					<li>Просмотров:&nbsp;<span class="badge"><?= $model->views ?></span></li>
 				</ul>
 
 			</div>

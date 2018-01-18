@@ -14,6 +14,7 @@ use kartik\depdrop\DepDrop;
 use common\models\Helpers;
 use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
+use backend\models\Currencies;
 
 FontAwesomeAsset::register( $this );
 ImagesAsset::register( $this );
@@ -76,27 +77,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
-    <?/*= $form->field( $price, 'price', [
-        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-2"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>'
-    ] )->textInput( [ 'placeholder' => 'Целое число', 'value' => number_format( $price->price, 0, '', ' ' ) ] )
-    */?><!--
-
-    --><?/*= $form->field( $currency, 'short_name', [
-        'template' => '<div class="col-sm-offset-6 col-sm-2">{input}</div>'
-    ] )->dropDownList( $currencyList, [ 'options' => [ ". $currency->id ." => [ 'selected' => true ] ], ] )->label( false ) */?>
-
-
-	<div class="form-group">
-		<label for="" class="col-sm-2 control-label">Цена</label>
-		<div class="col-sm-4">
-        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false, 'value' => Helpers::format($price->price) ] ) ?>
-		</div>
-
-		<div class="col-sm-2">
-        <?= Html::activeDropDownList( $currency, 'short_name', $currencyList,
-            [ 'class' => 'form-control', 'label' => false, 'value' => $price->currency_id] ) ?>
-		</div>
-	</div>
+    <?= $form->field( $price, 'price', [
+        'template' => '{label} <div class="col-sm-4 col-xs-8">{input}{error}{hint}</div><div class="col-sm-2 col-xs-4">' . Html::activeDropDownList( $currency,
+                'short_name', $currencyList, [ 'class' => 'form-control', 'label' => false, 'value' => $price->currency_id ] ) . '</div>'
+    ] ) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
@@ -117,12 +101,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	</div>
 
 	<div class="form-group">
-		<div class="col-sm-10">
+		<div class="col-sm-offset-2 col-sm-10">
 
         <?= FileUploadUI::widget( [
             'model'         => $images,
-            'attribute'     => 'image',
-            'url'           => [ 'images/image-upload', 'id' => $images->id ],
+            'attribute'     => 'images',
+            'url'           => [ 'images/image-upload', ],
             'gallery'       => false,
             'fieldOptions'  => [
                 'accept' => 'image/*'
@@ -133,28 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'minFileSize' => 100,
                 'maxNumberOfFiles' => 4,
             ],
-            // ...
             'clientEvents'  => [
-                'fileuploadprocessdone' => 'function(e, data) {
-
-    				console.log("Processing " + data.files[data.index].name + " done . ");
-    		}',
-                'fileuploaddone' => 'function(e, data) {
-
-        		$.each(data.files, function (index, file) {
-								console.log("Added file: " + file.name);
-						});
-                                console.log( "Event: " + e);
-                                console.log( "Data: " + data ) ;
-										console.log( "Result: " + data.result );
-										console.log( "Text status: " + data.textStatus );
-										console.log( "Data jq: " + data.jqXHR );
-										console.log( "Data context: " + data.context );
-                            }',
-                'fileuploadfail' => 'function(e, data) {
-                                console.log(e);
-                                console.log(data);
-                            }',
 								'fileuploadsubmit' => 'function(e, data) {
 										var input = $("#ad_id");
 										data.formData = {ad_id: input.val()};
@@ -203,7 +166,6 @@ $this->params['breadcrumbs'][] = $this->title;
       ?>
 	</div>
 
-    <?php $this->registerJsFile( '@web/js/add_phones.js', ['depends' => [\yii\web\JqueryAsset::className()]] ); ?>
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">

@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
 							class="pull-right"><?= $model->active == 1 ? "Активно" : "Не активно" ?></span></p>
 				<hr>
 
-				<p><i class="fa fa-eye fa-fw"></i>Просмотров:<span class="pull-right">1</span></p>
+				<p><i class="fa fa-eye fa-fw"></i>Просмотров:<span class="pull-right"><?= $model->views ?></span></p>
 				<hr>
 
 				<p><i class="fa fa-reply-all fa-fw"></i>Откликов:<span class="pull-right">1</span></p>
@@ -98,10 +98,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					объявление&nbsp;&nbsp;<span
 							class="caret"></span></a>
 			</div>
-
-			<!--<script type="text/javascript">$('#resp_mail').find('a.btn-success').click(function () {
-			  $(this).fadeOut('slow');
-		  })</script>-->
 
 			<div id="response-ad" class="col-xs-12 collapse">
 				<hr>

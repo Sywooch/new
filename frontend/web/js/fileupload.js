@@ -8,7 +8,6 @@ $(document).ready(function () {
 			dropZone: $('#dropzone')
 		});
 
-
 	// Изменение размеров dropzone
 	$(document).bind('dragover', function (e) {
 		var dropZone = $('#dropzone'),
@@ -29,7 +28,7 @@ $(document).ready(function () {
 	});
 
 	var targetUrl = '/images/uploaded-images';
-	var ad_id = $(document).find('#ad_id').val(); //console.log(marker);
+	var ad_id = $(document).find('#ad_id').val(); //console.log(ad_id);
 
 	$.ajax({
 		url: targetUrl,
@@ -44,7 +43,7 @@ $(document).ready(function () {
 		},
 		success: function (data) {
 
-			var table = $(document).find('#images-image-fileupload').find('table');
+			var table = $(document).find('#images-images-fileupload').find('table'); //console.log( table);
 
 			$.each(data.images, function (i, val) {
 				table.append('<tr class="template-download fade in">' +
@@ -67,7 +66,6 @@ $(document).ready(function () {
 			})
 		},
 		complete: function () {
-
 		}
 	});
 });

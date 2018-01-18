@@ -18,6 +18,7 @@ use backend\models\Category;
 use backend\models\Subcategory;
 use backend\models\Periods;
 use backend\models\Types;
+use frontend\models\Images;
 
 class Adverts extends ActiveRecord
 {
@@ -33,6 +34,22 @@ class Adverts extends ActiveRecord
      * @var
      */
     public $marker;
+
+    // Черновик объявления
+    const STATUS_DRAFT = 1;
+    // Опуликованное объявление
+    const STATUS_PUBLISHED = 0;
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
+
+    const DEFAULT_PAGE_SIZE = 25;
+
+    const PAGE_SIZE_LIMIT_MIN = 15;
+    const PAGE_SIZE_LIMIT_MAX = 100;
+
+    const HAS_IMAGES = 1;
+    const HAS_NOT_IMAGES = 0;
 
     public static function tableName()
     {
@@ -59,7 +76,7 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'old_id','cat_id','subcat_id','type','country','period','active','selected','selected_old','special','special_old','images_old', 'ip', 'created_at', 'updated_at', 'draft', 'marker' ], 'integer' ],
+            [ [ 'old_id','cat_id','subcat_id','type','country','period','active','selected','selected_old','special','special_old','images_old', 'ip', 'created_at', 'updated_at', 'draft', 'marker', 'has_images', 'views', ], 'integer' ],
             [ [ 'sid','cat_id','subcat_id','type','header','description','author','email','period','country','ip',],'required'],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
@@ -109,6 +126,10 @@ class Adverts extends ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'draft'      => 'Draft',
+
+            'has_images' => 'Has_images',
+            'views' => 'Просмотров',
+
             'verifyCode' => 'Проверочный код',
         ];
     }
@@ -169,11 +190,21 @@ class Adverts extends ActiveRecord
         return $this->hasOne( Types::className(), [ 'id' => 'type' ] );
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getPricies()
     {
         return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getImages()
+    {
+        return $this->hasOne( Images::className(), [ 'ad_id' => 'id' ] );
+    }
 
     public function releaseEvents(){ }
 }

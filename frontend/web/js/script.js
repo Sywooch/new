@@ -22,4 +22,7 @@ $('#ads-sort').click(function () {
 	block.collapse('toggle');
 });
 
-
+$(document).ready(function () {
+	// Выравнивание изображений
+	$('ul.thumbnails').find('.image-additional:eq(2)').after('<div class="clearfix"></div>');
+});

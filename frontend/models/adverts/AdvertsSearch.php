@@ -164,6 +164,7 @@ class AdvertsSearch extends Adverts
             ->andWhere( $this->whereType() )
             ->andWhere( $this->whereCat() )
             ->andWhere( $this->whereSubcat() )
+            ->andWhere( [ 'draft' => Adverts::STATUS_PUBLISHED ] )
             ->orderBy( $this->whereDate() )
             ->addOrderBy( $this->wherePrice() );
 
@@ -172,9 +173,9 @@ class AdvertsSearch extends Adverts
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
             'pagination' => [
-                'defaultPageSize' => 25,
+                'defaultPageSize' => Adverts::DEFAULT_PAGE_SIZE,
                 'pageSize'        => $pageSize,
-                'pageSizeLimit'   => [ 15, 100 ],
+                'pageSizeLimit'   => [ Adverts::PAGE_SIZE_LIMIT_MIN, Adverts::PAGE_SIZE_LIMIT_MAX ],
             ],
             'sort'       => [
                 'defaultOrder' => [ 'id' => SORT_DESC, ],
@@ -233,8 +234,8 @@ class AdvertsSearch extends Adverts
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
             'pagination' => [
-                'defaultPageSize' => 25,
-                'pageSizeLimit'   => [ 15, 100 ],
+                'defaultPageSize' => Adverts::DEFAULT_PAGE_SIZE,
+                'pageSizeLimit'   => [ Adverts::PAGE_SIZE_LIMIT_MIN, Adverts::PAGE_SIZE_LIMIT_MAX ],
             ],
             'sort'       => $sort,
         ] );
@@ -286,8 +287,8 @@ class AdvertsSearch extends Adverts
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
             'pagination' => [
-                'defaultPageSize' => 25,
-                'pageSizeLimit'   => [ 15, 100 ],
+                'defaultPageSize' => Adverts::DEFAULT_PAGE_SIZE,
+                'pageSizeLimit'   => [ Adverts::PAGE_SIZE_LIMIT_MIN, Adverts::PAGE_SIZE_LIMIT_MAX ],
             ],
             'sort'       => $sort,
         ] );

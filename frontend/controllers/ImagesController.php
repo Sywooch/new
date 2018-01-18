@@ -57,7 +57,7 @@ class ImagesController extends Controller
     {
         $model = new Images();
 
-        $imageFile = UploadedFile::getInstance( $model, 'image' );
+        $imageFile = UploadedFile::getInstance( $model, 'images' );
 
         $directory = Yii::getAlias( '@frontend/web/img/temp' ) . DIRECTORY_SEPARATOR . Yii::$app->session->id . DIRECTORY_SEPARATOR;
         if ( !is_dir( $directory ) ) {
@@ -73,7 +73,6 @@ class ImagesController extends Controller
                 $folder = '/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR;
 
                 $model->sid = Yii::$app->session->id;
-                $model->image = $imageFile->baseName;
                 $model->filename = $fileName;
                 $model->size = $imageFile->size;
                 $model->path = $folder;
@@ -164,8 +163,6 @@ class ImagesController extends Controller
             else {
                 throw new NotFoundHttpException( 'The requested page does not exist.' );
             }
-
-
         }
 
         return Json::encode( $output );
@@ -197,5 +194,15 @@ class ImagesController extends Controller
         $model->delete();
 
         return;
+    }
+
+    protected function findModel( $ad_id, $sid )
+    {
+        if ( ( $model = Images::findAll( [ 'ad_id' => $ad_id, 'sid' => $sid ] ) ) !== null ) {
+            return $model;
+        }
+        else {
+            throw new NotFoundHttpException( 'The requested page does not exist.' );
+        }
     }
 }

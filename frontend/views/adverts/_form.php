@@ -13,7 +13,7 @@ use kartik\depdrop\DepDrop;
 use backend\models\Currencies;
 use yii\captcha\Captcha;
 use dosamigos\fileupload\FileUploadUI;
-//use frontend\assets\ImagesAsset;
+use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
 
 //ImagesAsset::register( $this );
@@ -29,7 +29,7 @@ PhonesAsset::register( $this );
 /* @var $country /view/create.php */
 /* @var $images /view/create.php */
 
-//\common\models\Helpers::p( \Yii::$app->user->identity->username); die;
+//\common\models\Helpers::p( $images ); die;
 ?>
 <div class="type-form">
 
@@ -42,7 +42,10 @@ PhonesAsset::register( $this );
         ],
     ] ); ?>
 
-    <?= $form->field( $model, 'marker' )->hiddenInput( [ 'id' => 'marker', 'value' => random_int( 11111111, 99999999 ) ] )->label( false ) ?>
+    <?= $form->field( $model, 'marker' )->hiddenInput( [
+        'id'    => 'marker',
+        'value' => random_int( 11111111, 99999999 )
+    ] )->label( false ) ?>
 
     <?= $form->field( $model, 'cat_id' )->dropDownList( $category,
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
@@ -64,38 +67,10 @@ PhonesAsset::register( $this );
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
-
-	<!--	<div class="input-group">-->
-	<!--		<input type="text" class="form-control" aria-label="...">-->
-	<!--		<div class="input-group-btn">-->
-	<!--			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>-->
-	<!--			<ul class="dropdown-menu dropdown-menu-right">-->
-	<!--				<li><a href="#">Action</a></li>-->
-	<!--				<li><a href="#">Another action</a></li>-->
-	<!--				<li><a href="#">Something else here</a></li>-->
-	<!--				<li role="separator" class="divider"></li>-->
-	<!--				<li><a href="#">Separated link</a></li>-->
-	<!--			</ul>-->
-	<!--		</div><!-- /btn-group -->
-	<!--	</div><!-- /input-group -->
-
-
-    <? //= $form->field( $price, 'price', [
-    //        'template' => '{label}<div class="col-sm-4">{input}</div><div class="col-sm-2"></div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
-    //
-    //				'inputTemplate' => '<div class="input-group"><div class="col-sm-6">{input}<span class="input-group-addon">@</span></div></div>',
-    //    ] )->textInput() ?>
-
-	<div class="form-group">
-		<label for="" class="col-sm-2 col-xs-12 control-label">Цена</label>
-		<div class="col-sm-4 col-xs-8">
-        <?= Html::activeInput( 'text', $price, 'price', [ 'class' => 'form-control', 'label' => false ] ) ?>
-		</div>
-		<div class="col-sm-2 col-xs-4">
-        <?= Html::activeDropDownList( new Currencies(), 'short_name', $currency,
-            [ 'class' => 'form-control', 'label' => false ] ) ?>
-		</div>
-	</div>
+    <?= $form->field( $price, 'price', [
+        'template' => '{label} <div class="col-sm-4 col-xs-8">{input}{error}{hint}</div><div class="col-sm-2 col-xs-4">' . Html::activeDropDownList( new Currencies(),
+                'short_name', $currency, [ 'class' => 'form-control', 'label' => false ] ) . '</div>'
+    ] ) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
@@ -119,29 +94,24 @@ PhonesAsset::register( $this );
 
         <?= FileUploadUI::widget( [
             'model'         => $images,
-            'attribute'     => 'image',
-            'url'           => [ 'images/image-upload', 'id' => $images->id ],
+            'attribute'     => 'images',
+            'url'           => [ 'images/image-upload', ],
             'gallery'       => false,
+            'uploadTemplateId' => null,
+            'downloadTemplateId' => null,
+            'downloadTemplateView' => '@frontend/views/uploads/download',
             'fieldOptions'  => [
                 'accept' => 'image/*'
             ],
             'clientOptions' => [
-                //    		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
+//            		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
                 'maxFileSize'      => 2000000,
                 'minFileSize'      => 100,
                 'maxNumberOfFiles' => 4,
+								'autoUpload' => true,
             ],
             'clientEvents'  => [
-                'fileuploadprocessdone' => 'function(e, data) {}',
-                'fileuploaddone'        => 'function(e, data) {
-
-							$.each(data.files, function (index, file) {});
-						}',
-						'fileuploadfail'        => 'function(e, data) {
-														console.log(e);
-														console.log(data);
-												}',
-						'fileuploadsubmit' => 'function(e, data) {
+                'fileuploadsubmit' => 'function(e, data) {
 							var input = $("#marker");
 							data.formData = { marker: input.val() };
 //							if (!data.formData.marker) {

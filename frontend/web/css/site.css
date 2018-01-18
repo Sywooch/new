@@ -134,6 +134,14 @@ a.desc:after {
 }
 
 /* Временные стили */
+.remove-phone-btn{
+  color:#C46964;
+}
+
+.add-phone-btn{
+  color:#74A074;
+}
+
 #sub-btn-search {
   min-width: 160px;
 }
@@ -201,6 +209,12 @@ OpenCart
   width: 140px;
   height: 120px;
   border: 1px solid #eee;
+  overflow: hidden;
+}
+
+.ad-list .ad-thumb .image img{
+  width: 140px;
+  height: 120px;
 }
 
 @media (max-width: 767px) {

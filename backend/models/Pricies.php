@@ -2,9 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
-use backend\models\Currencies;
+use common\models\behaviors\RemoveWhitespaseBehavior;
 use board\entities\Adverts;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%price}}".
@@ -18,7 +18,7 @@ use board\entities\Adverts;
  *
  * @property Currencies $currency
  */
-class Pricies extends \yii\db\ActiveRecord
+class Pricies extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -34,11 +34,26 @@ class Pricies extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [ ['ad_id', 'old_id', 'price', 'price_old', 'currency_id' ], 'integer' ],
+            [ ['ad_id', 'old_id', 'price_old', 'currency_id' ], 'integer' ],
             [ ['price'], 'integer', 'max' => 50000000 ],
             [ 'price', 'default', 'value' => 0 ],
+//            [ 'price', 'match', 'pattern' =>  '/[^0-9]+/' ],
             [ ['negotiable'], 'boolean'],
             [ ['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currencies::className(), 'targetAttribute' => [ 'currency_id' => 'id']],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class'      => RemoveWhitespaseBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'price',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'price',
+                ],
+                'field'      => 'price',
+            ],
         ];
     }
 
@@ -66,6 +81,9 @@ class Pricies extends \yii\db\ActiveRecord
         return $this->hasOne(Currencies::className(), [ 'id' => 'currency_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getAdverts()
     {
         return $this->hasMany(Adverts::className(), ['id' => 'ad_id']);

@@ -36,10 +36,11 @@ class ImageCleanerController extends Controller
 
             if( Yii::$app->db->createCommand()->delete( 'images',
                 [ 'sid' => $val->sid, 'filename' => $val->filename, ] )->execute() ){
-                $this->stdout( 'All done!' . PHP_EOL );
+                $this->stdout( 'File deleted from table!' . PHP_EOL );
             }
         }
 
+        $this->stdout( 'All done!' . PHP_EOL );
         return 0;
     }
 
