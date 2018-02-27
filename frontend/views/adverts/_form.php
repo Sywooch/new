@@ -6,7 +6,6 @@
  * Time: 9:37
  */
 use yii\helpers\Html;
-//use yii\widgets\ActiveForm;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use kartik\depdrop\DepDrop;
@@ -15,8 +14,9 @@ use yii\captcha\Captcha;
 use dosamigos\fileupload\FileUploadUI;
 use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
+use board\repositories\AdvertsRepository;
 
-//ImagesAsset::register( $this );
+ImagesAsset::register( $this );
 PhonesAsset::register( $this );
 
 /* @var $model /view/create.php */
@@ -47,7 +47,7 @@ PhonesAsset::register( $this );
         'value' => random_int( 11111111, 99999999 )
     ] )->label( false ) ?>
 
-    <?= $form->field( $model, 'cat_id' )->dropDownList( $category,
+    <?= $form->field( $model, 'cat_id' )->dropDownList( AdvertsRepository::categoryList(),
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
 
     <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
@@ -59,9 +59,9 @@ PhonesAsset::register( $this );
         ]
     ] ) ?>
 
-    <?= $form->field( $model, 'type' )->dropDownList( $type, [ 'prompt' => 'Выберите тип' ] ) ?>
+    <?= $form->field( $model, 'type' )->dropDownList( AdvertsRepository::typeList(), [ 'prompt' => 'Выберите тип' ] ) ?>
 
-    <?= $form->field( $model, 'period' )->dropDownList( $period, [ 'prompt' => 'Выберите период' ] ) ?>
+    <?= $form->field( $model, 'period' )->dropDownList( AdvertsRepository::periodList(), [ 'prompt' => 'Выберите период' ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
@@ -69,7 +69,7 @@ PhonesAsset::register( $this );
 
     <?= $form->field( $price, 'price', [
         'template' => '{label} <div class="col-sm-4 col-xs-8">{input}{error}{hint}</div><div class="col-sm-2 col-xs-4">' . Html::activeDropDownList( new Currencies(),
-                'short_name', $currency, [ 'class' => 'form-control', 'label' => false ] ) . '</div>'
+                'short_name', AdvertsRepository::currencyList(), [ 'class' => 'form-control', 'label' => false ] ) . '</div>'
     ] ) ?>
 
 	<div class="form-group">
@@ -90,7 +90,7 @@ PhonesAsset::register( $this );
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
+		<div id="file-upload" class="col-sm-offset-2 col-sm-6">
 
         <?= FileUploadUI::widget( [
             'model'         => $images,
@@ -100,26 +100,24 @@ PhonesAsset::register( $this );
             'uploadTemplateId' => null,
             'downloadTemplateId' => null,
             'downloadTemplateView' => '@frontend/views/uploads/download',
+            'uploadTemplateView' => '@frontend/views/uploads/upload',
+            'formView' => '@frontend/views/uploads/form',
             'fieldOptions'  => [
                 'accept' => 'image/*'
             ],
             'clientOptions' => [
 //            		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
-                'maxFileSize'      => 2000000,
-                'minFileSize'      => 100,
-                'maxNumberOfFiles' => 4,
-								'autoUpload' => true,
             ],
             'clientEvents'  => [
                 'fileuploadsubmit' => 'function(e, data) {
-							var input = $("#marker");
-							data.formData = { marker: input.val() };
-//							if (!data.formData.marker) {
-//									data.context.find("button").prop("disabled", false);
-//									input.focus();
-//									return false;
-//							}
-						}',
+							     var input = $("#marker");
+							     data.formData = { marker: input.val() };
+//							   if (!data.formData.marker) {
+//									 data.context.find("button").prop("disabled", false);
+//									 input.focus();
+//									 return false;
+//							   }
+						    }',
             ],
         ] );
 
@@ -140,7 +138,7 @@ PhonesAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'country' )->dropDownList( $country, [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'country' )->dropDownList( AdvertsRepository::countryList(), [ 'prompt' => 'Выберите' ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [
         'placeholder' => 'Иванов Иван',

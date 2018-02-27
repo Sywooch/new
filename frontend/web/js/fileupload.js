@@ -2,11 +2,34 @@
  * Created by Администратор on 28.12.2017.
  */
 $(document).ready(function () {
+	var loader = $(document).find('#images-images-fileupload');
 
-	$('#fileupload')
-		.fileupload({
+	loader.fileupload({
+		    autoUpload: true,
+			maxFileSize: 2000000,
+		    minFileSize: 100,
+			previewMaxWidth: 144,
+			previewMaxHeight: 85,
+			maxNumberOfFiles: 4,
+			acceptFileTypes: /(\.|\/)(jpg)$/i,
 			dropZone: $('#dropzone')
-		});
+		}).bind('fileuploadalways', function (e, data) {
+		    $(this).find('li.template-download:eq(2)').after('<div class="clearfix"></div>');
+	    }).bind('fileuploaddestroy', function (e, data) {
+			$(this).find('.load-warning').remove();
+		}).bind('fileuploadprocessfail', function (e, data) {
+			if( $('*').is('.load-warning') ) {
+				return false;
+			} else {
+				$(this).append('<p class="load-warning">' +
+					'<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>' +
+					'Превышено максимальное количество файлов!</p>');
+			}
+	    });
+	
+	loader.on('click','.cancel', function () {
+		loader.find('.load-warning').remove();
+	});
 
 	// Изменение размеров dropzone
 	$(document).bind('dragover', function (e) {
@@ -35,12 +58,8 @@ $(document).ready(function () {
 		dataType: 'json',
 		method: 'post',
 		data: {id:ad_id},
-		beforeSend: function () {
-
-		},
-		error: function () {
-
-		},
+		beforeSend: function () {},
+		error: function () {},
 		success: function (data) {
 
 			var table = $(document).find('#images-images-fileupload').find('table'); //console.log( table);
@@ -65,8 +84,7 @@ $(document).ready(function () {
 					'</tr>');
 			})
 		},
-		complete: function () {
-		}
+		complete: function () {}
 	});
 });
 

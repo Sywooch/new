@@ -20,6 +20,40 @@ use backend\models\Periods;
 use backend\models\Types;
 use frontend\models\Images;
 
+/**
+ * This is the model class for table "{{%adverts}}".
+ *
+ * @property integer $id
+ * @property integer $old_id
+ * @property string $sid
+ * @property integer $cat_id
+ * @property integer $subcat_id
+ * @property integer $type
+ * @property string $header
+ * @property string $description
+ * @property integer $country
+ * @property integer $period
+ * @property string $author
+ * @property string $email
+ * @property integer $active
+ * @property integer $selected
+ * @property integer $selected_old
+ * @property integer $special
+ * @property integer $special_old
+ * @property integer $images_old
+ * @property integer $ip
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property integer $draft
+ *
+ * @property Category $cat
+ * @property Countries $countries
+ * @property Periods $periods
+ * @property Subcategory $subcategory
+ * @property Types $types
+ * @property Pricies $pricies
+ * @property Images $images
+ */
 class Adverts extends ActiveRecord
 {
     use EventTrait;

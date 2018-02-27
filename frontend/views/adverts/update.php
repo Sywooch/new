@@ -6,7 +6,7 @@
  * Time: 9:37
  */
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use frontend\assets\FontAwesomeAsset;
 use yii\helpers\Url;
 use dosamigos\fileupload\FileUploadUI;
