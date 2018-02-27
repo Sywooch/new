@@ -168,22 +168,6 @@ class Adverts extends ActiveRecord
         ];
     }
 
-    /*public function addPhoto( UploadedFile $file )
-    {
-        $image = $this->photos;
-        $image[] = Image::create( $file );
-        $this->updateImages( $image );
-    }
-
-    private function updateImages( array $photos )
-    {
-        foreach ( $photos as $i => $photo ) {
-            $photo->setSort( $i );
-        }
-        $this->photos = $photos;
-        $this->populateRelation( 'mainPhoto', reset( $photos ) );
-    }*/
-
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -181,7 +181,7 @@ class AdvertsRepository
      * @param $cat_id
      * @return array
      */
-    public function subcategoryListUpdate( $cat_id )
+    public static function subcategoryListUpdate( $cat_id )
     {
         return ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
             'id', 'subcat_name' );

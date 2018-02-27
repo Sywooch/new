@@ -32,7 +32,7 @@ class UserPhones extends \yii\db\ActiveRecord
             [ [ 'user_id', 'ad_id', 'sort' ], 'integer' ],
             [ [ 'phone' ], 'string', 'min' => 6, 'max' => 20 ],
             [ [ 'ad_id', 'phone', 'sort' ], 'required' ],
-            ['phone', 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'message' => 'Только цифры' ],
+//            ['phone', 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'message' => 'Только цифры' ],
         ];
     }
 

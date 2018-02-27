@@ -21,7 +21,7 @@ $this->title = 'Создать объявление';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="type-create">
+<div class="adverts-create">
 
     <?= $this->render( '_form', [
         'model'    => $model,
