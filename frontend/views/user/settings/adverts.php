@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
  * @var dektrium\user\models\SettingsForm $model
+ * @var $dataProvider frontend\controllers\user\SettingsController
  */
 
 $this->title = Yii::t( 'user', 'My Adverts' );

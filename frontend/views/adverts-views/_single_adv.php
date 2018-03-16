@@ -39,13 +39,13 @@ use common\models\Helpers;
 					<small><i class="fa fa-calendar" aria-hidden="true"></i>
 							<?= Yii::$app->formatter->asDatetime( $model->created_at, Yii::$app->params['dateFormat'] ); ?>
 						<br>
-						<i class="fa fa-map-marker"></i><?= $model->countries->country_name ?>
+						<i class="fa fa-map-marker" aria-hidden="true"></i><?= $model->country->country_name ?>
 						<i class="fa fa-folder-open" aria-hidden="true"></i><?= $model->category->category_name ?>
 						&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?>
 					</small>
 				</p>
 
-				<p class="price"><?= Helpers::format( $model->pricies->price ) ?><?= $model->pricies->currencies->name ?></p>
+				<p class="price"><?= Helpers::format( $model->price->price ) ?><?= $model->price->currencies->name ?></p>
 			</div>
 
 			<div class="pull-right data-extra">
@@ -59,13 +59,13 @@ use common\models\Helpers;
 					<li>Коротко:
 						<a href="javascript:void(0);" data-container="body" data-toggle="popover" animation="true"
 							 data-placement="top"
-							 data-content="<?= \common\models\Helpers::getShortComment( $model->description, 140 ); ?>"
+							 data-content="<?= Helpers::getShortComment( $model->description, 140 ); ?>"
 							 data-original-title="" title="" style="z-index: -222;">
 							<i class="fa fa-align-left"></i>
 						</a>
 					</li>
 					<li class="adv-type">
-						Тип:&nbsp;<strong><span><?= $model->types->name ?></span></strong>
+						Тип:&nbsp;<strong><span><?= $model->type->name ?></span></strong>
 					</li>
 					<li>Просмотров:&nbsp;<span class="badge">1</span></li>
 				</ul>

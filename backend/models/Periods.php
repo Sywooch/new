@@ -56,6 +56,6 @@ class Periods extends \yii\db\ActiveRecord
      */
     public function getAdverts()
     {
-        return $this->hasMany(Adverts::className(), ['period' => 'id']);
+        return $this->hasMany(Adverts::className(), ['period_id' => 'id']);
     }
 }

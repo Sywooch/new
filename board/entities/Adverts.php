@@ -140,17 +140,17 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCountries()
+    public function getCountry()
     {
-        return $this->hasOne( Countries::className(), [ 'id' => 'country' ] );
+        return $this->hasOne( Countries::className(), [ 'id' => 'country_id' ] );
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPeriods()
+    public function getPeriod()
     {
-        return $this->hasOne( Periods::className(), [ 'id' => 'period' ] );
+        return $this->hasOne( Periods::className(), [ 'id' => 'period_id' ] );
     }
 
     /**
@@ -164,16 +164,16 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTypes()
+    public function getType()
     {
-        return $this->hasOne( Types::className(), [ 'id' => 'type' ] );
+        return $this->hasOne( Types::className(), [ 'id' => 'type_id' ] );
     }
 
-    public function getPricies()
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPrice()
     {
         return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
     }
-
-
-    public function releaseEvents(){ }
 }

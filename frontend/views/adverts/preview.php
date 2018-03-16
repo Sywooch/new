@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<div id="details">
 						<!--<# CUSTOM_FORM #>-->
 						<p><i class="fa fa-map-marker fa-fw"></i>Расположение:<span
-									class="pull-right"><strong><?= $model->countries->country_name ?></strong></span></p>
+									class="pull-right"><strong><?= $model->country->country_name ?></strong></span></p>
 						<hr>
 						<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
 										<span class="label label-danger"><strong><?= Helpers::format($price->price) ?>
@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
               ?>
 
 						<p><i class="fa fa-calendar fa-fw"></i>Период:<span
-									class="pull-right"><?= $model->periods->description ?></span></span></p>
+									class="pull-right"><?= $model->period->description ?></span></span></p>
 						<hr>
 
 						<p><i class="fa fa-info fa-fw"></i>Статус:<span
