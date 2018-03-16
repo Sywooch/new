@@ -157,6 +157,9 @@ class ImagesController extends Controller
                 if ( !empty( $model ) ) {
                     $output = [ 'images' => $model ];
                 }
+                else {
+                    $output = [ 'images' => $sid ];
+                }
 
                 return Json::encode( $output );
             }

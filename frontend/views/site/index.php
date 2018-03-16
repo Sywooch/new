@@ -33,8 +33,8 @@ $this->title = 'vezugruz29.ru';
 						поиск</a></b>
 				<!-- Статистика объявлений -->
 				<span class="pull-right">Всего в базе объявлений <strong
-							class="text-primary"><?= $dataProvider->totalCount ?></strong>, за месяц 444, за сутки
-	333</span>
+							class="text-primary"><?= $dataProvider->getTotalCount() ?></strong>, за месяц <?= $dataProvider->getTotalCount() ?>, за сутки <?= $dataProvider->getTotalCount() ?>
+				</span>
 			</p></div>
 	</div>
 

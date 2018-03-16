@@ -50,8 +50,9 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
-	var targetUrl = '/images/uploaded-images';
-	var ad_id = $(document).find('#ad_id').val(); //console.log(ad_id);
+	var targetUrl = '/images/uploaded-images',
+		ad_id = $(document).find('#ad_id').val(),
+		table = $(document).find('#images-images-fileupload').find('table');
 
 	$.ajax({
 		url: targetUrl,
@@ -62,27 +63,30 @@ $(document).ready(function () {
 		error: function () {},
 		success: function (data) {
 
-			var table = $(document).find('#images-images-fileupload').find('table'); //console.log( table);
-
-			$.each(data.images, function (i, val) {
-				table.append('<tr class="template-download fade in">' +
-					'<td><span class="preview">' +
-					'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
-					val.filename + '" data-gallery=""><img src="' + val.path + val.filename + '"></a>' +
-					'</span></td>' +
-					'<td><p class="name">' +
-					'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
-					val.filename + '" data-gallery="">' + val.filename + '</a>' +
-					'</p></td>' +
-					'<td><span class="size">' + val.size + '</span></td>' +
-					'<td>' +
-					'<button class="btn btn-danger delete" data-type="POST" data-url="/images/image-delete?name=' + val.filename + '">' +
-					'<i class="glyphicon glyphicon-trash"></i>' +
-					'<span>Удалить</span></button>' +
-					'<input class="toggle" name="delete" value="1" type="checkbox">' +
-					'</td>' +
-					'</tr>');
-			})
+			if($.isArray(data)){
+				$.each(data.images, function (i, val) { //console.log(val);
+					table.append('<tr class="template-download fade in">' +
+						'<td><span class="preview">' +
+						'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
+						val.filename + '" data-gallery=""><img src="' + val.path + val.filename + '"></a>' +
+						'</span></td>' +
+						'<td><p class="name">' +
+						'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
+						val.filename + '" data-gallery="">' + val.filename + '</a>' +
+						'</p></td>' +
+						'<td><span class="size">' + val.size + '</span></td>' +
+						'<td>' +
+						'<button class="btn btn-danger delete" data-type="POST" data-url="/images/image-delete?name=' + val.filename + '">' +
+						'<i class="glyphicon glyphicon-trash"></i>' +
+						'<span>Удалить</span></button>' +
+						'<input class="toggle" name="delete" value="1" type="checkbox">' +
+						'</td>' +
+						'</tr>');
+				})
+			} else {
+				// Если нет картинок
+				console.log(data);
+			}
 		},
 		complete: function () {}
 	});

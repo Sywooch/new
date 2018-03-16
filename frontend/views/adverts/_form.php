@@ -62,13 +62,13 @@ PhonesAsset::register( $this );
 
     <?php
     if ( $model->isNewRecord ) {
-        $form->field( $model, 'marker' )->hiddenInput( [
+        echo $form->field( $model, 'marker' )->hiddenInput( [
             'id'    => 'marker',
             'value' => random_int( 11111111, 99999999 )
         ] )->label( false );
     }
     else {
-        $form->field( $model, 'ad_id' )->hiddenInput( [ 'id' => 'ad_id', 'value' => $model->id ] )->label( false );
+        echo $form->field( $model, 'ad_id' )->hiddenInput( [ 'id' => 'ad_id', 'value' => $model->id ] )->label( false );
     } ?>
 
     <?= $form->field( $model, 'cat_id' )->dropDownList( AdvertsRepository::categoryList(),

@@ -19,11 +19,8 @@
 							{% } %}
 
 					</li>
-
 					<li class="buttons">
-
 					{% if (file.deleteUrl) { %}
-
 					<button class="btn btn-danger btn-xs delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
 							<i class="fa fa-trash" aria-hidden="true"></i>
 							<span><?= Yii::t( 'fileupload', 'Delete' ) ?></span>
@@ -37,11 +34,7 @@
 					{% } %}
 
 					<li>
-
        </ul>
-
     </li>
 {% } %}
-
-
 </script>

@@ -28,11 +28,6 @@ PhonesAsset::register( $this );
 
 $this->title = 'Редактировать объявление';
 $this->params['breadcrumbs'][] = $this->title;
-
-//$this->title = 'Update Adverts: ' . $model->id;
-//$this->params['breadcrumbs'][] = ['label' => 'Adverts', 'url' => ['index']];
-//$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-//$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="adverts-update">
 	<h1><?= Html::encode($this->title) ?></h1>
