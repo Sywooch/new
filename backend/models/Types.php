@@ -52,6 +52,6 @@ class Types extends \yii\db\ActiveRecord
 
     public function getAdverts()
     {
-        return $this->hasMany(Adverts::className(), ['type' => 'id']);
+        return $this->hasMany(Adverts::className(), ['type_id' => 'id']);
     }
 }

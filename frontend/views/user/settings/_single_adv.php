@@ -29,49 +29,43 @@ use yii\helpers\Url;
 		<div>
 			<div class="caption">
 				<a href="<?= Url::to( [
-            'adverts-views/details',
+            '/adverts-views/details',
             'id' => $model->id
         ] ); ?>">
 					<h5><?= $model->header ?></h5>
 				</a>
 				<p>
-					<small><span><?= Yii::$app->formatter->asDatetime( $model->created_at, Yii::$app->params['dateFormat'] ); ?>
-							<span>
-						<i class="fa fa-map-marker"></i><?= $model->countries->country_name ?></span>,
-					&nbsp;&nbsp;&nbsp;
-					<i class="fa fa-folder-open"></i><?= $model->category->category_name ?>
-							&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?></span>
+					<small><i class="fa fa-calendar" aria-hidden="true"></i>
+							<?= Yii::$app->formatter->asDatetime( $model->created_at, Yii::$app->params['dateFormat'] ); ?>
+						<br>
+						<i class="fa fa-map-marker" aria-hidden="true"></i><?= $model->country->country_name ?>,
+						<i class="fa fa-folder-open" aria-hidden="true"></i><?= $model->category->category_name ?>
+							&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?>
 					</small>
 				</p>
 
-				<p class="price"><?= $model->pricies->price ?>&nbsp;<?= $model->pricies->currencies->short_name ?>.</p>
+				<p class="price"><?= $model->price->price ?>&nbsp;<?= $model->price->currencies->short_name ?>.</p>
 			</div>
 
-			<div class="pull-right data-extra">
-
+			<div class="pull-right">
 				<ul class="list-inline">
-
-					<li title="Количество фотографий">
-						<i class="fa fa-file-image-o"></i>
-						<span class="badge"></span>
+					<li title="Редактирование объявления">
+              <?= Html::a('<i class="fa fa-cog"></i>Редактировать', ['/adverts/update', 'id' => $model->id ], ['class' => 'btn btn-default',] ) ?>
 					</li>
-					<li>Коротко:
-						<a href="javascript:void(0);" data-container="body" data-toggle="popover" animation="true"
-							 data-placement="top"
-							 data-content="<?= \common\models\Helpers::getShortComment( $model->description, 140 ); ?>"
-							 data-original-title="" title="" style="z-index: -222;">
-							<i class="fa fa-align-left"></i>
-						</a>
+					<li title="Просмотр информации">
+              <?= Html::a('<i class="fa fa-info-circle"></i>Инфо', ['', 'id' => $model->id ], ['class' => 'btn btn-default',] ) ?>
 					</li>
-					<li class="adv-type">
-						Тип:&nbsp;<strong><span><?= $model->types->name ?></span></strong>
-					</li>
-					<li>Просмотров:&nbsp;<span class="badge">1</span></li>
 				</ul>
-
 			</div>
 		</div>
+		<div class="clearfix"></div>
+		<div class="info">
+			<ul class="list-unstyled">
+				<li>
 
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 

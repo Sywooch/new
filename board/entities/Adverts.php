@@ -168,6 +168,22 @@ class Adverts extends ActiveRecord
         ];
     }
 
+    /*public function addPhoto( UploadedFile $file )
+    {
+        $image = $this->photos;
+        $image[] = Image::create( $file );
+        $this->updateImages( $image );
+    }
+
+    private function updateImages( array $photos )
+    {
+        foreach ( $photos as $i => $photo ) {
+            $photo->setSort( $i );
+        }
+        $this->photos = $photos;
+        $this->populateRelation( 'mainPhoto', reset( $photos ) );
+    }*/
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -179,17 +195,17 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCountries()
+    public function getCountry()
     {
-        return $this->hasOne( Countries::className(), [ 'id' => 'country' ] );
+        return $this->hasOne( Countries::className(), [ 'id' => 'country_id' ] );
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPeriods()
+    public function getPeriod()
     {
-        return $this->hasOne( Periods::className(), [ 'id' => 'period' ] );
+        return $this->hasOne( Periods::className(), [ 'id' => 'period_id' ] );
     }
 
     /**
@@ -203,15 +219,15 @@ class Adverts extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTypes()
+    public function getType()
     {
-        return $this->hasOne( Types::className(), [ 'id' => 'type' ] );
+        return $this->hasOne( Types::className(), [ 'id' => 'type_id' ] );
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPricies()
+    public function getPrice()
     {
         return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
     }

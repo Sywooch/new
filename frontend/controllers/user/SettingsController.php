@@ -48,11 +48,11 @@ class SettingsController extends BaseSettingsController
         $query = \board\entities\Adverts::find()
             ->joinWith( 'category' )
             ->joinWith( 'subcategory' )
-            ->joinWith( 'types' )
-            ->joinWith( 'periods' )
-            ->joinWith( 'countries' )
+            ->joinWith( 'type' )
+            ->joinWith( 'period' )
+            ->joinWith( 'country' )
             ->joinWith( [
-                'pricies p' => function ( $q ){
+                'price p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
                 }
             ] )
@@ -85,6 +85,7 @@ class SettingsController extends BaseSettingsController
      */
     public function actionAdverts()
     {
+        // TODO: изменить! Поиск не только по email
         $email = \Yii::$app->user->identity->email;
 
         $dataProvider = $this->getUserAdverts( $email );

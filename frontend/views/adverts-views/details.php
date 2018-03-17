@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	<div class="col-sm-7">
 		<p>ID объявления:<span class="pull-right"><?= $model->id ?></span></p>
 		<hr>
-		<p id="adv-type">Тип:&nbsp;<strong><?= $model->types->name ?></strong>
+		<p id="adv-type">Тип:&nbsp;<strong><?= $model->type->name ?></strong>
 			<span id="place-date"
 						class="pull-right"><?= Yii::$app->formatter->asDatetime( $model->created_at,
               Yii::$app->params['dateFormat'] ); ?>
@@ -58,12 +58,12 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div id="details">
 				<!--<# CUSTOM_FORM #>-->
 				<p><i class="fa fa-map-marker fa-fw"></i>Расположение:<span
-							class="pull-right"><strong><?= $model->countries->country_name ?></strong></span></p>
+							class="pull-right"><strong><?= $model->country->country_name ?></strong></span></p>
 				<hr>
 				<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
-										<span class="label label-danger"><strong><?= $model->pricies->price ?>
-												&nbsp;<?= $model->pricies->currencies->short_name ?>.</strong></span></span>
-            <?= $model->pricies->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
+										<span class="label label-danger"><strong><?= $model->price->price ?>
+												&nbsp;<?= $model->price->currencies->short_name ?>.</strong></span></span>
+            <?= $model->price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
 				</p>
 				<hr>
 

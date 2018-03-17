@@ -138,10 +138,10 @@ class AdvertsSearch extends Adverts
         $pricePost = yii::$app->request->post( 'price_sort' );  //var_dump( $pricePost ); //die;
         switch ( $pricePost ) {
             case 'desc':
-                return [ 'pricies.price' => SORT_DESC ];
+                return [ 'pricie.price' => SORT_DESC ];
                 break;
             case 'asc':
-                return [ 'pricies.price' => SORT_ASC ];
+                return [ 'pricie.price' => SORT_ASC ];
         }
         return null;
     }
@@ -154,9 +154,9 @@ class AdvertsSearch extends Adverts
     public function searchHomeAdverts()
     {
         $query = Adverts::find()
-            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
+            ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
             ->joinWith( [
-                'pricies p' => function ( $q ){
+                'price p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
                 }
             ] )
@@ -213,8 +213,8 @@ class AdvertsSearch extends Adverts
                     'default' => SORT_DESC,
                 ],
                 'type'         => [
-                    'asc'     => [ 'types.name' => SORT_ASC, ],
-                    'desc'    => [ 'types.name' => SORT_DESC, ],
+                    'asc'     => [ 'type.name' => SORT_ASC, ],
+                    'desc'    => [ 'type.name' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
                 'defaultOrder' => [ 'id' => SORT_DESC ],
@@ -223,9 +223,9 @@ class AdvertsSearch extends Adverts
 
         $query = Adverts::find()
             ->where( [ 'adverts.cat_id' => $params['id'] ] )
-            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
+            ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
             ->joinWith( [
-                'pricies p' => function ( $q ){
+                'price p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
                 }
             ] )
@@ -265,8 +265,8 @@ class AdvertsSearch extends Adverts
                     'default' => SORT_DESC,
                 ],
                 'type'         => [
-                    'asc'     => [ 'types.name' => SORT_ASC, ],
-                    'desc'    => [ 'types.name' => SORT_DESC, ],
+                    'asc'     => [ 'type.name' => SORT_ASC, ],
+                    'desc'    => [ 'type.name' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
                 'defaultOrder' => [ 'id' => SORT_DESC ],
@@ -276,9 +276,9 @@ class AdvertsSearch extends Adverts
         $query = Adverts::find()
             ->where( [ 'adverts.cat_id' => $params ['catid'] ] )
             ->andWhere( [ 'adverts.subcat_id' => $params ['id'] ] )
-            ->joinWith( [ 'category', 'subcategory', 'types', 'periods', 'countries', 'pricies' ] )
+            ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
             ->joinWith( [
-                'pricies p' => function ( $q ){
+                'price p' => function ( $q ){
                     $q->joinWith( 'currencies c' );
                 }
             ] )

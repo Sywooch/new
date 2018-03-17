@@ -52,6 +52,6 @@ class Countries extends \yii\db\ActiveRecord
      */
     public function getAdverts()
     {
-        return $this->hasMany(Adverts::className(), ['country' => 'id']);
+        return $this->hasMany(Adverts::className(), ['country_id' => 'id']);
     }
 }
