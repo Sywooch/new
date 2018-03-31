@@ -28,11 +28,11 @@ use frontend\models\Images;
  * @property string $sid
  * @property integer $cat_id
  * @property integer $subcat_id
- * @property integer $type
+ * @property integer $type_id
  * @property string $header
  * @property string $description
- * @property integer $country
- * @property integer $period
+ * @property integer $country_id
+ * @property integer $period_id
  * @property string $author
  * @property string $email
  * @property integer $active
@@ -50,7 +50,7 @@ use frontend\models\Images;
  * @property Countries $countries
  * @property Periods $periods
  * @property Subcategory $subcategory
- * @property Types $types
+ * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
  */
@@ -110,18 +110,74 @@ class Adverts extends ActiveRecord
     public function rules()
     {
         return [
-            [ [ 'old_id','cat_id','subcat_id','type','country','period','active','selected','selected_old','special','special_old','images_old', 'ip', 'created_at', 'updated_at', 'draft', 'marker', 'has_images', 'views', ], 'integer' ],
-            [ [ 'sid','cat_id','subcat_id','type','header','description','author','email','period','country','ip',],'required'],
+            [
+                [
+                    'old_id',
+                    'cat_id',
+                    'subcat_id',
+                    'type_id',
+                    'country_id',
+                    'period_id',
+                    'active',
+                    'selected',
+                    'selected_old',
+                    'special',
+                    'special_old',
+                    'images_old',
+                    'ip',
+                    'created_at',
+                    'updated_at',
+                    'draft',
+                    'marker',
+                    'has_images',
+                    'views',
+                ],
+                'integer'
+            ],
+            [
+                [
+                    'sid',
+                    'cat_id',
+                    'subcat_id',
+                    'type_id',
+                    'header',
+                    'description',
+                    'author',
+                    'email',
+                    'period_id',
+                    'country_id',
+                    'ip',
+                ],
+                'required'
+            ],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
             [ 'email', 'email' ],
             [ [ 'old_id' ], 'unique' ],
             [ [ 'cat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => [ 'cat_id' => 'id' ] ],
-            [ [ 'country' ], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => [ 'country' => 'id' ] ],
-            [ [ 'period' ], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => [ 'period' => 'id' ] ],
+            [
+                [ 'country_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Countries::className(),
+                'targetAttribute' => [ 'country_id' => 'id' ]
+            ],
+            [
+                [ 'period_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Periods::className(),
+                'targetAttribute' => [ 'period_id' => 'id' ]
+            ],
             [ [ 'subcat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => [ 'subcat_id' => 'id' ] ],
-            [ [ 'type' ], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => [ 'type' => 'id' ] ],
+            [
+                [ 'type_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Types::className(),
+                'targetAttribute' => [ 'type_id' => 'id' ]
+            ],
             //            ['verifyCode', 'captcha'],
         ];
     }
@@ -138,15 +194,15 @@ class Adverts extends ActiveRecord
 
             'cat_id'    => 'Раздел',
             'subcat_id' => 'Подраздел',
-            'type'      => 'Тип',
+            'type_id'   => 'Тип',
 
             'header'      => 'Заголовок',
             'description' => 'Описание',
-            'country'     => 'Расположение',
+            'country_id'  => 'Расположение',
 
-            'period' => 'Период',
-            'author' => 'Автор',
-            'email'  => 'Email',
+            'period_id' => 'Период',
+            'author'    => 'Автор',
+            'email'     => 'Email',
 
             'active'       => 'Active',
             'selected'     => 'Selected',

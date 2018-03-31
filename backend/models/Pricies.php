@@ -11,7 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $ad_id
- * @property integer $price
+ * @property integer $price_name
  * @property integer $price_old
  * @property integer $currency_id
  * @property string $negotiable
@@ -35,9 +35,10 @@ class Pricies extends ActiveRecord
     {
         return [
             [ ['ad_id', 'old_id', 'price_old', 'currency_id' ], 'integer' ],
-            [ ['price'], 'integer', 'max' => 50000000 ],
-            [ 'price', 'default', 'value' => 0 ],
-//            [ 'price', 'match', 'pattern' =>  '/[^0-9]+/' ],
+            //            [ ['price_name'], 'integer', 'min' => 0, 'max' => 50000000 ],
+            [ [ 'price_name' ], 'string', 'min' => 0, 'max' => 10 ],
+            [ 'price_name', 'default', 'value' => 0 ],
+            [ 'price_name', 'match', 'pattern' => '/^[0-9\s]+$/', 'message' => 'Только цифры' ],// Все кроме цифр
             [ ['negotiable'], 'boolean'],
             [ ['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currencies::className(), 'targetAttribute' => [ 'currency_id' => 'id']],
         ];
@@ -49,10 +50,10 @@ class Pricies extends ActiveRecord
             [
                 'class'      => RemoveWhitespaseBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => 'price',
-                    ActiveRecord::EVENT_BEFORE_UPDATE => 'price',
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'price_name',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'price_name',
                 ],
-                'field'      => 'price',
+                'field'      => 'price_name',
             ],
         ];
     }
@@ -63,20 +64,20 @@ class Pricies extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'ad_id' => 'Ad ID',
-            'old_id' => 'Old_ID',
-            'price' => 'Цена',
-            'price_old' => 'Price Old',
+            'id'          => 'ID',
+            'ad_id'       => 'Ad ID',
+            'old_id'      => 'Old_ID',
+            'price_name'  => 'Цена',
+            'price_old'   => 'Price Old',
             'currency_id' => 'Currency ID',
-            'negotiable' => 'Negotiable',
+            'negotiable'  => 'Negotiable',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCurrencies()
+    public function getCurrence()
     {
         return $this->hasOne(Currencies::className(), [ 'id' => 'currency_id']);
     }
@@ -84,8 +85,8 @@ class Pricies extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAdverts()
+    public function getAdvert()
     {
-        return $this->hasMany(Adverts::className(), ['id' => 'ad_id']);
+        return $this->hasOne( Adverts::className(), [ 'id' => 'ad_id' ] );
     }
 }

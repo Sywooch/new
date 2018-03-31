@@ -12,9 +12,11 @@ use kartik\depdrop\DepDrop;
 use backend\models\Currencies;
 use yii\captcha\Captcha;
 use dosamigos\fileupload\FileUploadUI;
+use board\repositories\AdvertsRepository;
+use yii\widgets\MaskedInput;
+
 use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
-use board\repositories\AdvertsRepository;
 
 ImagesAsset::register( $this );
 PhonesAsset::register( $this );
@@ -30,7 +32,6 @@ PhonesAsset::register( $this );
 /* @var $images /view/create.php */
 /* @var $phonesArray /view/update.php */
 
-//\common\models\Helpers::p( $images ); die;
 ?>
 <div class="type-form">
 
@@ -97,19 +98,23 @@ PhonesAsset::register( $this );
         ] );
     } ?>
 
-    <?= $form->field( $model, 'type' )->dropDownList( AdvertsRepository::typeList(), [ 'prompt' => 'Выберите тип' ] ) ?>
+    <?= $form->field( $model, 'type_id' )->dropDownList( AdvertsRepository::typeList(),
+        [ 'prompt' => 'Выберите тип' ] ) ?>
 
-    <?= $form->field( $model, 'period' )->dropDownList( AdvertsRepository::periodList(), [ 'prompt' => 'Выберите период' ] ) ?>
+    <?= $form->field( $model, 'period_id' )->dropDownList( AdvertsRepository::periodList(),
+        [ 'prompt' => 'Выберите период' ] ) ?>
 
     <?= $form->field( $model, 'header' )->textInput() ?>
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
-    <?= $form->field( $price, 'price', [
-        'template' => '{label} <div class="col-sm-4 col-xs-8">{input}{error}{hint}</div><div class="col-sm-2 col-xs-4">' . Html::activeDropDownList( new Currencies(),
-                'short_name', AdvertsRepository::currencyList(),
-                [ 'class' => 'form-control', 'label' => false ] ) . '</div>'
-    ] ) ?>
+    <?= $form->field( $price, 'price_name', [
+        'template' => '{label} <div class="col-sm-4 col-xs-8">{input}{error}{hint}</div>
+				<div class="col-sm-3 col-xs-4">' .
+            $form->field( $price, 'currency_id' )->dropDownList( AdvertsRepository::currencyList(),
+                [ 'class' => 'form-control' ] )->label( false )
+            . '</div>'
+    ] )->textInput( [ 'maxlength' => true, ] ) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
@@ -207,7 +212,8 @@ PhonesAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'country' )->dropDownList( AdvertsRepository::countryList(), [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field( $model, 'country_id' )->dropDownList( AdvertsRepository::countryList(),
+        [ 'prompt' => 'Выберите' ] ) ?>
 
     <?= $form->field( $model, 'author' )->textInput( [
         'placeholder' => 'Иванов Иван',
@@ -223,7 +229,7 @@ PhonesAsset::register( $this );
 
           <?= $form->field( $phones, 'phone[]', [
               'template' => '{label}<div class="col-sm-5 col-xs-9">{input}</div><div class="col-sm-1 col-xs-2"><button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон"><i class="fa fa-plus" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
-          ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', ] ) ?>
+          ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'maxlength' => true, ] ) ?>
 
 			</div>
     <?php } else { ?>
