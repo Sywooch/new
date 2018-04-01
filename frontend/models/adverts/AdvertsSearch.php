@@ -157,7 +157,7 @@ class AdvertsSearch extends Adverts
             ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
             ->joinWith( [
                 'price p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
+                    $q->joinWith( 'currency c' );
                 }
             ] )
             ->andWhere( $this->whereCountry() )
@@ -226,7 +226,7 @@ class AdvertsSearch extends Adverts
             ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
             ->joinWith( [
                 'price p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
+                    $q->joinWith( 'currency c' );
                 }
             ] )
             ->orderBy( $sort->orders );
@@ -279,7 +279,7 @@ class AdvertsSearch extends Adverts
             ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
             ->joinWith( [
                 'price p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
+                    $q->joinWith( 'currency c' );
                 }
             ] )
             ->orderBy( $sort->orders );

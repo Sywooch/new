@@ -77,7 +77,7 @@ class Pricies extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCurrence()
+    public function getCurrency()
     {
         return $this->hasOne(Currencies::className(), [ 'id' => 'currency_id']);
     }

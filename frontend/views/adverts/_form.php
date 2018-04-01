@@ -18,8 +18,8 @@ use yii\widgets\MaskedInput;
 use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
 
-ImagesAsset::register( $this );
-PhonesAsset::register( $this );
+ImagesAsset::register($this);
+PhonesAsset::register($this);
 
 /* @var $model /view/create.php */
 /* @var $category /view/create.php */
@@ -36,7 +36,7 @@ PhonesAsset::register( $this );
 <div class="type-form">
 
     <?php
-		if( $model->isNewRecord ){
+    if ($model->isNewRecord) {
         $form = ActiveForm::begin([
             'options'     => ['enctype' => 'multipart/form-data', 'class' => 'form-horizontal',],
             //        'enableAjaxValidation' => true,
@@ -45,82 +45,80 @@ PhonesAsset::register( $this );
                 'labelOptions' => ['class' => 'col-sm-2 col-xs-12 control-label'],
             ],
         ]);
-		} else {
-        $form = ActiveForm::begin( [
+    } else {
+        $form = ActiveForm::begin([
             'options'     => [
                 'enctype' => 'multipart/form-data',
-                'action'  => [ 'adverts/preview' ],
-                'id' => 'update-ad',
+                'action'  => ['adverts/preview'],
+                'id'      => 'update-ad',
                 'class'   => 'form-horizontal',
             ],
             'fieldConfig' => [
                 'template'     => '{label}<div class="col-sm-6">{input}</div><div class="col-sm-offset-2 col-sm-6">{error}</div>',
-                'labelOptions' => [ 'class' => 'col-sm-2 control-label' ],
+                'labelOptions' => ['class' => 'col-sm-2 control-label'],
             ],
-        ] );
-		}
+        ]);
+    }
     ?>
 
     <?php
-    if ( $model->isNewRecord ) {
-        echo $form->field( $model, 'marker' )->hiddenInput( [
+    if ($model->isNewRecord) {
+        echo $form->field($model, 'marker')->hiddenInput([
             'id'    => 'marker',
-            'value' => random_int( 11111111, 99999999 )
-        ] )->label( false );
-    }
-    else {
-        echo $form->field( $model, 'ad_id' )->hiddenInput( [ 'id' => 'ad_id', 'value' => $model->id ] )->label( false );
+            'value' => random_int(11111111, 99999999)
+        ])->label(false);
+    } else {
+        echo $form->field($model, 'ad_id')->hiddenInput(['id' => 'ad_id', 'value' => $model->id])->label(false);
     } ?>
 
-    <?= $form->field( $model, 'cat_id' )->dropDownList( AdvertsRepository::categoryList(),
-        [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
+    <?= $form->field($model, 'cat_id')->dropDownList(AdvertsRepository::categoryList(),
+        ['id' => 'cat-id', 'prompt' => 'Выберите раздел']) ?>
 
     <?php
-    if ( $model->isNewRecord ) {
-        echo $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
-            'options'       => [ 'prompt' => 'Выберите подраздел', ],
+    if ($model->isNewRecord) {
+        echo $form->field($model, 'subcat_id')->widget(DepDrop::classname(), [
+            'options'       => ['prompt' => 'Выберите подраздел',],
             'pluginOptions' => [
-                'depends'     => [ 'cat-id' ],
+                'depends'     => ['cat-id'],
                 'placeholder' => 'Выберите подраздел',
-                'url'         => Url::to( [ '/site/subcat' ] )
+                'url'         => Url::to(['/site/subcat'])
             ]
-        ] );
-    }
-    else {
-        echo $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
-            'options'       => [ 'prompt' => 'Выберите подраздел', ],
-            'data'          => AdvertsRepository::subcategoryListUpdate( $model->cat_id ),
+        ]);
+    } else {
+        echo $form->field($model, 'subcat_id')->widget(DepDrop::classname(), [
+            'options'       => ['prompt' => 'Выберите подраздел',],
+            'data'          => AdvertsRepository::subcategoryListUpdate($model->cat_id),
             'pluginOptions' => [
-                'depends'     => [ 'cat-id' ],
+                'depends'     => ['cat-id'],
                 'placeholder' => 'Выберите подраздел',
-                'url'         => Url::to( [ '/site/subcat' ] )
+                'url'         => Url::to(['/site/subcat'])
             ]
-        ] );
+        ]);
     } ?>
 
-    <?= $form->field( $model, 'type_id' )->dropDownList( AdvertsRepository::typeList(),
-        [ 'prompt' => 'Выберите тип' ] ) ?>
+    <?= $form->field($model, 'type_id')->dropDownList(AdvertsRepository::typeList(),
+        ['prompt' => 'Выберите тип']) ?>
 
-    <?= $form->field( $model, 'period_id' )->dropDownList( AdvertsRepository::periodList(),
-        [ 'prompt' => 'Выберите период' ] ) ?>
+    <?= $form->field($model, 'period_id')->dropDownList(AdvertsRepository::periodList(),
+        ['prompt' => 'Выберите период']) ?>
 
-    <?= $form->field( $model, 'header' )->textInput() ?>
+    <?= $form->field($model, 'header')->textInput() ?>
 
-    <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
+    <?= $form->field($model, 'description')->textarea(['rows' => 4]) ?>
 
-    <?= $form->field( $price, 'price_name', [
+    <?= $form->field($price, 'price_name', [
         'template' => '{label} <div class="col-sm-4 col-xs-8">{input}{error}{hint}</div>
 				<div class="col-sm-3 col-xs-4">' .
-            $form->field( $price, 'currency_id' )->dropDownList( AdvertsRepository::currencyList(),
-                [ 'class' => 'form-control' ] )->label( false )
+            $form->field($price, 'currency_id')->dropDownList(AdvertsRepository::currencyList(),
+                ['class' => 'form-control'])->label(false)
             . '</div>'
-    ] )->textInput( [ 'maxlength' => true, ] ) ?>
+    ])->textInput(['maxlength' => true,]) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
 			<div class="checkbox">
 				<label>
-            <?= Html::activeCheckbox( $price, 'negotiable', [ 'label' => false ] ) ?>
+            <?= Html::activeCheckbox($price, 'negotiable', ['label' => false]) ?>
 					Торг уместен
 				</label>
 			</div>
@@ -138,24 +136,24 @@ PhonesAsset::register( $this );
 		<div id="file-upload" class="col-sm-offset-2 col-sm-6">
 
         <?php
-				if( $model->isNewRecord ){
-            echo FileUploadUI::widget( [
-                'model'         => $images,
-                'attribute'     => 'images',
-                'url'           => [ 'images/image-upload', ],
-                'gallery'       => false,
-                'uploadTemplateId' => null,
-                'downloadTemplateId' => null,
+        if ($model->isNewRecord) {
+            echo FileUploadUI::widget([
+                'model'                => $images,
+                'attribute'            => 'images',
+                'url'                  => ['images/image-upload',],
+                'gallery'              => false,
+                'uploadTemplateId'     => null,
+                'downloadTemplateId'   => null,
                 'downloadTemplateView' => '@frontend/views/uploads/download',
-                'uploadTemplateView' => '@frontend/views/uploads/upload',
-                'formView' => '@frontend/views/uploads/form',
-                'fieldOptions'  => [
+                'uploadTemplateView'   => '@frontend/views/uploads/upload',
+                'formView'             => '@frontend/views/uploads/form',
+                'fieldOptions'         => [
                     'accept' => 'image/*'
                 ],
-                'clientOptions' => [
+                'clientOptions'        => [
 //            		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
                 ],
-                'clientEvents'  => [
+                'clientEvents'         => [
                     'fileuploadsubmit' => 'function(e, data) {
 							     var input = $("#marker");
 							     data.formData = { marker: input.val() };
@@ -166,20 +164,20 @@ PhonesAsset::register( $this );
 //							   }
 						    }',
                 ],
-            ] );
-				} else {
-            echo FileUploadUI::widget( [
+            ]);
+        } else {
+            echo FileUploadUI::widget([
                 'model'         => $images,
                 'attribute'     => 'images',
-                'url'           => [ 'images/image-upload', ],
+                'url'           => ['images/image-upload',],
                 'gallery'       => false,
                 'fieldOptions'  => [
                     'accept' => 'image/*'
                 ],
                 'clientOptions' => [
                     //    		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
-                    'maxFileSize' => 2000000,
-                    'minFileSize' => 100,
+                    'maxFileSize'      => 2000000,
+                    'minFileSize'      => 100,
                     'maxNumberOfFiles' => 4,
                 ],
                 'clientEvents'  => [
@@ -193,8 +191,8 @@ PhonesAsset::register( $this );
 //										}
 								}',
                 ],
-            ] );
-				}
+            ]);
+        }
         ?>
 		</div>
 	</div>
@@ -212,51 +210,38 @@ PhonesAsset::register( $this );
 		</div>
 	</div>
 
-    <?= $form->field( $model, 'country_id' )->dropDownList( AdvertsRepository::countryList(),
-        [ 'prompt' => 'Выберите' ] ) ?>
+    <?= $form->field($model, 'country_id')->dropDownList(AdvertsRepository::countryList(),
+        ['prompt' => 'Выберите']) ?>
 
-    <?= $form->field( $model, 'author' )->textInput( [
+    <?= $form->field($model, 'author')->textInput([
         'placeholder' => 'Иванов Иван',
         'value'       => \Yii::$app->user->identity->username
-    ] ) ?>
+    ]) ?>
 
-    <?= $form->field( $model, 'email' )->input( 'email',
-        [ 'placeholder' => 'someone@mail.ru', 'value' => \Yii::$app->user->identity->email ] ) ?>
+    <?= $form->field($model, 'email')->input('email',
+        ['placeholder' => 'someone@mail.ru', 'value' => \Yii::$app->user->identity->email]) ?>
 
-    <?php
-    if ( $model->isNewRecord ) { ?>
-			<div id="form-phones-create">
 
-          <?= $form->field( $phones, 'phone[]', [
-              'template' => '{label}<div class="col-sm-5 col-xs-9">{input}</div><div class="col-sm-1 col-xs-2"><button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон"><i class="fa fa-plus" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
-          ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'maxlength' => true, ] ) ?>
+	<div id="form-phones">
+      <?php
+      foreach ($phonesArray as $key => $phones) {
+          echo $form->field($phones, "[$key]phone", [
+              'template' => '{label}<div class="col-sm-5">{input}</div>
+							<div class="col-sm-1">
+								<button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон">
+									<i class="fa fa-plus" aria-hidden="true"></i></button></div>
+							<div class="col-sm-offset-2 col-sm-5">{error}</div>'
+          ])->textInput(['placeholder' => '+7(xxx) xxx xx xx']);
+      } ?>
+	</div>
 
-			</div>
-    <?php } else { ?>
-			<div id="form-phones-update">
-          <?php
-          foreach ( $phonesArray as $key => $val ) {
-              if ( $key == 0 ) {
-                  echo $form->field( $phonesArray[$key], 'phone[]', [
-                      'template' => '{label}<div class="col-sm-5">{input}</div><div class="col-sm-1"><button class="btn btn-default add-phone-btn" type="button" title="Добавить телефон"><i class="fa fa-plus" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
-                  ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'value' => $phonesArray[$key]->phone ] );
-              }
-              else {
-                  echo $form->field( $phonesArray[$key], 'phone[]', [
-                      'template' => '<div class="col-sm-offset-2 col-sm-5">{input}</div><div class="col-sm-1"><button class="btn btn-default remove-phone-btn" type="button" title="Удалить телефон"><i class="fa fa-times" aria-hidden="true"></i></button></div><div class="col-sm-offset-2 col-sm-5">{error}</div>'
-                  ] )->textInput( [ 'placeholder' => '8 xxx xxx xx xx', 'value' => $phonesArray[$key]->phone ] ) ?>
-              <?php }
-          }
-          ?>
-			</div>
-		<?php } ?>
 
     <? /*= $form->field($model, 'verifyCode')->widget(Captcha::className()) */ ?>
 
 	<hr>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-6">
-        <?= Html::submitButton( 'Сохранить и перейти >>', [ 'class' => 'btn btn-primary' ] ) ?>
+        <?= Html::submitButton('Сохранить и перейти >>', ['class' => 'btn btn-primary']) ?>
 		</div>
 	</div>
 

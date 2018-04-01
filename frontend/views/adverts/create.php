@@ -14,10 +14,14 @@ use yii\helpers\Html;
 /* @var $country frontend\controllers\AdvertsController */
 /* @var $price frontend\controllers\AdvertsController */
 /* @var $currency frontend\controllers\AdvertsController */
-/* @var $phones frontend\controllers\AdvertsController */
+/* @var $phonesArray frontend\controllers\AdvertsController */
 /* @var $images frontend\controllers\AdvertsController */
 
-$this->title = 'Создать объявление';
+if($model->isNewRecord){
+	$this->title = 'Создать объявление';
+} else {
+    $this->title = 'Редактировать объявление';
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -26,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render( '_form', [
         'model'    => $model,
         'price'    => $price,
-        'phones'   => $phones,
+        'phonesArray'   => $phonesArray,
 				'images'   => $images,
     ] ) ?>
 

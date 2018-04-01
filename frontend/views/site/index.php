@@ -88,9 +88,7 @@ $this->title = 'vezugruz29.ru';
 			<hr>
 		</div>
       <?php foreach ( $dataProvider->getModels() as $model ) { ?>
-          <?= $this->render( Yii::getAlias( '@web' ) . '/adverts-views/_single_adv', [
-              'model' => $model
-          ] ) ?>
+          <?= $this->render( '/adverts-views/_single_adv', [ 'model' => $model ] ) ?>
       <?php } ?>
 
 	</div>
