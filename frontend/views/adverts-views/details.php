@@ -61,8 +61,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							class="pull-right"><strong><?= $model->country->country_name ?></strong></span></p>
 				<hr>
 				<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
-										<span class="label label-danger"><strong><?= $model->price->price ?>
-												&nbsp;<?= $model->price->currencies->short_name ?>.</strong></span></span>
+										<span class="label label-danger"><strong><?= $model->price->price_value ?>
+												&nbsp;<?= $model->price->currency->short_name ?></strong></span></span>
             <?= $model->price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
 				</p>
 				<hr>

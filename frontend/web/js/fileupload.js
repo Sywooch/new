@@ -2,7 +2,10 @@
  * Created by Администратор on 28.12.2017.
  */
 $(document).ready(function () {
-	var loader = $(document).find('#images-images-fileupload');
+	var loader = $(document).find('#images-fileupload-images');
+	var targetUrl = '/images/uploaded-images',
+		ad_id = $(document).find('#marker').val(),
+		table = $(document).find('#images-images-fileupload').find('table');
 
 	loader.fileupload({
 		    autoUpload: true,
@@ -11,13 +14,16 @@ $(document).ready(function () {
 			previewMaxWidth: 144,
 			previewMaxHeight: 85,
 			maxNumberOfFiles: 4,
-			acceptFileTypes: /(\.|\/)(jpg)$/i,
+		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+		// acceptFileTypes: /(\.|\/)(jpg)$/i,
 			dropZone: $('#dropzone')
 		}).bind('fileuploadalways', function (e, data) {
 		    $(this).find('li.template-download:eq(2)').after('<div class="clearfix"></div>');
 	    }).bind('fileuploaddestroy', function (e, data) {
 			$(this).find('.load-warning').remove();
 		}).bind('fileuploadprocessfail', function (e, data) {
+		// TODO: отловить ошибки
+		console.log(data.files);
 			if( $('*').is('.load-warning') ) {
 				return false;
 			} else {
@@ -50,10 +56,7 @@ $(document).ready(function () {
 		e.preventDefault();
 	});
 
-	var targetUrl = '/images/uploaded-images',
-		ad_id = $(document).find('#ad_id').val(),
-		table = $(document).find('#images-images-fileupload').find('table');
-
+	// Ищем загруженные картинки при редактировании
 	$.ajax({
 		url: targetUrl,
 		dataType: 'json',
@@ -62,9 +65,10 @@ $(document).ready(function () {
 		beforeSend: function () {},
 		error: function () {},
 		success: function (data) {
-
-			if($.isArray(data)){
-				$.each(data.images, function (i, val) { //console.log(val);
+			// TODO: проверка data на соответствие или пустоту
+			if (data) {
+				$.each(data.images, function (i, val) {
+					console.log(val);
 					table.append('<tr class="template-download fade in">' +
 						'<td><span class="preview">' +
 						'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +

@@ -59,7 +59,8 @@ use common\models\Helpers;
 					</small>
 				</p>
 
-				<p class="price"><?= Helpers::format( $model->price->price ) ?><?= $model->price->currencies->name ?></p>
+				<p class="price"><?= Helpers::format( $model->price->price_value ) ?>
+					&nbsp;<?= $model->price->currency->short_name ?></p>
 			</div>
 
 			<div class="pull-right data-extra">

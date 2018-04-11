@@ -44,7 +44,7 @@ use yii\helpers\Url;
 					</small>
 				</p>
 
-				<p class="price"><?= $model->price->price ?>&nbsp;<?= $model->price->currencies->short_name ?>.</p>
+				<p class="price"><?= $model->price->price_value ?>&nbsp;<?= $model->price->currency->short_name ?>.</p>
 			</div>
 
 			<div class="pull-right">

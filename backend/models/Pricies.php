@@ -35,10 +35,9 @@ class Pricies extends ActiveRecord
     {
         return [
             [ ['ad_id', 'old_id', 'price_old', 'currency_id' ], 'integer' ],
-            //            [ ['price_name'], 'integer', 'min' => 0, 'max' => 50000000 ],
-            [ [ 'price_name' ], 'string', 'min' => 0, 'max' => 10 ],
-            [ 'price_name', 'default', 'value' => 0 ],
-            [ 'price_name', 'match', 'pattern' => '/^[0-9\s]+$/', 'message' => 'Только цифры' ],// Все кроме цифр
+            [ [ 'price_value' ], 'string', 'max' => 10 ],
+            [ 'price_value', 'default', 'value' => '0' ],
+            [ 'price_value', 'match', 'pattern' => '/^[0-9\s]+$/', 'message' => 'Только цифры' ],// Все кроме цифр
             [ ['negotiable'], 'boolean'],
             [ ['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currencies::className(), 'targetAttribute' => [ 'currency_id' => 'id']],
         ];
@@ -50,10 +49,10 @@ class Pricies extends ActiveRecord
             [
                 'class'      => RemoveWhitespaseBehavior::className(),
                 'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => 'price_name',
-                    ActiveRecord::EVENT_BEFORE_UPDATE => 'price_name',
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'price_value',
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'price_value',
                 ],
-                'field'      => 'price_name',
+                'field'      => 'price_value',
             ],
         ];
     }
@@ -67,11 +66,17 @@ class Pricies extends ActiveRecord
             'id'          => 'ID',
             'ad_id'       => 'Ad ID',
             'old_id'      => 'Old_ID',
-            'price_name'  => 'Цена',
+            'price_value' => 'Цена',
             'price_old'   => 'Price Old',
             'currency_id' => 'Currency ID',
-            'negotiable'  => 'Negotiable',
+            'negotiable'  => 'Торг уместен',
         ];
+    }
+
+    public function beforeSave( $insert )
+    {
+        $this->price_value = str_replace( ' ', '', $this->price_value );
+        return true;
     }
 
     /**

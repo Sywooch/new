@@ -12,7 +12,8 @@ class m180330_180721_update_pricies_table extends Migration
      */
     public function safeUp()
     {
-        $this->renameColumn( '{{%pricies}}', 'price', 'price_name' );
+        $this->renameColumn( '{{%pricies}}', 'price', 'price_value' );
+        $this->alterColumn( '{{%pricies}}', 'price_value', $this->string( 10 ) );
     }
 
     /**
@@ -20,6 +21,7 @@ class m180330_180721_update_pricies_table extends Migration
      */
     public function safeDown()
     {
-        $this->renameColumn( '{{%pricies}}', 'price_name', 'price' );
+        $this->alterColumn( '{{%pricies}}', 'price_value', $this->integer() );
+        $this->renameColumn( '{{%pricies}}', 'price_value', 'price' );
     }
 }

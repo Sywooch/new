@@ -8,17 +8,18 @@
 
 namespace board\entities;
 
-use backend\models\Currencies;
+use frontend\models\UserPhones;
+use Yii;
 use backend\models\Pricies;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
-use yii\web\UploadedFile;
 use backend\models\Countries;
 use backend\models\Category;
 use backend\models\Subcategory;
 use backend\models\Periods;
 use backend\models\Types;
 use frontend\models\Images;
+use common\models\Helpers;
 
 /**
  * This is the model class for table "{{%adverts}}".
@@ -224,6 +225,19 @@ class Adverts extends ActiveRecord
         ];
     }
 
+    /**
+     * @return bool
+     */
+    public function beforeValidate()
+    {
+        if ( $this->isNewRecord ) {
+            $this->sid = Yii::$app->session->id;
+            $this->ip = Helpers::IpToNum( Yii::$app->request->userIP );
+            return true;
+        }
+        return parent::beforeValidate();
+    }
+
     /*public function addPhoto( UploadedFile $file )
     {
         $image = $this->photos;
@@ -296,5 +310,8 @@ class Adverts extends ActiveRecord
         return $this->hasOne( Images::className(), [ 'ad_id' => 'id' ] );
     }
 
-    public function releaseEvents(){ }
+    public function getPhones()
+    {
+        return $this->hasMany( UserPhones::className(), [ 'ad_id' => 'id' ] );
+    }
 }

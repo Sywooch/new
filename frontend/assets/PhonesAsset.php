@@ -13,7 +13,7 @@ class PhonesAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [];
     public $js = [
-        'js/add_phones.min.js',
+        'js/add_phones.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

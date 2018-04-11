@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use board\entities\Adverts;
 
 /**
  * This is the model class for table "{{%user_phones}}".
@@ -31,9 +32,8 @@ class UserPhones extends \yii\db\ActiveRecord
         return [
             [ [ 'user_id', 'ad_id', 'sort' ], 'integer' ],
             [ [ 'phone' ], 'string', 'min' => 6, 'max' => 20 ],
-            [ [ 'ad_id', 'phone', 'sort' ], 'required' ],
+            [ [ 'phone', ], 'required' ],
             [ 'phone', 'match', 'pattern' => '/^[-+0-9()\s]+$/', 'message' => 'Только цифры' ],
-            //            ['phone', 'match', 'pattern' => '/^\s*[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'message' => 'Только цифры' ],
         ];
     }
 
@@ -49,5 +49,10 @@ class UserPhones extends \yii\db\ActiveRecord
             'phone'   => 'Телефон',
             'sort'    => 'Sort',
         ];
+    }
+
+    public function getAdvert()
+    {
+        return $this->hasOne( Adverts::className(), [ 'id' => 'ad_id' ] );
     }
 }

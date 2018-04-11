@@ -142,33 +142,27 @@ class ImagesController extends Controller
 
     /**
      * @return string
+     * @throws NotFoundHttpException
      */
     public function actionUploadedImages()
     {
         $output = [];
         $id = Yii::$app->request->post( 'id' );
 
-        if ( Yii::$app->request->isAjax ) {
-            // TODO: изменить sid
-            $sid = Yii::$app->session->id;
+        // TODO: изменить sid
+        $sid = Yii::$app->session->id;
 
-            if ( ( $model = Images::findAll( [ 'ad_id' => $id, 'sid' => $sid ] ) ) !== null ) {
+        if ( ( $model = Images::findAll( [ 'ad_id' => $id, 'sid' => $sid ] ) ) !== null ) {
 
-                if ( !empty( $model ) ) {
-                    $output = [ 'images' => $model ];
-                }
-                else {
-                    $output = [ 'images' => $sid ];
-                }
-
-                return Json::encode( $output );
+            if ( !empty( $model ) ) {
+                $output = [ 'images' => $model ];
             }
-            else {
-                throw new NotFoundHttpException( 'The requested page does not exist.' );
-            }
+
+            return Json::encode( $output );
         }
-
-        return Json::encode( $output );
+        else {
+            throw new NotFoundHttpException( 'The requested page does not exist.' );
+        }
     }
 
     /**

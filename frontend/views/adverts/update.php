@@ -17,7 +17,8 @@ use frontend\assets\PhonesAsset;
 /* @var $country frontend\controllers\AdvertsController */
 /* @var $price frontend\controllers\AdvertsController */
 /* @var $currency frontend\controllers\AdvertsController */
-/* @var $phones frontend\controllers\AdvertsController */
+/* @var $phonesArray frontend\controllers\AdvertsController */
+/* @var $images frontend\controllers\AdvertsController */
 
 FontAwesomeAsset::register( $this );
 ImagesAsset::register( $this );
@@ -30,9 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render( '_form', [
         'model'       => $model,
-        //        'price'        => $price,
-        'currency'    => $currency,
-        //        'currencyList' => $currencyList,
+        'price'       => $price,
         'phonesArray' => $phonesArray,
         'images'      => $images,
     ] ) ?>

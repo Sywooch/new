@@ -53,7 +53,7 @@ class SettingsController extends BaseSettingsController
             ->joinWith( 'country' )
             ->joinWith( [
                 'price p' => function ( $q ){
-                    $q->joinWith( 'currencies c' );
+                    $q->joinWith( 'currency c' );
                 }
             ] )
             ->where( [ 'email' => $email ] );
