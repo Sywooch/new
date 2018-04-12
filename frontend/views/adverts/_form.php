@@ -118,11 +118,15 @@ PhonesAsset::register( $this );
                     'accept' => 'image/*'
                 ],
             'clientOptions'        => [
-//            		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
+                'maxFileSize'      => 2000000,
+                'autoUpload'       => true,
+                'previewMaxWidth'  => 213,
+                'previewMaxHeight' => 160,
+                //            		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
                 ],
             'clientEvents'         => [
                     'fileuploadsubmit' => 'function(e, data) {
-							     var input = $("#marker");
+							     	var input = $("#marker");
 							     data.formData = { marker: input.val() };
 //							   if (!data.formData.marker) {
 //									 data.context.find("button").prop("disabled", false);
@@ -130,42 +134,8 @@ PhonesAsset::register( $this );
 //									 return false;
 //							   }
 						    }',
-                ],
+            ],
         ] );
-        //        }
-        //        else {
-        //            echo FileUploadUI::widget( [
-        //                'model'         => $images,
-        //                'attribute'     => 'images',
-        //                'url'           => [ 'images/image-upload', ],
-        //                'gallery'       => false,
-        //                'uploadTemplateId'     => null,
-        //                'downloadTemplateId'   => null,
-        //                'downloadTemplateView' => '@frontend/views/uploads/download',
-        //                'uploadTemplateView'   => '@frontend/views/uploads/upload',
-        //                'formView'             => '@frontend/views/uploads/form',
-        //                'fieldOptions'  => [
-        //                    'accept' => 'image/*'
-        //                ],
-        //                'clientOptions' => [
-        //                    //    		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
-        //                    'maxFileSize'      => 2000000,
-        //                    'minFileSize'      => 100,
-        //                    'maxNumberOfFiles' => 4,
-        //                ],
-        //                'clientEvents'  => [
-        //                    'fileuploadsubmit' => 'function(e, data) {
-        //										var input = $("#marker");
-        //										data.formData = {marker: input.val()};
-        ////										if (!data.formData.example) {
-        ////												data.context.find("button").prop("disabled", false);
-        ////												input.focus();
-        ////												return false;
-        ////										}
-        //								}',
-        //                ],
-        //            ] );
-        //        }
         ?>
 		</div>
 	</div>

@@ -2,73 +2,52 @@
  * Created by Администратор on 28.12.2017.
  */
 $(document).ready(function () {
-	var loader = $(document).find('#images-fileupload-images');
-	var targetUrl = '/images/uploaded-images',
+	var loader = $(document).find('#images-images-fileupload'),
+		targetUrl = '/images/uploaded-images',
 		ad_id = $(document).find('#marker').val(),
-		table = $(document).find('#images-images-fileupload').find('table');
+		table = loader.find('table');
 
 	loader.fileupload({
-		    autoUpload: true,
-			maxFileSize: 2000000,
-		    minFileSize: 100,
-			previewMaxWidth: 144,
-			previewMaxHeight: 85,
-			maxNumberOfFiles: 4,
+		// autoUpload: true,
+		// maxFileSize: 2000000,
+		minFileSize: 100,
+		// previewMaxWidth: 144,
+		// previewMaxHeight: 85,
+		maxNumberOfFiles: 4,
 		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 		// acceptFileTypes: /(\.|\/)(jpg)$/i,
-			dropZone: $('#dropzone')
-		}).bind('fileuploadalways', function (e, data) {
-		    $(this).find('li.template-download:eq(2)').after('<div class="clearfix"></div>');
-	    }).bind('fileuploaddestroy', function (e, data) {
-			$(this).find('.load-warning').remove();
-		}).bind('fileuploadprocessfail', function (e, data) {
+		dropZone: $('#dropzone')
+	}).bind('fileuploadalways', function (e, data) {
+		$(this).find('li.template-download:eq(2)').after('<div class="clearfix"></div>');
+	}).bind('fileuploaddestroy', function (e, data) {
+		$(this).find('.load-warning').remove();
+	}).bind('fileuploadprocessfail', function (e, data) {
 		// TODO: отловить ошибки
 		console.log(data.files);
-			if( $('*').is('.load-warning') ) {
-				return false;
-			} else {
-				$(this).append('<p class="load-warning">' +
-					'<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>' +
-					'Превышено максимальное количество файлов!</p>');
-			}
-	    });
-	
-	loader.on('click','.cancel', function () {
-		loader.find('.load-warning').remove();
-	});
-
-	// Изменение размеров dropzone
-	$(document).bind('dragover', function (e) {
-		var dropZone = $('#dropzone'),
-			timeout = window.dropZoneTimeout;
-		if (timeout) {
-			clearTimeout(timeout);
+		if ($('*').is('.load-warning')) {
+			return false;
 		} else {
-			dropZone.addClass('in');
+			$(this).append('<p class="load-warning">' +
+				'<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>' +
+				'Превышено максимальное количество файлов!</p>');
 		}
-		var hoveredDropZone = $(e.target).closest(dropZone);
-		dropZone.toggleClass('hover', hoveredDropZone.length);
-		window.dropZoneTimeout = setTimeout(function () {
-			window.dropZoneTimeout = null;
-			dropZone.removeClass('in hover');
-		}, 100);
-	}).bind('drop dragover', function (e) {
-		e.preventDefault();
 	});
 
-	// Ищем загруженные картинки при редактировании
+// Ищем загруженные картинки при редактировании
 	$.ajax({
 		url: targetUrl,
 		dataType: 'json',
 		method: 'post',
-		data: {id:ad_id},
-		beforeSend: function () {},
-		error: function () {},
+		data: {id: ad_id},
+		beforeSend: function () {
+		},
+		error: function () {
+		},
 		success: function (data) {
 			// TODO: проверка data на соответствие или пустоту
 			if (data) {
-				$.each(data.images, function (i, val) {
-					console.log(val);
+				$.each(data.images, function (i, val) { //console.log('images--' + val);
+					console.log(table);
 					table.append('<tr class="template-download fade in">' +
 						'<td><span class="preview">' +
 						'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
@@ -92,7 +71,31 @@ $(document).ready(function () {
 				console.log(data);
 			}
 		},
-		complete: function () {}
+		complete: function () {
+		}
+	});
+
+	loader.on('click', '.cancel', function () {
+		loader.find('.load-warning').remove();
+	});
+
+	// Изменение размеров dropzone
+	$(document).bind('dragover', function (e) {
+		var dropZone = $('#dropzone'),
+			timeout = window.dropZoneTimeout;
+		if (timeout) {
+			clearTimeout(timeout);
+		} else {
+			dropZone.addClass('in');
+		}
+		var hoveredDropZone = $(e.target).closest(dropZone);
+		dropZone.toggleClass('hover', hoveredDropZone.length);
+		window.dropZoneTimeout = setTimeout(function () {
+			window.dropZoneTimeout = null;
+			dropZone.removeClass('in hover');
+		}, 100);
+	}).bind('drop dragover', function (e) {
+		e.preventDefault();
 	});
 });
 

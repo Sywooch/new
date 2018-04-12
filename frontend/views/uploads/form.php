@@ -29,7 +29,7 @@ $context = $this->context;
 </div>
 <!-- The table listing the files available for upload/download -->
 <div id="preview-container">
-	<ul class="files list-unstyled"></ul>
+	<div class="files"></div>
 </div>
 <div class="clearfix"></div>
 <?= Html::endTag( 'div' ); ?>
