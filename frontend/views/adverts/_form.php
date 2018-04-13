@@ -102,9 +102,7 @@ PhonesAsset::register( $this );
 	<div class="form-group">
 		<div id="file-upload" class="col-sm-offset-2 col-sm-6">
 
-        <?php
-        //        if ( $model->isNewRecord ) {
-        echo FileUploadUI::widget( [
+        <?= FileUploadUI::widget( [
             'model'                => $images,
             'attribute'            => 'images',
             'url'                  => [ 'images/image-upload', ],
@@ -118,10 +116,12 @@ PhonesAsset::register( $this );
                     'accept' => 'image/*'
                 ],
             'clientOptions'        => [
+                'maxNumberOfFiles' => 6,
                 'maxFileSize'      => 2000000,
+                'minFileSize'      => 100,
                 'autoUpload'       => true,
-                'previewMaxWidth'  => 213,
-                'previewMaxHeight' => 160,
+                'previewMaxWidth'  => 151,
+                'previewMaxHeight' => 113,
                 //            		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
                 ],
             'clientEvents'         => [

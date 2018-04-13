@@ -412,17 +412,21 @@ div.required label.control-label:after {
 }
 
 /* Images blueimp */
-#file-upload .template-download, #file-upload .template-upload {
-  float: left;
-  margin-right: 20px;
-  margin-bottom: 15px;
+#file-upload .panel {
+  /*float: left;*/
+  /*margin-right: 15px;*/
+  /*margin-bottom: 15px;*/
   padding: 6px;
   text-align: center;
 }
 
+#file-upload .list-unstyled {
+  margin-bottom: 0 !important;
+}
+
 #file-upload .preview {
-  width: 213px;
-  height: 160px;
+  max-width: 151px;
+  height: 113px;
 }
 
 #file-upload .preview img{

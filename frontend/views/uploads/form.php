@@ -10,14 +10,14 @@ $context = $this->context;
 <div class="row fileupload-buttonbar">
 	<div class="col-sm-12">
 		<!-- The fileinput-button span is used to style the file input field as button -->
-		<span class="btn btn-success fileinput-button">
+		<a class="btn btn-success fileinput-button">
                 <i class="glyphicon glyphicon-plus"></i>
                 <span><?= Yii::t( 'fileupload', 'Add files' ) ?>...</span>
 
         <?= $context->model instanceof \yii\base\Model && $context->attribute !== null
             ? Html::activeFileInput( $context->model, $context->attribute, $context->fieldOptions )
             : Html::fileInput( $context->name, $context->value, $context->fieldOptions ); ?>
-		</span>
+		</a>
 	</div>
 	<!-- The global progress state -->
 	<div class="col-sm-7 fileupload-progress fade">
@@ -29,7 +29,7 @@ $context = $this->context;
 </div>
 <!-- The table listing the files available for upload/download -->
 <div id="preview-container">
-	<div class="files"></div>
+	<div class="files row"></div>
 </div>
 <div class="clearfix"></div>
 <?= Html::endTag( 'div' ); ?>

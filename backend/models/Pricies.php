@@ -5,13 +5,14 @@ namespace backend\models;
 use common\models\behaviors\RemoveWhitespaseBehavior;
 use board\entities\Adverts;
 use yii\db\ActiveRecord;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "{{%price}}".
  *
  * @property integer $id
  * @property integer $ad_id
- * @property integer $price_name
+ * @property integer $price_value
  * @property integer $price_old
  * @property integer $currency_id
  * @property string $negotiable
@@ -93,5 +94,19 @@ class Pricies extends ActiveRecord
     public function getAdvert()
     {
         return $this->hasOne( Adverts::className(), [ 'id' => 'ad_id' ] );
+    }
+
+    /**
+     * TODO: проверить нужен ли этот метод
+     * @param $id
+     * @return null|static
+     * @throws NotFoundHttpException
+     */
+    public static function findModel( $id )
+    {
+        if ( ( $model = static::findOne( [ 'ad_id' => $id ] ) ) !== null ) {
+            return $model;
+        }
+        throw new NotFoundHttpException( 'The requested page does not exist.' );
     }
 }

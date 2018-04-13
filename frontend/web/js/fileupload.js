@@ -5,17 +5,11 @@ $(document).ready(function () {
 	var loader = $(document).find('#images-images-fileupload'),
 		targetUrl = '/images/uploaded-images',
 		ad_id = $(document).find('#marker').val(),
-		table = loader.find('table');
+		table = loader.find('table'),
+		imageContainer = loader.find("#preview-container");
 
 	loader.fileupload({
-		// autoUpload: true,
-		// maxFileSize: 2000000,
-		minFileSize: 100,
-		// previewMaxWidth: 144,
-		// previewMaxHeight: 85,
-		maxNumberOfFiles: 4,
 		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-		// acceptFileTypes: /(\.|\/)(jpg)$/i,
 		dropZone: $('#dropzone')
 	}).bind('fileuploadalways', function (e, data) {
 		$(this).find('li.template-download:eq(2)').after('<div class="clearfix"></div>');
@@ -46,25 +40,44 @@ $(document).ready(function () {
 		success: function (data) {
 			// TODO: проверка data на соответствие или пустоту
 			if (data) {
-				$.each(data.images, function (i, val) { //console.log('images--' + val);
-					console.log(table);
-					table.append('<tr class="template-download fade in">' +
-						'<td><span class="preview">' +
-						'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
-						val.filename + '" data-gallery=""><img src="' + val.path + val.filename + '"></a>' +
-						'</span></td>' +
-						'<td><p class="name">' +
-						'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
-						val.filename + '" data-gallery="">' + val.filename + '</a>' +
-						'</p></td>' +
-						'<td><span class="size">' + val.size + '</span></td>' +
-						'<td>' +
-						'<button class="btn btn-danger delete" data-type="POST" data-url="/images/image-delete?name=' + val.filename + '">' +
-						'<i class="glyphicon glyphicon-trash"></i>' +
-						'<span>Удалить</span></button>' +
-						'<input class="toggle" name="delete" value="1" type="checkbox">' +
-						'</td>' +
-						'</tr>');
+				$.each(data.images, function (i, val) {
+					if ($("*").is(table)) {
+						table.append('<tr class="template-download fade in">' +
+							'<td><span class="preview">' +
+							'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
+							val.filename + '" data-gallery=""><img src="' + val.path + val.filename + '"></a>' +
+							'</span></td>' +
+							'<td><p class="name">' +
+							'<a href="' + val.path + val.filename + '" title="' + val.filename + '" download="' +
+							val.filename + '" data-gallery="">' + val.filename + '</a>' +
+							'</p></td>' +
+							'<td><span class="size">' + val.size + '</span></td>' +
+							'<td>' +
+							'<button class="btn btn-danger delete" data-type="POST" data-url="/images/image-delete?name=' + val.filename + '">' +
+							'<i class="glyphicon glyphicon-trash"></i>' +
+							'<span>Удалить</span></button>' +
+							'<input class="toggle" name="delete" value="1" type="checkbox">' +
+							'</td>' +
+							'</tr>');
+					}
+
+					if ($("*").is(imageContainer)) {
+						console.log(imageContainer);
+						imageContainer.find(".files").append('<div class="col-sm-4 template-download fade in">'
+							+ '<div class="panel panel-default">'
+							+ '<ul class="list-unstyled">'
+							+ '<li class="preview">'
+							+ '<img src="' + val.path + val.filename + '">'
+							+ '</li>'
+							+ '<li class="buttons">'
+							+ '<button class="btn btn-danger delete" title="Удалить" data-type="POST" data-url="/images/image-delete?name='
+							+ val.filename + '"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>'
+							+ '</li>'
+							+ '</ul>'
+							+ '</div>'
+							+ '</div>');
+					}
+
 				})
 			} else {
 				// Если нет картинок

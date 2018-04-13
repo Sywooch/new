@@ -1,9 +1,8 @@
-<?php
-?>
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <div class="panel panel-default template-upload fade">
+<div class="col-sm-4 template-upload fade">
+    <div class="panel panel-default">
 
         <ul class="list-unstyled">
             <li class="preview"></li>
@@ -16,13 +15,14 @@
 										</button>
 								{% } %}
 								{% if (!i) { %}
-										<button class="btn btn-warning cancel">
-												<i class="glyphicon glyphicon-ban-circle"></i>
+										<button class="btn btn-warning cancel" title="Отменить">
+												<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
 										</button>
 								{% } %}
             </li>
         </ul>
 
     </div>
+</div>
 {% } %}
 </script>
