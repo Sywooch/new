@@ -148,31 +148,17 @@ class AdvertsRepository
 
             if ( $parents != null ) {
                 $cat_id = $parents[0];
-                $out = self::subcategoryList( $cat_id );
+                $out = ArrayHelper::map( Subcategory::find()
+                    ->where( [ 'cat_id' => $cat_id ] )
+                    ->orderBy( 'sort' )->asArray()->all(),
+                    'id', 'subcat_name' );
+
                 echo Json::encode( [ 'output' => $out, 'selected' => '' ] );
                 return;
             }
         }
 
         echo Json::encode( [ 'output' => '', 'selected' => '' ] );
-    }
-
-    /**
-     * Получение списка подкатегорий для getSubcat()
-     *
-     * @param $cat_id
-     * @return array
-     */
-    public function subcategoryList( $cat_id )
-    {
-        $array = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
-            'id', 'subcat_name' );
-
-        $result = [];
-        foreach ( $array as $key => $value ) {
-            $result[] = [ 'id' => $key, 'name' => $value ];
-        }
-        return $result;
     }
 
     /**
