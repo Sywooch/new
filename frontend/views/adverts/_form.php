@@ -16,8 +16,8 @@ use board\repositories\AdvertsRepository;
 use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
 
-ImagesAsset::register( $this );
-PhonesAsset::register( $this );
+//ImagesAsset::register( $this );
+//PhonesAsset::register( $this );
 
 /* @var $model /view/create.php */
 /* @var $category /view/create.php */
@@ -46,7 +46,7 @@ PhonesAsset::register( $this );
         ],
     ] )
     ?>
-    <?= Html::hiddenInput( 'marker', $model->isNewRecord ? random_int( 11111111, 99999999 ) : $model->id,
+    <?= Html::hiddenInput( 'marker', $model->isNewRecord ? mt_rand( 11111111, 99999999 ) : $model->id,
         [ 'id' => 'marker' ] ); ?>
     <?= $form->field( $model, 'cat_id' )->dropDownList( AdvertsRepository::categoryList(),
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>

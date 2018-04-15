@@ -9,9 +9,7 @@
 namespace board\repositories;
 
 use yii;
-use board\dispatchers\EventDispatcher;
 use board\entities\Adverts;
-use board\repositories\events\EntityPersisted;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use backend\models\Subcategory;
@@ -26,37 +24,21 @@ use frontend\models\UserPhones;
 
 class AdvertsRepository
 {
-    private $_dispatcher;
     public $model;
 
-    /*public function __construct( EventDispatcher $dispatcher )
-    {
-        $this->_dispatcher = $dispatcher;
-    }*/
-
-    /*public function save( Adverts $advert )
-    {
-        if ( !$advert->save() ) {
-            throw new \RuntimeException( 'Saving error.' );
-        }
-
-//        $this->_dispatcher->dispatchAll( $advert->releaseEvents() );
-//        $this->_dispatcher->dispatch( new EntityPersisted( $advert ) );
-    }*/
-
-    public function createAdvertForm(){
-        $this->model = new Adverts();
-        $this->model->_category = self::categoryList();
-        $this->model->type = self::typeList();
-        $this->model->_period = self::periodList();
-        $this->model->_city = self::countryList();
-        $this->model->price = new Pricies();
-        $this->model->_currency = self::currencyList();
-        $this->model->currency = new Currencies();
-        $this->model->phones = new UserPhones();
-
-        return $this->model;
-    }
+//    public function createAdvertForm(){
+//        $this->model = new Adverts();
+//        $this->model->_category = self::categoryList();
+//        $this->model->type = self::typeList();
+//        $this->model->_period = self::periodList();
+//        $this->model->_city = self::countryList();
+//        $this->model->price = new Pricies();
+//        $this->model->_currency = self::currencyList();
+//        $this->model->currency = new Currencies();
+//        $this->model->phones = new UserPhones();
+//
+//        return $this->model;
+//    }
 
     public function get( $id )
     {
@@ -148,31 +130,15 @@ class AdvertsRepository
 
             if ( $parents != null ) {
                 $cat_id = $parents[0];
-                $out = self::subcategoryList( $cat_id );
+                $out = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
+                    'id', 'subcat_name' );
+
                 echo Json::encode( [ 'output' => $out, 'selected' => '' ] );
                 return;
             }
         }
 
         echo Json::encode( [ 'output' => '', 'selected' => '' ] );
-    }
-
-    /**
-     * Получение списка подкатегорий для getSubcat()
-     *
-     * @param $cat_id
-     * @return array
-     */
-    public function subcategoryList( $cat_id )
-    {
-        $array = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
-            'id', 'subcat_name' );
-
-        $result = [];
-        foreach ( $array as $key => $value ) {
-            $result[] = [ 'id' => $key, 'name' => $value ];
-        }
-        return $result;
     }
 
     /**
