@@ -16,8 +16,8 @@ use board\repositories\AdvertsRepository;
 use frontend\assets\ImagesAsset;
 use frontend\assets\PhonesAsset;
 
-//ImagesAsset::register( $this );
-//PhonesAsset::register( $this );
+ImagesAsset::register( $this );
+PhonesAsset::register( $this );
 
 /* @var $model /view/create.php */
 /* @var $category /view/create.php */

@@ -130,10 +130,13 @@ class AdvertsRepository
 
             if ( $parents != null ) {
                 $cat_id = $parents[0];
-                $out = ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
-                    'id', 'subcat_name' );
 
-                echo Json::encode( [ 'output' => $out, 'selected' => '' ] );
+                $model = Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all();
+                foreach ( $model as $val ) {
+                    $out[] = [ 'id' => $val['id'], 'name' => $val['subcat_name'] ];
+                }
+
+                Yii::$app->response->data = Json::encode( [ 'output' => $out, 'selected' => '' ] );
                 return;
             }
         }
