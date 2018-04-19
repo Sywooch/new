@@ -106,18 +106,12 @@ class AdvertsViewsController extends Controller
      */
     public function actionDetails( $id )
     {
-        $sid = Yii::$app->session->id;
         $model = $this->findModel( $id );
         // Обновление счетчика просмотров
         $model->updateCounters(['views' => 1]);
-        // TODO: sid
-        $phones = UserPhones::find()->where( [ 'ad_id' => $id ] )->orderBy( 'sort' )->all();
-        $images = Images::find()->where( [ 'ad_id' => $id, 'sid' => $sid ] )->all();
+
         return $this->render( 'details', [
-            'id'    => $id,
             'model' => $model,
-            'phones' => $phones,
-            'images' => $images,
         ] );
     }
 
@@ -130,7 +124,7 @@ class AdvertsViewsController extends Controller
     {
         if ( ( $model = Adverts::find()
                 ->where( [ 'adverts.id' => $id ] )
-                ->joinWith( ['category', 'subcategory', 'type', 'period', 'country', 'price' ] )
+                ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price', 'phones', 'images' ] )
                 ->joinWith( [ 'price p' => function ( $q ){ $q->joinWith( 'currency c' ); } ] )
                 ->one()
             ) !== null

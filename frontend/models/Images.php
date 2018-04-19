@@ -70,6 +70,6 @@ class Images extends \yii\db\ActiveRecord
      */
     public function getAdverts()
     {
-        return $this->hasMany(Adverts::className(), ['id' => 'ad_id']);
+        return $this->hasOne( Adverts::className(), [ 'id' => 'ad_id' ] );
     }
 }

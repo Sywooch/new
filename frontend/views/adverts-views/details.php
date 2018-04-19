@@ -6,12 +6,13 @@
  * Time: 7:52
  */
 
-/* @var $id frontend\controllers\AdvertsViewsController */
+/* @var $images frontend\controllers\AdvertsController */
 
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\captcha\Captcha;
 use frontend\assets\MagnificAsset;
+use board\entities\Adverts;
 
 MagnificAsset::register( $this );
 
@@ -71,8 +72,8 @@ $this->params['breadcrumbs'][] = $this->title;
 							class="pull-right"><strong><?= $model->author ?></strong></span></p>
 				<hr>
           <?php
-          foreach ( $phones as $key => $val ) { ?>
-						<p><i class="fa fa-phone fa-fw"></i>Телефон:<span class="pull-right"><?= $phones[$key]->phone ?></span>
+          foreach ( $model->phones as $key => $val ) { ?>
+						<p><i class="fa fa-phone fa-fw"></i>Телефон:<span class="pull-right"><?= $val->phone ?></span>
 						</p>
 						<hr>
           <?php }
@@ -171,10 +172,12 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="row">
 			<div class="col-sm-12 col-xs-12 mb10">
 				<div id="lr-btns" class="btn-group pull-right">
-					<a class="btn btn-primary" href=""
-						 title="Предыдущее объявление"><i class="fa fa-chevron-left"></i></a>
-					<a class="btn btn-primary" href=""
-						 title="Следующее объявление"><i class="fa fa-chevron-right"></i></a>
+            <?= Html::a( '<i class="fa fa-chevron-left"></i>',
+                [ 'adverts-views/details', 'id' => Adverts::getPrevNextPage( $model->id, Adverts::PREV_PAGE_DIRECT ) ],
+                [ 'class' => 'btn btn-primary', 'title' => 'Предыдущее объявление' ] ) ?>
+            <?= Html::a( '<i class="fa fa-chevron-right"></i>',
+                [ '/adverts-views/details', 'id' => Adverts::getPrevNextPage( $model->id, Adverts::NEXT_PAGE_DIRECT ) ],
+                [ 'class' => 'btn btn-primary', 'title' => 'Следующее объявление' ] ) ?>
 				</div>
 			</div>
 		</div>
@@ -183,20 +186,26 @@ $this->params['breadcrumbs'][] = $this->title;
 			<div class="col-sm-12 col-xs-12">
 				<ul class="thumbnails list-unstyled">
             <?php
-            foreach ( $images as $key => $value ){
-                if ($key == 0){ ?>
+            foreach ( $model->images as $key => $value ) {
+                if ( $key == 0 ) { ?>
 									<li>
-										<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>" title="">
-                        <?= Html::img('@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+										<a class="thumbnail"
+											 href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $value->sid . '/' . $value->filename ?>"
+											 title="">
+                        <?= Html::img( '@web/img/temp/' . $value->sid . '/' . $value->filename ) ?>
 										</a>
 									</li>
-                <?php } else { ?>
-									<li class="image-additional">
-										<a class="thumbnail" href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>" title="">
-                        <?= Html::img('@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
-										</a>
-									</li>
-                <?php }} ?>
+                <?php } ?>
+
+							<li class="image-additional">
+								<a class="thumbnail"
+									 href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $value->sid . '/' . $value->filename ?>"
+									 title="">
+                    <?= Html::img( '@web/img/temp/' . $value->sid . '/' . $value->filename ) ?>
+								</a>
+							</li>
+
+            <?php } ?>
 				</ul>
 			</div>
 		</div>
