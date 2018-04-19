@@ -94,17 +94,17 @@ $this->params['breadcrumbs'][] = $this->title;
                           <?= Html::img( '@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
 											</a>
 										</li>
-                  <?php }
-                  else { ?>
-										<li class="image-additional">
-											<a class="thumbnail"
-												 href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>"
-												 title="">
-                          <?= Html::img( '@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
-											</a>
-										</li>
-                  <?php }
-              } ?>
+                  <?php } ?>
+
+								<li class="image-additional">
+									<a class="thumbnail"
+										 href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>"
+										 title="">
+                      <?= Html::img( '@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+									</a>
+								</li>
+
+              <?php } ?>
 					</ul>
 				</div>
 				<div class="clearfix"></div>

@@ -7,6 +7,7 @@ use frontend\widgets\catmenu\CatmenuTabs;
 use frontend\widgets\adsort\AdSort;
 
 /* @var $this yii\web\View */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 FontAwesomeAsset::register( $this );
 $this->title = 'vezugruz29.ru';
 ?>

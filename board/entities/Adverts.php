@@ -86,6 +86,9 @@ class Adverts extends ActiveRecord
     const HAS_IMAGES = 1;
     const HAS_NOT_IMAGES = 0;
 
+    const NEXT_PAGE_DIRECT = 1;
+    const PREV_PAGE_DIRECT = 0;
+
     public static function tableName()
     {
         return '{{%adverts}}';
@@ -238,22 +241,6 @@ class Adverts extends ActiveRecord
         return parent::beforeValidate();
     }
 
-    /*public function addPhoto( UploadedFile $file )
-    {
-        $image = $this->photos;
-        $image[] = Image::create( $file );
-        $this->updateImages( $image );
-    }
-
-    private function updateImages( array $photos )
-    {
-        foreach ( $photos as $i => $photo ) {
-            $photo->setSort( $i );
-        }
-        $this->photos = $photos;
-        $this->populateRelation( 'mainPhoto', reset( $photos ) );
-    }*/
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -307,11 +294,34 @@ class Adverts extends ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasOne( Images::className(), [ 'ad_id' => 'id' ] );
+        return $this->hasMany( Images::className(), [ 'ad_id' => 'id' ] );
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getPhones()
     {
         return $this->hasMany( UserPhones::className(), [ 'ad_id' => 'id' ] );
+    }
+
+    /**
+     * @param $id
+     * @param $direct
+     * @return array|null|ActiveRecord[]
+     */
+    public static function getPrevNextPage( $id, $direct )
+    {
+        if ( $direct == 1 ) {
+            $target = Adverts::find()->where( [ '>', 'id', $id ] )->orderBy( 'id ASC' )->one();
+        }
+        elseif ( $direct == 0 ) {
+            $target = Adverts::find()->where( [ '<', 'id', $id ] )->orderBy( 'id DESC' )->one();
+        }
+
+        if ( isset( $target ) ) {
+            return $target->id;
+        }
+        return null;
     }
 }
