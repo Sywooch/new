@@ -158,11 +158,14 @@ PhonesAsset::register( $this );
 
     <?= $form->field( $model, 'author' )->textInput( [
         'placeholder' => 'Иванов Иван',
-        'value'       => \Yii::$app->user->identity->username
+        'value'       => isset( \Yii::$app->user->identity->username ) ? \Yii::$app->user->identity->username : $model->author
     ] ) ?>
 
     <?= $form->field( $model, 'email' )->input( 'email',
-        [ 'placeholder' => 'someone@mail.ru', 'value' => \Yii::$app->user->identity->email ] ) ?>
+        [
+            'placeholder' => 'someone@mail.ru',
+            'value'       => isset( \Yii::$app->user->identity->email ) ? \Yii::$app->user->identity->email : $model->email
+        ] ) ?>
 
 	<div id="form-phones">
       <?php
@@ -180,7 +183,9 @@ PhonesAsset::register( $this );
       } ?>
 	</div>
 
-    <? /*= $form->field($model, 'verifyCode')->widget(Captcha::className()) */ ?>
+    <? if ( Yii::$app->user->isGuest ) {
+        echo $form->field( $model, 'verifyCode' )->widget( Captcha::className() );
+    } ?>
 
 	<hr>
 	<div class="form-group">

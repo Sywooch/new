@@ -5,12 +5,12 @@ namespace backend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\Subcategory;
+use backend\models\Subcategories;
 
 /**
- * SubcategorySearch represents the model behind the search form about `backend\models\Subcategory`.
+ * SubcategoriesSearch represents the model behind the search form about `backend\models\Subcategories`.
  */
-class SubcategorySearch extends Subcategory
+class SubcategoriesSearch extends Subcategories
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class SubcategorySearch extends Subcategory
      */
     public function search($params)
     {
-        $query = Subcategory::find();
+        $query = Subcategories::find();
 
         // add conditions that should always apply here
 

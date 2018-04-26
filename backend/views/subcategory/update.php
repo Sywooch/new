@@ -3,14 +3,14 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Subcategory */
+/* @var $model backend\models\Subcategories */
 
-$this->title = 'Update Subcategory: ' . $model->id;
+$this->title = 'Update Subcategories: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Subcategories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="subcategory-update">
+<div class="subcategories-update">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

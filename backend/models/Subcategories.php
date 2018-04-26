@@ -5,7 +5,7 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "subcategory".
+ * This is the model class for table "subcategories".
  *
  * @property integer $id
  * @property integer $old_id
@@ -14,17 +14,17 @@ use Yii;
  * @property string $subcat_name
  * @property integer $menu_order
  *
- * @property Category $cat
- * @property Category $oldCat
+ * @property Categories $cat
+ * @property Categories $oldCat
  */
-class Subcategory extends \yii\db\ActiveRecord
+class Subcategories extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'subcategory';
+        return 'subcategories';
     }
 
     /**
@@ -37,8 +37,20 @@ class Subcategory extends \yii\db\ActiveRecord
             [['old_id', 'old_cat_id', 'cat_id', 'sort'], 'integer'],
             [['subcat_name'], 'string', 'max' => 50],
             [['old_id'], 'unique'],
-            [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-            [['old_cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['old_cat_id' => 'old_id']],
+            [
+                [ 'cat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Categories::className(),
+                'targetAttribute' => [ 'cat_id' => 'id' ]
+            ],
+            [
+                [ 'old_cat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Categories::className(),
+                'targetAttribute' => [ 'old_cat_id' => 'old_id' ]
+            ],
         ];
     }
 
@@ -62,7 +74,7 @@ class Subcategory extends \yii\db\ActiveRecord
      */
     public function getCat()
     {
-        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
+        return $this->hasOne( Categories::className(), [ 'id' => 'cat_id' ] );
     }
 
     /**
@@ -70,6 +82,6 @@ class Subcategory extends \yii\db\ActiveRecord
      */
     public function getOldCat()
     {
-        return $this->hasOne(Category::className(), ['old_id' => 'old_cat_id']);
+        return $this->hasOne( Categories::className(), [ 'old_id' => 'old_cat_id' ] );
     }
 }

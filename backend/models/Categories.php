@@ -5,7 +5,7 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%category}}".
+ * This is the model class for table "{{%categories}}".
  *
  * @property integer $id
  * @property integer $old_id
@@ -15,17 +15,17 @@ use Yii;
  * @property string $icon
  *
  * @property Adverts[] $adverts
- * @property Subcategory[] $subcategories
- * @property Subcategory[] $subcategories0
+ * @property Subcategories[] $subcategories
+ * @property Subcategories[] $subcategories0
  */
-class Category extends \yii\db\ActiveRecord
+class Categories extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%category}}';
+        return '{{%categories}}';
     }
 
     /**
@@ -72,7 +72,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getSubcategories()
     {
-        return $this->hasMany(Subcategory::className(), ['cat_id' => 'id']);
+        return $this->hasMany( Subcategories::className(), [ 'cat_id' => 'id' ] );
     }
 
     /**
@@ -80,6 +80,6 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getSubcategories0()
     {
-        return $this->hasMany(Subcategory::className(), ['old_cat_id' => 'old_id']);
+        return $this->hasMany( Subcategories::className(), [ 'old_cat_id' => 'old_id' ] );
     }
 }

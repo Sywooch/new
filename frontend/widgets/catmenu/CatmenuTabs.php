@@ -13,7 +13,7 @@ use yii\bootstrap\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\db\Query;
-use backend\models\Category;
+use backend\models\Categories;
 
 class CatmenuTabs extends Widget
 {
@@ -39,7 +39,7 @@ class CatmenuTabs extends Widget
      */
     private function _getCategory()
     {
-        $category = Category::find()
+        $category = Categories::find()
             ->asArray()
             ->joinWith( [
                 'subcategories' => function ( $q ){

@@ -12,10 +12,10 @@ use yii;
 use board\entities\Adverts;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
-use backend\models\Subcategory;
+use backend\models\Subcategories;
 use common\models\Helpers;
 use backend\models\Currencies;
-use backend\models\Category;
+use backend\models\Categories;
 use backend\models\Types;
 use backend\models\Periods;
 use backend\models\Countries;
@@ -61,7 +61,7 @@ class AdvertsRepository
      */
     public static function categoryList()
     {
-        return ArrayHelper::map( Category::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'category_name' );
+        return ArrayHelper::map( Categories::find()->orderBy( 'sort' )->asArray()->all(), 'id', 'category_name' );
     }
 
     /**
@@ -114,7 +114,8 @@ class AdvertsRepository
 
     public static function subcatList($cat_id)
     {
-        return ArrayHelper::map( Subcategory::find()->where(['cat_id' => $cat_id ])->orderBy('sort')->asArray()->all(), 'id', 'subcat_name' );
+        return ArrayHelper::map( Subcategories::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
+            'id', 'subcat_name' );
     }
 
     /**
@@ -131,7 +132,7 @@ class AdvertsRepository
             if ( $parents != null ) {
                 $cat_id = $parents[0];
 
-                $model = Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all();
+                $model = Subcategories::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all();
                 foreach ( $model as $val ) {
                     $out[] = [ 'id' => $val['id'], 'name' => $val['subcat_name'] ];
                 }
@@ -152,7 +153,7 @@ class AdvertsRepository
      */
     public static function subcategoryListUpdate( $cat_id )
     {
-        return ArrayHelper::map( Subcategory::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
+        return ArrayHelper::map( Subcategories::find()->where( [ 'cat_id' => $cat_id ] )->orderBy( 'sort' )->asArray()->all(),
             'id', 'subcat_name' );
     }
 }

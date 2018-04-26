@@ -14,8 +14,8 @@ use backend\models\Pricies;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
 use backend\models\Countries;
-use backend\models\Category;
-use backend\models\Subcategory;
+use backend\models\Categories;
+use backend\models\Subcategories;
 use backend\models\Periods;
 use backend\models\Types;
 use frontend\models\Images;
@@ -35,6 +35,7 @@ use common\models\Helpers;
  * @property integer $country_id
  * @property integer $period_id
  * @property string $author
+ * @property integer $user_id
  * @property string $email
  * @property integer $active
  * @property integer $selected
@@ -47,10 +48,10 @@ use common\models\Helpers;
  * @property integer $updated_at
  * @property integer $draft
  *
- * @property Category $cat
+ * @property Categories $cat
  * @property Countries $countries
  * @property Periods $periods
- * @property Subcategory $subcategory
+ * @property Subcategories $subcategory
  * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
@@ -89,9 +90,23 @@ class Adverts extends ActiveRecord
     const NEXT_PAGE_DIRECT = 1;
     const PREV_PAGE_DIRECT = 0;
 
+    const PRICE_CURRENCY_SEPARATOR = '&nbsp;';
+    const EMPTY_PRICE_VALUE = '...';
+
+    const SCENARIO_OWNER = 'owner';
+
     public static function tableName()
     {
         return '{{%adverts}}';
+    }
+
+    /**
+     * @return array
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        return $scenarios;
     }
 
     public function behaviors()
@@ -135,6 +150,7 @@ class Adverts extends ActiveRecord
                     'marker',
                     'has_images',
                     'views',
+                    'user_id'
                 ],
                 'integer'
             ],
@@ -159,30 +175,42 @@ class Adverts extends ActiveRecord
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
             [ 'email', 'email' ],
             [ [ 'old_id' ], 'unique' ],
-            [ [ 'cat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => [ 'cat_id' => 'id' ] ],
+            [
+                [ 'cat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Categories::class,
+                'targetAttribute' => [ 'cat_id' => 'id' ]
+            ],
             [
                 [ 'country_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Countries::className(),
+                'targetClass'     => Countries::class,
                 'targetAttribute' => [ 'country_id' => 'id' ]
             ],
             [
                 [ 'period_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Periods::className(),
+                'targetClass'     => Periods::class,
                 'targetAttribute' => [ 'period_id' => 'id' ]
             ],
-            [ [ 'subcat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => [ 'subcat_id' => 'id' ] ],
+            [
+                [ 'subcat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Subcategories::class,
+                'targetAttribute' => [ 'subcat_id' => 'id' ]
+            ],
             [
                 [ 'type_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Types::className(),
+                'targetClass'     => Types::class,
                 'targetAttribute' => [ 'type_id' => 'id' ]
             ],
-            //            ['verifyCode', 'captcha'],
+            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
 
@@ -206,6 +234,7 @@ class Adverts extends ActiveRecord
 
             'period_id' => 'Период',
             'author'    => 'Автор',
+            'user_id'   => 'User ID',
             'email'     => 'Email',
 
             'active'       => 'Active',
@@ -246,7 +275,7 @@ class Adverts extends ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne( Category::className(), [ 'id' => 'cat_id' ] );
+        return $this->hasOne( Categories::class, [ 'id' => 'cat_id' ] );
     }
 
     /**
@@ -254,7 +283,7 @@ class Adverts extends ActiveRecord
      */
     public function getCountry()
     {
-        return $this->hasOne( Countries::className(), [ 'id' => 'country_id' ] );
+        return $this->hasOne( Countries::class, [ 'id' => 'country_id' ] );
     }
 
     /**
@@ -262,7 +291,7 @@ class Adverts extends ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne( Periods::className(), [ 'id' => 'period_id' ] );
+        return $this->hasOne( Periods::class, [ 'id' => 'period_id' ] );
     }
 
     /**
@@ -270,7 +299,7 @@ class Adverts extends ActiveRecord
      */
     public function getSubcategory()
     {
-        return $this->hasOne( Subcategory::className(), [ 'id' => 'subcat_id' ] );
+        return $this->hasOne( Subcategories::class, [ 'id' => 'subcat_id' ] );
     }
 
     /**
@@ -278,7 +307,7 @@ class Adverts extends ActiveRecord
      */
     public function getType()
     {
-        return $this->hasOne( Types::className(), [ 'id' => 'type_id' ] );
+        return $this->hasOne( Types::class, [ 'id' => 'type_id' ] );
     }
 
     /**
@@ -286,7 +315,7 @@ class Adverts extends ActiveRecord
      */
     public function getPrice()
     {
-        return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
+        return $this->hasOne( Pricies::class, [ 'ad_id' => 'id' ] );
     }
 
     /**
@@ -294,7 +323,7 @@ class Adverts extends ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasMany( Images::className(), [ 'ad_id' => 'id' ] );
+        return $this->hasMany( Images::class, [ 'ad_id' => 'id' ] );
     }
 
     /**
@@ -302,7 +331,7 @@ class Adverts extends ActiveRecord
      */
     public function getPhones()
     {
-        return $this->hasMany( UserPhones::className(), [ 'ad_id' => 'id' ] );
+        return $this->hasMany( UserPhones::class, [ 'ad_id' => 'id' ] );
     }
 
     /**

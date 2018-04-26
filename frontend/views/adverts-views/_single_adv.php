@@ -8,9 +8,9 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\models\Helpers;
+use board\entities\Adverts;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
-//\common\models\Helpers::p( $model->images ); die;
 ?>
 
 <div class="ad-list col-xs-12">
@@ -18,10 +18,11 @@ use common\models\Helpers;
 		<div class="image">
 			<div class="row">
 				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6">
-						<?php
+            <?php
             if ( $model->has_images ) {
 
-                echo Html::img('@web/img/temp/' . $model->images->sid . '/' . $model->images->filename, [ 'class' => 'thumbnail' ] );
+                echo Html::img( '@web/img/temp/' . $model->images[0]->sid . '/' . $model->images[0]->filename,
+                    [ 'class' => 'thumbnail' ] );
 
              } else { ?>
 
@@ -32,13 +33,7 @@ use common\models\Helpers;
 					<?php } ?>
 
 				</div>
-
 			</div>
-
-			<!--<a href="#">
-          <? /*= Html::img( '/i/blank_img.jpg', [ 'class' => 'img-responsive', 'alt' => '', 'title' => '', ] ) */ ?>
-			</a>-->
-
 		</div>
 
 		<div>
@@ -51,7 +46,7 @@ use common\models\Helpers;
 				</a>
 				<p>
 					<small><i class="fa fa-calendar" aria-hidden="true"></i>
-							<?= Yii::$app->formatter->asDatetime( $model->created_at, Yii::$app->params['dateFormat'] ); ?>
+              <?= Yii::$app->formatter->asDatetime( $model->created_at ); ?>
 						<br>
 						<i class="fa fa-map-marker" aria-hidden="true"></i><?= $model->country->country_name ?>
 						<i class="fa fa-folder-open" aria-hidden="true"></i><?= $model->category->category_name ?>
@@ -59,8 +54,9 @@ use common\models\Helpers;
 					</small>
 				</p>
 
-				<p class="price"><?= Helpers::format( $model->price->price_value ) ?>
-					&nbsp;<?= $model->price->currency->short_name ?></p>
+				<p class="price"><?= !empty( $model->price->price_value )
+                ? Yii::$app->formatter->asInteger( $model->price->price_value ) . Adverts::PRICE_CURRENCY_SEPARATOR . $model->price->currency->short_name
+                : Adverts::EMPTY_PRICE_VALUE ?></p>
 			</div>
 
 			<div class="pull-right data-extra">
