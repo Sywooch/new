@@ -84,11 +84,7 @@ class ImagesController extends Controller
                     // Если не удалось сохранить модель, удаляем загруженные файлы
                     $this->actionImageDelete( $fileName );
                     return Json::encode([
-                        'files' => [
-                            [
-                                'error' => Yii::t('app', 'Unable to save picture')
-                            ]
-                        ]
+                        'files' => [ [ 'error' => Yii::t( 'app', 'Unable to save picture' ) ] ]
                     ]);
                 }
 

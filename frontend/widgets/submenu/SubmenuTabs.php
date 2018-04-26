@@ -13,7 +13,7 @@ use yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use backend\models\Subcategory;
+use backend\models\Subcategories;
 
 class SubmenuTabs extends Widget
 {
@@ -65,7 +65,7 @@ class SubmenuTabs extends Widget
      */
     private function _getSubcategory( $id )
     {
-        $subcategory = Subcategory::find()
+        $subcategory = Subcategories::find()
             ->asArray()
             ->where( [ 'cat_id' => $id ] )
             ->orderBy( 'sort' )

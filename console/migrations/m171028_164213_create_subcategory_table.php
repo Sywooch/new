@@ -26,7 +26,6 @@ class m171028_164213_create_subcategory_table extends Migration
         $this->addForeignKey( 'fk-subcat-category', 'subcategory', 'cat_id', 'category', 'id', 'CASCADE' );
         $this->addForeignKey( 'fk-subcut-oldcategory', 'subcategory', 'old_cat_id', 'category', 'old_id',
             'CASCADE' );
-//        $this->addForeignKey( 'fk-subcat_id', '{{%subcategory}}', 'id', '{{%adverts}}', 'subcat_id' );
     }
 
     /**

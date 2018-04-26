@@ -30,10 +30,10 @@ use Yii;
  * @property integer $updated_at
  * @property integer $draft
  *
- * @property Category $cat
+ * @property Categories $cat
  * @property Countries $country0
  * @property Periods $period0
- * @property Subcategory $subcat
+ * @property Subcategories $subcat
  * @property Types $type0
  */
 class Adverts extends \yii\db\ActiveRecord
@@ -76,18 +76,18 @@ class Adverts extends \yii\db\ActiveRecord
 
 
 
-//            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'country', 'ip', 'created_at', 'updated_at'], 'required'],
+            //            [['sid', 'cat_id', 'subcat_id', 'type', 'header', 'country', 'ip', 'created_at', 'updated_at'], 'required'],
 
-//            [['description'], 'string'],
-//            [['sid'], 'string', 'max' => 32],
-//            [['header', 'author', 'email'], 'string', 'max' => 255],
-//            [['sid'], 'unique'],
-//            [['old_id'], 'unique'],
-//            [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['cat_id' => 'id']],
-//            [['country'], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => ['country' => 'id']],
-//            [['period'], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => ['period' => 'id']],
-//            [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => ['subcat_id' => 'id']],
-//            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => ['type' => 'id']],
+            //            [['description'], 'string'],
+            //            [['sid'], 'string', 'max' => 32],
+            //            [['header', 'author', 'email'], 'string', 'max' => 255],
+            //            [['sid'], 'unique'],
+            //            [['old_id'], 'unique'],
+            //            [['cat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['cat_id' => 'id']],
+            //            [['country'], 'exist', 'skipOnError' => true, 'targetClass' => Countries::className(), 'targetAttribute' => ['country' => 'id']],
+            //            [['period'], 'exist', 'skipOnError' => true, 'targetClass' => Periods::className(), 'targetAttribute' => ['period' => 'id']],
+            //            [['subcat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subcategories::className(), 'targetAttribute' => ['subcat_id' => 'id']],
+            //            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => Types::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
 
@@ -127,7 +127,7 @@ class Adverts extends \yii\db\ActiveRecord
      */
 //    public function getCat()
 //    {
-//        return $this->hasOne(Category::className(), ['id' => 'cat_id']);
+//        return $this->hasOne(Categories::className(), ['id' => 'cat_id']);
 //    }
 
     /**
@@ -151,7 +151,7 @@ class Adverts extends \yii\db\ActiveRecord
      */
 //    public function getSubcat()
 //    {
-//        return $this->hasOne(Subcategory::className(), ['id' => 'subcat_id']);
+//        return $this->hasOne(Subcategories::className(), ['id' => 'subcat_id']);
 //    }
 
     /**
