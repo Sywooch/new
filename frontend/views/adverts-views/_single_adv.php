@@ -10,7 +10,6 @@ use yii\helpers\Url;
 use common\models\Helpers;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
-//\common\models\Helpers::p( $model->images ); die;
 ?>
 
 <div class="ad-list col-xs-12">
@@ -18,7 +17,7 @@ use common\models\Helpers;
 		<div class="image">
 			<div class="row">
 				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6">
-						<?php
+            <?php //if($model->id == 180){ d($model->images); die; }
             if ( $model->has_images ) {
 
                 echo Html::img('@web/img/temp/' . $model->images->sid . '/' . $model->images->filename, [ 'class' => 'thumbnail' ] );

@@ -267,7 +267,7 @@ class Adverts extends ActiveRecord
      */
     public function getCountry()
     {
-        return $this->hasOne( Countries::className(), [ 'id' => 'country_id' ] );
+        return $this->hasOne( Countries::class, [ 'id' => 'country_id' ] );
     }
 
     /**
@@ -275,7 +275,7 @@ class Adverts extends ActiveRecord
      */
     public function getPeriod()
     {
-        return $this->hasOne( Periods::className(), [ 'id' => 'period_id' ] );
+        return $this->hasOne( Periods::class, [ 'id' => 'period_id' ] );
     }
 
     /**
@@ -283,7 +283,7 @@ class Adverts extends ActiveRecord
      */
     public function getSubcategory()
     {
-        return $this->hasOne( Subcategory::className(), [ 'id' => 'subcat_id' ] );
+        return $this->hasOne( Subcategory::class, [ 'id' => 'subcat_id' ] );
     }
 
     /**
@@ -291,7 +291,7 @@ class Adverts extends ActiveRecord
      */
     public function getType()
     {
-        return $this->hasOne( Types::className(), [ 'id' => 'type_id' ] );
+        return $this->hasOne( Types::class, [ 'id' => 'type_id' ] );
     }
 
     /**
@@ -299,7 +299,7 @@ class Adverts extends ActiveRecord
      */
     public function getPrice()
     {
-        return $this->hasOne( Pricies::className(), [ 'ad_id' => 'id' ] );
+        return $this->hasOne( Pricies::class, [ 'ad_id' => 'id' ] );
     }
 
     /**
@@ -307,11 +307,11 @@ class Adverts extends ActiveRecord
      */
     public function getImages()
     {
-        return $this->hasOne( Images::className(), [ 'ad_id' => 'id' ] );
+        return $this->hasOne( Images::class, [ 'ad_id' => 'id' ] );
     }
 
     public function getPhones()
     {
-        return $this->hasMany( UserPhones::className(), [ 'ad_id' => 'id' ] );
+        return $this->hasMany( UserPhones::class, [ 'ad_id' => 'id' ] );
     }
 }

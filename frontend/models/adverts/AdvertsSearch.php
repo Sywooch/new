@@ -154,7 +154,7 @@ class AdvertsSearch extends Adverts
     public function searchHomeAdverts()
     {
         $query = Adverts::find()
-            ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
+            ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country' ] )
             ->joinWith( [
                 'price p' => function ( $q ){
                     $q->joinWith( 'currency c' );
@@ -168,13 +168,11 @@ class AdvertsSearch extends Adverts
             ->orderBy( $this->whereDate() )
             ->addOrderBy( $this->wherePrice() );
 
-        $pageSize = self::_setPageSize();
-
         $dataProvider = new ActiveDataProvider( [
             'query'      => $query,
             'pagination' => [
                 'defaultPageSize' => Adverts::DEFAULT_PAGE_SIZE,
-                'pageSize'        => $pageSize,
+                'pageSize'        => self::_setPageSize(),
                 'pageSizeLimit'   => [ Adverts::PAGE_SIZE_LIMIT_MIN, Adverts::PAGE_SIZE_LIMIT_MAX ],
             ],
             'sort'       => [
