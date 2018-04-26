@@ -35,6 +35,7 @@ use common\models\Helpers;
  * @property integer $country_id
  * @property integer $period_id
  * @property string $author
+ * @property integer $user_id
  * @property string $email
  * @property integer $active
  * @property integer $selected
@@ -92,9 +93,20 @@ class Adverts extends ActiveRecord
     const PRICE_CURRENCY_SEPARATOR = '&nbsp;';
     const EMPTY_PRICE_VALUE = '...';
 
+    const SCENARIO_OWNER = 'owner';
+
     public static function tableName()
     {
         return '{{%adverts}}';
+    }
+
+    /**
+     * @return array
+     */
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        return $scenarios;
     }
 
     public function behaviors()
@@ -138,6 +150,7 @@ class Adverts extends ActiveRecord
                     'marker',
                     'has_images',
                     'views',
+                    'user_id'
                 ],
                 'integer'
             ],
@@ -166,38 +179,38 @@ class Adverts extends ActiveRecord
                 [ 'cat_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Categories::className(),
+                'targetClass'     => Categories::class,
                 'targetAttribute' => [ 'cat_id' => 'id' ]
             ],
             [
                 [ 'country_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Countries::className(),
+                'targetClass'     => Countries::class,
                 'targetAttribute' => [ 'country_id' => 'id' ]
             ],
             [
                 [ 'period_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Periods::className(),
+                'targetClass'     => Periods::class,
                 'targetAttribute' => [ 'period_id' => 'id' ]
             ],
             [
                 [ 'subcat_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Subcategories::className(),
+                'targetClass'     => Subcategories::class,
                 'targetAttribute' => [ 'subcat_id' => 'id' ]
             ],
             [
                 [ 'type_id' ],
                 'exist',
                 'skipOnError'     => true,
-                'targetClass'     => Types::className(),
+                'targetClass'     => Types::class,
                 'targetAttribute' => [ 'type_id' => 'id' ]
             ],
-            //            ['verifyCode', 'captcha'],
+            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
 
@@ -221,6 +234,7 @@ class Adverts extends ActiveRecord
 
             'period_id' => 'Период',
             'author'    => 'Автор',
+            'user_id'   => 'User ID',
             'email'     => 'Email',
 
             'active'       => 'Active',
