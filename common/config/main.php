@@ -5,7 +5,13 @@ return [
     'language' => 'ru-RU',
     'sourceLanguage' => 'ru-RU',
     'components' => [
-        'cache'                => [
+        'formatter'    => [
+            'dateFormat'        => 'dd.MM.yyyy',
+            'decimalSeparator'  => ',',
+            'thousandSeparator' => ' ',
+            'currencyCode'      => 'RUR',
+        ],
+        'cache'        => [
             'class' => 'yii\caching\FileCache',
         ],
         'assetManager' => [

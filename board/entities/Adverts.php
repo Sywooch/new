@@ -258,7 +258,7 @@ class Adverts extends ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne( Categories::className(), [ 'id' => 'cat_id' ] );
+        return $this->hasOne( Categories::class, [ 'id' => 'cat_id' ] );
     }
 
     /**

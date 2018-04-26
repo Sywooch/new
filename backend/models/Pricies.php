@@ -35,9 +35,7 @@ class Pricies extends ActiveRecord
     public function rules()
     {
         return [
-            [ ['ad_id', 'old_id', 'price_old', 'currency_id' ], 'integer' ],
-            [ [ 'price_value' ], 'string', 'max' => 10 ],
-            [ 'price_value', 'default', 'value' => '0' ],
+            [ [ 'ad_id', 'old_id', 'price_old', 'currency_id', 'price_value' ], 'integer' ],
             [ 'price_value', 'match', 'pattern' => '/^[0-9\s]+$/', 'message' => 'Только цифры' ],// Все кроме цифр
             [ ['negotiable'], 'boolean'],
             [ ['currency_id'], 'exist', 'skipOnError' => true, 'targetClass' => Currencies::className(), 'targetAttribute' => [ 'currency_id' => 'id']],
@@ -48,7 +46,7 @@ class Pricies extends ActiveRecord
     {
         return [
             [
-                'class'      => RemoveWhitespaseBehavior::className(),
+                'class'      => RemoveWhitespaseBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => 'price_value',
                     ActiveRecord::EVENT_BEFORE_UPDATE => 'price_value',
@@ -74,18 +72,18 @@ class Pricies extends ActiveRecord
         ];
     }
 
-    public function beforeSave( $insert )
-    {
-        $this->price_value = str_replace( ' ', '', $this->price_value );
-        return true;
-    }
+//    public function beforeSave( $insert )
+//    {
+//        $this->price_value = str_replace( ' ', '', $this->price_value );
+//        return true;
+//    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getCurrency()
     {
-        return $this->hasOne(Currencies::className(), [ 'id' => 'currency_id']);
+        return $this->hasOne( Currencies::class, [ 'id' => 'currency_id' ] );
     }
 
     /**
@@ -93,7 +91,7 @@ class Pricies extends ActiveRecord
      */
     public function getAdvert()
     {
-        return $this->hasOne( Adverts::className(), [ 'id' => 'ad_id' ] );
+        return $this->hasOne( Adverts::class, [ 'id' => 'ad_id' ] );
     }
 
     /**

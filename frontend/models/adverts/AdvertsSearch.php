@@ -121,7 +121,7 @@ class AdvertsSearch extends Adverts
 
     public function whereDate()
     {
-        $datePost = yii::$app->request->post( 'date_sort' ); //var_dump( $datePost ); die;
+        $datePost = yii::$app->request->post( 'date_sort' );
         switch ( $datePost ) {
             case 'desc':
                 return [ 'adverts.updated_at' => SORT_DESC ];
@@ -135,13 +135,13 @@ class AdvertsSearch extends Adverts
 
     public function wherePrice()
     {
-        $pricePost = yii::$app->request->post( 'price_sort' );  //var_dump( $pricePost ); //die;
+        $pricePost = yii::$app->request->post( 'price_sort' );
         switch ( $pricePost ) {
             case 'desc':
-                return [ 'pricie.price' => SORT_DESC ];
+                return [ 'pricies.price_value' => SORT_DESC ];
                 break;
             case 'asc':
-                return [ 'pricie.price' => SORT_ASC ];
+                return [ 'pricies.price_value' => SORT_ASC ];
         }
         return null;
     }
@@ -154,7 +154,7 @@ class AdvertsSearch extends Adverts
     public function searchHomeAdverts()
     {
         $query = Adverts::find()
-            ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country' ] )
+            ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price' ] )
             ->joinWith( [
                 'price p' => function ( $q ){
                     $q->joinWith( 'currency c' );
@@ -252,6 +252,7 @@ class AdvertsSearch extends Adverts
     {
         /**
          * TODO: сортировка по типу не работает как надо
+         * TODO: добавить сортировку по городам
          */
         $sort = new Sort( [
             'attributes' => [

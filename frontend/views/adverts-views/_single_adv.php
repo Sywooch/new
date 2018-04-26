@@ -17,10 +17,11 @@ use common\models\Helpers;
 		<div class="image">
 			<div class="row">
 				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6">
-            <?php //if($model->id == 180){ d($model->images); die; }
+            <?php
             if ( $model->has_images ) {
 
-                echo Html::img('@web/img/temp/' . $model->images->sid . '/' . $model->images->filename, [ 'class' => 'thumbnail' ] );
+                echo Html::img( '@web/img/temp/' . $model->images[0]->sid . '/' . $model->images[0]->filename,
+                    [ 'class' => 'thumbnail' ] );
 
              } else { ?>
 
@@ -31,13 +32,7 @@ use common\models\Helpers;
 					<?php } ?>
 
 				</div>
-
 			</div>
-
-			<!--<a href="#">
-          <? /*= Html::img( '/i/blank_img.jpg', [ 'class' => 'img-responsive', 'alt' => '', 'title' => '', ] ) */ ?>
-			</a>-->
-
 		</div>
 
 		<div>
@@ -58,7 +53,7 @@ use common\models\Helpers;
 					</small>
 				</p>
 
-				<p class="price"><?= Helpers::format( $model->price->price_value ) ?>
+				<p class="price"><?= Yii::$app->formatter->asInteger( $model->price->price_value ) ?>
 					&nbsp;<?= $model->price->currency->short_name ?></p>
 			</div>
 
