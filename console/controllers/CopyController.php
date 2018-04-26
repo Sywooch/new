@@ -14,7 +14,7 @@ namespace console\controllers;
 
 use backend\models\Advert;
 use board\entities\Adverts;
-use backend\models\Subcategory;
+use backend\models\Subcategories;
 use backend\models\Pricies;
 use common\models\Helpers;
 use frontend\models\UserPhones;
@@ -135,7 +135,7 @@ class CopyController extends Controller
     private function convertCategory( $AdvertFolder )
     {
         $cat_id = '';
-        $subcategory = new Subcategory();
+        $subcategory = new Subcategories();
         $query = $subcategory->find()->asArray()->all();
 
         foreach ( $query as $val ) {
@@ -156,7 +156,7 @@ class CopyController extends Controller
     private function convertSubcategory( $AdvertFolder )
     {
         $subcut_id = '';
-        $subcategory = new Subcategory();
+        $subcategory = new Subcategories();
         $query = $subcategory->find()->asArray()->all();
 
         foreach ( $query as $val ) {

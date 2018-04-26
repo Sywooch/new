@@ -110,13 +110,13 @@ class AdvertsSearch extends Adverts
     public function whereCat()
     {
         $categoryPost = yii::$app->request->post( 'category_sort' );
-        return ( $categoryPost ) ? $category = "category.id=$categoryPost" : $category = 'category.id is not null';
+        return ( $categoryPost ) ? $category = "categories.id=$categoryPost" : $category = 'categories.id is not null';
     }
 
     public function whereSubcat()
     {
         $sybcatPost = yii::$app->request->post( 'subcategory_sort' );
-        return ( $sybcatPost ) ? $subcategory = "subcategory.id=$sybcatPost" : $subcategory = 'subcategory.id is not null';
+        return ( $sybcatPost ) ? $subcategory = "subcategories.id=$sybcatPost" : $subcategory = 'subcategories.id is not null';
     }
 
     public function whereDate()
@@ -206,13 +206,13 @@ class AdvertsSearch extends Adverts
                     'default' => SORT_DESC,
                 ],
                 'price'        => [
-                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
-                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
+                    'asc'     => [ 'pricies.price_value' => SORT_ASC, ],
+                    'desc'    => [ 'pricies.price_value' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
                 'type'         => [
-                    'asc'     => [ 'type.name' => SORT_ASC, ],
-                    'desc'    => [ 'type.name' => SORT_DESC, ],
+                    'asc'     => [ 'types.name' => SORT_ASC, ],
+                    'desc'    => [ 'types.name' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
                 'defaultOrder' => [ 'id' => SORT_DESC ],
@@ -250,6 +250,9 @@ class AdvertsSearch extends Adverts
      */
     public function searchSubcategoryPage( $params )
     {
+        /**
+         * TODO: сортировка по типу не работает как надо
+         */
         $sort = new Sort( [
             'attributes' => [
                 'header'       => [
@@ -258,13 +261,13 @@ class AdvertsSearch extends Adverts
                     'default' => SORT_DESC,
                 ],
                 'price'        => [
-                    'asc'     => [ 'pricies.price' => SORT_ASC, ],
-                    'desc'    => [ 'pricies.price' => SORT_DESC, ],
+                    'asc'     => [ 'pricies.price_value' => SORT_ASC, ],
+                    'desc'    => [ 'pricies.price_value' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
                 'type'         => [
-                    'asc'     => [ 'type.name' => SORT_ASC, ],
-                    'desc'    => [ 'type.name' => SORT_DESC, ],
+                    'asc'     => [ 'types.name' => SORT_ASC, ],
+                    'desc'    => [ 'types.name' => SORT_DESC, ],
                     'default' => SORT_DESC,
                 ],
                 'defaultOrder' => [ 'id' => SORT_DESC ],

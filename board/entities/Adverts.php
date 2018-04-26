@@ -14,8 +14,8 @@ use backend\models\Pricies;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use yii\db\ActiveRecord;
 use backend\models\Countries;
-use backend\models\Category;
-use backend\models\Subcategory;
+use backend\models\Categories;
+use backend\models\Subcategories;
 use backend\models\Periods;
 use backend\models\Types;
 use frontend\models\Images;
@@ -47,10 +47,10 @@ use common\models\Helpers;
  * @property integer $updated_at
  * @property integer $draft
  *
- * @property Category $cat
+ * @property Categories $cat
  * @property Countries $countries
  * @property Periods $periods
- * @property Subcategory $subcategory
+ * @property Subcategories $subcategory
  * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
@@ -156,7 +156,13 @@ class Adverts extends ActiveRecord
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
             [ 'email', 'email' ],
             [ [ 'old_id' ], 'unique' ],
-            [ [ 'cat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => [ 'cat_id' => 'id' ] ],
+            [
+                [ 'cat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Categories::className(),
+                'targetAttribute' => [ 'cat_id' => 'id' ]
+            ],
             [
                 [ 'country_id' ],
                 'exist',
@@ -171,7 +177,13 @@ class Adverts extends ActiveRecord
                 'targetClass'     => Periods::className(),
                 'targetAttribute' => [ 'period_id' => 'id' ]
             ],
-            [ [ 'subcat_id' ], 'exist', 'skipOnError' => true, 'targetClass' => Subcategory::className(), 'targetAttribute' => [ 'subcat_id' => 'id' ] ],
+            [
+                [ 'subcat_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Subcategories::className(),
+                'targetAttribute' => [ 'subcat_id' => 'id' ]
+            ],
             [
                 [ 'type_id' ],
                 'exist',
@@ -259,7 +271,7 @@ class Adverts extends ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne( Category::className(), [ 'id' => 'cat_id' ] );
+        return $this->hasOne( Categories::className(), [ 'id' => 'cat_id' ] );
     }
 
     /**
@@ -283,7 +295,7 @@ class Adverts extends ActiveRecord
      */
     public function getSubcategory()
     {
-        return $this->hasOne( Subcategory::class, [ 'id' => 'subcat_id' ] );
+        return $this->hasOne( Subcategories::class, [ 'id' => 'subcat_id' ] );
     }
 
     /**
