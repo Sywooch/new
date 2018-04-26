@@ -89,6 +89,9 @@ class Adverts extends ActiveRecord
     const NEXT_PAGE_DIRECT = 1;
     const PREV_PAGE_DIRECT = 0;
 
+    const PRICE_CURRENCY_SEPARATOR = '&nbsp;';
+    const EMPTY_PRICE_VALUE = '...';
+
     public static function tableName()
     {
         return '{{%adverts}}';

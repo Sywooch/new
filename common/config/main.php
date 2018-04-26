@@ -6,7 +6,13 @@ return [
     'sourceLanguage' => 'ru-RU',
     'components' => [
         'formatter'    => [
-            'dateFormat'        => 'dd.MM.yyyy',
+            'class'             => 'yii\i18n\Formatter',
+            'defaultTimeZone'   => 'Europe/Moscow',
+            'timeZone'          => 'GMT+3',
+            'locale'            => 'ru-RU',
+            'dateFormat'        => 'dd MMMM yyyy',
+            'datetimeFormat'    => 'dd MMMM yyyy H:i:s',
+            'timeFormat'        => 'H:i:s',
             'decimalSeparator'  => ',',
             'thousandSeparator' => ' ',
             'currencyCode'      => 'RUR',
