@@ -16,7 +16,7 @@ use yii\helpers\FileHelper;
 
 class ImageCleanerController extends Controller
 {
-    public $initFolder = '@frontend/web/img/temp';
+    public $tempFolder = '@frontend/web/img/temp';
 
     /**
      * Метод удаляет изображения не принадлежащие объявлениям
@@ -28,7 +28,7 @@ class ImageCleanerController extends Controller
         $images = Images::find()->where( [ 'ad_id' => null ] )->all();
         if ( !empty( $images ) ) {
             foreach ( $images as $val ) {
-                $directory = Yii::getAlias( $this->initFolder ) . DIRECTORY_SEPARATOR . $val->sid;
+                $directory = Yii::getAlias( $this->tempFolder ) . DIRECTORY_SEPARATOR . $val->sid;
 
                 if ( is_file( $directory . DIRECTORY_SEPARATOR . $val->filename ) ) {
                     unlink( $directory . DIRECTORY_SEPARATOR . $val->filename );
@@ -62,7 +62,7 @@ class ImageCleanerController extends Controller
         // Все изображения в таблице
         $orphanImages = Images::find()->asArray()->all();
         // Массив папок в директории tmp
-        $tmpArray = array_diff( scandir( Yii::getAlias( $this->initFolder ) ), [ '.', '..' ] );
+        $tmpArray = array_diff( scandir( Yii::getAlias( $this->tempFolder ) ), [ '.', '..' ] );
 
         foreach ( $orphanImages as $image ):
             $filenamesArray[] = $image['filename'];
@@ -74,7 +74,7 @@ class ImageCleanerController extends Controller
         foreach ( $tmpArray as $folder ) :
             // Если папка в директории tmp совпадает с папкой в таблице...
             if ( in_array( $folder, $sidArray ) ) {
-                $directory = Yii::getAlias( $this->initFolder ) . DIRECTORY_SEPARATOR . $folder;
+                $directory = Yii::getAlias( $this->tempFolder ) . DIRECTORY_SEPARATOR . $folder;
                 // Находим массивы изображений в каждой папке sid
                 $imgArrays = array_diff( scandir( $directory ), [ '.', '..' ] );
 
@@ -88,7 +88,7 @@ class ImageCleanerController extends Controller
             }
             else {
                 // Если папки в директории tmp нет в таблице...
-                $directory = Yii::getAlias( $this->initFolder ) . DIRECTORY_SEPARATOR . $folder;
+                $directory = Yii::getAlias( $this->tempFolder ) . DIRECTORY_SEPARATOR . $folder;
                 foreach ( array_diff( scandir( $directory ), [ '.', '..' ] ) as $item ) {
                     unlink( $directory . DIRECTORY_SEPARATOR . $item );
                 }
@@ -108,9 +108,9 @@ class ImageCleanerController extends Controller
      */
     public function actionCleanFolder()
     {
-        $tmpArray = array_diff( scandir( Yii::getAlias( $this->initFolder ) ), [ '.', '..' ] );
+        $tmpArray = array_diff( scandir( Yii::getAlias( $this->tempFolder ) ), [ '.', '..' ] );
         foreach ( $tmpArray as $value ) {
-            $folder = Yii::getAlias( $this->initFolder . DIRECTORY_SEPARATOR . $value );
+            $folder = Yii::getAlias( $this->tempFolder . DIRECTORY_SEPARATOR . $value );
             if ( [] === ( array_diff( scandir( $folder ), [ '.', '..' ] ) ) ) {
                 if ( rmdir( $folder ) ) {
                     $this->stdout( 'Folder removed!' . PHP_EOL );
