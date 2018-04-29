@@ -28,7 +28,8 @@
         "kint-php/kint": "^2.2",
         "codeception/specify": "*",
         "codeception/verify": "*",
-        "fxp/composer-asset-plugin": "^1.4"
+        "fxp/composer-asset-plugin": "^1.4",
+        "shifrin/yii2-noty": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

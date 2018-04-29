@@ -6,11 +6,9 @@
  * @var $dataProvider frontend\controllers\user\SettingsController
  */
 
-$this->title = Yii::t( 'user', 'My Adverts' );
+$this->title = Yii::t( 'user', 'Мои объявления' );
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<?= $this->render( '/_alert', [ 'module' => Yii::$app->getModule( 'user' ) ] ) ?>
 
 <div class="row">
 	<div class="col-md-3">

@@ -8,6 +8,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use backend\models\Pricies;
+use shifrin\noty\NotyAsset;
+use shifrin\noty\NotyWidget;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
 //\common\models\Helpers::p( $model ); die;
@@ -76,9 +78,14 @@ use backend\models\Pricies;
 					<li title="Удаление объявления">
 						<?= Html::a( '<i class="fa fa-trash"></i>Удалить', [ '/adverts/delete', 'id' => $model->id ], [
 								'class'        => 'btn btn-danger',
+								//								'onClick' => "var n = Noty('id');
+								//									$.noty.setText(n.options.id, 'Welcome to our site!');
+								//									$.noty.buttons();
+								//									",
 								'data-confirm' => 'Вы хотите удалить это объявление?',
 								'data-method'  => 'post',
 						] ) ?>
+
 					</li>
 				</ul>
 			</div>
