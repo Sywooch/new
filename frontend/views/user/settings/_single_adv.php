@@ -38,10 +38,10 @@ use backend\models\Pricies;
 
 		<div>
 			<div class="caption">
-				<a href="<?= Url::to( [
-            '/adverts-views/details',
-            'id' => $model->id
-        ] ); ?>">
+				<h5>
+					ID:&nbsp;<?= $model->id ?>
+				</h5>
+				<a href="<?= Url::to( [ '/adverts-views/details', 'id' => $model->id ] ); ?>">
 					<h5><?= $model->header ?></h5>
 				</a>
 				<p>
