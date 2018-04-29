@@ -8,7 +8,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use common\models\Helpers;
-use board\entities\Adverts;
+use backend\models\Pricies;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
 ?>
@@ -31,7 +31,6 @@ use board\entities\Adverts;
 							</div>
 
 					<?php } ?>
-
 				</div>
 			</div>
 		</div>
@@ -55,8 +54,9 @@ use board\entities\Adverts;
 				</p>
 
 				<p class="price"><?= !empty( $model->price->price_value )
-                ? Yii::$app->formatter->asInteger( $model->price->price_value ) . Adverts::PRICE_CURRENCY_SEPARATOR . $model->price->currency->short_name
-                : Adverts::EMPTY_PRICE_VALUE ?></p>
+							? Yii::$app->formatter->asInteger( $model->price->price_value ) . Pricies::PRICE_CURRENCY_SEPARATOR . $model->price->currency->short_name
+							: Pricies::EMPTY_PRICE_VALUE ?>
+				</p>
 			</div>
 
 			<div class="pull-right data-extra">
@@ -86,5 +86,3 @@ use board\entities\Adverts;
 
 	</div>
 </div>
-
-

@@ -21,6 +21,9 @@ use yii\web\NotFoundHttpException;
  */
 class Pricies extends ActiveRecord
 {
+    const PRICE_CURRENCY_SEPARATOR = '&nbsp;';
+    const EMPTY_PRICE_VALUE = '...';
+    
     /**
      * @inheritdoc
      */

@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<p id="adv-type">Тип:&nbsp;<?= $model->type->name ?>
 						<span id="place-date"
 									class="pull-right">Размещено:&nbsp;<?= Yii::$app->formatter->asDatetime( $model->created_at,
-                    Yii::$app->params['dateFormat'] ); ?>
+									Yii::$app->params['dateFormat'] ); ?>
 						</span>
 					</p>
 					<hr>
@@ -55,19 +55,19 @@ $this->params['breadcrumbs'][] = $this->title;
 							<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
 										<span class="label label-danger"><strong><?= Helpers::format( $model->price->price_value ) ?>
 												&nbsp;<?= $model->price->currency->short_name ?></strong></span></span>
-                  <?= $model->price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
+								<?= $model->price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
 							</p>
 							<hr>
 
 							<p><i class="fa fa-user fa-fw"></i>Автор:<span
 										class="pull-right"><strong><?= $model->author ?></strong></span></p>
 							<hr>
-                <?php foreach ( $model->phones as $key => $val ) { ?>
-									<p><i class="fa fa-phone fa-fw"></i>Телефон:<span class="pull-right"><?= $val->phone ?></span>
-									</p>
-									<hr>
-                <?php }
-                ?>
+							<?php foreach ( $model->phones as $key => $val ) { ?>
+								<p><i class="fa fa-phone fa-fw"></i>Телефон:<span class="pull-right"><?= $val->phone ?></span>
+								</p>
+								<hr>
+							<?php }
+							?>
 
 							<p><i class="fa fa-calendar fa-fw"></i>Период:<span
 										class="pull-right"><?= $model->period->description ?></span></span></p>
@@ -84,27 +84,34 @@ $this->params['breadcrumbs'][] = $this->title;
 				<!-- start right block -->
 				<div class="col-sm-5">
 					<ul class="thumbnails list-unstyled">
-              <?php
-              foreach ( $images as $key => $value ) {
-                  if ( $key == 0 ) { ?>
-										<li>
-											<a class="thumbnail"
-												 href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>"
-												 title="">
-                          <?= Html::img( '@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
-											</a>
-										</li>
-                  <?php } ?>
+						<?php
+						if ( $images ) {
+							foreach ( $images as $key => $value ) {
+								if ( $key == 0 ) { ?>
+									<li>
+										<a class="thumbnail"
+											 href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>"
+											 title="">
+											<?= Html::img( '@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+										</a>
+									</li>
+								<?php } ?>
 
 								<li class="image-additional">
 									<a class="thumbnail"
 										 href="<?= Yii::getAlias( '@web' ) . '/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ?>"
 										 title="">
-                      <?= Html::img( '@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
+										<?= Html::img( '@web/img/temp/' . $images[$key]->sid . '/' . $images[$key]->filename ) ?>
 									</a>
 								</li>
 
-              <?php } ?>
+							<?php }
+						}
+						else { ?>
+							<li class="thumbnail blank-img">
+								<i class="fa fa-camera fa-2x" aria-hidden="true"></i>
+							</li>
+						<?php } ?>
 					</ul>
 				</div>
 				<div class="clearfix"></div>
@@ -122,4 +129,4 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="col-sm-3">Sidebar</div>
 	</div>
 <?php $this->registerJsFile( '@web/js/jquery.magnific-popup.min.js',
-    [ 'depends' => [ \yii\web\JqueryAsset::className() ] ] ); ?>
+		[ 'depends' => [ \yii\web\JqueryAsset::className() ] ] ); ?>

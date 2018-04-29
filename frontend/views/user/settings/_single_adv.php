@@ -7,6 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\helpers\Url;
+use backend\models\Pricies;
 
 /* @var $model frontend\controllers\AdvertsViewsController */
 //\common\models\Helpers::p( $model ); die;
@@ -16,14 +17,23 @@ use yii\helpers\Url;
 	<div class="ad-thumb">
 		<div class="image">
 			<div class="row">
-				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6 blank-img">
-					<i class="fa fa-camera fa-2x" aria-hidden="true"></i></div>
+				<div class="col-sm-offset-0 col-sm-12 col-xs-offset-3 col-xs-6">
+					<?php
+					if ( $model->has_images ) {
+
+						echo Html::img( '@web/img/temp/' . $model->images[0]->sid . '/' . $model->images[0]->filename,
+								[ 'class' => 'thumbnail' ] );
+
+					}
+					else { ?>
+
+						<div class="blank-img">
+							<i class="fa fa-camera fa-2x" aria-hidden="true"></i>
+						</div>
+
+					<?php } ?>
+				</div>
 			</div>
-
-			<!--<a href="#">
-          <?/*= Html::img( '/i/blank_img.jpg', [ 'class' => 'img-responsive', 'alt' => '', 'title' => '', ] ) */?>
-			</a>-->
-
 		</div>
 
 		<div>
@@ -43,8 +53,15 @@ use yii\helpers\Url;
 							&nbsp;/&nbsp;<?= $model->subcategory->subcat_name ?>
 					</small>
 				</p>
+				<hr>
+				<p>
+					<?= $model->description ?>
+				</p>
 
-				<p class="price"><?= $model->price->price_value ?>&nbsp;<?= $model->price->currency->short_name ?>.</p>
+				<p class="price"><?= !empty( $model->price->price_value )
+							? Yii::$app->formatter->asInteger( $model->price->price_value ) . Pricies::PRICE_CURRENCY_SEPARATOR . $model->price->currency->short_name
+							: Pricies::EMPTY_PRICE_VALUE ?>
+				</p>
 			</div>
 
 			<div class="pull-right">

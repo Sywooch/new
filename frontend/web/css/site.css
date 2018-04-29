@@ -220,6 +220,18 @@ OpenCart
   overflow: hidden;
 }
 
+li.blank-img {
+  text-align: center;
+}
+
+li.blank-img .fa {
+  display: inline-block;
+  line-height: 120px;
+  color: #D4D4D4;
+  text-align: center;
+  vertical-align: bottom;
+}
+
 .ad-list .ad-thumb .image img{
   width: 140px;
   height: 120px;

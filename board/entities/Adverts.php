@@ -65,12 +65,6 @@ class Adverts extends ActiveRecord
      */
     public $verifyCode;
 
-    /**
-     * Свойство для временной маркировки изображений
-     * @var
-     */
-    public $marker;
-
     // Черновик объявления
     const STATUS_DRAFT = 1;
     // Опуликованное объявление
@@ -89,9 +83,6 @@ class Adverts extends ActiveRecord
 
     const NEXT_PAGE_DIRECT = 1;
     const PREV_PAGE_DIRECT = 0;
-
-    const PRICE_CURRENCY_SEPARATOR = '&nbsp;';
-    const EMPTY_PRICE_VALUE = '...';
 
     const SCENARIO_OWNER = 'owner';
 
@@ -147,7 +138,6 @@ class Adverts extends ActiveRecord
                     'created_at',
                     'updated_at',
                     'draft',
-                    'marker',
                     'has_images',
                     'views',
                     'user_id'
