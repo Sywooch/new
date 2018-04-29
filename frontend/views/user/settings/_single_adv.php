@@ -66,11 +66,19 @@ use backend\models\Pricies;
 
 			<div class="pull-right">
 				<ul class="list-inline">
-					<li title="Редактирование объявления">
-              <?= Html::a('<i class="fa fa-cog"></i>Редактировать', ['/adverts/update', 'id' => $model->id ], ['class' => 'btn btn-default',] ) ?>
-					</li>
 					<li title="Просмотр информации">
               <?= Html::a('<i class="fa fa-info-circle"></i>Инфо', ['', 'id' => $model->id ], ['class' => 'btn btn-default',] ) ?>
+					</li>
+					<li title="Редактирование объявления">
+						<?= Html::a( '<i class="fa fa-cog"></i>Редактировать', [ '/adverts/update', 'id' => $model->id ],
+								[ 'class' => 'btn btn-default', ] ) ?>
+					</li>
+					<li title="Удаление объявления">
+						<?= Html::a( '<i class="fa fa-trash"></i>Удалить', [ '/adverts/delete', 'id' => $model->id ], [
+								'class'        => 'btn btn-danger',
+								'data-confirm' => 'Вы хотите удалить это объявление?',
+								'data-method'  => 'post',
+						] ) ?>
 					</li>
 				</ul>
 			</div>

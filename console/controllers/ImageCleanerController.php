@@ -76,6 +76,7 @@ class ImageCleanerController extends Controller
             if ( in_array( $folder, $sidArray ) ) {
                 $directory = Yii::getAlias( $this->tempFolder ) . DIRECTORY_SEPARATOR . $folder;
                 // Находим массивы изображений в каждой папке sid
+                // TODO: переписать на метод FileHelper::findFiles
                 $imgArrays = array_diff( scandir( $directory ), [ '.', '..' ] );
 
                 // Если изображения в папке sid нет в таблице...
