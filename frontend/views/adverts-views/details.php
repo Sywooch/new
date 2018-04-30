@@ -9,10 +9,10 @@
 /* @var $images frontend\controllers\AdvertsController */
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\captcha\Captcha;
 use frontend\assets\MagnificAsset;
 use board\entities\Adverts;
+use backend\models\Pricies;
 
 MagnificAsset::register( $this );
 
@@ -63,8 +63,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				<p><i class="fa fa-money fa-fw"></i>Цена:<span class="pull-right">
 										<span
 												class="label label-danger"><strong><?= !empty( $model->price->price_value )
-														? Yii::$app->formatter->asInteger( $model->price->price_value ) . Adverts::PRICE_CURRENCY_SEPARATOR . $model->price->currency->short_name
-														: Adverts::EMPTY_PRICE_VALUE ?></strong></span></span>
+														? Yii::$app->formatter->asInteger( $model->price->price_value ) . Pricies::PRICE_CURRENCY_SEPARATOR . $model->price->currency->short_name
+														: Pricies::EMPTY_PRICE_VALUE ?></strong></span></span>
 
 					<?= $model->price->negotiable == true ? '<p class="text-right"><i class="fa fa-check lime" aria-hidden="true"></i>Торг уместен</p>' : ""; ?>
 				</p>
