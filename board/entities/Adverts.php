@@ -8,6 +8,7 @@
 
 namespace board\entities;
 
+use backend\models\Responses;
 use frontend\models\UserPhones;
 use Yii;
 use backend\models\Pricies;
@@ -55,6 +56,7 @@ use common\models\Helpers;
  * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
+ * @property Responses $response
  */
 class Adverts extends ActiveRecord
 {
@@ -202,6 +204,13 @@ class Adverts extends ActiveRecord
                 'targetClass'     => Types::class,
                 'targetAttribute' => [ 'type_id' => 'id' ]
             ],
+            [
+                [ 'response_id' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Responses::class,
+                'targetAttribute' => [ 'response_id' => 'id' ]
+            ],
             [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
@@ -324,6 +333,14 @@ class Adverts extends ActiveRecord
     public function getPhones()
     {
         return $this->hasMany( UserPhones::class, [ 'ad_id' => 'id' ] );
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResponses()
+    {
+        return $this->hasMany( Responses::class, [ 'id' => 'response_id' ] );
     }
 
     /**

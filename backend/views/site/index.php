@@ -37,6 +37,8 @@ $this->title = 'My Yii Application';
 
 					<li><a href="<?= \yii\helpers\Url::to( [ '/currencies/index' ] ) ?>">Валюта</a></li>
 
+					<li><a href="<?= \yii\helpers\Url::to( [ '/responses/index' ] ) ?>">Отклики</a></li>
+
 					<li><a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>">Rbac</a></li>
 				</ol>
 

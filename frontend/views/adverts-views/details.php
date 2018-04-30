@@ -13,6 +13,7 @@ use yii\captcha\Captcha;
 use frontend\assets\MagnificAsset;
 use board\entities\Adverts;
 use backend\models\Pricies;
+use yii\bootstrap\ActiveForm;
 
 MagnificAsset::register( $this );
 
@@ -87,8 +88,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<p><i class="fa fa-eye fa-fw"></i>Просмотров:<span class="pull-right"><?= $model->views ?></span></p>
 				<hr>
-
-				<p><i class="fa fa-reply-all fa-fw"></i>Откликов:<span class="pull-right">1</span></p>
+				
+				<p><i class="fa fa-reply-all fa-fw"></i>Откликов:<span class="pull-right"><?= $model->response_id ?></span></p>
 				<hr>
 			</div>
 		</div>
@@ -104,14 +105,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
 			<div id="response-ad" class="col-xs-12 collapse">
 				<hr>
-				<?= Html::beginForm( [
-						'action',
-						'id' => 'email'
-				],
-						'post', [
-								'id'    => '',
-								'class' => 'form-horizontal'
-						] ) ?>
+				<?php $form = ActiveForm::begin( [
+						'options'     => [
+								'id'    => 'response-email',
+								'class' => 'form-horizontal',
+						],
+						//        'enableAjaxValidation' => true,
+						'fieldConfig' => [
+								'template'     => '{label}<div class="col-sm-6 col-xs-12">{input}</div><div class="col-sm-offset-2 col-sm-6 col-xs-10">{error}</div>',
+								'labelOptions' => [ 'class' => 'col-sm-2 col-xs-12 control-label' ],
+						],
+				] )
+				?>
 
 				<?= Html::hiddenInput( 'qact', 'send_email' ) ?>
 				<?= Html::hiddenInput( 'id', $data['id'] ) ?>
@@ -123,6 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						<?= Html::input( 'text', 'username', '', [ 'class' => 'form-control' ] ) ?>
 					</div>
 				</div>
+
 
 				<div class="form-group">
 					<?= Html::label( '<SUP>*</SUP>Email:', 'useremail', [ 'class' => 'col-sm-3 control-label' ] ) ?>
@@ -160,7 +166,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>
 				</div>
 
-				<?= Html::endForm() ?>
+				<?php ActiveForm::end(); ?>
 
 			</div>
 		</div>

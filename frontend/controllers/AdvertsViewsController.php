@@ -124,7 +124,17 @@ class AdvertsViewsController extends Controller
     {
         if ( ( $model = Adverts::find()
                 ->where( [ 'adverts.id' => $id ] )
-                ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price', 'phones', 'images' ] )
+                ->joinWith( [
+                    'category',
+                    'subcategory',
+                    'type',
+                    'period',
+                    'country',
+                    'price',
+                    'phones',
+                    'images',
+                    'responses'
+                ] )
                 ->joinWith( [ 'price p' => function ( $q ){ $q->joinWith( 'currency c' ); } ] )
                 ->one()
             ) !== null
