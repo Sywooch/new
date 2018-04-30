@@ -25,7 +25,7 @@ $this->title = 'My Yii Application';
 						<a href="<?= \yii\helpers\Url::to( [ '/adverts/index' ] ) ?>">Новые объявления</a>
 					</li>
 
-					<li><a href="<?= \yii\helpers\Url::to( [ '/category/index' ] ) ?>">Категории</a></li>
+					<li><a href="<?= \yii\helpers\Url::to( [ '/categories/index' ] ) ?>">Категории</a></li>
 
 					<li><a href="<?= \yii\helpers\Url::to( [ '/subcategory/index' ] ) ?>">Подкатегории</a></li>
 

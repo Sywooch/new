@@ -84,6 +84,8 @@ class Adverts extends ActiveRecord
     const NEXT_PAGE_DIRECT = 1;
     const PREV_PAGE_DIRECT = 0;
 
+    const NO_ADV_FOUND = 'Ничего не найдено';
+
     const SCENARIO_OWNER = 'owner';
 
     public static function tableName()
