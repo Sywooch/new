@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 
-use common\models\Helpers;
 use frontend\models\adverts\AdvertsSearch;
 use Yii;
 use board\repositories\AdvertsRepository;

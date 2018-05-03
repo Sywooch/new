@@ -1,12 +1,6 @@
 <?php
-/**
- * File: details.php
- * Email: becksonq@gmail.com
- * Date: 03.12.2017
- * Time: 7:52
- */
-
 /* @var $images frontend\controllers\AdvertsController */
+/* @var $responses \backend\models\Responses */
 
 use yii\helpers\Html;
 use yii\captcha\Captcha;
@@ -14,6 +8,8 @@ use frontend\assets\MagnificAsset;
 use board\entities\Adverts;
 use backend\models\Pricies;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\Pjax;
+use yii\web\View;
 
 MagnificAsset::register( $this );
 
@@ -37,7 +33,6 @@ $this->params['breadcrumbs'][] = [
 		]
 ];
 $this->params['breadcrumbs'][] = $this->title;
-//\common\models\Helpers::p( $model ); die;
 ?>
 <div class="row">
 	<div class="col-sm-7">
@@ -88,89 +83,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
 				<p><i class="fa fa-eye fa-fw"></i>Просмотров:<span class="pull-right"><?= $model->views ?></span></p>
 				<hr>
-				
-				<p><i class="fa fa-reply-all fa-fw"></i>Откликов:<span class="pull-right"><?= $model->response_id ?></span></p>
+
+				<p><i class="fa fa-reply-all fa-fw"></i>Откликов:<span class="pull-right"><?= $model->response_count ?></span>
+				</p>
 				<hr>
 			</div>
 		</div>
-		<!-- --------------------------------------------------------------------------------------------------------------- -->
-		<div id="resp_mail" class="row">
-
-			<div class="col-xs-12">
-				<a class="btn btn-success pull-right" role="button" data-toggle="collapse" href="#response-ad"
-					 aria-expanded="false" aria-controls="response-ad" title="Отправить письмо продавцу">Ответить на
-					объявление&nbsp;&nbsp;<span
-							class="caret"></span></a>
-			</div>
-
-			<div id="response-ad" class="col-xs-12 collapse">
-				<hr>
-				<?php $form = ActiveForm::begin( [
-						'options'     => [
-								'id'    => 'response-email',
-								'class' => 'form-horizontal',
-						],
-						//        'enableAjaxValidation' => true,
-						'fieldConfig' => [
-								'template'     => '{label}<div class="col-sm-6 col-xs-12">{input}</div><div class="col-sm-offset-2 col-sm-6 col-xs-10">{error}</div>',
-								'labelOptions' => [ 'class' => 'col-sm-2 col-xs-12 control-label' ],
-						],
-				] )
-				?>
-
-				<?= Html::hiddenInput( 'qact', 'send_email' ) ?>
-				<?= Html::hiddenInput( 'id', $data['id'] ) ?>
-				<?= Html::hiddenInput( 'ajax', '0' ) ?>
-
-				<div class="form-group">
-					<?= Html::label( 'Имя:', 'username', [ 'class' => 'col-sm-3 control-label' ] ) ?>
-					<div class="col-sm-9">
-						<?= Html::input( 'text', 'username', '', [ 'class' => 'form-control' ] ) ?>
-					</div>
-				</div>
-
-
-				<div class="form-group">
-					<?= Html::label( '<SUP>*</SUP>Email:', 'useremail', [ 'class' => 'col-sm-3 control-label' ] ) ?>
-					<div class="col-sm-9">
-						<?= Html::input( 'email', 'useremail', '', [ 'class' => 'form-control' ] ) ?>
-						<? //= Html::error($post, 'email', ['class' => 'error']) ?>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<?= Html::label( 'Телефон:', 'userphone', [ 'class' => 'col-sm-3 control-label' ] ) ?>
-					<div class="col-sm-9">
-						<?= Html::input( 'text', 'userphone', '',
-								[ 'class' => 'form-control', 'placeholder' => '+7 XXX XXX XX XX' ] ) ?>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<?= Html::label( '<SUP>*</SUP>Текст:', 'message', [ 'class' => 'col-sm-3 control-label' ] ) ?>
-					<div class="col-sm-9">
-						<?= Html::textarea( 'message', '', [ 'class' => 'form-control', 'rows' => 4, 'cols' => 30 ] ) ?>
-						<? //= Html::error($post, 'email', ['class' => 'error']) ?>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-3 col-sm-4">
-						<?= Captcha::widget( [ 'name' => 'captcha', 'attribute' => 'captcha', ] ); ?>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<div class="col-sm-offset-3 col-sm-9 pull-right">
-						<?= Html::submitButton( 'Отправить', [ 'class' => 'btn btn-primary', 'name' => 'send-button' ] ) ?>
-					</div>
-				</div>
-
-				<?php ActiveForm::end(); ?>
-
-			</div>
-		</div>
-		<!-- --------------------------------------------------------------------------------------------------------------- -->
+		<?= $this->render( '_response-form', [
+				'responses' => $responses,
+				'model'     => $model,
+		] )
+		?>
 	</div>
 	<!-- end of left block -->
 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->

@@ -16,15 +16,15 @@ class m180430_080352_create_responses_table extends Migration
 
         $this->createTable( '{{%responses}}', [
             'id'      => $this->primaryKey(),
+            'ad_id'   => $this->integer(),
             'name'    => $this->string( 120 ),
             'email'   => $this->string( 120 ),
             'phone'   => $this->string( 20 ),
             'message' => $this->text(),
         ], $tableOptions );
 
-        $this->addColumn( '{{%adverts}}', 'response_id', $this->integer() );
-        $this->addForeignKey( 'fk-adverts-responses', '{{%adverts}}', 'response_id', '{{%responses}}', 'id',
-            'CASCADE' );
+        $this->addColumn( '{{%adverts}}', 'response_count', $this->integer()->defaultValue( 0 ) );
+        $this->addForeignKey( 'fk-responses-adverts', '{{%responses}}', 'ad_id', '{{%adverts}}', 'id', 'CASCADE' );
         $this->addForeignKey( 'fk-pricies-adverts', '{{%pricies}}', 'ad_id', '{{%adverts}}', 'id', 'CASCADE' );
     }
 
@@ -34,8 +34,8 @@ class m180430_080352_create_responses_table extends Migration
     public function safeDown()
     {
         $this->dropForeignKey( 'fk-pricies-adverts', '{{%pricies}}' );
-        $this->dropForeignKey( 'fk-adverts-responses', '{{%adverts}}' );
-        $this->dropColumn( '{{%adverts}}', 'response_id' );
+        $this->dropForeignKey( 'fk-responses-adverts', '{{%responses}}' );
+        $this->dropColumn( '{{%adverts}}', 'response_count' );
         $this->dropTable( '{{%responses}}' );
     }
 }

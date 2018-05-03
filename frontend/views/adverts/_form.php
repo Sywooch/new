@@ -70,7 +70,7 @@ PhonesAsset::register( $this );
     <?= $form->field( $model, 'period_id' )->dropDownList( AdvertsRepository::periodList(),
         [ 'prompt' => 'Выберите период' ] ) ?>
 
-    <?= $form->field( $model, 'header' )->textInput() ?>
+	<?= $form->field( $model, 'header' )->textInput( [ 'maxlength' => true, ] ) ?>
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
@@ -157,8 +157,7 @@ PhonesAsset::register( $this );
         'value'       => isset( \Yii::$app->user->identity->username ) ? \Yii::$app->user->identity->username : $model->author
     ] ) ?>
 
-    <?= $form->field( $model, 'email' )->input( 'email',
-        [
+	<?= $form->field( $model, 'email' )->textInput( [
             'placeholder' => 'someone@mail.ru',
             'value'       => isset( \Yii::$app->user->identity->email ) ? \Yii::$app->user->identity->email : $model->email
         ] ) ?>

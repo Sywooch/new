@@ -113,7 +113,7 @@ class ResponsesController extends Controller
      * Finds the Responses model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Responses the loaded model
+     * @return \backend\models\Responses the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel( $id )

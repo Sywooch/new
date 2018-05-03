@@ -9,6 +9,7 @@
 namespace frontend\controllers;
 
 
+use backend\models\Responses;
 use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -16,9 +17,9 @@ use yii\filters\VerbFilter;
 use board\manage\AdvertManageService;
 use board\entities\Adverts;
 use yii\web\NotFoundHttpException;
-use frontend\models\UserPhones;
 use frontend\models\adverts\AdvertsSearch;
-use frontend\models\Images;
+use yii\bootstrap\ActiveForm;
+use yii\web\Response;
 
 class AdvertsViewsController extends Controller
 {
@@ -34,7 +35,7 @@ class AdvertsViewsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'subcategory-page', 'category-page', 'details' ],
+                        'actions' => [ 'subcategory-page', 'category-page', 'details', 'create-response' ],
                         'allow'   => true,
                     ],
                     [
@@ -111,7 +112,37 @@ class AdvertsViewsController extends Controller
         $model->updateCounters(['views' => 1]);
 
         return $this->render( 'details', [
-            'model' => $model,
+            'model'     => $model,
+            'responses' => new Responses()
+        ] );
+    }
+
+    public function actionCreateResponse( $id )
+    {
+        $responses = new Responses();
+        $responses->ad_id = $id;
+
+        if ( Yii::$app->request->isAjax && $responses->load( Yii::$app->request->post() ) ) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate( $responses );
+        }
+
+        if ( Yii::$app->request->isPjax
+            && $responses->load( Yii::$app->request->post() )
+            && $responses->save()
+        ) {
+            $adverts = Adverts::findOne( $id );
+            $adverts->updateCounters( [ 'response_count' => 1 ] );
+
+            Yii::$app->session->setFlash( 'success', 'Ответ отправлен!' );
+            return $this->render( '_response-form', [
+                'responses' => $responses,
+            ] );
+        }
+
+        Yii::$app->session->setFlash( 'error', 'Произошла ошибка' );
+        return $this->render( '_response-form', [
+            'responses' => $responses,
         ] );
     }
 
@@ -133,7 +164,7 @@ class AdvertsViewsController extends Controller
                     'price',
                     'phones',
                     'images',
-                    'responses'
+                    //                    'responses'
                 ] )
                 ->joinWith( [ 'price p' => function ( $q ){ $q->joinWith( 'currency c' ); } ] )
                 ->one()

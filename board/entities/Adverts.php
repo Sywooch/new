@@ -56,15 +56,12 @@ use common\models\Helpers;
  * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
- * @property Responses $response
+ * @property \backend\models\Responses $response
  */
 class Adverts extends ActiveRecord
 {
     use EventTrait;
 
-    /**
-     * @var
-     */
     public $verifyCode;
 
     // Черновик объявления
@@ -205,13 +202,21 @@ class Adverts extends ActiveRecord
                 'targetAttribute' => [ 'type_id' => 'id' ]
             ],
             [
-                [ 'response_id' ],
+                [ 'response_count' ],
                 'exist',
                 'skipOnError'     => true,
                 'targetClass'     => Responses::class,
-                'targetAttribute' => [ 'response_id' => 'id' ]
+                'targetAttribute' => [ 'response_count' => 'id' ]
             ],
-            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
+            [ 'verifyCode', 'required' ],
+            [
+                [ 'verifyCode' ],
+                'captcha',
+                'skipOnEmpty' => true,
+                'when'        => function ( $model ){
+                    return !Yii::$app->user->isGuest;
+                }
+            ],
         ];
     }
 
@@ -255,6 +260,16 @@ class Adverts extends ActiveRecord
             'views' => 'Просмотров',
 
             'verifyCode' => 'Проверочный код',
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'captcha' => [
+                'class'           => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'test' : null,
+            ],
         ];
     }
 
@@ -340,7 +355,7 @@ class Adverts extends ActiveRecord
      */
     public function getResponses()
     {
-        return $this->hasMany( Responses::class, [ 'id' => 'response_id' ] );
+        return $this->hasMany( Responses::class, [ 'ad_id' => 'id' ] );
     }
 
     /**
