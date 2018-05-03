@@ -13,7 +13,8 @@ use board\entities\Adverts;
  * @property string $name
  * @property string $email
  * @property string $phone
- * @property string $message
+ * @property string $messages
+ * @property string $status
  *
  * @property Adverts[] $adverts
  */
@@ -21,22 +22,18 @@ class Responses extends \yii\db\ActiveRecord
 {
     public $verifyCode;
 
+    public $messages = null;
+
+    public $status = null;
+
+    const SCENARIO_OWNER = 'resp';
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%responses}}';
-    }
-
-    public function actions()
-    {
-        return [
-            'captcha' => [
-                'class'           => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'test' : null,
-            ],
-        ];
     }
 
     /**
@@ -51,15 +48,10 @@ class Responses extends \yii\db\ActiveRecord
             [ [ 'phone' ], 'string', 'max' => 20 ],
             [ [ 'email', 'message', 'ad_id' ], 'required' ],
             [ [ 'email' ], 'email' ],
-            [ 'verifyCode', 'required' ],
-            [
-                [ 'verifyCode' ],
-                'captcha',
-                'skipOnEmpty' => true,
-                'when'        => function ( $model ){
-                    return !Yii::$app->user->isGuest;
-                }
-            ]
+            [ [ 'verifyCode' ], 'required' ],
+            //            [ ['verifyCode'], 'required', 'on' => Yii::$app->user->isGuest ],
+            //            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => !Yii::$app->user->isGuest ]
+            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'resp' ]
         ];
     }
 

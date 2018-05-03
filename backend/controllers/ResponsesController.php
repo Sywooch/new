@@ -14,6 +14,18 @@ use yii\filters\VerbFilter;
  */
 class ResponsesController extends Controller
 {
+    public function actions()
+    {
+        return [
+            'captcha' => [
+                'class'           => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+                'minLength'       => 3,
+                'maxLength'       => 5,
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */

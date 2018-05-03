@@ -26,3 +26,9 @@ $(document).ready(function () {
 	// Выравнивание изображений
 	$('ul.thumbnails').find('.image-additional:eq(2)').after('<div class="clearfix"></div>');
 });
+
+// Форма отправки ответа автору объявления
+$("#response-email").on("pjax:end", function () {
+	var form = $(document).find("#response-form");
+	form.remove();
+});

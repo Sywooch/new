@@ -108,12 +108,17 @@ class AdvertsViewsController extends Controller
     public function actionDetails( $id )
     {
         $model = $this->findModel( $id );
+        $responses = new Responses();
+        if ( Yii::$app->user->identity ) {
+            $responses->scenario = 'resp';
+        }
+
         // Обновление счетчика просмотров
         $model->updateCounters(['views' => 1]);
 
         return $this->render( 'details', [
             'model'     => $model,
-            'responses' => new Responses()
+            'responses' => $responses
         ] );
     }
 
@@ -122,27 +127,24 @@ class AdvertsViewsController extends Controller
         $responses = new Responses();
         $responses->ad_id = $id;
 
-        if ( Yii::$app->request->isAjax && $responses->load( Yii::$app->request->post() ) ) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return ActiveForm::validate( $responses );
-        }
-
-        if ( Yii::$app->request->isPjax
-            && $responses->load( Yii::$app->request->post() )
+        if ( $responses->load( Yii::$app->request->post() )
             && $responses->save()
         ) {
             $adverts = Adverts::findOne( $id );
             $adverts->updateCounters( [ 'response_count' => 1 ] );
 
-            Yii::$app->session->setFlash( 'success', 'Ответ отправлен!' );
-            return $this->render( '_response-form', [
-                'responses' => $responses,
-            ] );
+            $responses->status = 'success';
+            $responses->messages = 'Ответ отправлен!';
+        }
+        else {
+            $responses->status = 'danger';
+            $responses->messages = 'Извините. Произошла ошибка';
         }
 
-        Yii::$app->session->setFlash( 'error', 'Произошла ошибка' );
         return $this->render( '_response-form', [
             'responses' => $responses,
+            'status'    => $responses->status,
+            'messages'  => $responses->messages,
         ] );
     }
 

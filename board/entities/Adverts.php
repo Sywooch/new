@@ -209,14 +209,15 @@ class Adverts extends ActiveRecord
                 'targetAttribute' => [ 'response_count' => 'id' ]
             ],
             [ 'verifyCode', 'required' ],
-            [
-                [ 'verifyCode' ],
-                'captcha',
-                'skipOnEmpty' => true,
-                'when'        => function ( $model ){
-                    return !Yii::$app->user->isGuest;
-                }
-            ],
+            //            [
+            //                [ 'verifyCode' ],
+            //                'captcha',
+            //                'skipOnEmpty' => true,
+            //                'when'        => function ( $model ){
+            //                    return !Yii::$app->user->isGuest;
+            //                }
+            //            ],
+            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
 
@@ -268,7 +269,7 @@ class Adverts extends ActiveRecord
         return [
             'captcha' => [
                 'class'           => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'test' : null,
+                //                'fixedVerifyCode' => YII_ENV_TEST ? 'test' : null,
             ],
         ];
     }
