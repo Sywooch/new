@@ -8,8 +8,6 @@
 
 namespace frontend\controllers;
 
-use board\entities\Image;
-use common\models\Helpers;
 use frontend\models\Images;
 use Yii;
 use yii\helpers\FileHelper;

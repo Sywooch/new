@@ -1,18 +1,11 @@
 <?php
-/**
- * User: Администратор
- * Date: 05.04.2017
- * Time: 23:30
- */
-
 use yii\bootstrap\Nav;
 
-/** @var $category */
+/** @var $items */
 echo Nav::widget( [
-    'items'   => $items,
-    'options' => [
+    'items'        => $items,
+    'encodeLabels' => false,
+    'options'      => [
         'class' => 'nav-tabs'
     ]
 ] );
-
-?>

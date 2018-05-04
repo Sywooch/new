@@ -8,6 +8,7 @@
 
 namespace board\entities;
 
+use frontend\models\Responses;
 use frontend\models\UserPhones;
 use Yii;
 use backend\models\Pricies;
@@ -55,14 +56,12 @@ use common\models\Helpers;
  * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
+ * @property \frontend\models\Responses $response
  */
 class Adverts extends ActiveRecord
 {
     use EventTrait;
 
-    /**
-     * @var
-     */
     public $verifyCode;
 
     // Черновик объявления
@@ -83,6 +82,8 @@ class Adverts extends ActiveRecord
 
     const NEXT_PAGE_DIRECT = 1;
     const PREV_PAGE_DIRECT = 0;
+
+    const NO_ADV_FOUND = 'Ничего не найдено';
 
     const SCENARIO_OWNER = 'owner';
 
@@ -200,6 +201,14 @@ class Adverts extends ActiveRecord
                 'targetClass'     => Types::class,
                 'targetAttribute' => [ 'type_id' => 'id' ]
             ],
+            [
+                [ 'response_count' ],
+                'exist',
+                'skipOnError'     => true,
+                'targetClass'     => Responses::class,
+                'targetAttribute' => [ 'response_count' => 'id' ]
+            ],
+            [ 'verifyCode', 'required' ],
             [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
@@ -322,6 +331,14 @@ class Adverts extends ActiveRecord
     public function getPhones()
     {
         return $this->hasMany( UserPhones::class, [ 'ad_id' => 'id' ] );
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResponses()
+    {
+        return $this->hasMany( Responses::class, [ 'ad_id' => 'id' ] );
     }
 
     /**
