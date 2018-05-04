@@ -1,8 +1,9 @@
 <?php
 /* @var $images frontend\controllers\AdvertsController */
-/* @var $responses \backend\models\Responses */
-/* @var $status backend\models\Responses */
-/* @var $messages backend\models\Responses */
+/* @var $responses \frontend\models\Responses */
+/* @var $status \frontend\models\Responses */
+/* @var $messages \frontend\models\Responses */
+/* @var $model \board\entities\Adverts */
 use yii\helpers\Html;
 use yii\captcha\Captcha;
 use yii\bootstrap\ActiveForm;
@@ -28,14 +29,14 @@ use common\widgets\Alert;
     <?php endif; ?>
 
     <?php $form = ActiveForm::begin( [
-        'action'      => [ '/adverts-views/create-response', 'id' => $model->id ],
-        'method'      => 'post',
-        'id'          => 'response-form',
-        'options'     => [
+				'action'      => [ '/responses/create-response', 'id' => $model->id ],
+				'method'      => 'post',
+				'id'          => 'response-form',
+				'options'     => [
             'data-pjax' => true,
             'class'     => 'form-horizontal',
         ],
-        'fieldConfig' => [
+				'fieldConfig' => [
             'template'     => '{label}<div class="col-sm-9 col-xs-12">{input}</div><div class="col-sm-offset-3 col-sm-9 col-xs-10">{error}</div>',
             'labelOptions' => [ 'class' => 'col-sm-3 col-xs-12 control-label' ],
         ],
@@ -51,9 +52,7 @@ use common\widgets\Alert;
     <?= $form->field( $responses, 'message' )->textarea( [ 'rows' => 4, 'cols' => 30 ] ) ?>
 
     <? if ( true ) {
-        echo $form->field( $responses, 'verifyCode' )->widget( Captcha::className(), [
-//            'captchaAction' => '/responses/captcha',
-        ] );
+			echo $form->field( $responses, 'verifyCode' )->widget( Captcha::className() );
     } ?>
 
 	<div class="form-group">

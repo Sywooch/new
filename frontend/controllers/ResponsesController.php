@@ -1,13 +1,14 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use Yii;
-use backend\models\Responses;
-use backend\models\ResponsesSearch;
+use frontend\models\Responses;
+use frontend\models\ResponsesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use board\entities\Adverts;
 
 /**
  * ResponsesController implements the CRUD actions for Responses model.
@@ -20,8 +21,6 @@ class ResponsesController extends Controller
             'captcha' => [
                 'class'           => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-                'minLength'       => 3,
-                'maxLength'       => 5,
             ],
         ];
     }
@@ -53,6 +52,36 @@ class ResponsesController extends Controller
         return $this->render( 'index', [
             'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
+        ] );
+    }
+
+
+    public function actionCreateResponse( $id )
+    {
+        $responses = new Responses();
+        if ( Yii::$app->user->identity ) {
+            $responses->scenario = Responses::SCENARIO_RESP;
+        }
+        $responses->ad_id = $id;
+
+        if ( $responses->load( Yii::$app->request->post() )
+            && $responses->save()
+        ) {
+            $adverts = Adverts::findOne( $id );
+            $adverts->updateCounters( [ 'response_count' => 1 ] );
+
+            $responses->status = 'success';
+            $responses->messages = 'Ответ отправлен!';
+        }
+        else {
+            $responses->status = 'danger';
+            $responses->messages = 'Извините. Произошла ошибка';
+        }
+
+        return $this->render( '/adverts-views/_response-form', [
+            'responses' => $responses,
+            'status'    => $responses->status,
+            'messages'  => $responses->messages,
         ] );
     }
 
@@ -125,7 +154,7 @@ class ResponsesController extends Controller
      * Finds the Responses model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return \backend\models\Responses the loaded model
+     * @return \frontend\models\Responses the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel( $id )

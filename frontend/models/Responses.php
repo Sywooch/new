@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace frontend\models;
 
 use Yii;
 use board\entities\Adverts;
@@ -26,7 +26,7 @@ class Responses extends \yii\db\ActiveRecord
 
     public $status = null;
 
-    const SCENARIO_OWNER = 'resp';
+    const SCENARIO_RESP = 'resp';
 
     /**
      * @inheritdoc
@@ -48,10 +48,10 @@ class Responses extends \yii\db\ActiveRecord
             [ [ 'phone' ], 'string', 'max' => 20 ],
             [ [ 'email', 'message', 'ad_id' ], 'required' ],
             [ [ 'email' ], 'email' ],
+            [ [ 'verifyCode' ], 'captcha' ],
             [ [ 'verifyCode' ], 'required' ],
+            //            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => self::SCENARIO_RESP ],
             //            [ ['verifyCode'], 'required', 'on' => Yii::$app->user->isGuest ],
-            //            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => !Yii::$app->user->isGuest ]
-            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'resp' ]
         ];
     }
 

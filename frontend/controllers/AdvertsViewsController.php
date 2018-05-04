@@ -9,7 +9,7 @@
 namespace frontend\controllers;
 
 
-use backend\models\Responses;
+use frontend\models\Responses;
 use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -108,9 +108,10 @@ class AdvertsViewsController extends Controller
     public function actionDetails( $id )
     {
         $model = $this->findModel( $id );
+
         $responses = new Responses();
         if ( Yii::$app->user->identity ) {
-            $responses->scenario = 'resp';
+            $responses->scenario = Responses::SCENARIO_OWNER;
         }
 
         // Обновление счетчика просмотров
@@ -119,32 +120,6 @@ class AdvertsViewsController extends Controller
         return $this->render( 'details', [
             'model'     => $model,
             'responses' => $responses
-        ] );
-    }
-
-    public function actionCreateResponse( $id )
-    {
-        $responses = new Responses();
-        $responses->ad_id = $id;
-
-        if ( $responses->load( Yii::$app->request->post() )
-            && $responses->save()
-        ) {
-            $adverts = Adverts::findOne( $id );
-            $adverts->updateCounters( [ 'response_count' => 1 ] );
-
-            $responses->status = 'success';
-            $responses->messages = 'Ответ отправлен!';
-        }
-        else {
-            $responses->status = 'danger';
-            $responses->messages = 'Извините. Произошла ошибка';
-        }
-
-        return $this->render( '_response-form', [
-            'responses' => $responses,
-            'status'    => $responses->status,
-            'messages'  => $responses->messages,
         ] );
     }
 

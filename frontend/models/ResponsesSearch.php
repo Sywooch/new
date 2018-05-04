@@ -1,13 +1,14 @@
 <?php
 
-namespace backend\models;
+namespace frontend\models;
 
+use frontend\models\Responses;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ResponsesSearch represents the model behind the search form of `backend\models\Responses`.
+ * ResponsesSearch represents the model behind the search form of `frontend\models\Responses`.
  */
 class ResponsesSearch extends Responses
 {

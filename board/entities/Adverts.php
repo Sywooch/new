@@ -8,7 +8,7 @@
 
 namespace board\entities;
 
-use backend\models\Responses;
+use frontend\models\Responses;
 use frontend\models\UserPhones;
 use Yii;
 use backend\models\Pricies;
@@ -56,7 +56,7 @@ use common\models\Helpers;
  * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
- * @property \backend\models\Responses $response
+ * @property \frontend\models\Responses $response
  */
 class Adverts extends ActiveRecord
 {
@@ -209,14 +209,6 @@ class Adverts extends ActiveRecord
                 'targetAttribute' => [ 'response_count' => 'id' ]
             ],
             [ 'verifyCode', 'required' ],
-            //            [
-            //                [ 'verifyCode' ],
-            //                'captcha',
-            //                'skipOnEmpty' => true,
-            //                'when'        => function ( $model ){
-            //                    return !Yii::$app->user->isGuest;
-            //                }
-            //            ],
             [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
@@ -261,16 +253,6 @@ class Adverts extends ActiveRecord
             'views' => 'Просмотров',
 
             'verifyCode' => 'Проверочный код',
-        ];
-    }
-
-    public function actions()
-    {
-        return [
-            'captcha' => [
-                'class'           => 'yii\captcha\CaptchaAction',
-                //                'fixedVerifyCode' => YII_ENV_TEST ? 'test' : null,
-            ],
         ];
     }
 

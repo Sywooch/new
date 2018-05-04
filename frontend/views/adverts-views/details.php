@@ -1,6 +1,6 @@
 <?php
 /* @var $images frontend\controllers\AdvertsController */
-/* @var $responses \backend\models\Responses */
+/* @var $responses \frontend\models\Responses */
 
 use yii\helpers\Html;
 use yii\captcha\Captcha;
