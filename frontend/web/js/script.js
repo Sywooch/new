@@ -29,7 +29,7 @@ $(document).ready(function () {
 
 // Форма отправки ответа автору объявления
 $("#response-email").on("pjax:end", function () {
-	var container = $(document).find("#response-email"),
+	var container = $(document).find("#resp_mail"),
 		form = container.find("#response-form");
 	container.hide("slow");
 	form.remove();
@@ -38,7 +38,7 @@ $("#response-email").on("pjax:end", function () {
 		type: 'success',
 		layout: 'center',
 		theme: 'metroui',
-		timeout: 3000,
+		closeWith: ['button'],
 		text: 'Ваше сообщение отправлено!'
 	}).show();
 });
