@@ -8,9 +8,9 @@ use yii\helpers\Html;
 use yii\captcha\Captcha;
 use yii\bootstrap\ActiveForm;
 use yii\widgets\Pjax;
-use yii\web\View;
-use common\widgets\Alert;
+use frontend\assets\NotyAsset;
 
+NotyAsset::register( $this );
 ?>
 
 <div id="response-ad" class="col-xs-12 collapse">
@@ -20,13 +20,13 @@ use common\widgets\Alert;
         'id'              => 'response-email'
     ] ); ?>
 
-    <?php if ( $status !== null && $messages !== null ): ?>
-			<div class="alert alert-<?= $status ?> alert-dismissible" role="alert">
+    <?php /*if ( $status !== null && $messages !== null ): */ ?><!--
+			<div class="alert alert-<? /*= $status */ ?> alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
 							aria-hidden="true">&times;</span></button>
-          <?= $messages ?>
+          <? /*= $messages */ ?>
 			</div>
-    <?php endif; ?>
+    --><?php /*endif; */ ?>
 
     <?php $form = ActiveForm::begin( [
 				'action'      => [ '/responses/create-response', 'id' => $model->id ],

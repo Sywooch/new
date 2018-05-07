@@ -141,7 +141,6 @@ class AdvertsViewsController extends Controller
                     'price',
                     'phones',
                     'images',
-                    //                    'responses'
                 ] )
                 ->joinWith( [ 'price p' => function ( $q ){ $q->joinWith( 'currency c' ); } ] )
                 ->one()

@@ -29,6 +29,15 @@ $(document).ready(function () {
 
 // Форма отправки ответа автору объявления
 $("#response-email").on("pjax:end", function () {
-	var form = $(document).find("#response-form");
+	var container = $(document).find("#response-email"),
+		form = container.find("#response-form");
+	container.hide("slow");
 	form.remove();
+
+	new Noty({
+		type: 'success',
+		layout: 'topRight',
+		theme: 'metroui',
+		text: 'Ваше сообщение отправлено!'
+	}).show();
 });
