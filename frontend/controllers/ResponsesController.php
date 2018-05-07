@@ -59,9 +59,6 @@ class ResponsesController extends Controller
     public function actionCreateResponse( $id )
     {
         $responses = new Responses();
-        if ( Yii::$app->user->identity ) {
-            $responses->scenario = Responses::SCENARIO_RESP;
-        }
         $responses->ad_id = $id;
 
         if ( $responses->load( Yii::$app->request->post() )
@@ -69,19 +66,9 @@ class ResponsesController extends Controller
         ) {
             $adverts = Adverts::findOne( $id );
             $adverts->updateCounters( [ 'response_count' => 1 ] );
-
-            $responses->status = 'success';
-            $responses->messages = 'Ответ отправлен!';
         }
-        else {
-            $responses->status = 'danger';
-            $responses->messages = 'Извините. Произошла ошибка';
-        }
-
         return $this->render( '/adverts-views/_response-form', [
             'responses' => $responses,
-            'status'    => $responses->status,
-            'messages'  => $responses->messages,
         ] );
     }
 

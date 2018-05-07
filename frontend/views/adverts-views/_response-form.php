@@ -20,23 +20,15 @@ NotyAsset::register( $this );
         'id'              => 'response-email'
     ] ); ?>
 
-    <?php /*if ( $status !== null && $messages !== null ): */ ?><!--
-			<div class="alert alert-<? /*= $status */ ?> alert-dismissible" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-							aria-hidden="true">&times;</span></button>
-          <? /*= $messages */ ?>
-			</div>
-    --><?php /*endif; */ ?>
-
     <?php $form = ActiveForm::begin( [
-				'action'      => [ '/responses/create-response', 'id' => $model->id ],
-				'method'      => 'post',
-				'id'          => 'response-form',
-				'options'     => [
+        'action'      => [ '/responses/create-response', 'id' => $model->id ],
+        'method'      => 'post',
+        'id'          => 'response-form',
+        'options'     => [
             'data-pjax' => true,
             'class'     => 'form-horizontal',
         ],
-				'fieldConfig' => [
+        'fieldConfig' => [
             'template'     => '{label}<div class="col-sm-9 col-xs-12">{input}</div><div class="col-sm-offset-3 col-sm-9 col-xs-10">{error}</div>',
             'labelOptions' => [ 'class' => 'col-sm-3 col-xs-12 control-label' ],
         ],
@@ -51,9 +43,7 @@ NotyAsset::register( $this );
 
     <?= $form->field( $responses, 'message' )->textarea( [ 'rows' => 4, 'cols' => 30 ] ) ?>
 
-    <? if ( true ) {
-			echo $form->field( $responses, 'verifyCode' )->widget( Captcha::className() );
-    } ?>
+    <?= $form->field( $responses, 'verifyCode' )->widget( Captcha::className() ) ?>
 
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-6">

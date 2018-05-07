@@ -96,8 +96,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $this->render( '_response-form', [
             'responses' => $responses,
             'model'     => $model,
-            'status'    => $status,
-            'messages'  => $messages,
         ] )
         ?>
 		</div>

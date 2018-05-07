@@ -36,8 +36,9 @@ $("#response-email").on("pjax:end", function () {
 
 	new Noty({
 		type: 'success',
-		layout: 'topRight',
+		layout: 'center',
 		theme: 'metroui',
+		timeout: 3000,
 		text: 'Ваше сообщение отправлено!'
 	}).show();
 });

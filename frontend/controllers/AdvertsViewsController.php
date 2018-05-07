@@ -108,11 +108,7 @@ class AdvertsViewsController extends Controller
     public function actionDetails( $id )
     {
         $model = $this->findModel( $id );
-
         $responses = new Responses();
-        if ( Yii::$app->user->identity ) {
-            $responses->scenario = Responses::SCENARIO_OWNER;
-        }
 
         // Обновление счетчика просмотров
         $model->updateCounters(['views' => 1]);
