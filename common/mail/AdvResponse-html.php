@@ -10,17 +10,15 @@ $advertLink = Yii::$app->urlManager->createAbsoluteUrl( [ 'adverts-views/details
 <div class="password-reset">
 	<p>Здравствуйте, <?= $adverts->author ?>!</p>
 
-	<p>На Ваше объявление <?= $adverts->header ?>, ID: <?= Html::a( Html::encode( $advertLink ), $advertLink ) ?> поступил
-		ответ.</p>
-	<p><?= $responses->message ?></p>
+	<p>На Ваше объявление <?= Html::a( Html::encode( $adverts->header ), $advertLink ) ?> поступил ответ.</p>
+	<p>Текст: <?= $responses->message ?></p>
     <?php
     if ( !null == $responses->name ) { ?>
 			<p>Отправитель: <?= $responses->name ?></p>
     <?php } ?>
-	<p>Email отправителя: <?= $responses->email ?></p>
+	<p>Email: <?= $responses->email ?></p>
     <?php
-    if ( !null == $responses->phone ) {
-        ?>
+    if ( !null == $responses->phone ) { ?>
 			<p>Телефон: <?= $responses->phone ?></p>
     <?php } ?>
 </div>

@@ -76,7 +76,7 @@ class ResponsesController extends Controller
             )
                 ->setFrom( [ Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot' ] )
                 ->setTo( $adverts->email )
-                ->setSubject( 'Ответ на Ваше объявление' )
+                ->setSubject( 'Ответ на объявление ' . $adverts->header )
                 ->send();
         }
         return $this->render( '/adverts-views/_response-form', [
