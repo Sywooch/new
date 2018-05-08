@@ -38,25 +38,7 @@ FontAwesomeAsset::register( $this );
           <?= Breadcrumbs::widget( [
               'links' => isset( $this->params['breadcrumbs'] ) ? $this->params['breadcrumbs'] : [],
           ] ) ?>
-					<? /*= Alert::widget() */ ?>
-					<?php \shifrin\noty\NotyWidget::widget( [
-							'options'                => [
-									'dismissQueue' => true,
-									'layout'       => 'topCenter',
-									'theme'        => 'relax',
-									'animation'    => [
-											'open'  => 'animated flipInX',
-											'close' => 'animated flipOutX',
-									],
-									'timeout'      => false
-							],
-							'enableSessionFlash'     => true,
-							'enableIcon'             => true,
-							'registerAnimateCss'     => true,
-							'registerButtonsCss'     => false,
-							'registerFontAwesomeCss' => true,
-					] );
-					?>
+          <?= Alert::widget() ?>
           <?= $content ?>
 			</div>
 		</div>

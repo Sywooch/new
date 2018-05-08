@@ -66,6 +66,7 @@ class ResponsesController extends Controller
         ) {
             $adverts = Adverts::findOne( $id );
             $adverts->updateCounters( [ 'response_count' => 1 ] );
+            // TODO: отправить письмо автору
         }
         return $this->render( '/adverts-views/_response-form', [
             'responses' => $responses,
