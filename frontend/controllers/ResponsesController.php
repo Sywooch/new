@@ -66,7 +66,18 @@ class ResponsesController extends Controller
         ) {
             $adverts = Adverts::findOne( $id );
             $adverts->updateCounters( [ 'response_count' => 1 ] );
-            // TODO: отправить письмо автору
+
+            Yii::$app->mailer->compose(
+                [ 'html' => 'AdvResponse-html', 'text' => 'AdvResponse-text' ],
+                [
+                    'responses' => $responses,
+                    'adverts'   => $adverts,
+                ]
+            )
+                ->setFrom( [ Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot' ] )
+                ->setTo( $adverts->email )
+                ->setSubject( 'Ответ на объявление ' . $adverts->header )
+                ->send();
         }
         return $this->render( '/adverts-views/_response-form', [
             'responses' => $responses,

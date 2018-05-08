@@ -13,18 +13,13 @@ use board\entities\Adverts;
  * @property string $name
  * @property string $email
  * @property string $phone
- * @property string $messages
- * @property string $status
+ * @property string $message
  *
  * @property Adverts[] $adverts
  */
 class Responses extends \yii\db\ActiveRecord
 {
     public $verifyCode;
-
-    public $messages = null;
-
-    public $status = null;
 
     const SCENARIO_RESP = 'resp';
 
