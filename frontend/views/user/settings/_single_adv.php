@@ -8,14 +8,17 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use backend\models\Pricies;
-use shifrin\noty\NotyAsset;
-use shifrin\noty\NotyWidget;
+use frontend\assets\NotyAsset;
+use frontend\assets\DeleteAdsAsset;
+
+NotyAsset::register( $this );
+DeleteAdsAsset::register( $this );
 
 /* @var $model frontend\controllers\AdvertsViewsController */
 //\common\models\Helpers::p( $model ); die;
 ?>
 
-<div class="ad-list col-xs-12">
+<div id="<?= $model->id ?>" class="ad-list col-xs-12">
 	<div class="ad-thumb">
 		<div class="image">
 			<div class="row">
@@ -76,16 +79,8 @@ use shifrin\noty\NotyWidget;
 								[ 'class' => 'btn btn-default', ] ) ?>
 					</li>
 					<li title="Удаление объявления">
-						<?= Html::a( '<i class="fa fa-trash"></i>Удалить', [ '/adverts/delete', 'id' => $model->id ], [
-								'class'        => 'btn btn-danger',
-								//								'onClick' => "var n = Noty('id');
-								//									$.noty.setText(n.options.id, 'Welcome to our site!');
-								//									$.noty.buttons();
-								//									",
-								'data-confirm' => 'Вы хотите удалить это объявление?',
-								'data-method'  => 'post',
-						] ) ?>
-
+              <?= Html::button( '<i class="fa fa-trash"></i>Удалить',
+                  [ 'class' => 'ad-delete-btn btn btn-danger', 'data-id' => $model->id ] ) ?>
 					</li>
 				</ul>
 			</div>
@@ -100,5 +95,3 @@ use shifrin\noty\NotyWidget;
 		</div>
 	</div>
 </div>
-
-

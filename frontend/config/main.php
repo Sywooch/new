@@ -46,10 +46,10 @@ return [
                 ],
             ],
             // Для разработки
-            'linkAssets' => true,
+            //'linkAssets' => true,
             // Еще вариант отключения браузерного кэша
-//            'class' => 'yii\web\AssetManager',
-//            'appendTimestamp' => true,
+            //            'class' => 'yii\web\AssetManager',
+            //            'appendTimestamp' => true,
         ],
         'view' => [
             'theme' => [

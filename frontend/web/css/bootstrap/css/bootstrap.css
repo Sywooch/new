@@ -3354,8 +3354,8 @@ fieldset[disabled] .btn-warning.focus {
 }
 .btn-danger:hover {
   color: #fff;
-  background-color: #FF4914;
-  border-color: #E03200;
+  background-color: #c9302c;
+  border-color: #ac2925;
 }
 .btn-danger:active,
 .btn-danger.active,
@@ -3436,7 +3436,7 @@ fieldset[disabled] .btn-link:focus {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.3333333;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 .btn-sm,
 .btn-group-sm > .btn {

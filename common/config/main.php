@@ -22,7 +22,8 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
         'assetManager' => [
-            'bundles' => [
+            'appendTimestamp' => true,
+            'bundles'         => [
                 'yii\bootstrap\BootstrapAsset'       => [
                     'sourcePath' => '@frontend/web/css/bootstrap/',
                     'css'        => [
