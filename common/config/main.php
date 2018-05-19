@@ -6,17 +6,17 @@ return [
     'sourceLanguage' => 'ru-RU',
     'components' => [
         'formatter'    => [
-//            'class'             => 'yii\i18n\Formatter',
-'defaultTimeZone'   => 'Europe/Moscow',
-//            'timeZone'          => 'GMT+3',
-'locale'            => 'ru-RU',
-//            'dateFormat'        => 'dd MMMM yyyy',
-'datetimeFormat'    => 'php:d F Y H:i',
-//            'datetimeFormat'    => 'dd MMMM yyyy H:i',
-//            'timeFormat'        => 'H:i:s',
-'decimalSeparator'  => ',',
-'thousandSeparator' => ' ',
-'currencyCode'      => 'RUR',
+            'class'             => 'yii\i18n\Formatter',
+            'defaultTimeZone'   => 'Europe/Moscow',
+            //            'timeZone'          => 'GMT+3',
+            'locale'            => 'ru-RU',
+            'dateFormat'        => 'dd MMMM yyyy',
+            'datetimeFormat'    => 'php:d F Y H:i',
+            //            'datetimeFormat'    => 'dd MMMM yyyy H:i',
+            'timeFormat'        => 'H:i:s',
+            'decimalSeparator'  => ',',
+            'thousandSeparator' => ' ',
+            'currencyCode'      => 'RUB',
         ],
         'cache'        => [
             'class' => 'yii\caching\FileCache',
@@ -28,7 +28,6 @@ return [
                     'sourcePath' => '@frontend/web/css/bootstrap/',
                     'css'        => [
                         'css/bootstrap.css',
-//                        'css/bootstrap-theme.css'
                     ],
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [
