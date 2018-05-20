@@ -48,7 +48,8 @@ PhonesAsset::register( $this );
     ?>
 
 	<?= Html::hiddenInput( 'sid', $model->isNewRecord ? Yii::$app->session->id : $model->sid, [ 'id' => 'sid' ] ); ?>
-	<?= Html::hiddenInput( 'id', $model->id, [ 'id' => 'ad_id' ] ); ?>
+    <?= Html::hiddenInput( 'id', $model->isNewRecord ? rand( 11111111, 99999999 ) : $model->id,
+        [ 'id' => 'ad_id' ] ); ?>
 
     <?= $form->field( $model, 'cat_id' )->dropDownList( AdvertsRepository::categoryList(),
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
@@ -70,7 +71,7 @@ PhonesAsset::register( $this );
     <?= $form->field( $model, 'period_id' )->dropDownList( AdvertsRepository::periodList(),
         [ 'prompt' => 'Выберите период' ] ) ?>
 
-	<?= $form->field( $model, 'header' )->textInput( [ 'maxlength' => true, ] ) ?>
+    <?= $form->field( $model, 'header' )->textInput( [ 'maxlength' => true, ] ) ?>
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
@@ -131,7 +132,7 @@ PhonesAsset::register( $this );
 										data.formData = { sid: $("#sid").val(), ad_id: $("#ad_id").val() };
 								}',
             ],
-        ] );
+        ] )
         ?>
 		</div>
 	</div>

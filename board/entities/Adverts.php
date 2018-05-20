@@ -48,6 +48,9 @@ use common\models\Helpers;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $draft
+ * @property integer $has_images
+ * @property integer $views
+ * @property integer $response_count
  *
  * @property Categories $cat
  * @property Countries $countries
@@ -85,7 +88,7 @@ class Adverts extends ActiveRecord
 
     const NO_ADV_FOUND = 'Ничего не найдено';
 
-    const SCENARIO_OWNER = 'owner';
+    const SCENARIO_GUEST = 'guest';
 
     public static function tableName()
     {
@@ -98,6 +101,7 @@ class Adverts extends ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
+        $scenarios[static::SCENARIO_GUEST] = [ 'verifyCode' ];
         return $scenarios;
     }
 
@@ -141,7 +145,8 @@ class Adverts extends ActiveRecord
                     'draft',
                     'has_images',
                     'views',
-                    'user_id'
+                    'user_id',
+                    'response_count'
                 ],
                 'integer'
             ],
@@ -161,6 +166,7 @@ class Adverts extends ActiveRecord
                 ],
                 'required'
             ],
+            [ [ 'response_count' ], 'default', 'value' => 0 ],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
@@ -201,15 +207,8 @@ class Adverts extends ActiveRecord
                 'targetClass'     => Types::class,
                 'targetAttribute' => [ 'type_id' => 'id' ]
             ],
-            [
-                [ 'response_count' ],
-                'exist',
-                'skipOnError'     => true,
-                'targetClass'     => Responses::class,
-                'targetAttribute' => [ 'response_count' => 'id' ]
-            ],
-            [ 'verifyCode', 'required' ],
-            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
+            [ [ 'verifyCode', ], 'required', 'on' => 'guest' ],
+            //            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
 
@@ -359,5 +358,40 @@ class Adverts extends ActiveRecord
             return $target->id;
         }
         return null;
+    }
+
+    /**
+     * @return int|string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function countPerDay()
+    {
+        $today = Yii::$app->formatter->asDate( 'now', 'yyyy-MM-dd' );
+        $count = Adverts::find()
+            ->select( [ 'id' ] )
+            ->where( [ 'between', 'created_at', strtotime( $today . ' 00:00:00' ), strtotime( $today . ' 23:59:59' ) ] )
+            ->count();
+
+        return $count;
+    }
+
+    /**
+     * @return int|string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function countPerMonth()
+    {
+        $today = Yii::$app->formatter->asDate( 'now', 'yyyy-MM-dd' );
+        $count = Adverts::find()
+            ->select( [ 'id' ] )
+            ->where( [
+                'between',
+                'created_at',
+                ( strtotime( date( "Y-m-d", strtotime( "-1 month" ) ) ) ),
+                strtotime( $today . ' 23:59:59' )
+            ] )
+            ->count();
+
+        return $count;
     }
 }

@@ -80,9 +80,7 @@ class ImagesController extends Controller
                     $model->sid = Yii::$app->request->post( 'sid' );
                 }
 
-                if ( Yii::$app->request->post( 'ad_id' ) ) {
-                    $model->ad_id = Yii::$app->request->post( 'ad_id' );
-                }
+                Yii::$app->request->post( 'ad_id' ) ? $model->ad_id = Yii::$app->request->post( 'ad_id' ) : null;
 
                 if ( !$model->save() ) {
                     // Если не удалось сохранить модель, удаляем загруженные файлы
