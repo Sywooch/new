@@ -5,15 +5,13 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use frontend\models\adverts\AdvertsSearch;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-    public $layout = 'dashboard';
-
     /**
      * @inheritdoc
      */
@@ -62,29 +60,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new AdvertsSearch();
+        $dataProvider = $searchModel->searchHomeAdverts();
+
+        return $this->render( '/adverts/index', [
+            'searchModel'  => $searchModel,
+            'dataProvider' => $dataProvider,
+        ] );
     }
-
-    /**
-     * Login action.
-     *
-     * @return string
-     */
-    /*public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }*/
 
     /**
      * Logout action.

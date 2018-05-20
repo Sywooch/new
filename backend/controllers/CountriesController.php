@@ -14,8 +14,6 @@ use yii\filters\VerbFilter;
  */
 class CountriesController extends Controller
 {
-    public $layout = 'dashboard';
-
     /**
      * @inheritdoc
      */

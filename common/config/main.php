@@ -8,15 +8,14 @@ return [
         'formatter'    => [
             'class'             => 'yii\i18n\Formatter',
             'defaultTimeZone'   => 'Europe/Moscow',
-            //            'timeZone'          => 'GMT+3',
             'locale'            => 'ru-RU',
             'dateFormat'        => 'dd MMMM yyyy',
             'datetimeFormat'    => 'php:d F Y H:i',
-            //            'datetimeFormat'    => 'dd MMMM yyyy H:i',
             'timeFormat'        => 'H:i:s',
             'decimalSeparator'  => ',',
             'thousandSeparator' => ' ',
             'currencyCode'      => 'RUB',
+            'nullDisplay'       => '---'
         ],
         'cache'        => [
             'class' => 'yii\caching\FileCache',
@@ -88,7 +87,7 @@ return [
              'controllerMap' => [
                 'admin' => [
                     'class'  => 'dektrium\user\controllers\AdminController',
-                    'layout' => '/dashboard', // Admin-layout
+                    'layout' => '/main', // Admin-layout
                 ],
                 'settings' => [
                     'class' => 'frontend\controllers\user\SettingsController'
