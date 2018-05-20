@@ -25,7 +25,11 @@
         "la-haute-societe/yii2-save-relations-behavior": "*",
         "kartik-v/yii2-widget-depdrop": "@dev",
         "2amigos/yii2-file-upload-widget": "~1.0",
-        "kint-php/kint": "^2.2"
+        "kint-php/kint": "^2.2",
+        "codeception/specify": "*",
+        "codeception/verify": "*",
+        "fxp/composer-asset-plugin": "^1.4",
+        "needim/noty": "^3.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

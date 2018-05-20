@@ -5,6 +5,7 @@ use yii\widgets\LinkPager;
 use yii\helpers\Url;
 use frontend\widgets\catmenu\CatmenuTabs;
 use frontend\widgets\adsort\AdSort;
+use board\entities\Adverts;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -34,7 +35,8 @@ $this->title = 'vezugruz29.ru';
 						поиск</a></b>
 				<!-- Статистика объявлений -->
 				<span class="pull-right">Всего в базе объявлений <strong
-							class="text-primary"><?= $dataProvider->getTotalCount() ?></strong>, за месяц <?= $dataProvider->getTotalCount() ?>, за сутки <?= $dataProvider->getTotalCount() ?>
+							class="text-primary"><?= $dataProvider->getTotalCount() ?></strong>, за месяц <?= Adverts::countPerMonth() ?>
+					, за сутки <?= Adverts::countPerDay() ?>
 				</span>
 			</p></div>
 	</div>

@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 
 
-use common\models\Helpers;
 use frontend\models\adverts\AdvertsSearch;
 use Yii;
 use board\repositories\AdvertsRepository;
@@ -65,7 +64,6 @@ class SiteController extends Controller
             ],
             'captcha' => [
                 'class'           => 'yii\captcha\CaptchaAction',
-                //                    'class' => 'common\components\MathCaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];

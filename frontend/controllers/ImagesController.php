@@ -8,8 +8,6 @@
 
 namespace frontend\controllers;
 
-use board\entities\Image;
-use common\models\Helpers;
 use frontend\models\Images;
 use Yii;
 use yii\helpers\FileHelper;
@@ -26,9 +24,9 @@ class ImagesController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
-                    'uploaded-images' => ['POST'],
+                    'uploaded-images' => [ 'POST' ],
                 ],
             ],
         ];
@@ -59,7 +57,9 @@ class ImagesController extends Controller
 
         $imageFile = UploadedFile::getInstance( $model, 'images' );
 
-        $directory = Yii::getAlias( '@frontend/web/img/temp' ) . DIRECTORY_SEPARATOR . Yii::$app->session->id . DIRECTORY_SEPARATOR;
+        $sid = Yii::$app->request->post( 'sid' );
+
+        $directory = Yii::getAlias( '@frontend/web/img/temp' ) . DIRECTORY_SEPARATOR . $sid . DIRECTORY_SEPARATOR;
         if ( !is_dir( $directory ) ) {
             FileHelper::createDirectory( $directory );
         }
@@ -69,23 +69,25 @@ class ImagesController extends Controller
             $fileName = $uid . '.' . $imageFile->extension;
             $filePath = $directory . $fileName;
             if ( $imageFile->saveAs( $filePath ) ) {
-                $path = '/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR . $fileName;
-                $folder = '/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR;
+                $path = '/img/temp/' . $sid . DIRECTORY_SEPARATOR . $fileName;
+                $folder = '/img/temp/' . $sid . DIRECTORY_SEPARATOR;
 
-                $model->sid = Yii::$app->session->id;
                 $model->filename = $fileName;
                 $model->size = $imageFile->size;
                 $model->path = $folder;
 
-                !empty( Yii::$app->request->post('marker') ) ? $model->marker = Yii::$app->request->post('marker') : null;
-                !empty( Yii::$app->request->post('ad_id') ) ? $model->ad_id = Yii::$app->request->post('ad_id') : null;
+                if ( Yii::$app->request->post( 'sid' ) ) {
+                    $model->sid = Yii::$app->request->post( 'sid' );
+                }
 
-                if( !$model->save() ){
+                Yii::$app->request->post( 'ad_id' ) ? $model->ad_id = Yii::$app->request->post( 'ad_id' ) : null;
+
+                if ( !$model->save() ) {
                     // Если не удалось сохранить модель, удаляем загруженные файлы
-                    $this->actionImageDelete( $fileName );
-                    return Json::encode([
+                    $this->actionImageDelete( $fileName, $sid );
+                    return Json::encode( [
                         'files' => [ [ 'error' => Yii::t( 'app', 'Unable to save picture' ) ] ]
-                    ]);
+                    ] );
                 }
 
                 return Json::encode( [
@@ -95,7 +97,7 @@ class ImagesController extends Controller
                             'size'         => $imageFile->size,
                             'url'          => $path,
                             'thumbnailUrl' => $path,
-                            'deleteUrl'    => '/images/image-delete?name=' . $fileName,
+                            'deleteUrl'    => '/images/image-delete?name=' . $fileName . '&sid=' . $sid,
                             'deleteType'   => 'POST',
                         ],
                     ],
@@ -110,26 +112,26 @@ class ImagesController extends Controller
      * @param $name
      * @return string
      */
-    public function actionImageDelete( $name )
+    public function actionImageDelete( $name, $sid )
     {
-        $directory = Yii::getAlias( '@frontend/web/img/temp' ) . DIRECTORY_SEPARATOR . Yii::$app->session->id;
+        $directory = Yii::getAlias( '@frontend/web/img/temp' ) . DIRECTORY_SEPARATOR . $sid;
         if ( is_file( $directory . DIRECTORY_SEPARATOR . $name ) ) {
             unlink( $directory . DIRECTORY_SEPARATOR . $name );
         }
 
-        $this->deleteModelByName( $name );
+        $this->deleteModelByName( $name, $sid );
 
         $files = FileHelper::findFiles( $directory );
-        $output = [];
+        $output = [ ];
         foreach ( $files as $file ) {
             $fileName = basename( $file );
-            $path = '@frontend/web/img/temp/' . Yii::$app->session->id . DIRECTORY_SEPARATOR . $fileName;
+            $path = '@frontend/web/img/temp/' . $sid . DIRECTORY_SEPARATOR . $fileName;
             $output['files'][] = [
                 'name'         => $fileName,
                 'size'         => filesize( $file ),
                 'url'          => $path,
                 'thumbnailUrl' => $path,
-                'deleteUrl'    => '/images/image-delete?name=' . $fileName,
+                'deleteUrl'    => '/images/image-delete?name=' . $fileName . '&sid=' . $sid,
                 'deleteType'   => 'POST',
             ];
         }
@@ -142,16 +144,14 @@ class ImagesController extends Controller
      */
     public function actionUploadedImages()
     {
-        $output = [];
+        $output = [ ];
         $id = Yii::$app->request->post( 'id' );
+        $sid = Yii::$app->request->post( 'sid' );
 
-        // TODO: изменить sid
-        $sid = Yii::$app->session->id;
+        if ( ( $images = Images::findAll( [ 'ad_id' => $id, 'sid' => $sid ] ) ) !== null ) {
 
-        if ( ( $model = Images::findAll( [ 'ad_id' => $id, 'sid' => $sid ] ) ) !== null ) {
-
-            if ( !empty( $model ) ) {
-                $output = [ 'images' => $model ];
+            if ( !empty( $images ) ) {
+                $output = [ 'images' => $images ];
             }
 
             return Json::encode( $output );
@@ -179,10 +179,8 @@ class ImagesController extends Controller
     /**
      * @param $filename
      */
-    public function deleteModelByName( $filename )
+    public function deleteModelByName( $filename, $sid )
     {
-        // TODO: изменить sid
-        $sid = Yii::$app->session->id;
         $model = Images::find()->where( [ 'sid' => $sid, 'filename' => $filename ] )->one();
         $model->delete();
 

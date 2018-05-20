@@ -8,25 +8,26 @@ return [
         'formatter'    => [
             'class'             => 'yii\i18n\Formatter',
             'defaultTimeZone'   => 'Europe/Moscow',
-            'timeZone'          => 'GMT+3',
+            //            'timeZone'          => 'GMT+3',
             'locale'            => 'ru-RU',
             'dateFormat'        => 'dd MMMM yyyy',
-            'datetimeFormat'    => 'dd MMMM yyyy H:i:s',
+            'datetimeFormat'    => 'php:d F Y H:i',
+            //            'datetimeFormat'    => 'dd MMMM yyyy H:i',
             'timeFormat'        => 'H:i:s',
             'decimalSeparator'  => ',',
             'thousandSeparator' => ' ',
-            'currencyCode'      => 'RUR',
+            'currencyCode'      => 'RUB',
         ],
         'cache'        => [
             'class' => 'yii\caching\FileCache',
         ],
         'assetManager' => [
-            'bundles' => [
+            'appendTimestamp' => true,
+            'bundles'         => [
                 'yii\bootstrap\BootstrapAsset'       => [
                     'sourcePath' => '@frontend/web/css/bootstrap/',
                     'css'        => [
                         'css/bootstrap.css',
-//                        'css/bootstrap-theme.css'
                     ],
                 ],
                 'yii\bootstrap\BootstrapPluginAsset' => [

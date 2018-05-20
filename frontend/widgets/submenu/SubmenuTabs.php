@@ -8,7 +8,6 @@
 
 namespace frontend\widgets\submenu;
 
-use common\models\Helpers;
 use yii;
 use yii\base\Widget;
 use yii\helpers\Html;

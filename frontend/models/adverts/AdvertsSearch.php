@@ -2,12 +2,11 @@
 
 namespace frontend\models\adverts;
 
-use Yii;
+use yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use board\entities\Adverts;
 use yii\data\Sort;
-use common\models\Helpers;
 
 /**
  * AdvertsSearch represents the model behind the search form about `backend\models\Adverts`.
@@ -60,31 +59,31 @@ class AdvertsSearch extends Adverts
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'old_id' => $this->old_id,
-            'cat_id' => $this->cat_id,
-            'subcat_id' => $this->subcat_id,
-            'type' => $this->type,
-            'country' => $this->country,
-            'period' => $this->period,
-            'active' => $this->active,
-            'selected' => $this->selected,
+        $query->andFilterWhere( [
+            'id'           => $this->id,
+            'old_id'       => $this->old_id,
+            'cat_id'       => $this->cat_id,
+            'subcat_id'    => $this->subcat_id,
+            'type'         => $this->type,
+            'country'      => $this->country,
+            'period'       => $this->period,
+            'active'       => $this->active,
+            'selected'     => $this->selected,
             'selected_old' => $this->selected_old,
-            'special' => $this->special,
-            'special_old' => $this->special_old,
-            'images_old' => $this->images_old,
-            'ip' => $this->ip,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'draft' => $this->draft,
-        ]);
+            'special'      => $this->special,
+            'special_old'  => $this->special_old,
+            'images_old'   => $this->images_old,
+            'ip'           => $this->ip,
+            'created_at'   => $this->created_at,
+            'updated_at'   => $this->updated_at,
+            'draft'        => $this->draft,
+        ] );
 
-        $query->andFilterWhere(['like', 'sid', $this->sid])
-            ->andFilterWhere(['like', 'header', $this->header])
-            ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'author', $this->author])
-            ->andFilterWhere(['like', 'email', $this->email]);
+        $query->andFilterWhere( [ 'like', 'sid', $this->sid ] )
+            ->andFilterWhere( [ 'like', 'header', $this->header ] )
+            ->andFilterWhere( [ 'like', 'description', $this->description ] )
+            ->andFilterWhere( [ 'like', 'author', $this->author ] )
+            ->andFilterWhere( [ 'like', 'email', $this->email ] );
 
         return $dataProvider;
     }

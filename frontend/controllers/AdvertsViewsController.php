@@ -9,6 +9,7 @@
 namespace frontend\controllers;
 
 
+use frontend\models\Responses;
 use yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -16,9 +17,9 @@ use yii\filters\VerbFilter;
 use board\manage\AdvertManageService;
 use board\entities\Adverts;
 use yii\web\NotFoundHttpException;
-use frontend\models\UserPhones;
 use frontend\models\adverts\AdvertsSearch;
-use frontend\models\Images;
+use yii\bootstrap\ActiveForm;
+use yii\web\Response;
 
 class AdvertsViewsController extends Controller
 {
@@ -34,7 +35,7 @@ class AdvertsViewsController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'subcategory-page', 'category-page', 'details' ],
+                        'actions' => [ 'subcategory-page', 'category-page', 'details', 'create-response' ],
                         'allow'   => true,
                     ],
                     [
@@ -107,11 +108,14 @@ class AdvertsViewsController extends Controller
     public function actionDetails( $id )
     {
         $model = $this->findModel( $id );
+        $responses = new Responses();
+
         // Обновление счетчика просмотров
         $model->updateCounters(['views' => 1]);
 
         return $this->render( 'details', [
-            'model' => $model,
+            'model'     => $model,
+            'responses' => $responses
         ] );
     }
 
@@ -124,7 +128,16 @@ class AdvertsViewsController extends Controller
     {
         if ( ( $model = Adverts::find()
                 ->where( [ 'adverts.id' => $id ] )
-                ->joinWith( [ 'category', 'subcategory', 'type', 'period', 'country', 'price', 'phones', 'images' ] )
+                ->joinWith( [
+                    'category',
+                    'subcategory',
+                    'type',
+                    'period',
+                    'country',
+                    'price',
+                    'phones',
+                    'images',
+                ] )
                 ->joinWith( [ 'price p' => function ( $q ){ $q->joinWith( 'currency c' ); } ] )
                 ->one()
             ) !== null

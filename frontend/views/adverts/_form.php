@@ -46,12 +46,15 @@ PhonesAsset::register( $this );
         ],
     ] )
     ?>
-    <?= Html::hiddenInput( 'marker', $model->isNewRecord ? mt_rand( 11111111, 99999999 ) : $model->id,
-        [ 'id' => 'marker' ] ); ?>
+
+	<?= Html::hiddenInput( 'sid', $model->isNewRecord ? Yii::$app->session->id : $model->sid, [ 'id' => 'sid' ] ); ?>
+    <?= Html::hiddenInput( 'id', $model->isNewRecord ? rand( 11111111, 99999999 ) : $model->id,
+        [ 'id' => 'ad_id' ] ); ?>
+
     <?= $form->field( $model, 'cat_id' )->dropDownList( AdvertsRepository::categoryList(),
         [ 'id' => 'cat-id', 'prompt' => 'Выберите раздел' ] ) ?>
 
-    <?= $form->field( $model, 'subcat_id' )->widget( DepDrop::classname(), [
+	<?= $form->field( $model, 'subcat_id' )->widget( DepDrop::class, [
         'options'       => [ 'id' => 'subcat-id', 'prompt' => 'Выберите подраздел', ],
         'data'          => AdvertsRepository::subcategoryListUpdate( $model->cat_id ),
         'pluginOptions' => [
@@ -68,7 +71,7 @@ PhonesAsset::register( $this );
     <?= $form->field( $model, 'period_id' )->dropDownList( AdvertsRepository::periodList(),
         [ 'prompt' => 'Выберите период' ] ) ?>
 
-    <?= $form->field( $model, 'header' )->textInput() ?>
+    <?= $form->field( $model, 'header' )->textInput( [ 'maxlength' => true, ] ) ?>
 
     <?= $form->field( $model, 'description' )->textarea( [ 'rows' => 4 ] ) ?>
 
@@ -125,17 +128,11 @@ PhonesAsset::register( $this );
                 //            		'acceptFileTypes' => '/(\.|\/)(gif|jpe?g|png)$/i',
                 ],
             'clientEvents'         => [
-                    'fileuploadsubmit' => 'function(e, data) {
-							     	var input = $("#marker");
-							     data.formData = { marker: input.val() };
-//							   if (!data.formData.marker) {
-//									 data.context.find("button").prop("disabled", false);
-//									 input.focus();
-//									 return false;
-//							   }
-						    }',
+								'fileuploadsubmit' => 'function(e, data) {
+										data.formData = { sid: $("#sid").val(), ad_id: $("#ad_id").val() };
+								}',
             ],
-        ] );
+        ] )
         ?>
 		</div>
 	</div>
@@ -161,8 +158,7 @@ PhonesAsset::register( $this );
         'value'       => isset( \Yii::$app->user->identity->username ) ? \Yii::$app->user->identity->username : $model->author
     ] ) ?>
 
-    <?= $form->field( $model, 'email' )->input( 'email',
-        [
+	<?= $form->field( $model, 'email' )->textInput( [
             'placeholder' => 'someone@mail.ru',
             'value'       => isset( \Yii::$app->user->identity->email ) ? \Yii::$app->user->identity->email : $model->email
         ] ) ?>

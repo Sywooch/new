@@ -8,6 +8,7 @@
 
 namespace board\entities;
 
+use frontend\models\Responses;
 use frontend\models\UserPhones;
 use Yii;
 use backend\models\Pricies;
@@ -47,6 +48,9 @@ use common\models\Helpers;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $draft
+ * @property integer $has_images
+ * @property integer $views
+ * @property integer $response_count
  *
  * @property Categories $cat
  * @property Countries $countries
@@ -55,21 +59,13 @@ use common\models\Helpers;
  * @property Types $type
  * @property Pricies $pricies
  * @property Images $images
+ * @property \frontend\models\Responses $response
  */
 class Adverts extends ActiveRecord
 {
     use EventTrait;
 
-    /**
-     * @var
-     */
     public $verifyCode;
-
-    /**
-     * Свойство для временной маркировки изображений
-     * @var
-     */
-    public $marker;
 
     // Черновик объявления
     const STATUS_DRAFT = 1;
@@ -90,10 +86,9 @@ class Adverts extends ActiveRecord
     const NEXT_PAGE_DIRECT = 1;
     const PREV_PAGE_DIRECT = 0;
 
-    const PRICE_CURRENCY_SEPARATOR = '&nbsp;';
-    const EMPTY_PRICE_VALUE = '...';
+    const NO_ADV_FOUND = 'Ничего не найдено';
 
-    const SCENARIO_OWNER = 'owner';
+    const SCENARIO_GUEST = 'guest';
 
     public static function tableName()
     {
@@ -106,6 +101,7 @@ class Adverts extends ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
+        $scenarios[static::SCENARIO_GUEST] = [ 'verifyCode' ];
         return $scenarios;
     }
 
@@ -147,10 +143,10 @@ class Adverts extends ActiveRecord
                     'created_at',
                     'updated_at',
                     'draft',
-                    'marker',
                     'has_images',
                     'views',
-                    'user_id'
+                    'user_id',
+                    'response_count'
                 ],
                 'integer'
             ],
@@ -170,6 +166,7 @@ class Adverts extends ActiveRecord
                 ],
                 'required'
             ],
+            [ [ 'response_count' ], 'default', 'value' => 0 ],
             [ [ 'description' ], 'string' ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
             [ [ 'header', 'author', 'email' ], 'string', 'max' => 255 ],
@@ -210,7 +207,8 @@ class Adverts extends ActiveRecord
                 'targetClass'     => Types::class,
                 'targetAttribute' => [ 'type_id' => 'id' ]
             ],
-            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
+            [ [ 'verifyCode', ], 'required', 'on' => 'guest' ],
+            //            [ [ 'verifyCode' ], 'captcha', 'skipOnEmpty' => true, 'on' => 'owner' ]
         ];
     }
 
@@ -335,6 +333,14 @@ class Adverts extends ActiveRecord
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResponses()
+    {
+        return $this->hasMany( Responses::class, [ 'ad_id' => 'id' ] );
+    }
+
+    /**
      * @param $id
      * @param $direct
      * @return array|null|ActiveRecord[]
@@ -352,5 +358,40 @@ class Adverts extends ActiveRecord
             return $target->id;
         }
         return null;
+    }
+
+    /**
+     * @return int|string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function countPerDay()
+    {
+        $today = Yii::$app->formatter->asDate( 'now', 'yyyy-MM-dd' );
+        $count = Adverts::find()
+            ->select( [ 'id' ] )
+            ->where( [ 'between', 'created_at', strtotime( $today . ' 00:00:00' ), strtotime( $today . ' 23:59:59' ) ] )
+            ->count();
+
+        return $count;
+    }
+
+    /**
+     * @return int|string
+     * @throws \yii\base\InvalidConfigException
+     */
+    public static function countPerMonth()
+    {
+        $today = Yii::$app->formatter->asDate( 'now', 'yyyy-MM-dd' );
+        $count = Adverts::find()
+            ->select( [ 'id' ] )
+            ->where( [
+                'between',
+                'created_at',
+                ( strtotime( date( "Y-m-d", strtotime( "-1 month" ) ) ) ),
+                strtotime( $today . ' 23:59:59' )
+            ] )
+            ->count();
+
+        return $count;
     }
 }

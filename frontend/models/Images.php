@@ -37,7 +37,7 @@ class Images extends \yii\db\ActiveRecord
             [ [ 'sid' ], 'required' ],
             [ [ 'filename', 'path' ], 'string', 'max' => 255 ],
             [ [ 'sid' ], 'string', 'max' => 32 ],
-            [ [ 'ad_id', 'marker', 'main_image', 'size' ], 'integer' ],
+            [ [ 'ad_id', 'main_image', 'size' ], 'integer' ],
             [ [ 'filename' ], 'unique' ],
         ];
     }
@@ -50,7 +50,6 @@ class Images extends \yii\db\ActiveRecord
         return [
             'id'         => 'ID',
             'ad_id'      => 'Ad ID',
-            'marker'     => 'Marker',
             'sid'        => 'Sid',
             'main_image' => 'Main image',
             'filename'   => 'Filename',
@@ -70,6 +69,6 @@ class Images extends \yii\db\ActiveRecord
      */
     public function getAdverts()
     {
-        return $this->hasOne( Adverts::className(), [ 'id' => 'ad_id' ] );
+        return $this->hasOne( Adverts::class, [ 'id' => 'ad_id' ] );
     }
 }

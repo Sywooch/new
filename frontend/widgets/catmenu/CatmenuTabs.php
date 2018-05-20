@@ -1,18 +1,10 @@
 <?php
-/**
- * User: Администратор
- * Date: 05.04.2017
- * Time: 23:19
- */
-
 namespace frontend\widgets\catmenu;
 
-use common\models\Helpers;
 use yii;
 use yii\bootstrap\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\db\Query;
 use backend\models\Categories;
 
 class CatmenuTabs extends Widget
@@ -69,18 +61,16 @@ class CatmenuTabs extends Widget
         foreach ( $array as $value ) {
             if ( $i >= 5 ) {
                 array_push( $extra_items, [
-                    'label' => Html::encode( $value['category_name'] ),
+                    'label' => $value['icon'] . $value['category_name'],
                     'url'   => Url::to( [
                         'adverts-views/category-page',
-                        'id'     => $value['id'],
+                        'id'  => $value['id'],
                         'cat' => $value['category_name']
                     ] )
                 ] );
             }
             else {
-
                 foreach ( $value['subcategories'] as $val ) {
-
                     array_push( $sub_category, [
                         'label' => Html::encode( $val['subcat_name'] ),
                         'url'   => Url::to( [
@@ -91,12 +81,11 @@ class CatmenuTabs extends Widget
                             'subcat' => $val['subcat_name']
                         ] )
                     ] );
-
                 }
                 unset( $val );
 
                 array_push( $items, [
-                    'label' => Html::encode( $value['category_name'] ),
+                    'label' => $value['icon'] . $value['category_name'],
                     'items' => $sub_category
                 ] );
                 $sub_category = [];

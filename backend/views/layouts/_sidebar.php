@@ -21,7 +21,7 @@
 			<a href="<?= \yii\helpers\Url::to( [ '/adverts/index' ] ) ?>">Новые объявления</a>
 		</li>
 		<li>
-			<a href="<?= \yii\helpers\Url::to( [ '/category/index' ] ) ?>">Категории</a>
+			<a href="<?= \yii\helpers\Url::to( [ '/categories/index' ] ) ?>">Категории</a>
 		</li>
 		<li><a href="<?= \yii\helpers\Url::to( [ '/subcategory/index' ] ) ?>">Подкатегории</a></li>
 
@@ -32,6 +32,8 @@
 		<li><a href="<?= \yii\helpers\Url::to( [ '/periods/index' ] ) ?>">Период</a></li>
 
 		<li><a href="<?= \yii\helpers\Url::to( [ '/currencies/index' ] ) ?>">Валюта</a></li>
+
+		<li><a href="<?= \yii\helpers\Url::to( [ '/responses/index' ] ) ?>">Отклики</a></li>
 
 		<li><a href="<?= \yii\helpers\Url::to( [ '/user/admin' ] ) ?>">Rbac</a></li>
 	</ul>
