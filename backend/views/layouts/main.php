@@ -1,19 +1,32 @@
 <?php
-
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+
+
 if ( Yii::$app->controller->action->id === 'login' ) {
+    /**
+     * Do not use this code in your template. Remove it.
+     * Instead, use the code  $this->layout = '//main-login'; in your controller.
+     */
     echo $this->render(
-        'wrapper-black',
+        'main-login',
         [ 'content' => $content ]
     );
 }
 else {
+
+    if ( class_exists( 'backend\assets\AppAsset' ) ) {
+        backend\assets\AppAsset::register( $this );
+    }
+    else {
+        app\assets\AppAsset::register( $this );
+    }
+
     dmstr\web\AdminLteAsset::register( $this );
-    backend\assets\AppAsset::register( $this );
-    $directoryAsset = Yii::$app->assetManager->getPublishedUrl( '@bower' ) . '/admin-lte';
+
+    $directoryAsset = Yii::$app->assetManager->getPublishedUrl( '@vendor/almasaeed2010/adminlte/dist' );
     ?>
     <?php $this->beginPage() ?>
 	<!DOCTYPE html>
@@ -25,15 +38,14 @@ else {
 		<title><?= Html::encode( $this->title ) ?></title>
       <?php $this->head() ?>
 	</head>
-	<body class="skin-black">
+	<body class="hold-transition skin-blue sidebar-mini">
   <?php $this->beginBody() ?>
+	<div class="wrapper">
 
-  <?= $this->render(
-      'header.php',
-      [ 'directoryAsset' => $directoryAsset ]
-  ) ?>
-
-	<div class="wrapper row-offcanvas row-offcanvas-left">
+      <?= $this->render(
+          'header.php',
+          [ 'directoryAsset' => $directoryAsset ]
+      ) ?>
 
       <?= $this->render(
           'left.php',
