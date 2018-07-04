@@ -13,7 +13,7 @@ use yii\rbac\Rule;
 
 class AuthorRule extends Rule
 {
-    public $name = 'updateOwnAds';
+    public $name = 'isAuthor';
 
     /**
      * @param int|string $user the user ID
